@@ -2,7 +2,7 @@
 
 namespace AbilitySystem.Base
 {
-    public abstract class GameplayAbility
+    public abstract class GameplayAbility : MonoBehaviour
     {
         protected AbilitySystem ASC;
         public void Init(AbilitySystem asc)

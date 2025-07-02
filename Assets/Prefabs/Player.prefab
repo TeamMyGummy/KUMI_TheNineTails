@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4572241603367076480}
   - component: {fileID: 2677374988490091879}
   - component: {fileID: 9100064898656960644}
+  - component: {fileID: 4411930095043759998}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -302,3 +303,19 @@ MonoBehaviour:
   speed: 0.1
   jumpPower: 5.02
   gravity: 2.52
+--- !u!114 &4411930095043759998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8d75b3a13a906489f0f06932c759a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilities:
+  - Name: Attack
+    UnlockFloor: 0
+    Ability: {fileID: 1775107579334247824, guid: 0ed3270d8ccf11b47a7e4d51664bbdbd, type: 3}

@@ -10,11 +10,15 @@ public class PlayerController : MonoBehaviour
     private CharacterMovement _characterMovement;
     private AbilitySystem.Base.AbilitySystem _asc;
 
-    void Start()
+    private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _characterMovement = GetComponent<CharacterMovement>();
         _asc = GetComponent<AbilitySystem.Base.AbilitySystem>();
+    }
+    private void Start()
+    {
+        _asc.GrantAllAbilities();
     }
 
     /*
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
     // --------------------------- Attack ---------------------------
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        // tryActivate(Attack());
+        _asc.TryActivateAbility("Attack");
     }
 
     public void OnEnableAttack()
