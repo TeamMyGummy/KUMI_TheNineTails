@@ -19,7 +19,7 @@ namespace AbilitySystem.Base
         [SerializeField]
         private List<AbilityComponent> _abilities = new();
 
-        private readonly Dictionary<string, GameplayAbility> _grantedAbilities = new();
+        private readonly Dictionary<string, GameplayAbilitySpec> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         
@@ -31,8 +31,7 @@ namespace AbilitySystem.Base
         /// <param name="ability">Key에 바인딩 된 Ability</param>
         public bool GrantAbility(string key, GameplayAbility ability)
         {
-            ability.Init(this);
-            return _grantedAbilities.TryAdd(key, ability);
+            return _grantedAbilities.TryAdd(key, new GameplayAbilitySpec(this, ability));
         }
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace AbilitySystem.Base
             {
                 if(ac.Ability != null)
                 {
-                    ac.Ability.Init(this);
-                    return _grantedAbilities.TryAdd(ac.Name, ac.Ability);
+                    return _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability));
                 }
             }
             return false;
@@ -67,8 +65,7 @@ namespace AbilitySystem.Base
                 {
                     if (ac.UnlockFloor <= floor)
                     {
-                        ac.Ability.Init(this);
-                        return _grantedAbilities.TryAdd(ac.Name, ac.Ability);
+                        return _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability));
                     }
                 }
             }
