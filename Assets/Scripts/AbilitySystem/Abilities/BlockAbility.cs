@@ -18,13 +18,13 @@ public class BlockAbility : GameplayAbility
     /// ⚠️반드시 부모(해당 클래스)의 Activate를 먼저 호출할 것<br/>
     /// 그래야만 다른 스킬들이 블락됨
     /// </summary>
-    protected override void Activate()
+    public override void Activate(GameplayAbilitySpec spec)
     {
-        ASC.TagContainer.AddWithDuration(GameplayTags.BlockRunningAbility, BlockTimer).Forget();
+        spec.Asc.TagContainer.AddWithDuration(GameplayTags.BlockRunningAbility, BlockTimer).Forget();
     }
 
-    protected override bool CanActivate()
+    public override bool CanActivate(GameplayAbilitySpec spec)
     {
-        return !ASC.TagContainer.Has(GameplayTags.BlockRunningAbility);
+        return !spec.Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
 }

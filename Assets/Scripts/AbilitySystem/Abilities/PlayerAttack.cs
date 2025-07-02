@@ -5,13 +5,15 @@ using AbilitySystem.Base;
 using Unity.VisualScripting;
 
 
-public class PlayerAttack : GameplayAbility
+[CreateAssetMenu(menuName = "Ability/PlayerAttack")]
+public class PlayerAttack : BlockAbility
 {
     /// <summary>
     /// 실제 Ability 실행부
     /// </summary>
-    protected override void Activate() 
+    public override void Activate(GameplayAbilitySpec spec) 
     {
+        base.Activate(spec);
         Debug.Log("어빌리티 실행");
     }
     
