@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6949076173635677489}
   - component: {fileID: 6454248848244992767}
   - component: {fileID: 4833121999341586799}
+  - component: {fileID: 5609828681694164570}
   - component: {fileID: 4572241603367076480}
   - component: {fileID: 2677374988490091879}
   - component: {fileID: 9100064898656960644}
-  - component: {fileID: 4601758999810024804}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -115,7 +115,52 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!61 &5609828681694164570
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &4572241603367076480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +203,19 @@ MonoBehaviour:
     m_ActionId: cf94eba2-28f3-46fd-82d1-718bcb33c033
     m_ActionName: PlayerActions/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
     m_ActionName: PlayerActions/Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -166,15 +223,51 @@ MonoBehaviour:
     m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
     m_ActionName: PlayerActions/Double Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 378fcf18-5022-4470-a05b-1a1ba447f92c
     m_ActionName: PlayerActions/Attack[/Keyboard/j]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 242d6c85-53ae-465d-8e95-ca2b657c2e85
     m_ActionName: PlayerActions/Dash[/Keyboard/d,/Keyboard/a]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnParrying
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c3f01abb-7ea7-4c89-a92d-54648ff2f18f
     m_ActionName: PlayerActions/Parrying[/Keyboard/k]
   m_NeverAutoSwitchControlSchemes: 0
@@ -206,18 +299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b4d6b24e35b0845b3a9ef4a97a0175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4601758999810024804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2384312483337340385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ffa4fe46ab57d4e808892cde2a875b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementInfo:
-    speed: 0.5
-    gravity: 0
+  speed: 0.1
+  jumpPower: 5.02
+  gravity: 2.52

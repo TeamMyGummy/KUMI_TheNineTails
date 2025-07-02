@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
     private Rigidbody2D rigid;
 
-    [Range(0.0f, 3.0f)] public float speed;
-    [Range(0.0f, 7.0f)] public float jumpPower;
-    [Range(0.0f, 3.0f)] public float gravity;
+    [SerializeField]
+    [Range(0.0f, 3.0f)] private float speed;
+
+    [SerializeField]
+    [Range(0.0f, 7.0f)] private float jumpPower;
+
+    [SerializeField]
+    [Range(0.0f, 3.0f)] private float gravity;
 
     private Vector2 nextDirection;
 
@@ -21,6 +27,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //  Move
         if(nextDirection != Vector2.zero)
         {
             Vector2 currMove = rigid.position;
@@ -30,15 +37,20 @@ public class CharacterMovement : MonoBehaviour
             //rigid.velocity = nextMove / Time.deltaTime;
         }
         
+        // Jump
         if(rigid.velocity.y < 0.0f)
         {
             //Debug.DrawRay(rigid.position, Vector2.down, new Color(1, 0, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.down, 1, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
             if(rayHit.collider != null)
             {
-                if(rayHit.distance < 1.0f)
+                if(rayHit.distance < 0.5f)
                 {
-                    GetComponent<PlayerController>().OnEnableJump();
+                    if (GetComponent<PlayerController>() != null)
+                    {
+                        GetComponent<PlayerController>().OnEnableJump();
+                    }
+                    
                 }
             }
         }
