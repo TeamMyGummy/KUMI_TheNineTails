@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    private Rigidbody2D rigid;
+    private Rigidbody2D _rigidBody;
 
     [SerializeField]
     [Range(0.0f, 3.0f)] private float speed;
@@ -16,32 +16,32 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 3.0f)] private float gravity;
 
-    private Vector2 nextDirection;
+    private Vector2 _nextDirection;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        rigid.gravityScale = gravity;
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _rigidBody.gravityScale = gravity;
     }
 
     private void FixedUpdate()
     {
         //  Move
-        if(nextDirection != Vector2.zero)
+        if(_nextDirection != Vector2.zero)
         {
-            Vector2 currMove = rigid.position;
-            Vector2 nextMove = nextDirection * speed;
+            Vector2 currMove = _rigidBody.position;
+            Vector2 nextMove = _nextDirection * speed;
 
-            rigid.position = currMove + nextMove;
+            _rigidBody.position = currMove + nextMove;
             //rigid.velocity = nextMove / Time.deltaTime;
         }
         
         // Jump
-        if(rigid.velocity.y < 0.0f)
+        if(_rigidBody.velocity.y < 0.0f)
         {
             //Debug.DrawRay(rigid.position, Vector2.down, new Color(1, 0, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
             if(rayHit.collider != null)
             {
                 if(rayHit.distance < 0.5f)
@@ -58,11 +58,11 @@ public class CharacterMovement : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        nextDirection = direction;
+        _nextDirection = direction;
     }
 
     public void Jump()
     {
-        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        _rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 }
