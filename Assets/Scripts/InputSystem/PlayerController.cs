@@ -1,4 +1,4 @@
-﻿using AbilitySystem.Base;
+using AbilitySystem.Base;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
