@@ -1,12 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace AbilitySystem.Base
 {
+    [System.Serializable]
+    public struct AbilityComponent
+    {
+        public string Name;
+        public int UnlockFloor;
+        public GameplayAbility Ability;
+    }
+
     public class AbilitySystem : MonoBehaviour
     {
-        private readonly Dictionary<string, GameplayAbility> _abilities = new();
+        [SerializeField]
+        private List<AbilityComponent> _abilities = new();
+
+        private readonly Dictionary<string, GameplayAbility> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         
@@ -19,7 +32,47 @@ namespace AbilitySystem.Base
         public bool GrantAbility(string key, GameplayAbility ability)
         {
             ability.Init(this);
-            return _abilities.TryAdd(key, ability);
+            return _grantedAbilities.TryAdd(key, ability);
+        }
+
+        /// <summary>
+        /// Ability를 모두 등록(캐릭터가 사용할 수 있게 됨) <br/>
+        /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
+        /// </summary>
+        public bool GrantAllAbilities()
+        {
+            foreach(AbilityComponent ac in _abilities)
+            {
+                if(ac.Ability != null)
+                {
+                    ac.Ability.Init(this);
+                    return _grantedAbilities.TryAdd(ac.Name, ac.Ability);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Ability를 특정 층까지 모두 등록(캐릭터가 사용할 수 있게 됨) <br/>
+        /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
+        /// </summary>
+        /// <param name="floor">Ability가 해금되는 층</param>
+        public bool GrantAllAbilities(int floor)
+        {
+            if (_abilities.Count == 0) return false;
+
+            foreach (AbilityComponent ac in _abilities)
+            {
+                if (ac.Ability != null)
+                {
+                    if (ac.UnlockFloor <= floor)
+                    {
+                        ac.Ability.Init(this);
+                        return _grantedAbilities.TryAdd(ac.Name, ac.Ability);
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -28,7 +81,7 @@ namespace AbilitySystem.Base
         /// <param name="key">실행할 스킬명</param>
         public void TryActivateAbility(string key)
         {
-            if (_abilities.TryGetValue(key, out var ability)) ability.TryActivate();
+            if (_grantedAbilities.TryGetValue(key, out var ability)) ability.TryActivate();
         }
 
         /// <summary>

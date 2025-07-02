@@ -1,17 +1,24 @@
-﻿using System.Collections;
+﻿using AbilitySystem.Base;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private CharacterMovement characterMovement;
+    private PlayerInput _playerInput;
+    private CharacterMovement _characterMovement;
+    private AbilitySystem.Base.AbilitySystem _asc;
 
-    void Start()
+    private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-        characterMovement = GetComponent<CharacterMovement>();
+        _playerInput = GetComponent<PlayerInput>();
+        _characterMovement = GetComponent<CharacterMovement>();
+        _asc = GetComponent<AbilitySystem.Base.AbilitySystem>();
+    }
+    private void Start()
+    {
+        _asc.GrantAllAbilities();
     }
 
     /*
@@ -24,34 +31,34 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        characterMovement.Move(inputDirection);
+        _characterMovement.Move(inputDirection);
     }
 
     public void OnEnableMove()
     {
-        playerInput.actions["Move"].Enable();
+        _playerInput.actions["Move"].Enable();
     }
 
     public void OnDisableMove()
     {
-        playerInput.actions["Move"].Disable();
+        _playerInput.actions["Move"].Disable();
     }
 
     // --------------------------- Jump ---------------------------
     public void OnJump()
     {
-        characterMovement.Jump();
+        _characterMovement.Jump();
         OnDisableJump();
     }
 
     public void OnEnableJump()
     {
-        playerInput.actions["Jump"].Enable();
+        _playerInput.actions["Jump"].Enable();
     }
 
     public void OnDisableJump()
     {
-        playerInput.actions["Jump"].Disable();
+        _playerInput.actions["Jump"].Disable();
     }
 
     // --------------------------- Dash ---------------------------
@@ -62,28 +69,28 @@ public class PlayerController : MonoBehaviour
 
     public void OnEnableDash()
     {
-        playerInput.actions["Dash"].Enable();
+        _playerInput.actions["Dash"].Enable();
     }
 
     public void OnDisableDash()
     {
-        playerInput.actions["Dash"].Disable();
+        _playerInput.actions["Dash"].Disable();
     }
 
     // --------------------------- Attack ---------------------------
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        // tryActivate(Attack());
+        _asc.TryActivateAbility("Attack");
     }
 
     public void OnEnableAttack()
     {
-        playerInput.actions["Attack"].Enable();
+        _playerInput.actions["Attack"].Enable();
     }
 
     public void OnDisableAttack()
     {
-        playerInput.actions["Attack"].Disable();
+        _playerInput.actions["Attack"].Disable();
     }
 
     // --------------------------- Parrying ---------------------------
@@ -94,21 +101,21 @@ public class PlayerController : MonoBehaviour
 
     public void OnEnableParrying()
     {
-        playerInput.actions["Parrying"].Enable();
+        _playerInput.actions["Parrying"].Enable();
     }
 
     public void OnDisableParrying()
     {
-        playerInput.actions["Parrying"].Disable();
+        _playerInput.actions["Parrying"].Disable();
     }
 
     // ----------------------------------------------------------------
     public void OnEnableAllInput()
     {
-        playerInput.ActivateInput();
+        _playerInput.ActivateInput();
     }
     public void OnDisableAllInput()
     {
-        playerInput.DeactivateInput();
+        _playerInput.DeactivateInput();
     }
 }
