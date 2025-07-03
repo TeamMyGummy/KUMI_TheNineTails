@@ -207,10 +207,14 @@ MonoBehaviour:
     m_ActionId: cf94eba2-28f3-46fd-82d1-718bcb33c033
     m_ActionName: PlayerActions/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
+    m_ActionName: PlayerActions/Jump[/Keyboard/space]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2677374988490091879}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnJump
+        m_MethodName: OnDoubleJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -220,10 +224,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
-    m_ActionName: PlayerActions/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
     m_ActionName: PlayerActions/Double Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -274,6 +274,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c3f01abb-7ea7-4c89-a92d-54648ff2f18f
     m_ActionName: PlayerActions/Parrying[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 293a2033-a89a-4a7d-9c76-c5347ead7036
+    m_ActionName: PlayerActions/WallClimb[/Keyboard/w,/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
