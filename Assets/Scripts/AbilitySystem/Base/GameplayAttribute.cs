@@ -10,14 +10,25 @@ namespace AbilitySystem.Base
         Override,
         Multiplicative
     }
-    
+
+    public enum AttributeName
+    {   
+        HP,
+        공격력
+    }
+
     [Serializable]
     public class Attribute
     {
-        public float BaseValue { get; private set; }
-        public float CurrentValue { get; private set; }
-        public float MaxValue { get; private set; }
-        
+        //public float BaseValue { get; private set; }
+        //public float CurrentValue { get; private set; }
+        //public float MaxValue { get; private set; }
+
+        [SerializeField] private float BaseValue;
+        [SerializeField] private float CurrentValue;
+        [SerializeField] private float MaxValue;
+
+
         public event Action<float>? OnValueChanged;
 
         public Attribute(float baseValue, float maxValue)
@@ -60,9 +71,30 @@ namespace AbilitySystem.Base
             OnValueChanged?.Invoke(CurrentValue);
         }
     }
-    
-    public class GameplayAttribute
+
+    [Serializable]
+    public struct AttributeEntry
     {
-        public Dictionary<string, Attribute> Attributes = new();
+        public AttributeName AttributeName;
+        public Attribute Attribute;
+    }
+
+    public class GameplayAttribute : MonoBehaviour
+    {
+        // 인스펙터 노출용
+        [SerializeField]
+        private List<AttributeEntry> _attributes = new();
+
+        // 딕셔너리로 저장 (실제로 접근은 여기로)
+        public Dictionary<AttributeName, Attribute> Attributes = new();
+
+        private void Start()
+        {
+            foreach (var attribute in _attributes)
+            {
+                
+                Attributes.Add(attribute.AttributeName, attribute.Attribute);
+            }
+        }
     }
 }
