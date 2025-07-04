@@ -11,7 +11,13 @@ namespace AbilitySystem.Base
         Override,
         Multiplicative
     }
-    
+
+    public enum AttributeName
+    {   
+        HP,
+        공격력
+    }
+
     [Serializable]
     public class Attribute
     {
@@ -64,8 +70,15 @@ namespace AbilitySystem.Base
             OnValueChanged?.Invoke(CurrentValue);
         }
     }
-    
-    public class GameplayAttribute
+
+    [Serializable]
+    public struct AttributeEntry
+    {
+        public AttributeName AttributeName;
+        public Attribute Attribute;
+    }
+
+    public class GameplayAttribute : MonoBehaviour
     {
         public Dictionary<string, Attribute> Attributes;
 

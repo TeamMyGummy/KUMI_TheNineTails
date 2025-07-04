@@ -1,4 +1,4 @@
-﻿using AbilitySystem.Base;
+using AbilitySystem.Base;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,10 +45,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // --------------------------- Jump ---------------------------
-    public void OnJump()
+    public void OnJump(InputAction.CallbackContext ctx)
     {
-        _characterMovement.Jump();
-        OnDisableJump();
+        if (ctx.performed)
+        {
+            OnDisableJump();
+            _characterMovement.Jump();
+        }
     }
 
     public void OnEnableJump()
@@ -61,10 +64,36 @@ public class PlayerController : MonoBehaviour
         _playerInput.actions["Jump"].Disable();
     }
 
+    // --------------------------- Double Jump ---------------------------
+    public void OnDoubleJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            _characterMovement.Jump();
+        }
+        if (ctx.performed)
+        {
+            OnDisableDoubleJump();
+            _characterMovement.Jump();
+        }
+    }
+
+    public void OnEnableDoubleJump()
+    {
+        _playerInput.actions["DoubleJump"].Enable();
+    }
+
+    public void OnDisableDoubleJump()
+    {
+        _playerInput.actions["DoubleJump"].Disable();
+    }
+
     // --------------------------- Dash ---------------------------
     public void OnDash(InputAction.CallbackContext ctx)
     {
-
+        if (ctx.performed)
+        {
+        }
     }
 
     public void OnEnableDash()
@@ -80,7 +109,10 @@ public class PlayerController : MonoBehaviour
     // --------------------------- Attack ---------------------------
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        _asc.TryActivateAbility("Attack");
+        if (ctx.performed)
+        {
+            _asc.TryActivateAbility("Attack");
+        }
     }
 
     public void OnEnableAttack()
@@ -96,7 +128,10 @@ public class PlayerController : MonoBehaviour
     // --------------------------- Parrying ---------------------------
     public void OnParrying(InputAction.CallbackContext ctx)
     {
-        //tryActivate(Parrying());
+        if (ctx.started)
+        {
+            // 게이지 시작
+        }
     }
 
     public void OnEnableParrying()

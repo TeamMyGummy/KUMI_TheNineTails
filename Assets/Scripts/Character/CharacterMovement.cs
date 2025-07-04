@@ -11,12 +11,13 @@ public class CharacterMovement : MonoBehaviour
     [Range(0.0f, 3.0f)] private float speed;
 
     [SerializeField]
-    [Range(0.0f, 7.0f)] private float jumpPower;
+    [Range(5.0f, 20.0f)] private float jumpPower;
 
     [SerializeField]
     [Range(0.0f, 3.0f)] private float gravity;
 
     private Vector2 _nextDirection;
+    private bool isGround;
 
     // Start is called before the first frame update
     void Start()
@@ -40,17 +41,12 @@ public class CharacterMovement : MonoBehaviour
         // Jump
         if(_rigidBody.velocity.y < 0.0f)
         {
-            //Debug.DrawRay(rigid.position, Vector2.down, new Color(1, 0, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
-            if(rayHit.collider != null)
+            if(isGround = CheckIsGround())
             {
-                if(rayHit.distance < 0.5f)
+                if (GetComponent<PlayerController>() != null)
                 {
-                    if (GetComponent<PlayerController>() != null)
-                    {
-                        GetComponent<PlayerController>().OnEnableJump();
-                    }
-                    
+                    //GetComponent<PlayerController>().OnEnableJump();
+                    GetComponent<PlayerController>().OnEnableDoubleJump();
                 }
             }
         }
@@ -63,6 +59,25 @@ public class CharacterMovement : MonoBehaviour
 
     public void Jump()
     {
-        _rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
+        _rigidBody.AddForce(Vector2.up * (cancelForce + jumpPower), ForceMode2D.Impulse);
+    }
+
+    /// <summary>
+    /// 오브젝트가 땅(Platform)에 있는지 확인하는 함수
+    /// </summary>
+    /// <returns>true: 땅에 있음 false: 땅에 있지 않음</returns>
+    public bool CheckIsGround()
+    {
+        Debug.DrawRay(_rigidBody.position, Vector2.down, new Color(1, 0, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 10, LayerMask.GetMask("Platform"));
+        if (rayHit.collider != null)
+        {
+            if (rayHit.distance < 0.6f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

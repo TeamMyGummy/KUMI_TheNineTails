@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Double Jump",
+                    "name": "DoubleJump",
                     "type": "Button",
                     "id": "7f9e5cb2-b46b-44f1-be72-481720cd70ad",
                     "expectedControlType": "Button",
@@ -58,11 +58,20 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "WallClimb",
+                    "type": "Button",
+                    "id": "293a2033-a89a-4a7d-9c76-c5347ead7036",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "WASD",
+                    "name": "AD",
                     "id": "9879823c-f707-49f5-a2cd-027d8957ae52",
                     "path": "2DVector",
                     "interactions": "",
@@ -109,10 +118,10 @@
                     "name": "",
                     "id": "62dc95a0-6d38-41c5-a479-fbfc61782efa",
                     "path": "<Keyboard>/space",
-                    "interactions": "MultiTap",
+                    "interactions": "MultiTap(tapTime=1)",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Double Jump",
+                    "action": "DoubleJump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -141,7 +150,7 @@
                 {
                     "name": "",
                     "id": "b5eb3e8e-7714-4a09-af14-5821b076fc23",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/shift",
                     "interactions": "MultiTap",
                     "processors": "",
                     "groups": "PC",
@@ -150,15 +159,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "17ac3cea-f49a-4ea2-b379-23d1e3830751",
-                    "path": "<Keyboard>/a",
-                    "interactions": "MultiTap",
+                    "name": "WS",
+                    "id": "581ab4c1-e543-417b-aa65-1fd856c423ab",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WallClimb",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fc58c3ee-7bea-4c56-a52c-69f6f805d6b4",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Dash",
+                    "action": "WallClimb",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "46b4c295-747b-4e07-80d8-fc3555c446c1",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "WallClimb",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
