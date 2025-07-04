@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace AbilitySystem.Base
@@ -14,8 +15,11 @@ namespace AbilitySystem.Base
     [Serializable]
     public class Attribute
     {
+        [JsonProperty]
         public float BaseValue { get; private set; }
+        [JsonProperty]
         public float CurrentValue { get; private set; }
+        [JsonProperty]
         public float MaxValue { get; private set; }
         
         public event Action<float>? OnValueChanged;
@@ -63,6 +67,11 @@ namespace AbilitySystem.Base
     
     public class GameplayAttribute
     {
-        public Dictionary<string, Attribute> Attributes = new();
+        public Dictionary<string, Attribute> Attributes;
+
+        public void SetAttribute(Dictionary<string, Attribute> dict)
+        {
+            Attributes = dict;
+        }
     }
 }
