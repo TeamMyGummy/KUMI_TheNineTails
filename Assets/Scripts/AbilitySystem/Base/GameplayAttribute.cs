@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace AbilitySystem.Base
@@ -20,15 +21,13 @@ namespace AbilitySystem.Base
     [Serializable]
     public class Attribute
     {
-        //public float BaseValue { get; private set; }
-        //public float CurrentValue { get; private set; }
-        //public float MaxValue { get; private set; }
-
-        [SerializeField] private float BaseValue;
-        [SerializeField] private float CurrentValue;
-        [SerializeField] private float MaxValue;
-
-
+        [JsonProperty]
+        public float BaseValue { get; private set; }
+        [JsonProperty]
+        public float CurrentValue { get; private set; }
+        [JsonProperty]
+        public float MaxValue { get; private set; }
+        
         public event Action<float>? OnValueChanged;
 
         public Attribute(float baseValue, float maxValue)
@@ -81,20 +80,11 @@ namespace AbilitySystem.Base
 
     public class GameplayAttribute : MonoBehaviour
     {
-        // 인스펙터 노출용
-        [SerializeField]
-        private List<AttributeEntry> _attributes = new();
+        public Dictionary<string, Attribute> Attributes;
 
-        // 딕셔너리로 저장 (실제로 접근은 여기로)
-        public Dictionary<AttributeName, Attribute> Attributes = new();
-
-        private void Start()
+        public void SetAttribute(Dictionary<string, Attribute> dict)
         {
-            foreach (var attribute in _attributes)
-            {
-                
-                Attributes.Add(attribute.AttributeName, attribute.Attribute);
-            }
+            Attributes = dict;
         }
     }
 }

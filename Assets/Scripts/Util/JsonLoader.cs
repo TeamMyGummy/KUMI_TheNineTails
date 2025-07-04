@@ -12,9 +12,8 @@ namespace Util
 {
     public class JsonLoader
     {
-        private static readonly string StaticDataWritePath = Application.dataPath + "/Resources/CreatedJson/";
+        private static readonly string StaticDataWritePath = "StaticJson/";
         private static readonly string DynamicDataPath = Application.persistentDataPath + "/";
-        private const string StaticDataPath = "StaticData/";
     
         /// <summary>
         /// 정적 데이터를 T 오브젝트로 반환. <br/>
@@ -27,17 +26,19 @@ namespace Util
         /// <param name="key"> 데이터 저장명 <br/>
         /// 이 경우 클래스명query(Ex. 클래스명 = ItemTable, query = SinAsan면 ItemTableSinAsan이 파일명인 데이터를 읽어옴</param>
         /// <returns></returns>
-        public static async UniTask<T> ReadStaticData<T>(string key)
+        public static T ReadStaticData<T>(string key)
         {
             try
             {
-                TextAsset jsonData = await AssetLoader.Load<TextAsset>(key);
+                if (String.IsNullOrEmpty(key)) key = typeof(T).Name;
+                TextAsset jsonData = Resources.Load<TextAsset>(StaticDataWritePath + key);
                 T data = JsonConvert.DeserializeObject<T>(jsonData.text);
                 return data;
             }
             catch (Exception e)
             {
-                throw new FileNotFoundException();
+                Debug.Log($"StaticData가 존재하지 않습니다! {StaticDataWritePath + key}");
+                return default;
             }
         }
         
@@ -72,7 +73,8 @@ namespace Util
             }
             catch (FileNotFoundException ex)
             {
-                throw new FileNotFoundException();
+                Debug.Log($"DynamicData가 존재하지 않습니다! {DynamicDataPath + name + ".json"}");
+                return default;
             }
         }
     

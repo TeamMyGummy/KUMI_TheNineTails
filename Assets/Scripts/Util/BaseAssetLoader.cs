@@ -2,90 +2,74 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Util
 {
     /// <summary>
-    /// 전역용/씬 전용에서 메인 로직 추출해 중복 방지
+    /// Addressables 에셋 로더 – 핸들 기반 캐싱 구조
     /// </summary>
     public abstract class BaseAssetLoader
     {
-        protected readonly Dictionary<string, UnityEngine.Object> _cache = new();
-        protected readonly Dictionary<string, GameObject> _prefabCache = new();
+        private readonly Dictionary<string, AsyncOperationHandle> _handles = new();
 
         /// <summary>
         /// 에셋 로드
         /// </summary>
-        /// <param name="key">에셋 key</param>
-        /// <returns>로드한 에셋</returns>
+        /// <param name="key">Addressable Key</param>
+        /// <typeparam name="T">UnityEngine.Object 타입</typeparam>
+        /// <returns>로드된 에셋</returns>
         public async UniTask<T> Load<T>(string key) where T : UnityEngine.Object
         {
-            if (_cache.TryGetValue(key, out var cached))
-                return (T)cached;
+            if (_handles.TryGetValue(key, out var handle))
+                return (T)handle.Result;
 
-            var asset = await Addressables.LoadAssetAsync<T>(key).ToUniTask();
-            _cache[key] = asset;
-            return asset;
+            var newHandle = Addressables.LoadAssetAsync<T>(key);
+            await newHandle.ToUniTask();
+
+            _handles[key] = newHandle;
+            return newHandle.Result;
         }
 
         /// <summary>
-        /// 에셋 로드
+        /// GameObject 전용 에셋 로드
         /// </summary>
-        /// <param name="key">에셋 key</param>
-        /// <returns>로드한 에셋</returns>
+        /// <param name="key">Addressable Key</param>
+        /// <returns>로드된 GameObject</returns>
         public async UniTask<GameObject> Load(string key)
         {
-            if (_prefabCache.TryGetValue(key, out var cached))
-                return cached;
-
-            var asset = await Addressables.LoadAssetAsync<GameObject>(key).ToUniTask();
-            _prefabCache[key] = asset;
-            return asset;
+            return await Load<GameObject>(key);
         }
 
         /// <summary>
-        /// 로드한 에셋을 실제 씬에 스폰
-        /// +a) 오브젝트 풀링으로 최적화 가능
+        /// GameObject를 씬에 인스턴스
+        /// (오브젝트 풀링 고려 가능)
         /// </summary>
-        /// <param name="key">에셋 키</param>
-        /// <param name="parent">에셋의 부모 오브젝트 Transform</param>
-        /// <returns>스폰된 오브젝트</returns>
+        /// <param name="key">프리팹 키</param>
+        /// <param name="parent">부모 트랜스폼</param>
+        /// <returns>인스턴스화된 GameObject</returns>
         public async UniTask<GameObject> Spawn(string key, Transform parent = null)
         {
-            await Load(key);
-            return Instantiate(key, parent);
-        }
+            var prefab = await Load<GameObject>(key);
+            if (prefab != null)
+                return Object.Instantiate(prefab, parent);
 
-        #region private
-        /// <summary>
-        /// 내부 Instantiate – Load 이후에만 호출해야 함
-        /// </summary>
-        private GameObject Instantiate(string key, Transform parent = null)
-        {
-            if (_prefabCache.TryGetValue(key, out var prefab))
-                return GameObject.Instantiate(prefab, parent);
-
-            Debug.LogError($"[강승연] 에셋이 캐싱되지 않음 - Spawn으로 호출했음에도 Load 시 에셋이 캐싱되지 않는 문제 발생");
+            Debug.LogError($"[강승연] {key} 로드 실패로 Instantiate 불가");
             return null;
         }
-        #endregion
 
         /// <summary>
-        /// 캐싱된 에셋을 릴리즈
+        /// 모든 캐싱된 에셋 릴리즈
         /// </summary>
         public void ReleaseAll()
         {
-            foreach (var cached in _cache)
+            foreach (var handle in _handles.Values)
             {
-                Addressables.Release(cached.Value);
-            }
-            foreach (var cached in _prefabCache)
-            {
-                Addressables.Release(cached.Value);
+                if (handle.IsValid())
+                    Addressables.Release(handle);
             }
 
-            _cache.Clear();
-            _prefabCache.Clear();
+            _handles.Clear();
         }
     }
 }
