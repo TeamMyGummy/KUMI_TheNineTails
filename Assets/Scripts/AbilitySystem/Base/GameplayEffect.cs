@@ -18,17 +18,17 @@ namespace AbilitySystem.Base
     /// </param>
     public abstract class GameplayEffect
     {
-        public AttributeName AttributeName { get; private set; }
+        public string AttributeName { get; private set; }
         public float Delta { get; private set; }
         public ModOperation Mod = ModOperation.Additive;
 
-        protected GameplayEffect(AttributeName attributeName, float delta)
+        protected GameplayEffect(string attributeName, float delta)
         {
             AttributeName = attributeName;
             Delta = delta;
         }
 
-        protected GameplayEffect(AttributeName attributeName, float delta, ModOperation mod)
+        protected GameplayEffect(string attributeName, float delta, ModOperation mod)
         {
             AttributeName = attributeName;
             Delta = delta;
@@ -43,9 +43,9 @@ namespace AbilitySystem.Base
     /// </summary>
     public class InstantGameplayEffect : GameplayEffect
     {
-        public InstantGameplayEffect(AttributeName attributeName, float delta)
+        public InstantGameplayEffect(string attributeName, float delta)
             : base(attributeName, delta) { }
-        public InstantGameplayEffect(AttributeName attributeName, float delta, ModOperation mod)
+        public InstantGameplayEffect(string attributeName, float delta, ModOperation mod)
             : base(attributeName, delta, mod) { }
 
         public override void Apply(GameplayAttribute attribute)
@@ -66,14 +66,14 @@ namespace AbilitySystem.Base
         public float Duration;
         public float Interval;
 
-        public DurationGameplayEffect(AttributeName attributeName, float delta, float duration, float interval)
+        public DurationGameplayEffect(string attributeName, float delta, float duration, float interval)
             : base(attributeName, delta)
         {
             Duration = duration;
             Interval = interval;
         }
 
-        public DurationGameplayEffect(AttributeName attributeName, float delta, ModOperation mod, float duration, float interval)
+        public DurationGameplayEffect(string attributeName, float delta, ModOperation mod, float duration, float interval)
             : base(attributeName, delta, mod)
         {
             Duration = duration;

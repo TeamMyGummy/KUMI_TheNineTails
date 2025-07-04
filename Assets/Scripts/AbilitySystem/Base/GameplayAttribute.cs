@@ -12,12 +12,6 @@ namespace AbilitySystem.Base
         Multiplicative
     }
 
-    public enum AttributeName
-    {   
-        HP,
-        공격력
-    }
-
     [Serializable]
     public class Attribute
     {
@@ -69,13 +63,6 @@ namespace AbilitySystem.Base
             CurrentValue = BaseValue;
             OnValueChanged?.Invoke(CurrentValue);
         }
-    }
-
-    [Serializable]
-    public struct AttributeEntry
-    {
-        public AttributeName AttributeName;
-        public Attribute Attribute;
     }
 
     public class GameplayAttribute : MonoBehaviour

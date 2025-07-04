@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 489620775718804199}
   - component: {fileID: 7717712328055240948}
   - component: {fileID: 5513022581248739754}
-  - component: {fileID: 4546058326931709123}
+  - component: {fileID: 1367420676785900354}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Enemies
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4546058326931709123
+--- !u!114 &1367420676785900354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,9 +146,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba4f7c4111b46078e458be307e36c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attributes:
-  - AttributeName: 0
-    Attribute:
-      BaseValue: 50
-      CurrentValue: 50
-      MaxValue: 50

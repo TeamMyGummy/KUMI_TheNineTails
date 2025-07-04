@@ -16,7 +16,7 @@ public class Damageable : MonoBehaviour
         // GE
         GameplayAttribute att = GetComponent<GameplayAttribute>();
 
-        InstantGameplayEffect effect = new(AttributeName.HP, damage * (-1));
+        InstantGameplayEffect effect = new("HP", damage * (-1));
         effect.Apply(att);
     }
 }
