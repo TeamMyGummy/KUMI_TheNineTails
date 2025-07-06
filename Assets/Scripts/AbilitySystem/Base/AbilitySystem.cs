@@ -1,13 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Data;
-using Managers;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Util;
 
 namespace AbilitySystem.Base
 {
+    [CreateAssetMenu(menuName = "AbilitySystemSO")]
+    public class AbilitySystemSO : ScriptableObject
+    {
+        public List<AttributeSO> AddAttributeSO;
+    }
+    
     [System.Serializable]
     public struct AbilityComponent
     {
@@ -102,9 +106,28 @@ namespace AbilitySystem.Base
 
         public void Load(object dto)
         {
-            if (dto == null) return;
             var ascState = (ASCState)dto;
             Attribute.SetAttribute(ascState.Attributes);
+        }
+
+        public void Init(string assetKey)
+        {
+            var SO = AssetLoader.Load<AbilitySystemSO>(assetKey);          
+            foreach (var att in SO.AddAttributeSO)
+            {
+                Attribute.CreateAttribute(att);
+            }
+        }
+
+        public bool CheckDto(object dto)
+        {
+            if (dto == null || dto is not ASCState)
+            {
+                Debug.LogError($"타입과 일치하지 않는 DTO를 받아오려고 시도함 | 예상한 타입: {GetType()}, 예상한 DTO: {typeof(ASCState)}");
+                return false;
+            }
+
+            return true;
         }
     }
 }
