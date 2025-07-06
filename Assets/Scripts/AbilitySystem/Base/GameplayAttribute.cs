@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using R3;
 using UnityEngine;
 
 namespace AbilitySystem.Base
@@ -12,23 +13,28 @@ namespace AbilitySystem.Base
         Multiplicative
     }
 
+    [CreateAssetMenu(menuName = "AttributeSO")]
+    public class AttributeSO : ScriptableObject
+    {
+        public string AttributeName;
+        public float BaseValue;
+        public float MaxValue;
+    }
+
     [Serializable]
     public class Attribute
     {
-        [JsonProperty]
-        public float BaseValue { get; private set; }
-        [JsonProperty]
-        public float CurrentValue { get; private set; }
-        [JsonProperty]
-        public float MaxValue { get; private set; }
+        private AttributeSO _attributeSo;
+        public float BaseValue => _attributeSo.BaseValue;
+        public ReactiveProperty<float> CurrentValue { get; private set; }
+        public float MaxValue => _attributeSo.MaxValue;
         
-        public event Action<float>? OnValueChanged;
+        //public event Action<float>? OnValueChanged;
 
-        public Attribute(float baseValue, float maxValue)
+        public Attribute(AttributeSO so)
         {
-            BaseValue = baseValue;
-            CurrentValue = baseValue;
-            MaxValue = maxValue;
+            _attributeSo = so;
+            CurrentValue = new ReactiveProperty<float>(so.BaseValue);
         }
         
         /// <summary>
@@ -42,17 +48,23 @@ namespace AbilitySystem.Base
             switch (op)
             {
                 case ModOperation.Additive:
-                    CurrentValue += delta;
+                    CurrentValue.Value += delta;
                     break;
                 case ModOperation.Override:
-                    CurrentValue = delta;
+                    CurrentValue.Value = delta;
                     break;
                 case ModOperation.Multiplicative:
-                    CurrentValue *= delta;
+                    CurrentValue.Value *= delta;
                     break;
             }
-            CurrentValue = Mathf.Clamp(CurrentValue, 0, MaxValue);
-            OnValueChanged?.Invoke(CurrentValue);
+            CurrentValue.Value = Mathf.Clamp(CurrentValue.Value, 0, MaxValue);
+            //OnValueChanged?.Invoke(CurrentValue);
+        }
+
+        public void SetCurrentValue(float value)
+        {
+            CurrentValue.Value = value;
+            //OnValueChanged?.Invoke(CurrentValue);
         }
 
         /// <summary>
@@ -60,18 +72,37 @@ namespace AbilitySystem.Base
         /// </summary>
         public void Reset()
         {
-            CurrentValue = BaseValue;
-            OnValueChanged?.Invoke(CurrentValue);
+            CurrentValue.Value = BaseValue;
+            //OnValueChanged?.Invoke(CurrentValue);
         }
     }
 
-    public class GameplayAttribute : MonoBehaviour
+    public class GameplayAttribute
     {
-        public Dictionary<string, Attribute> Attributes;
+        public Dictionary<string, Attribute> Attributes = new();
 
-        public void SetAttribute(Dictionary<string, Attribute> dict)
+        public void CreateAttribute(AttributeSO so)
         {
-            Attributes = dict;
+            Attributes.Add(so.AttributeName, new Attribute(so));
+        }
+
+        public void SetAttribute(Dictionary<string, float> dict)
+        {
+            foreach (var att in dict)
+            {
+                Attributes[att.Key].SetCurrentValue(att.Value);
+            }
+        }
+
+        public Dictionary<string, float> GetAttributeState()
+        {
+            var dict = new Dictionary<string, float>();
+            foreach (var att in Attributes)
+            {
+                dict[att.Key] = att.Value.CurrentValue.Value;
+            }
+
+            return dict;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace AbilitySystem.Base
         public GameplayAbility Ability;
     }
 
-    public class AbilitySystem : MonoBehaviour
+    public class AbilitySystem : IDomain// : MonoBehaviour
     {
         [SerializeField]
         private List<AbilityComponent> _abilities = new();
@@ -23,11 +24,6 @@ namespace AbilitySystem.Base
         private readonly Dictionary<string, GameplayAbilitySpec> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
-
-        public void Awake() 
-        {
-            Attribute.SetAttribute(DataManager.Instance.Player.Attributes);
-        }
         
         /// <summary>
         /// Ability를 등록(캐릭터가 사용할 수 있게 됨) <br/>
@@ -95,6 +91,20 @@ namespace AbilitySystem.Base
         public void ApplyGameplayEffect(AbilitySystem ownerAsc, GameplayEffect effect)
         {
             effect.Apply(Attribute);
+        }
+
+        public object Save()
+        {
+            var asc = new ASCState();
+            asc.Attributes = Attribute.GetAttributeState();
+            return asc;
+        }
+
+        public void Load(object dto)
+        {
+            if (dto == null) return;
+            var ascState = (ASCState)dto;
+            Attribute.SetAttribute(ascState.Attributes);
         }
     }
 }
