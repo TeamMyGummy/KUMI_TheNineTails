@@ -45,6 +45,7 @@ public class DomainFactory : Singleton<DomainFactory>
     {
         base.Awake();
         DataManager.Load("gamedata_0", out _gameState);
+        if (_gameState is null) _gameState = new();
     }
     
     public void SaveGameData(string key)
@@ -84,7 +85,7 @@ public class DomainFactory : Singleton<DomainFactory>
     {
         if (_domains.TryGetValue(key, out var value))
         {
-            domain = (T)value;
+            domain = (T)value; 
         }
 
         domain = new();

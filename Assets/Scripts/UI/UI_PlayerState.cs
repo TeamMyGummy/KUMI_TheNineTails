@@ -15,11 +15,10 @@ public class UI_PlayerState : MonoBehaviour
     void Awake()
     {
         _playerVM = GetComponent<VM_PlayerState>();
+
     }
-    
-    void Start()
+    async void Start()
     {
-        //View 코드
         UpdateUp(_playerVM.Hp.CurrentValue);
         _disposables.Add(_playerVM.Hp.Subscribe(UpdateUp));
     }

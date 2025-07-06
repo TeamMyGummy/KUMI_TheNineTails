@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using Cysharp.Threading.Tasks;
+using R3;
 using UnityEngine;
 
 namespace UI
@@ -7,10 +8,10 @@ namespace UI
     {
         private AbilitySystem.Base.AbilitySystem _playerModel;
         public ReadOnlyReactiveProperty<float> Hp { get; private set; }
-
-        void Awake()
+        
+        public void Awake()
         {
-            _playerModel = DomainFactory.Instance.GetDomain<AbilitySystem.Base.AbilitySystem>(SaveKey.Player);
+            DomainFactory.Instance.GetDomain(SaveKey.Player, out _playerModel);
             Hp = _playerModel.Attribute.Attributes["HP"].CurrentValue;
         }
     }
