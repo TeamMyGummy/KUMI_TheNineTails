@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using R3;
 using UnityEngine;
 
 namespace AbilitySystem.Base
@@ -12,15 +13,21 @@ namespace AbilitySystem.Base
         Multiplicative
     }
 
+    [CreateAssetMenu(menuName = "AttributeSO")]
+    public class AttributeSO : ScriptableObject
+    {
+        public string AttributeName;
+        public float BaseValue;
+        public float MaxValue;
+    }
+
     [Serializable]
     public class Attribute
     {
-        [JsonProperty]
-        public float BaseValue { get; private set; }
-        [JsonProperty]
         public float CurrentValue { get; private set; }
-        [JsonProperty]
-        public float MaxValue { get; private set; }
+        private AttributeSO _attributeSo;
+        public float BaseValue => _attributeSo.BaseValue;
+        public float MaxValue => _attributeSo.MaxValue;
         
         public event Action<float>? OnValueChanged;
 
@@ -65,13 +72,32 @@ namespace AbilitySystem.Base
         }
     }
 
-    public class GameplayAttribute : MonoBehaviour
+    public class GameplayAttribute
     {
-        public Dictionary<string, Attribute> Attributes;
+        public Dictionary<string, Attribute> Attributes = new();
 
-        public void SetAttribute(Dictionary<string, Attribute> dict)
+        public void CreateAttribute(AttributeSO so)
         {
-            Attributes = dict;
+            Attributes.Add(so.AttributeName, new Attribute(so));
+        }
+
+        public void SetAttribute(Dictionary<string, float> dict)
+        {
+            foreach (var att in dict)
+            {
+                Attributes[att.Key].SetCurrentValue(att.Value);
+            }
+        }
+
+        public Dictionary<string, float> GetAttributeState()
+        {
+            var dict = new Dictionary<string, float>();
+            foreach (var att in Attributes)
+            {
+                dict[att.Key] = att.Value.CurrentValue.Value;
+            }
+
+            return dict;
         }
     }
 }

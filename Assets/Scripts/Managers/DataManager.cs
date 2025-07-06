@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using AbilitySystem.Base;
 using Cysharp.Threading.Tasks;
+using Data;
 using UnityEngine;
 using Util;
 
@@ -11,18 +12,22 @@ namespace Managers
     /// <summary>
     /// 250705 기준) 저장 프로세스는 PR #10 참고
     /// </summary>
+    [DefaultExecutionOrder(-50)]
     public class DataManager : Singleton<DataManager>
     {
-        public PlayerState Player;
-        
+        public new void Awake()
+        {
+            base.Awake();
+            Load(String.Empty);
+        }
         public void Save(string key)
         {
-            SaveData("Player", Player);
+            SaveData("Player", DomainFactory.Instance.PlayerASC.Save());
         }
 
         public void Load(string key)
         {
-            LoadData("Player", out Player);
+            DomainFactory.Instance.PlayerASC.Load(LoadData<ASCState>("Player"));
         }
 
         private void SaveData<T>(string key, T data)
@@ -34,9 +39,17 @@ namespace Managers
         {
             var data = JsonLoader.ReadDynamicData<T>(key);
             if (data is null) data = JsonLoader.ReadStaticData<T>(key);
-            container = data;
+            container = default;
         }
         
+        private T LoadData<T>(string key)
+        {
+            var data = JsonLoader.ReadDynamicData<T>(key);
+            if (data is null) data = JsonLoader.ReadStaticData<T>(key);
+            return default;
+        }
+        
+        /*
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void EnsureGlobalLifetimeScope()
         {
@@ -44,8 +57,8 @@ namespace Managers
             {
                 var go = new GameObject("DataManager");
                 go.AddComponent<DataManager>();
-                DataManager.Instance.Load(String.Empty);
+                DontDestroyOnLoad(go);
             }
-        }
+        }*/
     }
 }
