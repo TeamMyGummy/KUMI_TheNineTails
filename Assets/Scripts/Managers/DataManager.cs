@@ -39,14 +39,14 @@ namespace Managers
         {
             var data = JsonLoader.ReadDynamicData<T>(key);
             if (data is null) data = JsonLoader.ReadStaticData<T>(key);
-            container = default;
+            container = data;
         }
         
         private T LoadData<T>(string key)
         {
             var data = JsonLoader.ReadDynamicData<T>(key);
             if (data is null) data = JsonLoader.ReadStaticData<T>(key);
-            return default;
+            return data;
         }
         
         /*

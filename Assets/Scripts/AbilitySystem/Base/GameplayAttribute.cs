@@ -24,18 +24,17 @@ namespace AbilitySystem.Base
     [Serializable]
     public class Attribute
     {
-        public float CurrentValue { get; private set; }
         private AttributeSO _attributeSo;
         public float BaseValue => _attributeSo.BaseValue;
+        public ReactiveProperty<float> CurrentValue { get; private set; }
         public float MaxValue => _attributeSo.MaxValue;
         
-        public event Action<float>? OnValueChanged;
+        //public event Action<float>? OnValueChanged;
 
-        public Attribute(float baseValue, float maxValue)
+        public Attribute(AttributeSO so)
         {
-            BaseValue = baseValue;
-            CurrentValue = baseValue;
-            MaxValue = maxValue;
+            _attributeSo = so;
+            CurrentValue = new ReactiveProperty<float>(so.BaseValue);
         }
         
         /// <summary>
@@ -49,17 +48,23 @@ namespace AbilitySystem.Base
             switch (op)
             {
                 case ModOperation.Additive:
-                    CurrentValue += delta;
+                    CurrentValue.Value += delta;
                     break;
                 case ModOperation.Override:
-                    CurrentValue = delta;
+                    CurrentValue.Value = delta;
                     break;
                 case ModOperation.Multiplicative:
-                    CurrentValue *= delta;
+                    CurrentValue.Value *= delta;
                     break;
             }
-            CurrentValue = Mathf.Clamp(CurrentValue, 0, MaxValue);
-            OnValueChanged?.Invoke(CurrentValue);
+            CurrentValue.Value = Mathf.Clamp(CurrentValue.Value, 0, MaxValue);
+            //OnValueChanged?.Invoke(CurrentValue);
+        }
+
+        public void SetCurrentValue(float value)
+        {
+            CurrentValue.Value = value;
+            //OnValueChanged?.Invoke(CurrentValue);
         }
 
         /// <summary>
@@ -67,8 +72,8 @@ namespace AbilitySystem.Base
         /// </summary>
         public void Reset()
         {
-            CurrentValue = BaseValue;
-            OnValueChanged?.Invoke(CurrentValue);
+            CurrentValue.Value = BaseValue;
+            //OnValueChanged?.Invoke(CurrentValue);
         }
     }
 
