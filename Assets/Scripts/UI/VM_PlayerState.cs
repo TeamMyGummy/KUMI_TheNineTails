@@ -10,7 +10,7 @@ namespace UI
 
         void Awake()
         {
-            _playerModel = DomainFactory.Instance.PlayerASC;
+            _playerModel = DomainFactory.Instance.GetDomain<AbilitySystem.Base.AbilitySystem>(SaveKey.Player);
             Hp = _playerModel.Attribute.Attributes["HP"].CurrentValue;
         }
     }

@@ -16,7 +16,7 @@ namespace AbilitySystem.Base
         public GameplayAbility Ability;
     }
 
-    public class AbilitySystem : IDomain<ASCState>// : MonoBehaviour
+    public class AbilitySystem : IDomain// : MonoBehaviour
     {
         [SerializeField]
         private List<AbilityComponent> _abilities = new();
@@ -93,17 +93,18 @@ namespace AbilitySystem.Base
             effect.Apply(Attribute);
         }
 
-        public ASCState Save()
+        public object Save()
         {
             var asc = new ASCState();
             asc.Attributes = Attribute.GetAttributeState();
             return asc;
         }
 
-        public void Load(ASCState dto)
+        public void Load(object dto)
         {
             if (dto == null) return;
-            Attribute.SetAttribute(dto.Attributes);
+            var ascState = (ASCState)dto;
+            Attribute.SetAttribute(ascState.Attributes);
         }
     }
 }

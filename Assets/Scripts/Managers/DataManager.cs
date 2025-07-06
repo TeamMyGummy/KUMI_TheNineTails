@@ -9,40 +9,34 @@ using Util;
 
 namespace Managers
 {
-    /// <summary>
-    /// 250705 기준) 저장 프로세스는 PR #10 참고
-    /// </summary>
-    [DefaultExecutionOrder(-50)]
-    public class DataManager : Singleton<DataManager>
+    public static class DataManager
     {
-        public new void Awake()
+        public static void Save(string key)
         {
-            base.Awake();
-            Load(String.Empty);
-        }
-        public void Save(string key)
-        {
-            SaveData("Player", DomainFactory.Instance.PlayerASC.Save());
+            foreach (var domain in DomainFactory.Instance.GetAllDomains())
+            {
+                SaveData(domain.Key, domain.Value.Save());
+            }
         }
 
-        public void Load(string key)
+        public static T Load<T>(SaveKey key)
         {
-            DomainFactory.Instance.PlayerASC.Load(LoadData<ASCState>("Player"));
+            return LoadData<T>(key.ToString());
         }
 
-        private void SaveData<T>(string key, T data)
+        private static void SaveData<T>(SaveKey key, T data)
         {
-            JsonLoader.WriteDynamicData(key, data);
+            JsonLoader.WriteDynamicData(key.ToString(), data);
         }
 
-        private void LoadData<T>(string key, out T container)
+        private static void LoadData<T>(string key, out T container)
         {
             var data = JsonLoader.ReadDynamicData<T>(key);
             if (data is null) data = JsonLoader.ReadStaticData<T>(key);
             container = data;
         }
         
-        private T LoadData<T>(string key)
+        private static T LoadData<T>(string key)
         {
             var data = JsonLoader.ReadDynamicData<T>(key);
             if (data is null) data = JsonLoader.ReadStaticData<T>(key);
