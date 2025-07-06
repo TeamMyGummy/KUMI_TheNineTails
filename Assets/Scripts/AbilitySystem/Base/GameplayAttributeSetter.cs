@@ -12,7 +12,7 @@ public class GameplayAttributeSetter : MonoBehaviour
 
     public void Awake()
     {
-        if (DomainFactory.Instance.TryGetDomain(SaveKey.Player, _playerModel)) return;
+        if (DomainFactory.Instance.TryGetDomain(SaveKey.Player, out _playerModel)) return;
         _playerModel = new();
         foreach (var att in AddAttributeSO)
         {

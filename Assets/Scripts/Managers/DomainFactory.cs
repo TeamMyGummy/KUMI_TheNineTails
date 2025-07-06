@@ -15,33 +15,34 @@ public enum SaveKey{
 
 public class DomainFactory : Singleton<DomainFactory>
 {
-    private Dictionary<SaveKey, IDomain> _domains = new();
+    private readonly Dictionary<SaveKey, IDomain> _domains = new();
 
     public bool HasDomain(SaveKey key)
     {
         return _domains.TryGetValue(key, out var value);
     }
 
-    public bool TryGetDomain<T>(SaveKey key, T outDomain)
+    public bool TryGetDomain<TDomain>(SaveKey key, out TDomain outDomain)
     {
-        if (_domains.TryGetValue(key, out var d))
+        if (_domains.TryGetValue(key, out var d) && d is TDomain)
         {
-            outDomain = (T)d;
+            outDomain = (TDomain)d;
             return true;
         }
+        outDomain = default;
         return false;
     }
 
-    public void RegisterDomain<T>(SaveKey key, IDomain domain)
+    public void RegisterDomain<TDto>(SaveKey key, IDomain domain)
     {
         if (_domains.ContainsKey(key)) return;
-        domain.Load(DataManager.Load<T>(key));
+        domain.Load(DataManager.Load<TDto>(key));
         _domains.TryAdd(key, domain);
     }
         
-    public T GetDomain<T>(SaveKey key)
+    public TDomain GetDomain<TDomain>(SaveKey key)
     {
-        return (T)_domains[key];
+        return (TDomain)_domains[key];
     }
 
     public Dictionary<SaveKey, IDomain> GetAllDomains() => _domains;

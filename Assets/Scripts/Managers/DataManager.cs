@@ -15,44 +15,16 @@ namespace Managers
         {
             foreach (var domain in DomainFactory.Instance.GetAllDomains())
             {
-                SaveData(domain.Key, domain.Value.Save());
+                JsonLoader.WriteDynamicData(domain.Key.ToString(), domain.Value.Save());
             }
         }
 
         public static T Load<T>(SaveKey key)
         {
-            return LoadData<T>(key.ToString());
-        }
-
-        private static void SaveData<T>(SaveKey key, T data)
-        {
-            JsonLoader.WriteDynamicData(key.ToString(), data);
-        }
-
-        private static void LoadData<T>(string key, out T container)
-        {
-            var data = JsonLoader.ReadDynamicData<T>(key);
-            if (data is null) data = JsonLoader.ReadStaticData<T>(key);
-            container = data;
-        }
-        
-        private static T LoadData<T>(string key)
-        {
-            var data = JsonLoader.ReadDynamicData<T>(key);
-            if (data is null) data = JsonLoader.ReadStaticData<T>(key);
+            string saveKey = key.ToString();
+            var data = JsonLoader.ReadDynamicData<T>(saveKey);
+            if (data is null) data = JsonLoader.ReadStaticData<T>(saveKey);
             return data;
         }
-        
-        /*
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void EnsureGlobalLifetimeScope()
-        {
-            if (FindObjectOfType<DataManager>() == null)
-            {
-                var go = new GameObject("DataManager");
-                go.AddComponent<DataManager>();
-                DontDestroyOnLoad(go);
-            }
-        }*/
     }
 }
