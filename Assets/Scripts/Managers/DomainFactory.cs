@@ -34,7 +34,7 @@ public class DomainFactory : Singleton<DomainFactory>
 
     public void RegisterDomain<T>(SaveKey key, IDomain domain)
     {
-        if (_domains.ContainsKey(SaveKey.Player)) return;
+        if (_domains.ContainsKey(key)) return;
         domain.Load(DataManager.Load<T>(key));
         _domains.TryAdd(key, domain);
     }
