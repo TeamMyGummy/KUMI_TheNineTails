@@ -13,6 +13,10 @@ GameObject:
   - component: {fileID: 7717712328055240948}
   - component: {fileID: 5513022581248739754}
   - component: {fileID: 1367420676785900354}
+  - component: {fileID: 186341297792406129}
+  - component: {fileID: 6332953523620686669}
+  - component: {fileID: 6339013384151487084}
+  - component: {fileID: 868580089823097190}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Enemies
@@ -146,3 +150,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba4f7c4111b46078e458be307e36c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &186341297792406129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721104532692786635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af33d3b385b442e4daff2d4932ea3f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterName: 
+  monsterType: 
+  isActive: 1
+--- !u!114 &6332953523620686669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721104532692786635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f316ee545a3ee46980d55f91628379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePerTick: 10
+  interval: 3
+--- !u!114 &6339013384151487084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721104532692786635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8dc89ec1bfbe14e937ca9b1efff13f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDistance: 2
+  moveSpeed: 2
+--- !u!114 &868580089823097190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721104532692786635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948d6a38238adcf4cbba3b1218367e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prfHpBar: {fileID: 2815187603987094077, guid: 8260bc7f9fd2772468b340f4a54ff28f, type: 3}
+  canvas: {fileID: 0}
