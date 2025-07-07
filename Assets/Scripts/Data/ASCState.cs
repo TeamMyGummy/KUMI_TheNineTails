@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AbilitySystem.Base;
+using GameAbilitySystem;
 
 namespace Data
 {

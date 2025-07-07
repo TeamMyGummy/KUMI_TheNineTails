@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using AbilitySystem;
-using AbilitySystem.Base;
+using GameAbilitySystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

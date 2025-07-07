@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using GameAbilitySystem;
 using R3;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace UI
 {
     public class VM_PlayerState : MonoBehaviour
     {
-        private AbilitySystem.Base.AbilitySystem _playerModel;
+        private AbilitySystem _playerModel;
         public ReadOnlyReactiveProperty<float> Hp { get; private set; }
         
         public void Awake()

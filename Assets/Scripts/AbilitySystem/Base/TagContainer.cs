@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
-namespace AbilitySystem.Base
+namespace GameAbilitySystem
 {
     /// <summary>
     /// Enum(GameplayTags)으로 Tag 관리 중 <br/>

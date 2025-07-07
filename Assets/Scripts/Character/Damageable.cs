@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GameAbilitySystem;
 using UnityEngine;
-using AbilitySystem.Base;
 
 public class Damageable : MonoBehaviour
 {

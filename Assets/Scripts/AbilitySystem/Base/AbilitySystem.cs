@@ -4,14 +4,8 @@ using Data;
 using UnityEngine;
 using Util;
 
-namespace AbilitySystem.Base
+namespace GameAbilitySystem
 {
-    [CreateAssetMenu(menuName = "AbilitySystemSO")]
-    public class AbilitySystemSO : ScriptableObject
-    {
-        public List<AttributeSO> AddAttributeSO;
-    }
-    
     [System.Serializable]
     public struct AbilityComponent
     {

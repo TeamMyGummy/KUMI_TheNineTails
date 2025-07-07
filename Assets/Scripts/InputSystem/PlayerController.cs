@@ -1,6 +1,6 @@
-using AbilitySystem.Base;
 using System.Collections;
 using System.Collections.Generic;
+using GameAbilitySystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
-    private AbilitySystem.Base.AbilitySystem _asc;
+    private AbilitySystem _asc;
 
     private void Awake()
     {

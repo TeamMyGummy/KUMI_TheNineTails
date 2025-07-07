@@ -1,4 +1,4 @@
-﻿namespace AbilitySystem.Base
+﻿namespace GameAbilitySystem
 {
     /// <summary>
     /// Ability의 상태 정보를 저장

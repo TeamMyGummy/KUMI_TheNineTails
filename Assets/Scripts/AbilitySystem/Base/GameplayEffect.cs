@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace AbilitySystem.Base
+namespace GameAbilitySystem
 {
     /// <summary>
     /// GameplayAttribute 값을 바꾸는 Game effect

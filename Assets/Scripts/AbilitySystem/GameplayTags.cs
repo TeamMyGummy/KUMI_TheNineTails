@@ -1,4 +1,4 @@
-﻿namespace AbilitySystem
+﻿namespace GameAbilitySystem
 {
     /// <summary>
     /// AbilitySystem에 사용될 태그를 정의

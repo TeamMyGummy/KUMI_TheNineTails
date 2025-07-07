@@ -4,21 +4,13 @@ using Newtonsoft.Json;
 using R3;
 using UnityEngine;
 
-namespace AbilitySystem.Base
+namespace GameAbilitySystem
 {
     public enum ModOperation
     {
         Additive,
         Override,
         Multiplicative
-    }
-
-    [CreateAssetMenu(menuName = "AttributeSO")]
-    public class AttributeSO : ScriptableObject
-    {
-        public string AttributeName;
-        public float BaseValue;
-        public float MaxValue;
     }
 
     [Serializable]
