@@ -1,9 +1,11 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class LanternState
-{
-    public HashSet<int> PassedCheckPoint = new();
-    public int RecentCheckPoint = -1;
-    public string RecentScene = String.Empty;
-}
+
+    public enum LanternState
+    {
+        Off,
+        SmallFlame,
+        BigFlame
+    }
