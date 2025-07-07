@@ -14,7 +14,7 @@ namespace Util
     {
         private static readonly string StaticDataWritePath = "StaticJson/";
         private static readonly string DynamicDataPath = Application.persistentDataPath + "/";
-    
+
         /// <summary>
         /// 정적 데이터를 T 오브젝트로 반환. <br/>
         /// Addressable에 추가해야 함
@@ -41,7 +41,7 @@ namespace Util
                 return default;
             }
         }
-        
+
         /// <summary>
         /// 정적 데이터를 Read하기 편하도록 데이터를 생성하는 함수 <br/>
         /// 개발 시 사용하는 것이 아닌 데이터 생성 용도로 사용하는 것
@@ -55,7 +55,7 @@ namespace Util
             string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(StaticDataWritePath + typeof(T).Name + query + ".json", jsonData);
         }
-    
+
         /// <summary>
         /// 동적 데이터를 T 오브젝트로 반환. <br/>
         /// </summary>
@@ -77,17 +77,30 @@ namespace Util
                 return default;
             }
         }
-    
+
         /// <summary>
         /// 동적 데이터를 저장합니다.
         /// </summary>
         /// <param name="name">저장할 파일명 </param>
         /// <param name="data">저장할 오브젝트 </param>
         /// <typeparam name="T">저장할 오브젝트의 클래스</typeparam>
+        /// 
         public static void WriteDynamicData<T>(string name, T data)
         {
             string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(DynamicDataPath + name + ".json", jsonData);
+        }
+
+        public static string GetDynamicDataPath(string key)
+        {
+            return Path.Combine(DynamicDataPath, key + ".json");
+        }
+        
+        
+        public static bool Exists(string key)
+        {
+            string path = GetDynamicDataPath(key);
+            return File.Exists(path);
         }
     }
 }
