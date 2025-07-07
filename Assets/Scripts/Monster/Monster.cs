@@ -1,29 +1,56 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using AbilitySystem.Base;
+﻿// Monster.cs
+using UnityEngine;
+using GameAbilitySystem;
 
 public class Monster : MonoBehaviour
 {
-    //인스펙터에서 설정 가능
-    public string monsterName = "";
-    public string monsterType = "";
-    public bool isActive = true; //능동이면 true
+    
+    public AbilitySystem asc { get; private set; }
 
-    private void Awake()//게임 오브젝트 생성 시 실행
+    [SerializeField] private string monsterName = "";
+    [SerializeField] private bool isCreature = true; //생물(true) / 기계(false)
+    [SerializeField] private bool isMoving = true; //능동(true) /수동(false)
+
+    private void Awake()
     {
-        var Attributes = new Dictionary<string, Attribute>
-        //디폴트값
-        {
-            { "HP", new Attribute(30f, 30f) },
-            { "Attack", new Attribute(1f, 1f) },
-            { "AttackSpeed", new Attribute(1f, 1f) },
-            { "MoveSpeed", new Attribute(0.7f, 0.7f) }
-        };
-
-        var ga = GetComponent<GameplayAttribute>();
-        //Attributes 세팅
-        ga.SetAttribute(Attributes);
+        // ASC 초기화
+        asc = new AbilitySystem();
+        asc.SetActor(this.gameObject);
+        asc.Init("Test/TestMonster1");
+        asc.GrantAllAbilities();
     }
 
-   
+    private float damageTimer = 0f;
+
+    private void Update()
+    {
+        // 사망 처리
+        if (asc.Attribute.Attributes.TryGetValue("HP", out var hp))
+        {
+            if (hp.CurrentValue.Value <= 0f)
+            {
+                Die();
+                return;
+            }
+        }
+
+        //여기서부턴 hp바 잘 뜨는지 보기 위한 임시 데미지입히기코드..
+        damageTimer += Time.deltaTime;
+        if (damageTimer >= 2f)
+        {
+            damageTimer = 0f;
+
+            if (asc.Attribute.Attributes.TryGetValue("HP", out var HP))
+            {
+                hp.Modify(-10f, ModOperation.Additive);
+                Debug.Log($"[Test] {monsterName}에게 10 데미지를 입혔습니다. 남은 체력: {hp.CurrentValue.Value}");
+            }
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"[Monster] {monsterName} 처치");
+        Destroy(this.gameObject);
+    }
 }
