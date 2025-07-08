@@ -39,11 +39,12 @@ public interface IDomain
 public class DomainFactory : Singleton<DomainFactory>
 {
     private GameState _gameState;
-    private readonly Dictionary<SaveKey, IDomain> _domains = new();
+    private readonly Dictionary<DomainKey, IDomain> _domains = new();
 
     new void Awake()
     {
         base.Awake();
+        //todo: 구체적인 저장 기획 방식이 나오면 수정하기
         DataManager.Load("gamedata_0", out _gameState);
         if (_gameState is null) _gameState = new();
     }
@@ -63,7 +64,7 @@ public class DomainFactory : Singleton<DomainFactory>
         DataManager.Load(key, out _gameState);
     }
 
-    public T GetDomain<T>(SaveKey key, Func<T> factory) where T : IDomain
+    public T GetDomain<T>(DomainKey key, Func<T> factory) where T : IDomain
     {
         if (_domains.TryGetValue(key, out var value))
         {
@@ -81,7 +82,7 @@ public class DomainFactory : Singleton<DomainFactory>
         return domain;
     }
     
-    public void GetDomain<T>(SaveKey key, out T domain) where T : IDomain, new()
+    public void GetDomain<T>(DomainKey key, out T domain) where T : IDomain, new()
     {
         if (_domains.TryGetValue(key, out var value))
         {
@@ -95,5 +96,20 @@ public class DomainFactory : Singleton<DomainFactory>
             domain.Load(dto);
 
         _domains.TryAdd(key, domain);
+    }
+
+    /// <returns>기존 데이터의 존재 유무</returns>
+    public bool GetState<T>(StateKey key, out T state) where T : new()
+    {
+        var savedState = _gameState.Get(key);
+        if (savedState is null || savedState is not T)
+        {
+            Debug.LogWarning($"[DomainFactory] State가 존재하지 않습니다. {key}");
+            state = new();
+            _gameState.Set(key, state);
+            return false;
+        }
+        state = (T)_gameState.Get(key);
+        return true;
     }
 }
