@@ -11,9 +11,9 @@ public class PlayerAttack : BlockAbility
     /// <summary>
     /// 실제 Ability 실행부
     /// </summary>
-    public override void Activate(GameplayAbilitySpec spec) 
+    public override void Activate(GameplayAbilitySpec spec, GameObject actor) 
     {
-        base.Activate(spec);
+        base.Activate(spec, actor);
         Debug.Log("어빌리티 실행");
     }
     

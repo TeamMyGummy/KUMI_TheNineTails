@@ -19,10 +19,21 @@ namespace GameAbilitySystem
         [SerializeField]
         private List<AbilityComponent> _abilities = new();
 
+        private GameObject _actor;
+
         private readonly Dictionary<string, GameplayAbilitySpec> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
-        
+
+        /// <summary>
+        /// Ability System을 사용하는 Actor 정보를 저장 <br/>
+        /// </summary>
+        /// <param name="actor">ASC를 사용하는 Actor GameObject</param>
+        public void SetActor(GameObject actor)
+        {
+            _actor = actor;
+        }
+
         /// <summary>
         /// Ability를 등록(캐릭터가 사용할 수 있게 됨) <br/>
         /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
@@ -31,7 +42,7 @@ namespace GameAbilitySystem
         /// <param name="ability">Key에 바인딩 된 Ability</param>
         public bool GrantAbility(string key, GameplayAbility ability)
         {
-            return _grantedAbilities.TryAdd(key, new GameplayAbilitySpec(this, ability));
+            return _grantedAbilities.TryAdd(key, new GameplayAbilitySpec(this, ability, _actor));
         }
 
         /// <summary>
@@ -44,7 +55,7 @@ namespace GameAbilitySystem
             {
                 if(ac.Ability != null)
                 {
-                    return _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability));
+                    _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability, _actor));
                 }
             }
             return false;
@@ -57,15 +68,13 @@ namespace GameAbilitySystem
         /// <param name="floor">Ability가 해금되는 층</param>
         public bool GrantAllAbilities(int floor)
         {
-            if (_abilities.Count == 0) return false;
-
             foreach (AbilityComponent ac in _abilities)
             {
                 if (ac.Ability != null)
                 {
                     if (ac.UnlockFloor <= floor)
                     {
-                        return _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability));
+                        _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability, _actor));
                     }
                 }
             }
@@ -110,6 +119,12 @@ namespace GameAbilitySystem
             foreach (var att in SO.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
+            }
+
+            foreach (var ga in SO.AddAbilitySO)
+            {
+                AbilityComponent ac = new() { Name = ga.Name, UnlockFloor = ga.UnlockFloor, Ability = ga.Ability };
+                _abilities.Add(ac);
             }
         }
     }

@@ -11,13 +11,11 @@ GameObject:
   - component: {fileID: 6949076173635677489}
   - component: {fileID: 6454248848244992767}
   - component: {fileID: 4833121999341586799}
-  - component: {fileID: 5609828681694164570}
+  - component: {fileID: 7030441563567184465}
   - component: {fileID: 4572241603367076480}
   - component: {fileID: 2677374988490091879}
   - component: {fileID: 9100064898656960644}
-  - component: {fileID: 4411930095043759998}
   - component: {fileID: 5537918733458322441}
-  - component: {fileID: 1987058578405936935}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -82,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ccd2b99e9b547b498330df9c7104170, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,7 +118,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5609828681694164570
+--- !u!61 &7030441563567184465
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,18 +150,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.3125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 3, y: 2.625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3, y: 2.625}
   m_EdgeRadius: 0
 --- !u!114 &4572241603367076480
 MonoBehaviour:
@@ -223,19 +221,7 @@ MonoBehaviour:
     m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
     m_ActionName: PlayerActions/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2677374988490091879}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnDoubleJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
     m_ActionName: PlayerActions/Double Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -322,22 +308,6 @@ MonoBehaviour:
   speed: 0.1
   jumpPower: 10
   gravity: 2.5
---- !u!114 &4411930095043759998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2384312483337340385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8d75b3a13a906489f0f06932c759a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _abilities:
-  - Name: Attack
-    UnlockFloor: 0
-    Ability: {fileID: 11400000, guid: 463a7fcd1a9d0f9409ff98607f284376, type: 2}
 --- !u!114 &5537918733458322441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,18 +318,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1987058578405936935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2384312483337340385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ba4f7c4111b46078e458be307e36c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2608040067414076250
@@ -380,7 +338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6815189559026434224
 Transform:
   m_ObjectHideFlags: 0
