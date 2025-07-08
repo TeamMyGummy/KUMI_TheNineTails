@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _characterMovement = GetComponent<CharacterMovement>();
-        DomainFactory.Instance.GetDomain(SaveKey.Player, out _asc);
+        DomainFactory.Instance.GetDomain(DomainKey.Player, out _asc);
     }
     private void Start()
     {

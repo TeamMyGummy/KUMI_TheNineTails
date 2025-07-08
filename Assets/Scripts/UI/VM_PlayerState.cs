@@ -12,7 +12,7 @@ namespace UI
         
         public void Awake()
         {
-            DomainFactory.Instance.GetDomain(SaveKey.Player, out _playerModel);
+            DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
             Hp = _playerModel.Attribute.Attributes["HP"].CurrentValue;
         }
     }
