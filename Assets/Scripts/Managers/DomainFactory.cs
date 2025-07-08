@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Managers;
 using UnityEngine;
 using Util;
+using Debug = UnityEngine.Debug;
 
 public interface IDomain
 {
@@ -26,14 +27,45 @@ public interface IDomain
     /// </summary>
     /// <param name="assetKey">저장할 도메인이면 Domain/SaveKey(enum) 경로에서 에셋을 불러옴/몬스터 등 저장과 무관하면 알아서 불러오기</param>
     void Init(string assetKey);
-    
-    /// <summary>
-    /// DTO 유효성 체크
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    bool CheckDto(object dto);
 }
+
+public abstract class BaseDomain<TDto> : IDomain
+{
+    public abstract void Init(string path);
+
+    public abstract void Load(TDto dto); 
+    public abstract TDto Save();
+
+    void IDomain.Load(object dto)
+    {
+        if (CheckDto(dto))
+            Load((TDto)dto);
+    }
+
+    object IDomain.Save()
+    {
+        return Save();
+    }
+
+    public bool CheckDto(object dto)
+    {
+        if (dto is null)
+        {
+            Debug.Log("[Domain] SaveData가 존재하지 않습니다. ");
+            return false;
+        }
+        if (dto is not TDto)
+        {
+            Debug.LogError($"[Domain] DTO 타입 불일치 | 예상: {typeof(TDto)}, 실제: {dto.GetType()}");
+            return false;
+        }
+
+        return true;
+    }
+
+    public Type DtoType => typeof(TDto);
+}
+
 
 [DefaultExecutionOrder(-99)]
 public class DomainFactory : Singleton<DomainFactory>
@@ -74,8 +106,7 @@ public class DomainFactory : Singleton<DomainFactory>
         T domain = factory();
         domain.Init($"Domain/{key.ToString()}");
         var dto = _gameState.Get(key);
-        if(domain.CheckDto(dto))
-            domain.Load(dto);
+        domain.Load(dto);
 
         _domains.TryAdd(key, domain);
         
@@ -92,8 +123,7 @@ public class DomainFactory : Singleton<DomainFactory>
         domain = new();
         domain.Init($"Domain/{key.ToString()}");
         var dto = _gameState.Get(key);
-        if(domain.CheckDto(dto))
-            domain.Load(dto);
+        domain.Load(dto);
 
         _domains.TryAdd(key, domain);
     }

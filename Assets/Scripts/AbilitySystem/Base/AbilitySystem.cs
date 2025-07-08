@@ -14,7 +14,7 @@ namespace GameAbilitySystem
         public GameplayAbility Ability;
     }
 
-    public class AbilitySystem : IDomain// : MonoBehaviour
+    public class AbilitySystem : BaseDomain<ASCState>// : MonoBehaviour
     {
         [SerializeField]
         private List<AbilityComponent> _abilities = new();
@@ -91,37 +91,26 @@ namespace GameAbilitySystem
             effect.Apply(Attribute);
         }
 
-        public object Save()
+        public override ASCState Save()
         {
             var asc = new ASCState();
             asc.Attributes = Attribute.GetAttributeState();
             return asc;
         }
 
-        public void Load(object dto)
+        public override void Load(ASCState dto)
         {
-            var ascState = (ASCState)dto;
+            var ascState = dto;
             Attribute.SetAttribute(ascState.Attributes);
         }
 
-        public void Init(string assetKey)
+        public override void Init(string assetKey)
         {
             var SO = AssetLoader.Load<AbilitySystemSO>(assetKey);          
             foreach (var att in SO.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
             }
-        }
-
-        public bool CheckDto(object dto)
-        {
-            if (dto == null || dto is not ASCState)
-            {
-                Debug.LogError($"타입과 일치하지 않는 DTO를 받아오려고 시도함 | 예상한 타입: {GetType()}, 예상한 DTO: {typeof(ASCState)}");
-                return false;
-            }
-
-            return true;
         }
     }
 }
