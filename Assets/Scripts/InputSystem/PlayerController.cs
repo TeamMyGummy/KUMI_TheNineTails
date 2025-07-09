@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
-<<<<<<< HEAD
+
     private AbilitySystem _asc;
-=======
-    private AbilitySystem.Base.AbilitySystem _asc;
+
+    //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
->>>>>>> b436ee1 (Feat-LanternInteraction)
+
 
     private void Awake()
     {
