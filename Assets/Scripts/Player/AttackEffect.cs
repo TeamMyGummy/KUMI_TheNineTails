@@ -8,7 +8,7 @@ public class AttackEffect : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemies")
         {
-            collision.gameObject.GetComponent<Damageable>().GetDamage(2.0f);
+            collision.gameObject.GetComponent<Damageable>().GetDamage(DomainKey.Player, 2.0f);
         }
     }
 }
