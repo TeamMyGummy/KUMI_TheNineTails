@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
     private CharacterMovement _characterMovement;
 
     private AbilitySystem _asc;
-=======
-    private AbilitySystem.Base.AbilitySystem _asc;
+
+    //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
->>>>>>> b436ee1 (Feat-LanternInteraction)
+
 
     //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
