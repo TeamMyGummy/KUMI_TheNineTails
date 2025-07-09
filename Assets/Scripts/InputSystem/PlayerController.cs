@@ -8,7 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
+
     private AbilitySystem _asc;
+
+    //private AbilitySystem.Base.AbilitySystem _asc;
+    private LanternObject _lanternObject;
+
 
     private void Awake()
     {
@@ -143,6 +148,20 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.actions["Parrying"].Disable();
     }
+
+    // -------------------- Lantern Interaction -----------------------
+    public void OnLanternInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            _lanternObject.InteractWithLantern();
+        }
+    }
+    public void SetLanternObject(LanternObject lantern)
+    {
+        _lanternObject = lantern;
+    }
+
 
     // ----------------------------------------------------------------
     public void OnEnableAllInput()
