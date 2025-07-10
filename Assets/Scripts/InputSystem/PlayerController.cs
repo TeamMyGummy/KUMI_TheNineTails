@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-            _asc.TryActivateAbility("Attack");
+            _asc.TryActivateAbility(AbilityName.Attack);
         }
     }
 

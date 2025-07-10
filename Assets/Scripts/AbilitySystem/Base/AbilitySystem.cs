@@ -1,30 +1,20 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 
 namespace GameAbilitySystem
 {
-    [System.Serializable]
-    public struct AbilityComponent
-    {
-        public string Name;
-        public int UnlockFloor;
-        public GameplayAbility Ability;
-    }
-
     public class AbilitySystem : BaseDomain<ASCState>// : MonoBehaviour
     {
-        [SerializeField]
-        private List<AbilityComponent> _abilities = new();
-
-        private GameObject _actor;
-
-        private readonly Dictionary<string, GameplayAbilitySpec> _grantedAbilities = new();
+        private readonly Dictionary<AbilityName, GameplayAbilitySO> _abilities = new();
+        private readonly HashSet<AbilityName> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
-
+        
         /// <summary>
         /// Ability System을 사용하는 Actor 정보를 저장 <br/>
         /// </summary>
@@ -39,10 +29,10 @@ namespace GameAbilitySystem
         /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
         /// </summary>
         /// <param name="key">Ability를 호출할 Key 값</param>
-        /// <param name="ability">Key에 바인딩 된 Ability</param>
-        public bool GrantAbility(string key, GameplayAbility ability)
+        /// <param name="abilitySo">Key에 바인딩 된 Ability</param>
+        public bool GrantAbility(AbilityName ability)
         {
-            return _grantedAbilities.TryAdd(key, new GameplayAbilitySpec(this, ability, _actor));
+            return _grantedAbilities.Add(ability);
         }
 
         /// <summary>
@@ -51,31 +41,11 @@ namespace GameAbilitySystem
         /// </summary>
         public bool GrantAllAbilities()
         {
-            foreach(AbilityComponent ac in _abilities)
+            foreach(var ac in _abilities)
             {
-                if(ac.Ability != null)
+                if(ac.Value != null)
                 {
-                    _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability, _actor));
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Ability를 특정 층까지 모두 등록(캐릭터가 사용할 수 있게 됨) <br/>
-        /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
-        /// </summary>
-        /// <param name="floor">Ability가 해금되는 층</param>
-        public bool GrantAllAbilities(int floor)
-        {
-            foreach (AbilityComponent ac in _abilities)
-            {
-                if (ac.Ability != null)
-                {
-                    if (ac.UnlockFloor <= floor)
-                    {
-                        _grantedAbilities.TryAdd(ac.Name, new GameplayAbilitySpec(this, ac.Ability, _actor));
-                    }
+                    return _grantedAbilities.Add(ac.Key);
                 }
             }
             return false;
@@ -85,9 +55,11 @@ namespace GameAbilitySystem
         /// Ability를 실행
         /// </summary>
         /// <param name="key">실행할 스킬명</param>
-        public void TryActivateAbility(string key)
+        /// todo: 사용할 수 없는 ability를 grant하면 문제됨(로그쓰기)
+        public void TryActivateAbility(AbilityName key)
         {
-            if (_grantedAbilities.TryGetValue(key, out var ability)) ability.TryActivate();
+            if (_grantedAbilities.TryGetValue(key, out var ability)) 
+                AbilityFactory.Instance.TryActivateAbility(_abilities[ability], _actor, this);
         }
 
         /// <summary>
