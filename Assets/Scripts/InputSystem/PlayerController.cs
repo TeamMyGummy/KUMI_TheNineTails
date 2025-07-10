@@ -84,7 +84,10 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-
+            if (_characterMovement.CheckIsGround())
+            {
+                _asc.TryActivateAbility(AbilityName.Dash);
+            }
         }
     }
 

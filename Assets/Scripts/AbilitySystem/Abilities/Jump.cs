@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameAbilitySystem;
 
-
-[CreateAssetMenu(menuName = "Ability/Jump")]
 public class Jump : GameplayAbility, ITickable
 {
     private Rigidbody2D _rigidBody;
