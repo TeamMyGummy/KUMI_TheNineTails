@@ -76,6 +76,7 @@ namespace GameAbilitySystem
         {
             var asc = new ASCState();
             asc.Attributes = Attribute.GetAttributeState();
+            asc.GrantedAbilities = _grantedAbilities.ToList();
             return asc;
         }
 
@@ -83,6 +84,10 @@ namespace GameAbilitySystem
         {
             var ascState = dto;
             Attribute.SetAttribute(ascState.Attributes);
+            foreach (var ability in dto.GrantedAbilities)
+            {
+                _grantedAbilities.Add(ability);
+            }
         }
 
         public override void Init(string assetKey)
@@ -93,10 +98,9 @@ namespace GameAbilitySystem
                 Attribute.CreateAttribute(att);
             }
 
-            foreach (var ga in SO.AddAbilitySO)
+            foreach (var ability in SO.AbilitySO)
             {
-                AbilityComponent ac = new() { Name = ga.Name, UnlockFloor = ga.UnlockFloor, Ability = ga.Ability };
-                _abilities.Add(ac);
+                _abilities.TryAdd(ability.skillName, ability);
             }
         }
     }

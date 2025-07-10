@@ -11,10 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76b9273313cb4ee5aad949a3b6ff4e13, type: 3}
   m_Name: Player
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp:AbilitySystem.Base:AbilitySystemSO
   AddAttributeSO:
   - {fileID: 11400000, guid: 278c9a01c3bd6ed47a2fcc2b79b06b1d, type: 2}
   - {fileID: 11400000, guid: 25198eb9af2572b4c954ce5c81d9c2db, type: 2}
-  AddAbilitySO:
-  - {fileID: 11400000, guid: 25fba1fe77f2e3a46be11598a35c3f82, type: 2}
-  - {fileID: 11400000, guid: 5287215a233c12146b19fa04f1971010, type: 2}
+  AbilitySO:
+  - {fileID: 11400000, guid: 808efc7c22f47b64e92b80707fdcf8da, type: 2}
