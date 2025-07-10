@@ -1,20 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using UnityEngine;
 using Unity.VisualScripting;
 
 
 [CreateAssetMenu(menuName = "Ability/PlayerAttack")]
-public class PlayerAttack : BlockAbility
+public class PlayerAttack : BlockAbility, ITickable
 {
     /// <summary>
     /// 실제 Ability 실행부
     /// </summary>
-    public override void Activate(GameplayAbilitySpec spec, GameObject actor) 
+    protected override void Activate() 
     {
-        base.Activate(spec, actor);
+        base.Activate();
         Debug.Log("어빌리티 실행");
+        EndSkill().Forget();
     }
-    
+
+    public void Update()
+    {
+        Debug.Log("~~어빌리티 실행중~~");
+    }
+
+    public void FixedUpdate()
+    {
+        
+    }
+
+    public async UniTask EndSkill()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(_so.BlockTimer), DelayType.DeltaTime);
+        AbilityFactory.Instance.RemoveTickable(this);
+    }
 }
