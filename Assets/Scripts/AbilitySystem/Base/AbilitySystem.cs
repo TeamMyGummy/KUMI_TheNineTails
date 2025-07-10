@@ -46,7 +46,7 @@ namespace GameAbilitySystem
             {
                 if(ac.Value != null)
                 {
-                    return _grantedAbilities.Add(ac.Key);
+                    _grantedAbilities.Add(ac.Key);
                 }
             }
             return false;

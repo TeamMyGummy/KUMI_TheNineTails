@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using GameAbilitySystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,12 +16,16 @@ public class PlayerController : MonoBehaviour
     //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
 
+    public static event System.Action OnJumpCanceled;
+    public int JumpCount = 0;
+
 
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _characterMovement = GetComponent<CharacterMovement>();
         DomainFactory.Instance.GetDomain(DomainKey.Player, out _asc);
+        _asc.SetActor(gameObject);
     }
     private void Start()
     {
@@ -52,11 +58,14 @@ public class PlayerController : MonoBehaviour
     // --------------------------- Jump ---------------------------
     public void OnJump(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.started)
         {
-            OnDisableJump();
-            _characterMovement.Jump();
+            _asc.TryActivateAbility(AbilityName.DoubleJump);
         }
+        else if (ctx.canceled)
+        {
+            OnJumpCanceled?.Invoke();
+        } 
     }
 
     public void OnEnableJump()
@@ -69,35 +78,13 @@ public class PlayerController : MonoBehaviour
         _playerInput.actions["Jump"].Disable();
     }
 
-    // --------------------------- Double Jump ---------------------------
-    public void OnDoubleJump(InputAction.CallbackContext ctx)
-    {
-        if (ctx.started)
-        {
-            _characterMovement.Jump();
-        }
-        if (ctx.performed)
-        {
-            OnDisableDoubleJump();
-            _characterMovement.Jump();
-        }
-    }
-
-    public void OnEnableDoubleJump()
-    {
-        _playerInput.actions["DoubleJump"].Enable();
-    }
-
-    public void OnDisableDoubleJump()
-    {
-        _playerInput.actions["DoubleJump"].Disable();
-    }
-
     // --------------------------- Dash ---------------------------
+
     public void OnDash(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
+
         }
     }
 
@@ -172,4 +159,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.DeactivateInput();
     }
+
+
 }

@@ -11,9 +11,6 @@ public class CharacterMovement : MonoBehaviour
     [Range(0.0f, 3.0f)] private float speed;
 
     [SerializeField]
-    [Range(5.0f, 20.0f)] private float jumpPower;
-
-    [SerializeField]
     [Range(0.0f, 3.0f)] private float gravity;
 
     private Vector2 _nextDirection;
@@ -37,19 +34,15 @@ public class CharacterMovement : MonoBehaviour
             _rigidBody.position = currMove + nextMove;
             //rigid.velocity = nextMove / Time.deltaTime;
         }
-        
+
         // Jump
-        if(_rigidBody.velocity.y < 0.0f)
-        {
-            if(isGround = CheckIsGround())
-            {
-                if (GetComponent<PlayerController>() != null)
-                {
-                    //GetComponent<PlayerController>().OnEnableJump();
-                    GetComponent<PlayerController>().OnEnableDoubleJump();
-                }
-            }
-        }
+        isGround = CheckIsGround();
+
+    }
+
+    public Vector2 GetCharacterDirection()
+    {
+        return _nextDirection;
     }
 
     public void Move(Vector2 direction)
@@ -57,11 +50,12 @@ public class CharacterMovement : MonoBehaviour
         _nextDirection = direction;
     }
 
-    public void Jump()
+    public void Jump(float jumpPower)
     {
         float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
         _rigidBody.AddForce(Vector2.up * (cancelForce + jumpPower), ForceMode2D.Impulse);
     }
+
 
     /// <summary>
     /// 오브젝트가 땅(Platform)에 있는지 확인하는 함수
@@ -80,4 +74,5 @@ public class CharacterMovement : MonoBehaviour
         }
         return false;
     }
+
 }
