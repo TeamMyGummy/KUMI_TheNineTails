@@ -14,6 +14,7 @@ namespace GameAbilitySystem
         private readonly HashSet<AbilityName> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
+        private GameObject _actor;
         
         /// <summary>
         /// Ability System을 사용하는 Actor 정보를 저장 <br/>
