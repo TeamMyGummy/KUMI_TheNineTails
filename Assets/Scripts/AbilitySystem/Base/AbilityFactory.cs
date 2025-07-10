@@ -10,6 +10,8 @@ public enum AbilityName
 {
     TestBlock,
     Attack,
+    Jump,
+    DoubleJump
 }
 
 public enum AbilityKey
@@ -72,7 +74,9 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
         return abilitySo.skillName switch
         {
             AbilityName.TestBlock => new BlockAbility(),
-            AbilityName.Attack => new PlayerAttack()
+            AbilityName.Attack => new PlayerAttack(),
+            AbilityName.Jump => new Jump(),
+            AbilityName.DoubleJump => new Jump()
         };
     }
 }
