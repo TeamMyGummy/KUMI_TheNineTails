@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameAbilitySystem;
 
+/*
 [CreateAssetMenu(menuName = "Ability/Jump")]
 public class Jump : GameplayAbility
 {
@@ -11,3 +12,4 @@ public class Jump : GameplayAbility
         
     }
 }
+*/

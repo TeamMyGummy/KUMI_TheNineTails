@@ -67,15 +67,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "LanternInteraction",
-                    "type": "Value",
-                    "id": "51420271-4908-481b-b51d-ee0c34139011",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -199,17 +190,6 @@
                     "action": "WallClimb",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "18ba0754-58e7-432d-9116-a39fb036b9cc",
-                    "path": "<Keyboard>/E",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "LanternInteraction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }

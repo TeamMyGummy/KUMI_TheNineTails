@@ -8,13 +8,6 @@ public enum LanternAppearance
     Big,
 }
 
-public enum LanternState
-{
-    Off,
-    SmallFlame,
-    BigFlame,
-}
-
 //LanternObject가 존재하는 씬에는 반드시 Lantern이 씬에 존재해야 함
 public class LanternObject : MonoBehaviour
 {
