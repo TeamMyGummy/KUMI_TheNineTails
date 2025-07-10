@@ -67,7 +67,7 @@ public class CharacterMovement : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 10, LayerMask.GetMask("Platform"));
         if (rayHit.collider != null)
         {
-            if (rayHit.distance < 0.6f)
+            if (rayHit.distance < 0.1f)
             {
                 return true;
             }

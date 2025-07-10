@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4ed123306db974eacae5b91ce6b8a1, type: 3}
-  m_Name: JumpAbility
+  m_Script: {fileID: 11500000, guid: 2e9e052dde6249bf8fd464e93a5f8328, type: 3}
+  m_Name: Dash
   m_EditorClassIdentifier: 
+  skillName: 4
+  BlockTimer: 0.1
