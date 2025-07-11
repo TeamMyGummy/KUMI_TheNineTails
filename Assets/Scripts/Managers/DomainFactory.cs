@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Managers;
+using Optional;
 using UnityEngine;
 using Util;
 using Debug = UnityEngine.Debug;
@@ -117,7 +118,8 @@ public class DomainFactory : Singleton<DomainFactory>
     {
         if (_domains.TryGetValue(key, out var value))
         {
-            domain = (T)value; 
+            domain = (T)value;
+            return;
         }
 
         domain = new();
@@ -129,17 +131,18 @@ public class DomainFactory : Singleton<DomainFactory>
     }
 
     /// <returns>기존 데이터의 존재 유무</returns>
-    public bool GetState<T>(StateKey key, out T state) where T : new()
+    public void GetState<T>(StateKey key, out T state) where T : new()
     {
-        var savedState = _gameState.Get(key);
-        if (savedState is null || savedState is not T)
-        {
-            Debug.LogWarning($"[DomainFactory] State가 존재하지 않습니다. {key}");
-            state = new();
-            _gameState.Set(key, state);
-            return false;
-        }
-        state = (T)_gameState.Get(key);
-        return true;
+        var option = _gameState.Get(key).FlatMap(obj => obj is T t ? Option.Some(t) : Option.None<T>());
+
+        state = option.Match(
+            some: some => some,
+            none: () =>
+            {
+                var newState = new T();
+                Debug.LogWarning($"[DomainFactory] State가 존재하지 않습니다. {key}");
+                _gameState.Set(key, newState);
+                return newState;
+            });
     }
 }

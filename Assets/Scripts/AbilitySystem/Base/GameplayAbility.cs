@@ -2,6 +2,17 @@ using UnityEngine;
 
 namespace GameAbilitySystem
 {
+    public abstract class GameplayAbility<TSO> : GameplayAbility where TSO : GameplayAbilitySO
+    {
+        public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+        {
+            base.InitAbility(actor, asc, abilitySo);
+            if (abilitySo is not TSO)
+            {
+                Debug.LogError("[BlockAbility] 타입이 일치하지 않거나 Null입니다. (AbilityFactory의 GetAbility에 정상적으로 스킬이 등록되었는지 확인 요망)");
+            }
+        }
+    }
     /// <summary>
     /// Ability의 로직, 상태를 구현(상태 = 변수/데이터 = 상수) <br/>
     /// Ability 종료 시(상태가 더 이상 필요치 않아졌을 때)
