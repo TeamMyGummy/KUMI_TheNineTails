@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8fd0a0fd7a40a428f990c4d9d315e1, type: 3}
   m_Name: Jump
   m_EditorClassIdentifier: 
+  skillKey: 2
   skillName: 2
   UnlockFloor: 0
   MaxJumpCount: 1
