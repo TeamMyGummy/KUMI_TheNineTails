@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameAbilitySystem;
 using System.Xml.Serialization;
+using Cysharp.Threading.Tasks;
 
 public class Dash : BlockAbility, ITickable
 {
@@ -13,6 +14,13 @@ public class Dash : BlockAbility, ITickable
     private float _dashPower;
     private float _dashTime;
     private float _delayTime;
+    
+    public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+    {
+        base.InitAbility(actor, asc, abilitySo);
+
+        IsTickable = true;
+    }
 
     // 점프와 대쉬를 동시에 눌렀을 때 대각선으로 나간다는 문제가 있음
     protected override void Activate()
@@ -46,7 +54,7 @@ public class Dash : BlockAbility, ITickable
             _delayTime -= Time.deltaTime;
             if( _delayTime < 0 )
             {
-                EndDash();
+                this.DelayOneFrame().Forget();
                 _playerController.OnEnableAllInput();
             }
         }
@@ -62,7 +70,7 @@ public class Dash : BlockAbility, ITickable
     private void EndDash()
     {
         InitDash();
-        AbilityFactory.Instance.RemoveTickable(this);
+        AbilityFactory.Instance.EndAbility(this);
     }
 
 }

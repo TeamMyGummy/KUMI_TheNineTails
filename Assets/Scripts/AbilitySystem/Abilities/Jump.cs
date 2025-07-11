@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using GameAbilitySystem;
 
@@ -15,10 +16,11 @@ public class Jump : GameplayAbility, ITickable
     private float _jumpPower;
     private bool isJumpKeyDown;
 
-    public override void SetGameplayAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+    public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
-        base.SetGameplayAbility(actor, asc, abilitySo);
+        base.InitAbility(actor, asc, abilitySo);
 
+        IsTickable = true;
         _jumpSO = (JumpSO) abilitySo;
         _maxJumpCount = _jumpSO.MaxJumpCount;
         _jumpPower = _jumpSO.JumpPower;
@@ -67,7 +69,7 @@ public class Jump : GameplayAbility, ITickable
                 _playerController.JumpCount = 0;
                 if (_playerController != null)
                 {
-                    AbilityFactory.Instance.RemoveTickable(this);
+                    this.DelayOneFrame().Forget();
                     _playerController.OnEnableJump();
                 }
             }
