@@ -9,13 +9,13 @@ using UnityEngine;
 /// 스킬 사용 중일 시 다른 스킬 블락 목적으로 만들어짐 <br/>
 /// 점프, 등을 제외한 모든 스킬이 해당 클래스를 상속받아야 됨 (250701 기획 상)
 /// </summary>
-public class BlockAbility : GameplayAbility
+public class BlockAbility : GameplayAbility<BlockAbilitySO>
 {
     protected BlockAbilitySO _so;
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
-        _so = (BlockAbilitySO)abilitySo;
+        _so = abilitySo as BlockAbilitySO;
     }
 
     /// <summary>

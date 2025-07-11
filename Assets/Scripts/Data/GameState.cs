@@ -1,6 +1,7 @@
-﻿using Data;
+﻿using System;
+using Data;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
+using UnityEngine;
 
 //초기화 시 에셋 로드가 필요한가 -> 도메인
 //GameState의 값을 직접 변경하지 않음(저장이 필요할 때 객체의 데이터를 긁어옴)
@@ -31,8 +32,15 @@ public class GameState
     };
     
     public void Set(DomainKey key, object data) {
-        switch(key) {
-            case DomainKey.Player: _ascState = (ASCState)data; break;
+        try
+        {
+            switch(key) {
+                case DomainKey.Player: _ascState = (ASCState)data; break;
+            }
+        }
+        catch (InvalidCastException ex)
+        {
+            Debug.LogError("[GameState] 저장하려는 데이터가 Null이거나 캐스팅 타입과 맞지 않습니다. ");
         }
     }
     
@@ -44,9 +52,21 @@ public class GameState
     };
     
     public void Set(StateKey key, object data) {
-        switch(key) {
-            case StateKey.TestMap: _testMapState = (TestMapState)data; break;
-            case StateKey.Lantern: _lanternState = (LanternState)data; break;
+        try
+        {
+            switch (key)
+            {
+                case StateKey.TestMap:
+                    _testMapState = (TestMapState)data;
+                    break;
+                case StateKey.Lantern:
+                    _lanternState = (LanternState)data;
+                    break;
+            }
+        }
+        catch (InvalidCastException ex)
+        {
+            Debug.LogError("[GameState] 저장하려는 데이터가 Null이거나 캐스팅 타입과 맞지 않습니다. ");
         }
     }
 }

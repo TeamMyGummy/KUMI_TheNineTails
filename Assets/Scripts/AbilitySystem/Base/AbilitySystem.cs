@@ -93,13 +93,13 @@ namespace GameAbilitySystem
 
         public override void Init(string assetKey)
         {
-            var SO = AssetLoader.Load<AbilitySystemSO>(assetKey);          
-            foreach (var att in SO.AddAttributeSO)
+            var so = AssetLoader.Load<AbilitySystemSO>(assetKey);          
+            foreach (var att in so.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
             }
 
-            foreach (var ability in SO.AbilitySO)
+            foreach (var ability in so.AbilitySO)
             {
                 _abilities.TryAdd(ability.skillName, ability);
             }

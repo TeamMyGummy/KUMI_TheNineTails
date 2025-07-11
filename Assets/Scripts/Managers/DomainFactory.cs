@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using Managers;
 using UnityEngine;
-using Util;
 using Debug = UnityEngine.Debug;
 
 public interface IDomain
@@ -117,7 +114,8 @@ public class DomainFactory : Singleton<DomainFactory>
     {
         if (_domains.TryGetValue(key, out var value))
         {
-            domain = (T)value; 
+            domain = (T)value;
+            return;
         }
 
         domain = new();
