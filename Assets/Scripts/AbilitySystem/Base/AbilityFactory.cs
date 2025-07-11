@@ -12,6 +12,12 @@ public enum AbilityName
     Attack,
 }
 
+public enum AbilityKey
+{
+    TestBlock,
+    Attack
+}
+
 public interface ITickable
 {
     public void Update();
