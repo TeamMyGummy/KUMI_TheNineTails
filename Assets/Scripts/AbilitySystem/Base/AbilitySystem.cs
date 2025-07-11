@@ -101,6 +101,11 @@ namespace GameAbilitySystem
 
             foreach (var ability in so.AbilitySO)
             {
+				if (ability == null)
+    			{
+       				Debug.LogWarning("[AbilitySystem] AbilitySO 리스트에 null 항목 있음. Resources 확인");
+    			}
+
                 _abilities.TryAdd(ability.skillKey, ability);
             }
         }
