@@ -14,6 +14,13 @@ public class Dash : BlockAbility, ITickable
     private float _dashPower;
     private float _dashTime;
     private float _delayTime;
+    
+    public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+    {
+        base.InitAbility(actor, asc, abilitySo);
+
+        IsTickable = true;
+    }
 
     // 점프와 대쉬를 동시에 눌렀을 때 대각선으로 나간다는 문제가 있음
     protected override void Activate()

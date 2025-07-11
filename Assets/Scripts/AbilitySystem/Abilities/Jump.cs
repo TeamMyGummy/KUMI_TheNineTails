@@ -20,6 +20,7 @@ public class Jump : GameplayAbility, ITickable
     {
         base.InitAbility(actor, asc, abilitySo);
 
+        IsTickable = true;
         _jumpSO = (JumpSO) abilitySo;
         _maxJumpCount = _jumpSO.MaxJumpCount;
         _jumpPower = _jumpSO.JumpPower;
