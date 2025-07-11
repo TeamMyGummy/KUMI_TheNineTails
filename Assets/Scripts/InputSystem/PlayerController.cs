@@ -10,10 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
-
     private AbilitySystem _asc;
-
-    //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
 
     public static event System.Action OnJumpCanceled;
