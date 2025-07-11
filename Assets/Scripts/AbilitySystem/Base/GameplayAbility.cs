@@ -10,8 +10,10 @@ namespace GameAbilitySystem
         protected GameObject Actor;
         protected AbilitySystem Asc;
 
-        //TryActivate 전에 반드시 선행되어야 함
-        public virtual void SetGameplayAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+        //TryActivate 전에 반드시 선행됨<br/>
+        //Awake 처럼 초기화 단을 담당함<br/>
+        //만약 Tickable을 사용할 경우 반드시 override해서 IsTickable = true로 세팅해야 함
+        public virtual void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
         {
             Actor = actor;
             Asc = asc;
