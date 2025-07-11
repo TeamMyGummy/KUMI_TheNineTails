@@ -12,9 +12,9 @@ using UnityEngine;
 public class BlockAbility : GameplayAbility
 {
     protected BlockAbilitySO _so;
-    public override void SetGameplayAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+    public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
-        base.SetGameplayAbility(actor, asc, abilitySo);
+        base.InitAbility(actor, asc, abilitySo);
         _so = (BlockAbilitySO)abilitySo;
     }
 

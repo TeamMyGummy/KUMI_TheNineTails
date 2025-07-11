@@ -52,7 +52,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             ability = GetAbility(abilitySo, actor, asc);
         }
 
-        ability.SetGameplayAbility(actor, asc, abilitySo);
+        ability.InitAbility(actor, asc, abilitySo);
         
         if(ability.TryActivate() && ability is ITickable)
             _tickables.Add((ITickable)ability);
