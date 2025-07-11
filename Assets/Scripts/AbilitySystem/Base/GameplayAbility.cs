@@ -3,12 +3,16 @@ using UnityEngine;
 namespace GameAbilitySystem
 {
     /// <summary>
-    /// Ability의 상태 정보를 저장
+    /// Ability의 로직, 상태를 구현(상태 = 변수/데이터 = 상수) <br/>
+    /// Ability 종료 시(상태가 더 이상 필요치 않아졌을 때)
+    /// AbilityFactory.Instance.EndAbility() 호출 필수
+    /// (만약 바로 상태가 없어졌을 시 Activate()에서 호출해도 됨 <br/>
     /// </summary>
     public abstract class GameplayAbility
     {
         protected GameObject Actor;
         protected AbilitySystem Asc;
+        public bool IsTickable = false;
 
         //TryActivate 전에 반드시 선행됨<br/>
         //Awake 처럼 초기화 단을 담당함<br/>
@@ -17,6 +21,7 @@ namespace GameAbilitySystem
         {
             Actor = actor;
             Asc = asc;
+            IsTickable = false;
         }
         
         /// <summary>

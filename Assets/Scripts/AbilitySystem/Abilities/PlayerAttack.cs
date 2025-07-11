@@ -10,6 +10,12 @@ using Unity.VisualScripting;
 [CreateAssetMenu(menuName = "Ability/PlayerAttack")]
 public class PlayerAttack : BlockAbility, ITickable
 {
+    public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
+    {
+        base.InitAbility(actor, asc, abilitySo);
+        IsTickable = true;
+    }
+    
     /// <summary>
     /// 실제 Ability 실행부
     /// </summary>
@@ -33,6 +39,6 @@ public class PlayerAttack : BlockAbility, ITickable
     public async UniTask EndSkill()
     {
         await UniTask.Delay(TimeSpan.FromSeconds(_so.BlockTimer), DelayType.DeltaTime);
-        AbilityFactory.Instance.RemoveTickable(this);
+        AbilityFactory.Instance.EndAbility(this);
     }
 }

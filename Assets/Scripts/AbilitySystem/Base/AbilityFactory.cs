@@ -37,12 +37,15 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
     }
     
     /// <summary>
-    /// Tickable 스킬이 종료될 시 반드시 RemoveTickable을 호출해야 함(안 그러면 메모리에 쌓임)
+    /// 모든 스킬이 종료될 때 반드시 호출해야 함(안 그러면 메모리에 쌓임!!!) <br/>
+    /// 만약 바로 스킬이 끝나면 그냥 Activate에 넣으면 됨 <br/>
+    /// ITickable의 경우 단순 메모리 쌓임 문제가 아니라 동작이 이상해질 수 있음
     /// </summary>
-    /// <param name="tickable"></param>
-    public void RemoveTickable(ITickable tickable)
+    public void EndAbility(GameplayAbility ability)
     {
-        _tickables.Remove(tickable);
+        //todo: 오브젝트 풀링
+        if(ability.IsTickable) 
+            _tickables.Remove(ability as ITickable);
     }
 
     public void TryActivateAbility(GameplayAbilitySO abilitySo, GameObject actor, AbilitySystem asc)
@@ -54,8 +57,8 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
 
         ability.InitAbility(actor, asc, abilitySo);
         
-        if(ability.TryActivate() && ability is ITickable)
-            _tickables.Add((ITickable)ability);
+        if(ability.TryActivate() && ability.IsTickable)
+            _tickables.Add(ability as ITickable);
     }
 
     private GameplayAbility GetAbility(GameplayAbilitySO abilitySo, GameObject actor, AbilitySystem asc)
