@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.started)
         {
-            _asc.TryActivateAbility(AbilityName.DoubleJump);
+            _asc.TryActivateAbility(AbilityKey.DoubleJump);
         }
         else if (ctx.canceled)
         {
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_characterMovement.CheckIsGround())
             {
-                _asc.TryActivateAbility(AbilityName.Dash);
+                _asc.TryActivateAbility(AbilityKey.Dash);
             }
         }
     }

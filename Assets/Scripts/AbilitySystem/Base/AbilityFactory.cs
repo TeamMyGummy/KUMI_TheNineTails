@@ -18,7 +18,10 @@ public enum AbilityName
 public enum AbilityKey
 {
     TestBlock,
-    Attack
+    Attack,
+    Jump,
+    DoubleJump,
+    Dash
 }
 
 public interface ITickable
@@ -79,7 +82,6 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.Jump => new Jump(),
             AbilityName.DoubleJump => new Jump(),
             AbilityName.Dash => new Dash(),
-
         };
     }
 }

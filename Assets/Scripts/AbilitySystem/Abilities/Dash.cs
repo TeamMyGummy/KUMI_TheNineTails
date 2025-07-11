@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameAbilitySystem;
 using System.Xml.Serialization;
+using Cysharp.Threading.Tasks;
 
 public class Dash : BlockAbility, ITickable
 {
@@ -46,7 +47,7 @@ public class Dash : BlockAbility, ITickable
             _delayTime -= Time.deltaTime;
             if( _delayTime < 0 )
             {
-                EndDash();
+                this.DelayOneFrame().Forget();
                 _playerController.OnEnableAllInput();
             }
         }
@@ -62,7 +63,7 @@ public class Dash : BlockAbility, ITickable
     private void EndDash()
     {
         InitDash();
-        AbilityFactory.Instance.RemoveTickable(this);
+        AbilityFactory.Instance.EndAbility(this);
     }
 
 }
