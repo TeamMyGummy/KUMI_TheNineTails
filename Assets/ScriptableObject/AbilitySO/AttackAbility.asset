@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9e052dde6249bf8fd464e93a5f8328, type: 3}
   m_Name: PlayerAttack
   m_EditorClassIdentifier: 
+  skillKey: 1
   skillName: 1
   BlockTimer: 1.5

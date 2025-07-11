@@ -10,8 +10,8 @@ namespace GameAbilitySystem
 {
     public class AbilitySystem : BaseDomain<ASCState>// : MonoBehaviour
     {
-        private readonly Dictionary<AbilityName, GameplayAbilitySO> _abilities = new();
-        private readonly HashSet<AbilityName> _grantedAbilities = new();
+        private readonly Dictionary<AbilityKey, GameplayAbilitySO> _abilities = new();
+        private readonly HashSet<AbilityKey> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         private GameObject _actor;
@@ -31,7 +31,7 @@ namespace GameAbilitySystem
         /// </summary>
         /// <param name="key">Ability를 호출할 Key 값</param>
         /// <param name="abilitySo">Key에 바인딩 된 Ability</param>
-        public bool GrantAbility(AbilityName ability)
+        public bool GrantAbility(AbilityKey ability)
         {
             return _grantedAbilities.Add(ability);
         }
@@ -57,7 +57,7 @@ namespace GameAbilitySystem
         /// </summary>
         /// <param name="key">실행할 스킬명</param>
         /// todo: 사용할 수 없는 ability를 grant하면 문제됨(로그쓰기)
-        public void TryActivateAbility(AbilityName key)
+        public void TryActivateAbility(AbilityKey key)
         {
             if (_grantedAbilities.TryGetValue(key, out var ability)) 
                 AbilityFactory.Instance.TryActivateAbility(_abilities[ability], _actor, this);
@@ -101,7 +101,7 @@ namespace GameAbilitySystem
 
             foreach (var ability in so.AbilitySO)
             {
-                _abilities.TryAdd(ability.skillName, ability);
+                _abilities.TryAdd(ability.skillKey, ability);
             }
         }
     }
