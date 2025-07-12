@@ -11,7 +11,6 @@ public enum SteamAppearance
 
 public class SteamObject : MonoBehaviour
 {
-    [SerializeField] private GameObject offSteamImage;      
     [SerializeField] private GameObject onSteamImage; 
     
     [SerializeField] private float damage = 1.0f;
@@ -21,6 +20,10 @@ public class SteamObject : MonoBehaviour
     private bool isActive = false;
     private bool isInCooldown = false;
     private SteamAppearance currentAppearance = SteamAppearance.Off;
+    
+    public bool IsActive() => isActive;
+    public float GetDamage() => damage;
+
 
     private void Start()
     {
@@ -34,11 +37,6 @@ public class SteamObject : MonoBehaviour
         if (!isActive && !isInCooldown)
         {
             StartCoroutine(ActivateLaser());
-        }
-
-        if (isActive)
-        {
-            collision.gameObject.GetComponent<Damageable>().GetDamage(DomainKey.Player, damage);
         }
     }
     
@@ -60,10 +58,6 @@ public class SteamObject : MonoBehaviour
     public void ChangeSteamState(SteamAppearance appearance)
     {
         currentAppearance = appearance;
-
-        currentAppearance = appearance;
-
-        offSteamImage?.SetActive(appearance == SteamAppearance.Off);
         onSteamImage?.SetActive(appearance == SteamAppearance.On);
     }
 }
