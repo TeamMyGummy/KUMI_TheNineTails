@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterName: 
-  isCreature: 1
+  isParrying: 1
   isMoving: 1
 --- !u!114 &868580089823097190
 MonoBehaviour:
@@ -206,7 +206,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3e0a28a460dbe49bd7662fbf893258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveRange: 6
+  pause: 3
+  platformLayer:
+    serializedVersion: 2
+    m_Bits: 0
   movePattern: 0
+  player: {fileID: 0}
+  aggroReleaseRange: 14
+  aggroCheckDelay: 0.2
 --- !u!114 &3908813324651643552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +227,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b4d6b24e35b0845b3a9ef4a97a0175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  jumpPower: 0
+  speed: 0.9
   gravity: 1
