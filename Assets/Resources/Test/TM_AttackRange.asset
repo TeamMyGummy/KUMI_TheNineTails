@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7755f0eb93a0da648bfa6f2271526407, type: 3}
-  m_Name: TestMonsterHP
+  m_Name: TM_AttackRange
   m_EditorClassIdentifier: 
-  AttributeName: HP
-  BaseValue: 30
-  MaxValue: 30
+  AttributeName: AttackRange
+  BaseValue: 2
+  MaxValue: 2
