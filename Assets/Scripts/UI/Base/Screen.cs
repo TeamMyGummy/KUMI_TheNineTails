@@ -8,19 +8,17 @@ using UnityEngine.UI;
 public class Screen : MonoBehaviour
 {
 
-    private Image targetImage;
-    private float fadeDuration = 0.5f;
+    private Image _targetImage;
+    private float _fadeDuration = 0.5f;
 
     private void Awake()
     {
-        targetImage = GetComponent<Image>();
+        _targetImage = GetComponent<Image>();
     }
 
     /// <summary>
     /// 화면 활성화
     /// </summary>
-
-
     public void ShowScreen()
     {
         if(!gameObject.activeSelf)
@@ -43,7 +41,7 @@ public class Screen : MonoBehaviour
 
     public void FadeInScreen()
     {
-        if (targetImage != null)
+        if (_targetImage != null)
         {
             StartCoroutine(FadeToAlpha(0.5f));
         }
@@ -54,7 +52,7 @@ public class Screen : MonoBehaviour
     /// </summary>
     public void FadeOutScreen()
     {
-        if (targetImage != null)
+        if (_targetImage != null)
         {
             StartCoroutine(FadeToAlpha(0f));
         }
@@ -62,18 +60,18 @@ public class Screen : MonoBehaviour
 
     private IEnumerator FadeToAlpha(float targetAlpha)
     {
-        Color color = targetImage.color;
+        Color color = _targetImage.color;
         float startAlpha = color.a;
         float time = 0f;
 
-        while (time < fadeDuration)
+        while (time < _fadeDuration)
         {
             time += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
-            targetImage.color = new Color(color.r, color.g, color.b, newAlpha);
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
+            _targetImage.color = new Color(color.r, color.g, color.b, newAlpha);
             yield return null;
         }
         
-        targetImage.color = new Color(color.r, color.g, color.b, targetAlpha);
+        _targetImage.color = new Color(color.r, color.g, color.b, targetAlpha);
     }
 }
