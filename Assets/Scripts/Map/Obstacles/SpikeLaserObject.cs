@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserObject : MonoBehaviour
+public class SpikeLaserObject : MonoBehaviour
 {
     [SerializeField] private float damage = 1.0f;
 

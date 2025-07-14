@@ -6,7 +6,7 @@ public class SteamChild : MonoBehaviour
 {
     private SteamObject parentSteam;
 
-    private void Start()
+    private void Awake()
     {
         parentSteam = GetComponentInParent<SteamObject>();
     }
