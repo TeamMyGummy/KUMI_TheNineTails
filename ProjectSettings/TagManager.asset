@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - RespawnPoint
+  - Ground
   - Enemies
   layers:
   - Default
