@@ -87,7 +87,6 @@ GameObject:
   m_Component:
   - component: {fileID: 347162652325166711}
   - component: {fileID: 5124536149466368117}
-  - component: {fileID: 1530248016536432800}
   m_Layer: 0
   m_Name: RespawnPoint
   m_TagString: RespawnPoint
@@ -156,15 +155,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1530248016536432800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8380944121269735291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e9ab2d98f3bceb4f91ef4747b484de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
