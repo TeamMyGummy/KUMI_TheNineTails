@@ -222,10 +222,6 @@ MonoBehaviour:
     m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
     m_ActionName: PlayerActions/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
-    m_ActionName: PlayerActions/Double Jump[/Keyboard/space]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2677374988490091879}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
@@ -277,6 +273,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 293a2033-a89a-4a7d-9c76-c5347ead7036
     m_ActionName: PlayerActions/WallClimb[/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRefillHP
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6c4cfdc0-88b8-48b1-80b2-dc4cb60f0c7b
+    m_ActionName: PlayerActions/MapInteraction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
@@ -333,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb511d1902e9294189b132ae610b8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnGround: {fileID: 0}
 --- !u!1 &2608040067414076250
 GameObject:
   m_ObjectHideFlags: 0
