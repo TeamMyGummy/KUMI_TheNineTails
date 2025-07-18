@@ -13,7 +13,8 @@ public enum AbilityName
     PlayerAttack,
     Jump,
     DoubleJump,
-    Dash
+    Dash,
+    MonsterAttack
 }
 
 public enum AbilityKey
@@ -23,7 +24,8 @@ public enum AbilityKey
     PlayerAttack,
     Jump,
     DoubleJump,
-    Dash
+    Dash,
+    MonsterAttack
 }
 
 public interface ITickable
@@ -91,6 +93,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.Jump => new Jump(),
             AbilityName.DoubleJump => new Jump(),
             AbilityName.Dash => new Dash(),
+            AbilityName.MonsterAttack => new MonsterAttack(),
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }
