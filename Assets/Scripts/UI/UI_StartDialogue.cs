@@ -18,7 +18,7 @@ public class UI_StartDialogue : MonoBehaviour
         player?.OnDisableAllInput(); // 인풋 중지
 
         foreach (var ui in uiToHide)
-            ui.SsetActive(false);
+            ui.SetActive(false);
 
         StartCoroutine(FadeIn());
     }
