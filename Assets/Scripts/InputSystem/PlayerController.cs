@@ -10,11 +10,9 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
-
     private AbilitySystem _asc;
-
-    //private AbilitySystem.Base.AbilitySystem _asc;
     private LanternObject _lanternObject;
+    private HPRefillStation _hpRefillStation;
 
     public static event System.Action OnJumpCanceled;
     public int JumpCount = 0;
@@ -139,7 +137,8 @@ public class PlayerController : MonoBehaviour
         _playerInput.actions["Parrying"].Disable();
     }
 
-    // -------------------- Lantern Interaction -----------------------
+    // -------------------- Map Interaction -----------------------
+    // Lantern
     public void OnLanternInteraction(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
@@ -151,7 +150,31 @@ public class PlayerController : MonoBehaviour
     {
         _lanternObject = lantern;
     }
-
+    
+    // HP Refill Station
+    public void OnRefillHP(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (_hpRefillStation != null)
+            {
+                _hpRefillStation.RefillHp();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] _hpRefillStation == null");
+            }
+        }
+    }
+    
+    public void SetHpRefillStation(HPRefillStation station)
+    {
+        if (station != null || _hpRefillStation != station)
+        {
+            _hpRefillStation = station;
+        }
+    }
+    
 
     // ----------------------------------------------------------------
     public void OnEnableAllInput()
@@ -162,6 +185,5 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.DeactivateInput();
     }
-
 
 }

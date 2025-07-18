@@ -19,5 +19,7 @@ public class Damageable : MonoBehaviour
 
         InstantGameplayEffect effect = new("HP", damage * (-1));
         effect.Apply(att);
+        
+        Debug.Log($"Damage: {damage}, HP: {att.Attributes["HP"].CurrentValue}");
     }
 }

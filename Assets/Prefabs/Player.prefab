@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2677374988490091879}
   - component: {fileID: 9100064898656960644}
   - component: {fileID: 5537918733458322441}
+  - component: {fileID: 2105771039037868481}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -221,10 +222,6 @@ MonoBehaviour:
     m_ActionId: e60c335b-b86e-4dd6-9daf-649eb846a255
     m_ActionName: PlayerActions/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
-    m_ActionName: PlayerActions/Double Jump[/Keyboard/space]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2677374988490091879}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
@@ -276,6 +273,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 293a2033-a89a-4a7d-9c76-c5347ead7036
     m_ActionName: PlayerActions/WallClimb[/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRefillHP
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6c4cfdc0-88b8-48b1-80b2-dc4cb60f0c7b
+    m_ActionName: PlayerActions/MapInteraction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
@@ -293,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9430db4e1184cc548b7548daa9c083a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpCount: 0
 --- !u!114 &9100064898656960644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +320,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
-  jumpPower: 10
   gravity: 2.5
 --- !u!114 &5537918733458322441
 MonoBehaviour:
@@ -320,6 +333,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2105771039037868481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb511d1902e9294189b132ae610b8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnGround: {fileID: 0}
 --- !u!1 &2608040067414076250
 GameObject:
   m_ObjectHideFlags: 0

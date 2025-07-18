@@ -20,8 +20,8 @@ public class LanternObject : MonoBehaviour
     [SerializeField] private GameObject interactionUI;
 
     public bool isInteracting = false;
-    private bool playerInRange = false;
-    private LanternAppearance currentAppearance = LanternAppearance.Off;
+    private bool _playerInRange = false;
+    private LanternAppearance _currentAppearance = LanternAppearance.Off;
 
     public Action<int> Interacted;
 
@@ -30,7 +30,13 @@ public class LanternObject : MonoBehaviour
         ChangeLanternState(LanternAppearance.Off);
 
         if (interactionUI != null)
+        {
             interactionUI.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("[LanternObject] interactionUI == null");
+        }
 
         LanternKey = transform.GetSiblingIndex();
 
@@ -43,7 +49,7 @@ public class LanternObject : MonoBehaviour
 
     public void ChangeLanternState(LanternAppearance appearance)
     {
-        currentAppearance = appearance;
+        _currentAppearance = appearance;
 
         if (offLanternImage != null) offLanternImage.SetActive(false);
         if (smallLanternImage != null) smallLanternImage.SetActive(false);
@@ -72,7 +78,7 @@ public class LanternObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
+            _playerInRange = true;
 
             if (interactionUI != null)
                 interactionUI.SetActive(true);
@@ -89,7 +95,7 @@ public class LanternObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            _playerInRange = false;
 
             if (interactionUI != null)
                 interactionUI.SetActive(false);
@@ -104,13 +110,12 @@ public class LanternObject : MonoBehaviour
 
     public void InteractWithLantern()
     {
-        if (playerInRange)
+        if (_playerInRange)
         {
             Interacted?.Invoke(LanternKey);
         }
     }
-
-    //랜턴 키 설정(외부에서 호출 가능)
+    
     public void SetLanternKey(int key)
     {
         LanternKey = key;
