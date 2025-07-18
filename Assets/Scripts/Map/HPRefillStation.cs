@@ -62,33 +62,37 @@ public class HPRefillStation : MonoBehaviour
             Debug.Log("[HP] 최대 회복 완료");
             
             _isUsed = true;
+            interactionUI.SetActive(false);
         }
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (_isUsed == false)
         {
-            _playerInRange = true;
-            interactionUI.SetActive(true);
-        }
+            if (other.CompareTag("Player"))
+            {
+                _playerInRange = true;
+                interactionUI.SetActive(true);
+            }
 
-        var controller = other.GetComponent<PlayerController>();
-        if (controller != null)
-        {
-            controller.SetHpRefillStation(this);
+            var controller = other.GetComponent<PlayerController>();
+            if (controller != null)
+            {
+                controller.SetHpRefillStation(this);
+            }
         }
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (_isUsed == false)
         {
-            _playerInRange = false;
-            interactionUI.SetActive(false);
+            if (other.CompareTag("Player"))
+            {
+                _playerInRange = false;
+                interactionUI.SetActive(false);
+            }
         }
     }
-    
-    
-    
 }
