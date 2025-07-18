@@ -69,6 +69,7 @@ public class DomainFactory : Singleton<DomainFactory>
 {
     private GameState _gameState;
     private readonly Dictionary<DomainKey, IDomain> _domains = new();
+    public SingletonData Data;
 
     new void Awake()
     {
@@ -76,6 +77,7 @@ public class DomainFactory : Singleton<DomainFactory>
         //todo: 구체적인 저장 기획 방식이 나오면 수정하기
         DataManager.Load("gamedata_0", out _gameState);
         if (_gameState is null) _gameState = new();
+        Data = _gameState.SingletonData;
     }
     
     public void SaveGameData(string key)
@@ -124,20 +126,5 @@ public class DomainFactory : Singleton<DomainFactory>
         domain.Load(dto);
 
         _domains.TryAdd(key, domain);
-    }
-
-    /// <returns>기존 데이터의 존재 유무</returns>
-    public bool GetState<T>(StateKey key, out T state) where T : new()
-    {
-        var savedState = _gameState.Get(key);
-        if (savedState is null || savedState is not T)
-        {
-            Debug.LogWarning($"[DomainFactory] State가 존재하지 않습니다. {key}");
-            state = new();
-            _gameState.Set(key, state);
-            return false;
-        }
-        state = (T)_gameState.Get(key);
-        return true;
     }
 }

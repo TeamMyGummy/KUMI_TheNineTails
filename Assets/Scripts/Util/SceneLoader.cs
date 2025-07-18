@@ -22,6 +22,11 @@ namespace Util
         {
             await SceneManager.LoadSceneAsync(scene);
         }
+
+        public static string GetCurrentSceneName()
+        {
+            return SceneManager.GetActiveScene().name;
+        }
             
     }
 }

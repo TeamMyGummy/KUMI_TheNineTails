@@ -2,39 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 
 //⚠️LanternObject가 존재하는 씬에 반드시 붙어있어야 함
-public class Lantern : MonoBehaviour
+public class Lantern : SceneSingleton<Lantern>
 {
     private Action<int> Interacted;
-    private Dictionary<int, LanternObject> _lanternsObjects;
+    private readonly Dictionary<int, LanternObject> _lanternsObjects = new();
     private LanternState _lanternState;
 
     public void Awake()
     {
-        DomainFactory.Instance.GetState(StateKey.Lantern, out _lanternState);
+        _lanternState = DomainFactory.Instance.Data.LanternState;
         Interacted -= Interact;
         Interacted += Interact;
-        Load();
     }
 
-    private void Load()
+    public void Register(LanternObject lantern)
     {
-        var lanternsObjects = FindObjectsByType<LanternObject>(FindObjectsSortMode.None);
-        foreach (var lantern in lanternsObjects)
-        {
-            if (_lanternState.RecentCheckPoint == lantern.LanternKey)
-            {
-                lantern.ChangeLanternState(LanternAppearance.Big);
-            }
-            else if (_lanternState.PassedCheckPoint.Contains(lantern.LanternKey))
-            {
-                lantern.ChangeLanternState(LanternAppearance.Small);
-            }
-            
-            lantern.Bind(Interacted);
-            _lanternsObjects[lantern.LanternKey] = lantern;
+        if (_lanternState.RecentCheckPoint == lantern.LanternKey)
+        { 
+            lantern.ChangeLanternState(LanternAppearance.Big);
         }
+        else if (_lanternState.PassedCheckPoint.Contains(lantern.LanternKey))
+        { 
+            lantern.ChangeLanternState(LanternAppearance.Small);
+        }
+            
+        lantern.Bind(Interacted);
+        _lanternsObjects[lantern.LanternKey] = lantern;
     }
 
     private void Interact(int interactLantern)
@@ -46,8 +42,8 @@ public class Lantern : MonoBehaviour
         }
         
         //상태 업데이트
-        _lanternsObjects.TryAdd(interactLantern, _lanternsObjects[interactLantern]);
+        _lanternState.PassedCheckPoint.Add(interactLantern);
         _lanternState.RecentCheckPoint = interactLantern;
-        _lanternState.RecentScene = SceneManager.GetActiveScene().name;
+        _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
     }
 }
