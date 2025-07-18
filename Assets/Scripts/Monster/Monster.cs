@@ -7,16 +7,16 @@ public class Monster : MonoBehaviour
     
     public AbilitySystem asc { get; private set; }
 
+    [SerializeField] private string abilitySystemPath = "";
     [SerializeField] private string monsterName = "";
     [SerializeField] private bool isParrying = true; //패링가능하면 true -> 필요할지 모르겠는데 일단 넣어놓음
-    [SerializeField] private bool isMoving = true; //능동(true) /수동(false)
 
     private void Awake()
     {
         // ASC 초기화
         asc = new AbilitySystem();
         asc.SetActor(this.gameObject);
-        asc.Init("Test/TestMonster1");
+        asc.Init(abilitySystemPath);
         asc.GrantAllAbilities();
     }
 
