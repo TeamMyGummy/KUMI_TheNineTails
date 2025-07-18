@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Util;
 
 public enum LanternAppearance
 {
@@ -39,7 +40,8 @@ public class LanternObject : MonoBehaviour
         }
 
         LanternKey = transform.GetSiblingIndex();
-
+        
+        Lantern.Instance.Register(this);
     }
 
     public void Bind(Action<int> interacted)
@@ -113,6 +115,7 @@ public class LanternObject : MonoBehaviour
         if (_playerInRange)
         {
             Interacted?.Invoke(LanternKey);
+            ChangeLanternState(LanternAppearance.Big);
         }
     }
     
