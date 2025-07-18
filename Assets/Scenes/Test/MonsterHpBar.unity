@@ -341,11 +341,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6546838180170112804, guid: a968146a6ba717543ad7a3bb452b805f, type: 3}
       propertyPath: movePattern
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6546838180170112804, guid: a968146a6ba717543ad7a3bb452b805f, type: 3}
       propertyPath: switchInterval
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6546838180170112804, guid: a968146a6ba717543ad7a3bb452b805f, type: 3}
+      propertyPath: platformLayer.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 186341297792406129, guid: a968146a6ba717543ad7a3bb452b805f, type: 3}
       propertyPath: domainKey
