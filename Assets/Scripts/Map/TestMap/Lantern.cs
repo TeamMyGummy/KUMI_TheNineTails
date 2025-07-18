@@ -13,7 +13,7 @@ public class Lantern : SceneSingleton<Lantern>
 
     public void Awake()
     {
-        DomainFactory.Instance.GetState(StateKey.Lantern, out _lanternState);
+        _lanternState = DomainFactory.Instance.Data.LanternState;
         Interacted -= Interact;
         Interacted += Interact;
     }
