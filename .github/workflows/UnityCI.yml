@@ -1,0 +1,84 @@
+name: GameCI Template 🎮
+
+on:
+  push:
+    branches: [ Build-Prerelease ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  UNITY_PASSWORD: ${{ secrets.UNITY_PW }}
+
+jobs:
+  checkLicense:
+    name: Check for the Unity license ☑️
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail - No license ☠️
+        if: ${{ !startsWith(env.UNITY_LICENSE, '<') }}
+        run: exit 1
+
+  buildWebGL:
+    name: Build WebGL 🔨
+    runs-on: ubuntu-latest
+    outputs:
+      artifact-name: build-WebGL-${{ github.run_id }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Restore Library cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-build-WebGL
+          restore-keys: |
+            Library-build-
+            Library-
+
+      - name: Build WebGL 🛠
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: WebGL
+
+      - name: Fail if build/WebGL is empty ❌
+        run: |
+          if [ -z "$(ls -A build/WebGL 2>/dev/null)" ]; then
+            echo "❌ build/WebGL is empty. Build probably failed."
+            exit 1
+          fi
+
+      - name: Save Build on build/WebGL folder 💾
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-WebGL-${{ github.run_id }}
+          path: build/WebGL
+
+  deployPages:
+    needs: buildWebGL
+    name: Deploy to Github Pages 🚀
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-WebGL-${{ github.run_id }}
+          path: build/
+
+      - name: Check artifact contents 🔍
+        run: |
+          echo "📂 Artifact content:"
+          ls -R build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: build/WebGL
+          clean: true
