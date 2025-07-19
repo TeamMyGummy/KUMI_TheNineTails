@@ -15,6 +15,8 @@ MonoBehaviour:
   AddAttributeSO:
   - {fileID: 11400000, guid: 278c9a01c3bd6ed47a2fcc2b79b06b1d, type: 2}
   - {fileID: 11400000, guid: 25198eb9af2572b4c954ce5c81d9c2db, type: 2}
+  - {fileID: 11400000, guid: 1181ea6d331a7104496d652e92eb019e, type: 2}
+  - {fileID: 11400000, guid: fa6b8cbe1df927a4facb2abfb35b81b6, type: 2}
   AbilitySO:
   - {fileID: 11400000, guid: 62031bc535894774eabc9f7b7b01b696, type: 2}
   - {fileID: 11400000, guid: 25fba1fe77f2e3a46be11598a35c3f82, type: 2}
