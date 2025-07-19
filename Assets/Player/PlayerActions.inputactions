@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DoubleJump",
-                    "type": "Button",
-                    "id": "7f9e5cb2-b46b-44f1-be72-481720cd70ad",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "378fcf18-5022-4470-a05b-1a1ba447f92c",
@@ -125,17 +116,6 @@
                 },
                 {
                     "name": "",
-                    "id": "62dc95a0-6d38-41c5-a479-fbfc61782efa",
-                    "path": "<Keyboard>/space",
-                    "interactions": "MultiTap(tapTime=1)",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "DoubleJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "881128e4-de29-4c4e-9e14-168d8f7c661c",
                     "path": "<Keyboard>/j",
                     "interactions": "",
@@ -160,7 +140,7 @@
                     "name": "",
                     "id": "b5eb3e8e-7714-4a09-af14-5821b076fc23",
                     "path": "<Keyboard>/shift",
-                    "interactions": "MultiTap",
+                    "interactions": "",
                     "processors": "",
                     "groups": "PC",
                     "action": "Dash",
