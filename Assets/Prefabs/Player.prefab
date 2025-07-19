@@ -327,6 +327,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6c4cfdc0-88b8-48b1-80b2-dc4cb60f0c7b
     m_ActionName: PlayerActions/MapInteraction[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7f9e5cb2-b46b-44f1-be72-481720cd70ad
+    m_ActionName: PlayerActions/DoubleJump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions

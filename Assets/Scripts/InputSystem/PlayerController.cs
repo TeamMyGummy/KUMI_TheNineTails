@@ -170,6 +170,11 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
+            if (_lanternObject == null)
+            {
+                /*Debug.Log("[LanternInteraction] _lanternObject가 null입니다.");*/
+                return;
+            }
             _lanternObject.InteractWithLantern();
         }
     }
