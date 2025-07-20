@@ -104,7 +104,7 @@ namespace GameAbilitySystem
 
         public override void Init(string assetKey)
         {
-            var so = AssetLoader.Load<AbilitySystemSO>(assetKey);          
+            var so = ResourcesManager.Instance.Load<AbilitySystemSO>(assetKey);          
             foreach (var att in so.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
