@@ -12,7 +12,7 @@ public class Jump : GameplayAbility, ITickable
     private JumpSO _jumpSO;
 
     private int _maxJumpCount;
-    //private int _jumpCount;
+    private int _jumpCount;
     private float _jumpPower;
     private bool isJumpKeyDown;
 
@@ -24,6 +24,7 @@ public class Jump : GameplayAbility, ITickable
         _jumpSO = (JumpSO) abilitySo;
         _maxJumpCount = _jumpSO.MaxJumpCount;
         _jumpPower = _jumpSO.JumpPower;
+        _jumpCount = 0;
     }
 
     protected override void Activate()
@@ -35,9 +36,9 @@ public class Jump : GameplayAbility, ITickable
         PlayerController.OnJumpCanceled += JumpCanceled;
         isJumpKeyDown = true;
 
-        if (_playerController.JumpCount < _maxJumpCount)
+        if (_jumpCount < _maxJumpCount)
         {
-            _playerController.JumpCount++;
+            _jumpCount++;
             _characterMovement.Jump(_jumpPower);
         }
         else
@@ -66,7 +67,7 @@ public class Jump : GameplayAbility, ITickable
         {
             if (_characterMovement.CheckIsGround())
             {
-                _playerController.JumpCount = 0;
+                _jumpCount = 0;
                 if (_playerController != null)
                 {
                     this.DelayOneFrame().Forget();
