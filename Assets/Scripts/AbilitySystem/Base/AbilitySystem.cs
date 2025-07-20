@@ -10,8 +10,8 @@ namespace GameAbilitySystem
 {
     public class AbilitySystem : BaseDomain<ASCState>// : MonoBehaviour
     {
-        private readonly Dictionary<AbilityKey, GameplayAbilitySO> _abilities = new();
-        private readonly HashSet<AbilityKey> _grantedAbilities = new();
+        private Dictionary<AbilityName, GameplayAbilitySO> _abilities = new();
+        private readonly Dictionary<AbilityKey, AbilityName> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         private GameObject _actor;
@@ -27,13 +27,14 @@ namespace GameAbilitySystem
 
         /// <summary>
         /// Ability를 등록(캐릭터가 사용할 수 있게 됨) <br/>
-        /// 주의) 만약 이미 Ability가 등록되어 있을 경우 무시됨
+        /// 주의1) 만약 이미 Ability가 등록되어 있을 경우 덮어씀
+        /// 주의2) 만약 해금할 수 없는 스킬이라면 false 반환 및 로그 발생
         /// </summary>
-        /// <param name="key">Ability를 호출할 Key 값</param>
-        /// <param name="abilitySo">Key에 바인딩 된 Ability</param>
-        public bool GrantAbility(AbilityKey ability)
+        public bool GrantAbility(AbilityKey key, AbilityName name)
         {
-            return _grantedAbilities.Add(ability);
+            if (!_abilities.TryGetValue(name, out var abilitySo)) return false;
+            _grantedAbilities.Add(key, name);
+            return true;
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace GameAbilitySystem
             {
                 if(ac.Value != null)
                 {
-                    _grantedAbilities.Add(ac.Key);
+                    _grantedAbilities.Add(ac.Value.skillKey, ac.Value.skillName);
                 }
             }
             return false;
@@ -59,8 +60,8 @@ namespace GameAbilitySystem
         /// todo: 사용할 수 없는 ability를 grant하면 문제됨(로그쓰기)
         public void TryActivateAbility(AbilityKey key)
         {
-            if (_grantedAbilities.TryGetValue(key, out var ability)) 
-                AbilityFactory.Instance.TryActivateAbility(_abilities[ability], _actor, this);
+            if (_grantedAbilities.TryGetValue(key, out var abilityName)) 
+                AbilityFactory.Instance.TryActivateAbility(_abilities[abilityName], _actor, this);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace GameAbilitySystem
         {
             var asc = new ASCState();
             asc.Attributes = Attribute.GetAttributeState();
-            asc.GrantedAbilities = _grantedAbilities.ToList();
+            asc.GrantedAbilities = _grantedAbilities;
             return asc;
         }
 
@@ -87,7 +88,7 @@ namespace GameAbilitySystem
             Attribute.SetAttribute(ascState.Attributes);
             foreach (var ability in dto.GrantedAbilities)
             {
-                _grantedAbilities.Add(ability);
+                _grantedAbilities.Add(ability.Key, ability.Value);
             }
         }
 
@@ -101,7 +102,7 @@ namespace GameAbilitySystem
 
             foreach (var ability in so.AbilitySO)
             {
-                _abilities.TryAdd(ability.skillKey, ability);
+                _abilities.TryAdd(ability.skillName, ability);
             }
         }
     }

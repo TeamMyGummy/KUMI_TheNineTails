@@ -6,6 +6,6 @@ namespace Data
     public class ASCState
     {
         public Dictionary<string, float> Attributes;
-        public List<AbilityKey> GrantedAbilities;
+        public Dictionary<AbilityKey, AbilityName> GrantedAbilities;
     }
 }
