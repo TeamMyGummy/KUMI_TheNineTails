@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public static event System.Action OnJumpCanceled;
     public int JumpCount = 0;
 
-
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -104,7 +103,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-            _asc.TryActivateAbility(AbilityKey.Attack);
+            _asc.TryActivateAbility(AbilityKey.PlayerAttack);
         }
     }
 
