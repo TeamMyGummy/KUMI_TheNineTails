@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Data;
+using R3;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Util;
@@ -15,6 +16,9 @@ namespace GameAbilitySystem
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         private GameObject _actor;
+        
+        private readonly ReactiveProperty<int> _grantedAbilityCount = new(0);
+        public ReadOnlyReactiveProperty<int> GrantedAbilityCount { get; private set; }
         
         /// <summary>
         /// Ability System을 사용하는 Actor 정보를 저장 <br/>
@@ -34,6 +38,7 @@ namespace GameAbilitySystem
         {
             if (!_abilities.TryGetValue(name, out var abilitySo)) return false;
             _grantedAbilities.Add(key, name);
+            _grantedAbilityCount.Value = _grantedAbilities.Count;
             return true;
         }
 
@@ -47,7 +52,7 @@ namespace GameAbilitySystem
             {
                 if(ac.Value != null)
                 {
-                    _grantedAbilities.Add(ac.Value.skillKey, ac.Value.skillName);
+                    GrantAbility(ac.Value.skillKey, ac.Key);
                 }
             }
             return false;
@@ -88,8 +93,13 @@ namespace GameAbilitySystem
             Attribute.SetAttribute(ascState.Attributes);
             foreach (var ability in dto.GrantedAbilities)
             {
-                _grantedAbilities.Add(ability.Key, ability.Value);
+                if (!_grantedAbilities.TryAdd(ability.Key, ability.Value))
+                {
+                    Debug.LogWarning("[AbilitySystem] 스킬 데이터에 키가 중복되는 스킬이 Grant 되었습니다.");
+                }
             }
+            _grantedAbilityCount.Value = _grantedAbilities.Count;
+            GrantedAbilityCount = _grantedAbilityCount.ToReadOnlyReactiveProperty();
         }
 
         public override void Init(string assetKey)
