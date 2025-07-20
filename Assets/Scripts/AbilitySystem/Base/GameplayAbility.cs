@@ -34,6 +34,11 @@ namespace GameAbilitySystem
             Asc = asc;
             IsTickable = false;
         }
+
+        public void UpdateActor(GameObject actor)
+        {
+            Actor = actor;
+        }
         
         /// <summary>
         /// 실제 Ability 실행부

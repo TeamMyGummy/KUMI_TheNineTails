@@ -11,7 +11,8 @@ namespace GameAbilitySystem
 {
     public class AbilitySystem : BaseDomain<ASCState>// : MonoBehaviour
     {
-        private Dictionary<AbilityName, GameplayAbilitySO> _abilities = new();
+        private readonly Dictionary<AbilityName, GameplayAbility> _abilityCache = new();
+        private readonly Dictionary<AbilityName, GameplayAbilitySO> _abilities = new();
         private readonly Dictionary<AbilityKey, AbilityName> _grantedAbilities = new();
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
@@ -62,11 +63,22 @@ namespace GameAbilitySystem
         /// Ability를 실행
         /// </summary>
         /// <param name="key">실행할 스킬명</param>
-        /// todo: 사용할 수 없는 ability를 grant하면 문제됨(로그쓰기)
         public void TryActivateAbility(AbilityKey key)
         {
-            if (_grantedAbilities.TryGetValue(key, out var abilityName)) 
-                AbilityFactory.Instance.TryActivateAbility(_abilities[abilityName], _actor, this);
+            if (!_grantedAbilities.TryGetValue(key, out var abilityName)) return;
+            if (!_abilities.TryGetValue(abilityName, out var abilitySo)) return;
+            
+            if (!_abilityCache.TryGetValue(abilitySo.skillName, out var ability))
+            {
+                ability = AbilityFactory.Instance.GetAbility(abilitySo.skillName);
+                ability.InitAbility(_actor, this, abilitySo);
+                _abilityCache.Add(abilitySo.skillName, ability);
+            }
+
+            ability.UpdateActor(_actor);
+        
+            if(ability.TryActivate() && ability.IsTickable)
+                AbilityFactory.Instance.RegisterTickable(ability as ITickable);
         }
 
         /// <summary>

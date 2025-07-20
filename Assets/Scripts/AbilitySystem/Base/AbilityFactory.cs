@@ -32,7 +32,7 @@ public interface ITickable
 
 public class AbilityFactory : SceneSingleton<AbilityFactory>
 {
-    //캐싱 해야 함
+    //인스턴스를 돌려쓰는 스킬
     private Dictionary<AbilityName, GameplayAbility> _cache = new();
     private HashSet<ITickable> _tickables = new();
 
@@ -55,33 +55,40 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
     /// </summary>
     public void EndAbility(GameplayAbility ability)
     {
-        //todo: 오브젝트 풀링
         if(ability.IsTickable) 
             _tickables.Remove(ability as ITickable);
+    }
+
+    public void RegisterTickable(ITickable tickableAbility)
+    {
+        _tickables.Add(tickableAbility);
     }
 
     public void TryActivateAbility(GameplayAbilitySO abilitySo, GameObject actor, AbilitySystem asc)
     {
         if (!_cache.TryGetValue(abilitySo.skillName, out var ability))
         {
-            ability = GetAbility(abilitySo, actor, asc);
+            ability = GetAbility(abilitySo.skillName);
+            ability.InitAbility(actor, asc, abilitySo);
+            _cache.Add(abilitySo.skillName, ability);
         }
 
-        ability.InitAbility(actor, asc, abilitySo);
+        ability.UpdateActor(actor);
         
         if(ability.TryActivate() && ability.IsTickable)
-            _tickables.Add(ability as ITickable);
+            AbilityFactory.Instance.RegisterTickable(ability as ITickable);
     }
 
-    private GameplayAbility GetAbility(GameplayAbilitySO abilitySo, GameObject actor, AbilitySystem asc)
+    public GameplayAbility GetAbility(AbilityName abilityName)
     {
-        return abilitySo.skillName switch
+        return abilityName switch
         {
             AbilityName.TestBlock => new BlockAbility(),
             AbilityName.Attack => new PlayerAttack(),
             AbilityName.Jump => new Jump(),
             AbilityName.DoubleJump => new Jump(),
             AbilityName.Dash => new Dash(),
+            _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }
 }
