@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private HPRefillStation _hpRefillStation;
 
     public static event System.Action OnJumpCanceled;
-    public int JumpCount = 0;
 
     private void Awake()
     {
