@@ -17,10 +17,11 @@ public class UI_PlayerState : MonoBehaviour
         _playerVM = GetComponent<VM_PlayerState>();
 
     }
-    async void Start()
+    void Start()
     {
-        UpdateUp(_playerVM.Hp.CurrentValue);
-        _disposables.Add(_playerVM.Hp.Subscribe(UpdateUp));
+        _playerVM.Hp
+            .Subscribe(UpdateUp)
+            .AddTo(_disposables);
     }
 
     //추후 해당 코드 변경
