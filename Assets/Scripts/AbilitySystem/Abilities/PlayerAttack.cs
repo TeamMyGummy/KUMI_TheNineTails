@@ -5,15 +5,27 @@ using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using UnityEngine;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 
 
-[CreateAssetMenu(menuName = "Ability/PlayerAttack")]
 public class PlayerAttack : BlockAbility, ITickable
 {
+    private Animator _animator;
+    private AnimatorStateInfo _animatorStateInfo;
+    private readonly String[] _animationNames = new [] {"AirSlash", "AirSlashUp", "AirSlashDown"};
+    private String _currentAnimationName;
+    private readonly String _parameterName = "AttackCount";
+    private int _parameterID;
+    private int _attackCount;
+    
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
         IsTickable = true;
+        _attackCount = 0;
+        
+        _animator = Actor.GetComponent<Animator>();
+        _parameterID = Animator.StringToHash(_parameterName);
     }
     
     /// <summary>
@@ -22,13 +34,39 @@ public class PlayerAttack : BlockAbility, ITickable
     protected override void Activate() 
     {
         base.Activate();
-        Debug.Log("어빌리티 실행");
-        EndSkill().Forget();
+
+        if (_animator != null)
+        { 
+            switch (_attackCount)
+            {
+                case 0:
+                    FirstAttack();
+                    _currentAnimationName =  _animationNames[0];
+                    break;
+                case 1:
+                    SecondAttack();
+                    _currentAnimationName =  _animationNames[1];
+                    break;
+                case 2:
+                    ThirdAttack();
+                    _currentAnimationName =  _animationNames[2];
+                    break;
+                default:
+                    break;
+            } 
+        }
+        
+        //EndSkill().Forget();
     }
 
     public void Update()
     {
-        Debug.Log("~~어빌리티 실행중~~");
+        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if (_animatorStateInfo.IsName(_currentAnimationName) && _animatorStateInfo.normalizedTime >= 1)
+        {
+            EndAttack();
+            EndSkill().Forget();
+        }
     }
 
     public void FixedUpdate()
@@ -40,5 +78,34 @@ public class PlayerAttack : BlockAbility, ITickable
     {
         await UniTask.Delay(TimeSpan.FromSeconds(_so.BlockTimer), DelayType.DeltaTime);
         AbilityFactory.Instance.EndAbility(this);
+    }
+
+    private void FirstAttack()
+    {
+        _animator.SetInteger(_parameterID, 1);
+        _attackCount++;
+    }
+    
+    private void SecondAttack()
+    {
+        _animator.SetInteger(_parameterID, 2);
+        _attackCount++;
+    }
+    
+    private void ThirdAttack()
+    {
+        _animator.SetInteger(_parameterID, 3);
+        ResetAttackCount();
+    }
+    
+    void EndAttack()
+    {
+        _animator.SetInteger(_parameterID, 0);
+        ResetAttackCount();
+    }
+
+    void ResetAttackCount()
+    {
+        _attackCount = 0;
     }
 }

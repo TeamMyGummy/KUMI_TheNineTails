@@ -10,6 +10,7 @@ public enum AbilityName
 {
     TestBlock,
     Attack,
+    PlayerAttack,
     Jump,
     DoubleJump,
     Dash
@@ -19,6 +20,7 @@ public enum AbilityKey
 {
     TestBlock,
     Attack,
+    PlayerAttack,
     Jump,
     DoubleJump,
     Dash
@@ -85,6 +87,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
         {
             AbilityName.TestBlock => new BlockAbility(),
             AbilityName.Attack => new PlayerAttack(),
+            AbilityName.PlayerAttack => new PlayerAttack(),
             AbilityName.Jump => new Jump(),
             AbilityName.DoubleJump => new Jump(),
             AbilityName.Dash => new Dash(),
