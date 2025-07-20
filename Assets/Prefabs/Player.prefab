@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6949076173635677489}
   - component: {fileID: 6454248848244992767}
+  - component: {fileID: 6870492250720839997}
   - component: {fileID: 4833121999341586799}
   - component: {fileID: 7030441563567184465}
   - component: {fileID: 4572241603367076480}
+  - component: {fileID: 6558610773569253239}
   - component: {fileID: 2677374988490091879}
   - component: {fileID: 9100064898656960644}
   - component: {fileID: 5537918733458322441}
@@ -92,6 +94,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6870492250720839997
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9815273898e47a644b179bdbea1fbc16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &4833121999341586799
 Rigidbody2D:
   serializedVersion: 4
@@ -294,6 +317,18 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6558610773569253239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21abadc704337cd4cb4de8082496aea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2677374988490091879
 MonoBehaviour:
   m_ObjectHideFlags: 0
