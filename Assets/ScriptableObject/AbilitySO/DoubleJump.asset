@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8fd0a0fd7a40a428f990c4d9d315e1, type: 3}
   m_Name: DoubleJump
   m_EditorClassIdentifier: 
-  skillKey: 3
-  skillName: 3
+  skillKey: 4
+  skillName: 4
   UnlockFloor: 0
   MaxJumpCount: 2
   JumpPower: 7
