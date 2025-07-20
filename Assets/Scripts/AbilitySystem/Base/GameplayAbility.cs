@@ -24,6 +24,7 @@ namespace GameAbilitySystem
         protected GameObject Actor;
         protected AbilitySystem Asc;
         public bool IsTickable = false;
+        public bool CanReuse = true;
 
         //TryActivate 전에 반드시 선행됨<br/>
         //Awake 처럼 초기화 단을 담당함<br/>

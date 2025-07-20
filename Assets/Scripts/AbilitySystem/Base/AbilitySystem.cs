@@ -72,7 +72,7 @@ namespace GameAbilitySystem
             {
                 ability = AbilityFactory.Instance.GetAbility(abilitySo.skillName);
                 ability.InitAbility(_actor, this, abilitySo);
-                _abilityCache.Add(abilitySo.skillName, ability);
+                if(ability.CanReuse) _abilityCache.Add(abilitySo.skillName, ability);
             }
 
             ability.UpdateActor(_actor);
