@@ -1,11 +1,18 @@
 title: Start
 ---
-Wow!
-한국어가 잘 될까요?
+<<show mark>>
+mark: i have a pen
+<<change 쿠미>>
 
 -> Gosh!
 -> Incredible!
 -> I'm amazed!
+<<hide mark>>
 
-Anyway, time to get writing!
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: you fucking awesome
+<<hide 쿠미>>
+<<end>>
 ===
