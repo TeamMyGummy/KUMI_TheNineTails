@@ -2,6 +2,7 @@ title: Start
 ---
 <<show mark>>
 mark: i have a pen
+mark: Do you agree?
 <<change 쿠미>>
 
 -> Gosh!
