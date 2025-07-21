@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePopup: {fileID: 8320787055283786393, guid: d477267dd7acb41828b3c1b972b6257c, type: 3}
   settingsPopup: {fileID: 3328791667321931522, guid: 54c15ebe0f8bd4d0d996885bff124dfa, type: 3}
-  canvas: {fileID: 0}
+  canvas: {fileID: 4474515677566109307, guid: c53a21dfd0e09664ebcf1f84cda3fc6d, type: 3}
