@@ -1,0 +1,18 @@
+title: Start
+---
+<<show mark>>
+mark: i have a pen
+<<change 쿠미>>
+
+-> Gosh!
+-> Incredible!
+-> I'm amazed!
+<<hide mark>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: you fucking awesome
+<<hide 쿠미>>
+<<end>>
+===
