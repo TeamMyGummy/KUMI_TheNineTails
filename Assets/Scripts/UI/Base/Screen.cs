@@ -9,7 +9,6 @@ public class Screen : MonoBehaviour
 {
 
     private Image _targetImage;
-    private float _fadeDuration = 0.5f;
 
     private void Awake()
     {
@@ -36,38 +35,28 @@ public class Screen : MonoBehaviour
     }
 
     /// <summary>
-    /// 알파값 커짐
+    /// 알파값 조절
     /// </summary>
 
-    public void FadeInScreen()
+    public void FadeScreen(float duration, float startAlpha, float targetAlpha)
     {
         if (_targetImage != null)
         {
-            StartCoroutine(FadeToAlpha(0.5f));
+            StartCoroutine(FadeToAlpha(startAlpha, targetAlpha, duration));
         }
     }
-	
-	/// <summary>
-    /// 알파값 0으로 서서히 변함
-    /// </summary>
-    public void FadeOutScreen()
-    {
-        if (_targetImage != null)
-        {
-            StartCoroutine(FadeToAlpha(0f));
-        }
-    }
+    
 
-    private IEnumerator FadeToAlpha(float targetAlpha)
+    private IEnumerator FadeToAlpha(float startAlpha, float targetAlpha, float duration)
     {
         Color color = _targetImage.color;
-        float startAlpha = color.a;
+        float start = startAlpha;
         float time = 0f;
 
-        while (time < _fadeDuration)
+        while (time < duration)
         {
             time += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
+            float newAlpha = Mathf.Lerp(start, targetAlpha, time / duration);
             _targetImage.color = new Color(color.r, color.g, color.b, newAlpha);
             yield return null;
         }
