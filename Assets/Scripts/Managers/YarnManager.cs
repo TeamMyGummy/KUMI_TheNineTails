@@ -22,6 +22,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     
     [SerializeField] private Image characterImage;
     [SerializeField] private Screen characterScreen;
+    [SerializeField] private UI_StartDialogue startDialogue;
 
     private string _prevCharacterName = "";
     
@@ -56,6 +57,8 @@ public class YarnManager : SceneSingleton<YarnManager>
         }
 
         runner.Stop();
+        
+        startDialogue.ApplyDialogueOverlay();
 
         dialogueScreen.FadeScreen(0.5f, 0f, 0.5f);
         StartCoroutine(WaitSeconds(0.8f));
@@ -81,7 +84,7 @@ public class YarnManager : SceneSingleton<YarnManager>
 
     void ShowCharacter(string spriteName)
     {
-        Sprite sprite = AssetLoader.Load<Sprite>("Sprites/Characters/" + spriteName);
+        Sprite sprite = ResourcesManager.Instance.Load<Sprite>("Sprites/Characters/" + spriteName);
         characterImage.sprite = sprite;
         characterImage.SetNativeSize();
         
@@ -109,7 +112,7 @@ public class YarnManager : SceneSingleton<YarnManager>
 
     void ChangeCharacter(string spriteName)
     {
-        Sprite sprite = AssetLoader.Load<Sprite>("Sprites/Characters/" + spriteName);
+        Sprite sprite = ResourcesManager.Instance.Load<Sprite>("Sprites/Characters/" + spriteName);
         characterImage.sprite = sprite;
         characterImage.SetNativeSize();
     }
