@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using R3;
 using UnityEngine;
@@ -9,11 +9,14 @@ namespace UI
     {
         private AbilitySystem _playerModel;
         public ReadOnlyReactiveProperty<float> Hp { get; private set; }
-        
+        public ReadOnlyReactiveProperty<int> SkillCount { get; private set; }
+
         public void Awake()
         {
             DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
+
             Hp = _playerModel.Attribute.Attributes["HP"].CurrentValue;
+            SkillCount = _playerModel.GrantedAbilityCount;
         }
     }
 }
