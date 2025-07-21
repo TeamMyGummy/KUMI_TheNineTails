@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6298356842276525212}
   - component: {fileID: 5588279943952147266}
   - component: {fileID: 5861849237727394192}
-  - component: {fileID: 7138695222194481082}
+  - component: {fileID: 9170949867514293343}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3147256654497754215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.69, y: -2.06, z: 0}
+  m_LocalPosition: {x: -2.39, y: -1.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7138695222194481082
+--- !u!114 &9170949867514293343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3147256654497754215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a90365e87c6164db19a6a8101002ab, type: 3}
+  m_Script: {fileID: 11500000, guid: cd86452e1804f6c46a4c3ac3f7eb2bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
