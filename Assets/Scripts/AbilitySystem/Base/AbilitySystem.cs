@@ -116,7 +116,7 @@ namespace GameAbilitySystem
 
         public override void Init(string assetKey)
         {
-            var so = ResourcesManager.Instance.Load<AbilitySystemSO>(assetKey);          
+            var so = ResourcesManager.Instance.Load<AbilitySystemSO>(assetKey);
             foreach (var att in so.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
@@ -126,6 +126,8 @@ namespace GameAbilitySystem
             {
                 _abilities.TryAdd(ability.skillName, ability);
             }
+
+            GrantedAbilityCount = _grantedAbilityCount.ToReadOnlyReactiveProperty();
         }
     }
 }
