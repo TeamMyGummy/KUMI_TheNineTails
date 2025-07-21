@@ -22,7 +22,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     
     [SerializeField] private Image characterImage;
     [SerializeField] private Screen characterScreen;
-    [SerializeField] private UI_StartDialogue startDialogue;
+    [SerializeField] private UI_Dialogue dialogue;
 
     private string _prevCharacterName = "";
     
@@ -58,7 +58,7 @@ public class YarnManager : SceneSingleton<YarnManager>
 
         runner.Stop();
         
-        startDialogue.ApplyDialogueOverlay();
+        dialogue.ApplyDialogueOverlay();
 
         dialogueScreen.FadeScreen(0.5f, 0f, 0.5f);
         StartCoroutine(WaitSeconds(0.8f));
@@ -77,6 +77,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     /// </summary>
     void EndDialogue()
     {
+        dialogue.RemoveDialogueOverlay();
         dialogueScreen.FadeScreen(0.5f, 0.5f, 0f);
         dialogEnd?.Invoke();
         dialogEnd = null;
