@@ -22,12 +22,13 @@ namespace GameAbilitySystem
         public ReadOnlyReactiveProperty<int> GrantedAbilityCount { get; private set; }
         
         /// <summary>
-        /// Ability System을 사용하는 Actor 정보를 저장 <br/>
+        /// Ability System에서 현재 씬 상태에 맞게 내부 상태를 변경
         /// </summary>
         /// <param name="actor">ASC를 사용하는 Actor GameObject</param>
         public void SetActor(GameObject actor)
         {
             _actor = actor;
+            _abilityCache.Clear();
         }
 
         /// <summary>
@@ -75,8 +76,6 @@ namespace GameAbilitySystem
                 if(ability.CanReuse) _abilityCache.Add(abilitySo.skillName, ability);
             }
 
-            ability.UpdateActor(_actor);
-        
             if(ability.TryActivate() && ability.IsTickable)
                 AbilityFactory.Instance.RegisterTickable(ability as ITickable);
         }

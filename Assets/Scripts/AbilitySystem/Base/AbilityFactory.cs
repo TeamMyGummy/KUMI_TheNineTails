@@ -68,21 +68,6 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
         _tickables.Add(tickableAbility);
     }
 
-    public void TryActivateAbility(GameplayAbilitySO abilitySo, GameObject actor, AbilitySystem asc)
-    {
-        if (!_cache.TryGetValue(abilitySo.skillName, out var ability))
-        {
-            ability = GetAbility(abilitySo.skillName);
-            ability.InitAbility(actor, asc, abilitySo);
-            _cache.Add(abilitySo.skillName, ability);
-        }
-
-        ability.UpdateActor(actor);
-        
-        if(ability.TryActivate() && ability.IsTickable)
-            AbilityFactory.Instance.RegisterTickable(ability as ITickable);
-    }
-
     public GameplayAbility GetAbility(AbilityName abilityName)
     {
         return abilityName switch
