@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _characterMovement = GetComponent<CharacterMovement>();
         DomainFactory.Instance.GetDomain(DomainKey.Player, out _asc);
-        _asc.SetActor(gameObject);
+        _asc.SetSceneState(gameObject);
     }
     private void Start()
     {

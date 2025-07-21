@@ -25,7 +25,7 @@ namespace GameAbilitySystem
         /// Ability System에서 현재 씬 상태에 맞게 내부 상태를 변경
         /// </summary>
         /// <param name="actor">ASC를 사용하는 Actor GameObject</param>
-        public void SetActor(GameObject actor)
+        public void SetSceneState(GameObject actor)
         {
             _actor = actor;
             _abilityCache.Clear();

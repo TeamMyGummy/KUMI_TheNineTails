@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour
     {
         // ASC 초기화
         asc = new AbilitySystem();
-        asc.SetActor(this.gameObject);
+        asc.SetSceneState(this.gameObject);
         asc.Init(abilitySystemPath);
         asc.GrantAllAbilities();
     }
