@@ -12,6 +12,8 @@ public class PlayerAttack : BlockAbility, ITickable
 {
     private Animator _animator;
     private AnimatorStateInfo _animatorStateInfo;
+    private AttackRange _attackRange;
+    
     private readonly String[] _animationNames = new [] {"AirSlash", "AirSlashUp", "AirSlashDown"};
     private String _currentAnimationName;
     private readonly String _parameterName = "AttackCount";
@@ -26,6 +28,8 @@ public class PlayerAttack : BlockAbility, ITickable
         
         _animator = Actor.GetComponent<Animator>();
         _parameterID = Animator.StringToHash(_parameterName);
+
+        _attackRange = Actor.GetComponentInChildren<AttackRange>();
     }
     
     /// <summary>
@@ -35,21 +39,18 @@ public class PlayerAttack : BlockAbility, ITickable
     {
         base.Activate();
 
-        if (_animator != null)
-        { 
+        if (_attackRange != null && _animator != null)
+        {
             switch (_attackCount)
             {
                 case 0:
-                    FirstAttack();
-                    _currentAnimationName =  _animationNames[0];
+                    Attack(1);
                     break;
                 case 1:
-                    SecondAttack();
-                    _currentAnimationName =  _animationNames[1];
+                    Attack(2);
                     break;
                 case 2:
-                    ThirdAttack();
-                    _currentAnimationName =  _animationNames[2];
+                    Attack(3);
                     break;
                 default:
                     break;
@@ -79,32 +80,33 @@ public class PlayerAttack : BlockAbility, ITickable
         await UniTask.Delay(TimeSpan.FromSeconds(_so.BlockTimer), DelayType.DeltaTime);
         AbilityFactory.Instance.EndAbility(this);
     }
-
-    private void FirstAttack()
+    
+    private void Attack(int attackCount)
     {
-        _animator.SetInteger(_parameterID, 1);
+        // Collider 설정
+        _attackRange.SpawnAttackRange();
+        _attackRange.EnableAttackCollider(false);
+        _attackRange.EnableAttackCollider(true);
+        
+        // Animation 설정
+        _animator.SetInteger(_parameterID, attackCount);
+        _currentAnimationName =  _animationNames[attackCount - 1];
+        if (attackCount == 3)
+        {
+            ResetAttackCount();
+            return;
+        }
         _attackCount++;
     }
     
-    private void SecondAttack()
+    private void EndAttack()
     {
-        _animator.SetInteger(_parameterID, 2);
-        _attackCount++;
-    }
-    
-    private void ThirdAttack()
-    {
-        _animator.SetInteger(_parameterID, 3);
-        ResetAttackCount();
-    }
-    
-    void EndAttack()
-    {
+        _attackRange.EnableAttackCollider(false);
         _animator.SetInteger(_parameterID, 0);
         ResetAttackCount();
     }
 
-    void ResetAttackCount()
+    private void ResetAttackCount()
     {
         _attackCount = 0;
     }
