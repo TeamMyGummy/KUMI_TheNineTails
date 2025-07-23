@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private AbilitySystem _asc;
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
+    private TailBox _tailBox;
 
     public static event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
@@ -207,6 +208,29 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    // Tail Box
+    public void OnTailBoxInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (_tailBox != null)
+            {
+                _tailBox.TailBoxInteraction();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] _tailBox == null");
+            }
+        }
+    }
+    
+    public void SetTailBox(TailBox tailbox)
+    {
+        if (tailbox != null || _tailBox != tailbox)
+        {
+            _tailBox = tailbox;
+        }
+    }
 
     // ----------------------------------------------------------------
     public void OnEnableAllInput()
