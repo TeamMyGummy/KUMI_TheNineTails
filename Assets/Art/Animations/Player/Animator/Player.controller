@@ -833,7 +833,15 @@ BlendTree:
   m_Name: Jump Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 67d4170958eed9342b013fbcfaf78de5, type: 2}
+    m_Motion: {fileID: 7400000, guid: a61dc1e9ef0d50b4c9a9f432a8c9beba, type: 2}
+    m_Threshold: -1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Blend
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: d506d7e1ec81e21499a9a2643a03f749, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -842,31 +850,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 1fd75e2ae4facc44fb56948f2ba9557d, type: 2}
-    m_Threshold: 0.1875
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: VerticalSpeed
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d506d7e1ec81e21499a9a2643a03f749, type: 2}
-    m_Threshold: 0.375
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: a61dc1e9ef0d50b4c9a9f432a8c9beba, type: 2}
-    m_Threshold: 0.5625
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 67d4170958eed9342b013fbcfaf78de5, type: 2}
-    m_Threshold: 0.75
+    m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -874,9 +858,9 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: VerticalSpeed
   m_BlendParameterY: Blend
-  m_MinThreshold: 0
-  m_MaxThreshold: 0.75
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -1
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1101 &1334403612983011644
@@ -1466,7 +1450,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dash
-  m_Speed: 1.34
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6199590035099595863}
