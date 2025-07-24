@@ -26,9 +26,4 @@ public class BlockAbility : GameplayAbility<BlockAbilitySO>
     {
         Asc.TagContainer.AddWithDuration(GameplayTags.BlockRunningAbility, _so.BlockTimer).Forget();
     }
-
-    protected override bool CanActivate()
-    {
-        return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
-    }
 }
