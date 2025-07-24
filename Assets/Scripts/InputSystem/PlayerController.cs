@@ -99,10 +99,15 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (_characterMovement.CheckIsGround())
+            if (_characterMovement.GetCharacterDirection() != Vector2.zero && _characterMovement.CheckIsGround())
             {
                 _asc.TryActivateAbility(AbilityKey.Dash);
+                OnDisableJump();
             }
+        }
+        else if (ctx.canceled)
+        {
+            OnEnableJump();
         }
     }
 
