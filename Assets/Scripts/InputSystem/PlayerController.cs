@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private HPRefillStation _hpRefillStation;
 
     public static event System.Action OnJumpCanceled;
+    public event System.Action OnParryingCanceled;
 
     private void Awake()
     {
@@ -121,8 +122,12 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.started)
         {
-            // 게이지 시작
+            _asc.TryActivateAbility(AbilityKey.Parrying);
         }
+        else if (ctx.canceled)
+        {
+            OnParryingCanceled?.Invoke();
+        } 
     }
 
     public void OnEnableParrying()

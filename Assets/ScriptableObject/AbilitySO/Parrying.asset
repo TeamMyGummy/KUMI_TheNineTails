@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88124fa338fa4bab88f639962e032099, type: 3}
+  m_Name: Parrying
+  m_EditorClassIdentifier: 
+  skillKey: 7
+  skillName: 7
+  Hitbox: {fileID: 3144560449005721106, guid: 12a3c12e541d61646993955dfcff8b44, type: 3}
+  GaugeBar: {fileID: 3789445894818840016, guid: 8260bc7f9fd2772468b340f4a54ff28f, type: 3}
