@@ -35,6 +35,22 @@ public class ResourcesManager : Singleton<ResourcesManager>
         go.name = original.name;
         return go;
     }
+    
+    public GameObject Instantiate(GameObject original, Transform parent = null)
+    {
+        if (original == null)
+        {
+            Debug.Log($"[ResourcesManager] Failed to instantiate prefab: {original.name}");
+            return null;
+        }
+
+        if (original.GetComponent<Poolable>() != null)
+            return PoolManager.Instance.Pop(original, parent).gameObject;
+
+        GameObject go = Object.Instantiate(original, parent);
+        go.name = original.name;
+        return go;
+    }
 
     public void Destroy(GameObject go)
     {
