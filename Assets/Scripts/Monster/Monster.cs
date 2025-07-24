@@ -6,11 +6,12 @@ public class Monster : MonoBehaviour
 {
     
     public AbilitySystem asc { get; private set; }
-
+    
+    [SerializeField] private MonsterSO monsterData;
+    public MonsterSO Data => monsterData;
+    
     [SerializeField] private string abilitySystemPath = "";
-    [SerializeField] private string monsterName = "";
-    [SerializeField] private bool isParrying = true; //패링가능하면 true -> 필요할지 모르겠는데 일단 넣어놓음
-
+    
     private void Awake()
     {
         // ASC 초기화
@@ -31,13 +32,11 @@ public class Monster : MonoBehaviour
                 return;
             }
         }
-
-        
     }
 
     private void Die()
     {
-        Debug.Log($"[Monster] {monsterName} 처치");
+        Debug.Log($"[Monster] 처치");
         Destroy(this.gameObject);
     }
 }

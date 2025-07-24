@@ -6,6 +6,7 @@ using System;
 public class MonsterAttack : GameplayAbility, ITickable
 {
     private MonsterMovement _movement;
+    private Monster _monster;
     private float _cooltime = 0f;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
@@ -14,56 +15,82 @@ public class MonsterAttack : GameplayAbility, ITickable
         IsTickable = true;
 
         _movement = actor.GetComponent<MonsterMovement>();
+        _monster = actor.GetComponent<Monster>();
     }
 
     protected override bool CanActivate()
     {
-        return true;
+        if (_monster == null || _monster.Data == null) return false;
+
+        float viewSight = _monster.Data.ViewSight;
+        float attackRangeX = _monster.Data.AttackRangeX;
+
+        Transform player = GameObject.FindWithTag("Player")?.transform;
+        if (player == null) return false;
+
+        Vector2 toPlayer = (Vector2)(player.position - Actor.transform.position);
+        float angle = Vector2.Angle(GetFacingDirection(), toPlayer);
+        float distance = toPlayer.magnitude;
+
+        return angle <= viewSight * 0.5f && distance <= attackRangeX;
     }
 
     protected override void Activate()
     {
-        // 쿨타임 중이면 실행 취소
-        if (_cooltime > 0f)
-        {
-            return;
-        }
+        if (_cooltime > 0f) return;
+        if (_monster == null || _monster.Data == null) return;
 
-        var attr = Asc.Attribute.Attributes;
+        var data = _monster.Data;
 
-        float attackRangeX = attr["AttackRangeX"].CurrentValue.Value;
-        float attackRangeY = attr["AttackRangeY"].CurrentValue.Value;
-        float attackSpeed = attr["AttackSpeed"].CurrentValue.Value;
-        float attackPower = attr["Attack"].CurrentValue.Value;
+        float attackRangeX = data.AttackRangeX;
+        float attackRangeY = data.AttackRangeY;
+        int attackDirCode = data.AttackDir;
 
-        //임시로 정해둠
+        if (!Asc.Attribute.Attributes.TryGetValue("AttackSpeed", out var speedAttr) ||
+            !Asc.Attribute.Attributes.TryGetValue("Attack", out var powerAttr)) return;
+
+        float attackSpeed = speedAttr.CurrentValue.Value;
+        float attackPower = powerAttr.CurrentValue.Value;
+
         float duration = 2f / attackSpeed;
         _cooltime = duration;
 
-        int dir = _movement != null ? _movement.GetDirection() : 1;
-        Vector2 origin = Actor.transform.position;
-        Vector2 size = new Vector2(attackRangeX, attackRangeY);
-        Vector2 center = origin + new Vector2(dir * size.x / 2f, 0f);
+        int facingDir = _movement != null ? _movement.GetDirection() : 1;
 
-        Collider2D hit = Physics2D.OverlapBox(center, size, 0f);
+        float attackDirDeg = attackDirCode switch
+        {
+            1 => 0f,     // 전방
+            2 => 270f,   // 수직 아래
+        };
+
+        if ((attackDirCode == 1 || attackDirCode == 4) && facingDir == -1)
+            attackDirDeg = 180f - attackDirDeg;
+
+        float angleRad = attackDirDeg * Mathf.Deg2Rad;
+        Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+
+        Vector2 size = new Vector2(attackRangeX, attackRangeY);
+        Vector2 offset = new Vector2(attackDir.x * attackRangeX / 2f, attackDir.y * attackRangeY / 2f);
+        Vector2 origin = (Vector2)Actor.transform.position + offset;
+
+        Collider2D hit = Physics2D.OverlapBox(origin, size, 0f);
         if (hit && hit.CompareTag("Player"))
         {
             if (hit.TryGetComponent(out Damageable damageable))
             {
                 damageable.GetDamage(DomainKey.Player, attackPower);
-                Debug.Log($"[MonsterAttack] 플레이어 공격 → {attackPower} 데미지 적용!");
+                Debug.Log($"[MonsterAttack] 플레이어 공격! {attackPower} 데미지");
             }
         }
-        else
-        {
-            Debug.Log("[MonsterAttack] 범위 안에 플레이어 없음");
-        }
 
-       
         AttackEnd(duration).Forget();
     }
 
-
+    private Vector2 GetFacingDirection()
+    {
+        int dir = _movement != null ? _movement.GetDirection() : 1;
+        return new Vector2(dir, 0f);
+    }
 
     private async UniTask AttackEnd(float duration)
     {
@@ -79,6 +106,4 @@ public class MonsterAttack : GameplayAbility, ITickable
     }
 
     public void FixedUpdate() { }
-   
-
 }

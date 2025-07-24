@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum MovePattern
@@ -19,43 +18,40 @@ public class MonsterMovement : MonoBehaviour
     private Vector2 patrolPos;
     private MovePattern moveState = MovePattern.Patrol;
 
-    [SerializeField] private float moveRange = 6f;
+    private bool isPaused = false;
+    private float pauseTimer = 0;
+
     [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Transform player;
 
-    private bool isPaused = false;
-    private float pauseTimer = 0f;
-    private float pausedTime = 3f;
-    
-    private float aggroReleaseRange = 14f; //어그로 해제 거리
-    private float aggroRange = 8f; //부채꼴의 반지름
-    private float sightAngle = 22.5f; // 45도 부채꼴
-    private float attackRangeX = 0; //공격 범위 가로 칸수
-    private float attackRangeY = 0; //공격 범위 세로 칸수
-
-    void Start()
+    private void Start()
     {
         cm = GetComponent<CharacterMovement>();
         monster = GetComponent<Monster>();
+
         spawnPos = transform.position;
-        patrolPos = spawnPos + new Vector2(-moveRange / 2f, 0);
+        patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
 
-        var attr = monster.asc.Attribute.Attributes;
-
-        aggroRange   = attr["AggroRange"].CurrentValue.Value;
-        attackRangeX  = attr["AttackRangeX"].CurrentValue.Value;
-        attackRangeY  = attr["AttackRangeY"].CurrentValue.Value;
+        if (player == null)
+            player = GameObject.FindWithTag("Player")?.transform;
     }
 
-    void Update()
+    private void Update()
     {
+        if (player == null) return;
+
         float dist = Vector2.Distance(transform.position, player.position);
 
-        if (IsPlayerInSight())
+        // 시야각 계산
+        Vector2 toPlayer = (player.position - transform.position).normalized;
+        Vector2 forward = Vector2.right * dir;
+        float angle = Vector2.Angle(forward, toPlayer);
+
+        if (dist <= monster.Data.AggroRange && angle <= monster.Data.ViewSight / 2f)
         {
             moveState = MovePattern.Aggro;
         }
-        else if (moveState == MovePattern.Aggro && dist >= aggroReleaseRange)
+        else if (moveState == MovePattern.Aggro && dist >= monster.Data.AggroReleaseRange)
         {
             moveState = MovePattern.Return;
         }
@@ -74,15 +70,10 @@ public class MonsterMovement : MonoBehaviour
                 {
                     moveState = MovePattern.Patrol;
                     dir = 1;
-                    patrolPos = spawnPos + new Vector2(-moveRange / 2f, 0);
+                    patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
                 }
                 break;
         }
-    }
-
-    public int GetDirection()
-    {
-        return dir;
     }
 
     private void PatrolMove()
@@ -90,7 +81,7 @@ public class MonsterMovement : MonoBehaviour
         if (isPaused)
         {
             pauseTimer += Time.deltaTime;
-            if (pauseTimer >= pausedTime)
+            if (pauseTimer >= monster.Data.PausedTime)
             {
                 isPaused = false;
                 pauseTimer = 0;
@@ -101,7 +92,7 @@ public class MonsterMovement : MonoBehaviour
             return;
         }
 
-        if (!CheckGroundAhead())
+        if (!monster.Data.IsFlying && !CheckGroundAhead())
         {
             isPaused = true;
             cm.Move(Vector2.zero);
@@ -111,39 +102,28 @@ public class MonsterMovement : MonoBehaviour
         cm.Move(Vector2.right * dir);
 
         float movedDistance = Mathf.Abs(transform.position.x - patrolPos.x);
-        if (movedDistance >= moveRange)
+        if (movedDistance >= monster.Data.PatrolRange)
         {
             dir *= -1;
             patrolPos = transform.position;
         }
     }
 
-    //어그로 끌렸을 때
     private void AggroMove()
     {
         dir = player.position.x > transform.position.x ? 1 : -1;
 
-        if (!CheckGroundAhead())
+        if (!monster.Data.IsFlying && !CheckGroundAhead())
         {
             cm.Move(Vector2.zero);
             return;
         }
 
         cm.Move(Vector2.right * dir);
-
-        if (IsPlayerInSight())
-        {
-            Vector2 offset = player.position - transform.position;
-            //실제 사거리 0.75배 범위 안에 들어와야 공격 시작
-            if (Mathf.Abs(offset.x) <= attackRangeX * 0.75 && Mathf.Abs(offset.y) <= attackRangeY * 0.75)
-            {
-                Debug.Log("[MonsterMovement] 시야 + 범위 충족 → 어빌리티 발동");
-                monster.asc.TryActivateAbility(AbilityKey.MonsterAttack);
-            }
-        }
+        monster.asc.TryActivateAbility(AbilityKey.MonsterAttack);
+        
     }
 
-    //어그로 해제 시 스폰위치로 이동
     private void ReturnMove()
     {
         float dist = Vector2.Distance(transform.position, spawnPos);
@@ -161,66 +141,71 @@ public class MonsterMovement : MonoBehaviour
         cm.Move(Vector2.right * dir);
     }
 
-    //전방 구덩이인지 체크
     private bool CheckGroundAhead()
     {
         Vector2 checkPos = (Vector2)transform.position + new Vector2(dir * 0.8f, -0.2f);
         float checkDistance = 1.2f;
 
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, checkDistance, platformLayer);
-        Debug.DrawRay(checkPos, Vector2.down * checkDistance, Color.red);
         return hit.collider != null;
     }
 
-    //플레이어가 몬스터 시야 범위에 들어왔는지 체크
-    private bool IsPlayerInSight()
-    {
-        Vector2 toPlayer = player.position - transform.position;
-        if (toPlayer.magnitude > aggroRange) return false;
+    public int GetDirection() => dir;
 
-        Vector2 forward = new Vector2(GetDirection(), 0).normalized;
-        float angle = Vector2.Angle(forward, toPlayer.normalized);
-
-        return angle <= sightAngle;
-    }
-
-
-    //몬스터 시야 / 공격 범위 확인 위한 디버깅용
-#if UNITY_EDITOR
+    
+    //어그로 범위, 공격 범위 시각화
     private void OnDrawGizmosSelected()
     {
+    #if UNITY_EDITOR
+        if (monster == null) monster = GetComponent<Monster>();
+        if (monster == null || monster.Data == null) return;
+
         Vector3 origin = transform.position;
-        int dir = GetDirection();
-        Vector3 forward = Vector3.right * dir;
+        Vector2 forward = Vector2.right * dir;
 
-        // 시야 시각화
-        Quaternion rot1 = Quaternion.Euler(0, 0, sightAngle * -dir);
-        Quaternion rot2 = Quaternion.Euler(0, 0, -sightAngle * -dir);
+        // 1. 시야각 + 어그로 범위
+        float viewSight = monster.Data.ViewSight;
+        float aggroRange = monster.Data.AggroRange;
+        float releaseRange = monster.Data.AggroReleaseRange;
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(origin, rot1 * forward * aggroRange);
-        Gizmos.DrawRay(origin, rot2 * forward * aggroRange);
+        float halfAngle = viewSight / 2f;
+
+        Gizmos.color = new Color(1f, 1f, 0f, 0.3f); // 노랑
+        Vector3 left = Quaternion.Euler(0, 0, -halfAngle) * forward;
+        Vector3 right = Quaternion.Euler(0, 0, halfAngle) * forward;
+        Gizmos.DrawRay(origin, left * aggroRange);
+        Gizmos.DrawRay(origin, right * aggroRange);
+
+        Gizmos.color = new Color(0f, 1f, 0f, 0.2f); // 초록
         Gizmos.DrawWireSphere(origin, aggroRange);
 
-        // 공격 범위 시각화
-        if (monster == null || monster.asc == null) return;
+        Gizmos.color = new Color(1f, 0f, 0f, 0.2f); // 빨강
+        Gizmos.DrawWireSphere(origin, releaseRange);
 
-        var attr = monster.asc.Attribute.Attributes;
+        // 2. 공격 범위 표시
+        float rangeX = monster.Data.AttackRangeX;
+        float rangeY = monster.Data.AttackRangeY;
+        int dirCode = monster.Data.AttackDir;
 
-        if (!attr.ContainsKey("AttackRangeX") || !attr.ContainsKey("AttackRangeY")) return;
+        float angleDeg = 0f;
+        switch (dirCode)
+        {
+            case 1: angleDeg = 0f; break;
+            case 2: angleDeg = 270f; break;
+        }
 
-        float attackRangeX = attr["AttackRangeX"].CurrentValue.Value;
-        float attackRangeY = attr["AttackRangeY"].CurrentValue.Value;
+        if ((dirCode == 1 || dirCode == 4) && dir == -1)
+        {
+            angleDeg = 180f - angleDeg;
+        }
 
-        Vector2 size = new Vector2(attackRangeX, attackRangeY);
-        Vector2 center = (Vector2)origin + new Vector2(dir * size.x / 2f, 0f);
+        float angleRad = angleDeg * Mathf.Deg2Rad;
+        Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+        Vector2 offset = attackDir * new Vector2(rangeX / 2f, rangeY / 2f);
+        Vector2 attackOrigin = (Vector2)transform.position + offset;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(center, size);
-    }
-
-    
-    
+        Gizmos.DrawWireCube(attackOrigin, new Vector2(rangeX, rangeY));
 #endif
-
+    }
 }
