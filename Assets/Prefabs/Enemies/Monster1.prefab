@@ -223,9 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af33d3b385b442e4daff2d4932ea3f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterData: {fileID: 11400000, guid: 487333a7b33cd654aaa8061057143775, type: 2}
   abilitySystemPath: Monster/Monster1
-  monsterName: Monster1
-  isParrying: 1
 --- !u!114 &4455798029593503710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3e0a28a460dbe49bd7662fbf893258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRange: 6
   platformLayer:
     serializedVersion: 2
     m_Bits: 8
