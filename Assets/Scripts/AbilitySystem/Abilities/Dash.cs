@@ -10,6 +10,8 @@ public class Dash : BlockAbility, ITickable
     private Rigidbody2D _rigid;
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
+    private Animator _animator;
+    private readonly int _dashID =  Animator.StringToHash("Dash");
 
     private float _dashPower;
     private float _dashTime;
@@ -20,6 +22,7 @@ public class Dash : BlockAbility, ITickable
         base.InitAbility(actor, asc, abilitySo);
 
         IsTickable = true;
+        _animator = Actor.GetComponent<Animator>();
     }
 
     // 점프와 대쉬를 동시에 눌렀을 때 대각선으로 나간다는 문제가 있음
@@ -32,6 +35,7 @@ public class Dash : BlockAbility, ITickable
         _playerController = Actor.GetComponent<PlayerController>();
 
         InitDash();
+        _animator.SetBool(_dashID, true);
         Vector2 currentPosition = _rigid.position;
         float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
 
@@ -55,6 +59,7 @@ public class Dash : BlockAbility, ITickable
             if( _delayTime < 0 )
             {
                 this.DelayOneFrame().Forget();
+                EndDash();
                 _playerController.OnEnableAllInput();
             }
         }
@@ -70,7 +75,8 @@ public class Dash : BlockAbility, ITickable
     private void EndDash()
     {
         InitDash();
-        AbilityFactory.Instance.EndAbility(this);
+        _animator.SetBool(_dashID, false);
+        //AbilityFactory.Instance.EndAbility(this);
     }
 
 }

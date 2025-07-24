@@ -16,8 +16,7 @@ public class PlayerAttack : BlockAbility, ITickable
     
     private readonly String[] _animationNames = new [] {"AirSlash", "AirSlashUp", "AirSlashDown"};
     private String _currentAnimationName;
-    private readonly String _parameterName = "AttackCount";
-    private int _parameterID;
+    private readonly int _parameterID = Animator.StringToHash("AttackCount");
     private int _attackCount;
     
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
@@ -27,8 +26,6 @@ public class PlayerAttack : BlockAbility, ITickable
         _attackCount = 0;
         
         _animator = Actor.GetComponent<Animator>();
-        _parameterID = Animator.StringToHash(_parameterName);
-
         _attackRange = Actor.GetComponentInChildren<AttackRange>();
     }
     
