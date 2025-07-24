@@ -22,10 +22,10 @@ public class UI_Dialogue : MonoBehaviour
             ui.SetActive(false);
         
         background.gameObject.SetActive(true);
-        background.alpha = 0f;
+        //background.alpha = 0f;
 
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeIn());
+        //if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+        //fadeRoutine = StartCoroutine(FadeIn());
     }
 
     public void RemoveDialogueOverlay()
@@ -35,7 +35,7 @@ public class UI_Dialogue : MonoBehaviour
         foreach (var ui in uiToHide)
             ui.SetActive(true);
 
-        StartCoroutine(FadeOut());
+        //StartCoroutine(FadeOut());
     }
 
     private IEnumerator FadeIn()
