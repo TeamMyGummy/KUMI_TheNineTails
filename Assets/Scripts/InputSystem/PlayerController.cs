@@ -51,6 +51,25 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.actions["Move"].Disable();
     }
+    
+    // ------------------------- WallClimb ------------------------
+    public void OnWallClimb(InputAction.CallbackContext ctx)
+    {
+        
+        Vector2 inputDirection = ctx.ReadValue<Vector2>();
+        Debug.Log(inputDirection);
+        _characterMovement.Move(inputDirection);
+    }
+
+    public void OnEnableWallClimb()
+    {
+        _playerInput.actions["WallClimb"].Enable();
+    }
+
+    public void OnDisableWallClimb()
+    {
+        _playerInput.actions["WallClimb"].Disable();
+    }
 
     // --------------------------- Jump ---------------------------
     public void OnJump(InputAction.CallbackContext ctx)
@@ -81,10 +100,15 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (_characterMovement.CheckIsGround())
+            if (_characterMovement.GetCharacterDirection() != Vector2.zero && _characterMovement.CheckIsGround())
             {
                 _asc.TryActivateAbility(AbilityKey.Dash);
+                OnDisableJump();
             }
+        }
+        else if (ctx.canceled)
+        {
+            OnEnableJump();
         }
     }
 

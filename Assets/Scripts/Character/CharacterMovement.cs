@@ -56,7 +56,18 @@ public class CharacterMovement : MonoBehaviour
         _rigidBody.AddForce(Vector2.up * (cancelForce + jumpPower), ForceMode2D.Impulse);
     }
 
+    public void StartWallClimb()
+    {
+        // 벽타기 상태
+         _rigidBody.velocity = Vector2.zero;
+         _rigidBody.gravityScale = 0;           
+    }
 
+    public void EndWallClimb()
+    {
+        _rigidBody.gravityScale = gravity;
+    }
+    
     /// <summary>
     /// 오브젝트가 땅(Platform)에 있는지 확인하는 함수
     /// </summary>
