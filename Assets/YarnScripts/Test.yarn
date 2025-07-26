@@ -2,18 +2,33 @@ title: Start
 ---
 <<show mark>>
 mark: i have a pen
-mark: Do you agree?
+mark: i have an apple
 <<change 쿠미>>
 
 -> Gosh!
 -> Incredible!
--> I'm amazed!
+-> Booooom!~
+ <<jump Wrong>>
+
 <<hide mark>>
 
 <<wait 1>>
 
 <<show 쿠미>>
-쿠미: you fucking awesome
+kumi: You're wrong
+<<hide 쿠미>>
+<<end>>
+
+===
+
+title: Wrong
+---
+<<hide mark>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+kumi: Apple Pen! Wow!
 <<hide 쿠미>>
 <<end>>
 ===

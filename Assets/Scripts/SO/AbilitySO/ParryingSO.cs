@@ -1,7 +1,7 @@
 ﻿using GameAbilitySystem;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Ability/GameplayAbility/Parrying")]
+[CreateAssetMenu(menuName = "Ability/Parrying")]
 public class ParryingSO : GameplayAbilitySO
 {
     public GameObject Hitbox;
