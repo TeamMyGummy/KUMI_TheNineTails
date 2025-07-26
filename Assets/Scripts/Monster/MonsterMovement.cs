@@ -21,7 +21,8 @@ public class MonsterMovement : MonoBehaviour
 
     private bool isPaused = false;
     private float pauseTimer = 0;
-
+    private bool isAttacking = false;
+    
     [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Transform player;
 
@@ -52,10 +53,12 @@ public class MonsterMovement : MonoBehaviour
         if (dist <= monster.Data.AggroRange && angle <= monster.Data.ViewSight / 2f)
         {
             moveState = MovePattern.Aggro;
+            monster.SetAggroState(true);
         }
         else if (moveState == MovePattern.Aggro && dist >= monster.Data.AggroReleaseRange)
         {
             moveState = MovePattern.Return;
+            monster.SetAggroState(false);
         }
 
         switch (moveState)
@@ -123,7 +126,7 @@ public class MonsterMovement : MonoBehaviour
 
         if (IsPlayerTouched())
         {
-            cm.Move(Vector2.zero); // 플레이어랑 부딪혔으면 멈춤
+            cm.Move(Vector2.zero);
         }
         else
         {
@@ -191,16 +194,16 @@ public class MonsterMovement : MonoBehaviour
 
         float halfAngle = viewSight / 2f;
 
-        Gizmos.color = new Color(1f, 1f, 0f, 0.3f); // 노랑
+        Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
         Vector3 left = Quaternion.Euler(0, 0, -halfAngle) * forward;
         Vector3 right = Quaternion.Euler(0, 0, halfAngle) * forward;
         Gizmos.DrawRay(origin, left * aggroRange);
         Gizmos.DrawRay(origin, right * aggroRange);
 
-        Gizmos.color = new Color(0f, 1f, 0f, 0.2f); // 초록
+        Gizmos.color = new Color(0f, 1f, 0f, 0.2f);
         Gizmos.DrawWireSphere(origin, aggroRange);
 
-        Gizmos.color = new Color(1f, 0f, 0f, 0.2f); // 빨강
+        Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
         Gizmos.DrawWireSphere(origin, releaseRange);
 
         // 2. 공격 범위 표시

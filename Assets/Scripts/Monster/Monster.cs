@@ -11,6 +11,9 @@ public class Monster : MonoBehaviour
     public MonsterSO Data => monsterData;
     
     [SerializeField] private string abilitySystemPath = "";
+    private SpriteRenderer spriteRenderer;
+    private float prevHp;
+    public bool isAggro { get; private set; }  = false;
     
     private void Awake()
     {
@@ -19,24 +22,35 @@ public class Monster : MonoBehaviour
         asc.SetSceneState(this.gameObject);
         asc.Init(abilitySystemPath);
         asc.GrantAllAbilities();
+        prevHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
+        float currHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
+        if (currHp < prevHp)
+            StartCoroutine(Flash());
+        prevHp = currHp;
+        
         // 사망 처리
-        if (asc.Attribute.Attributes.TryGetValue("HP", out var hp))
-        {
-            if (hp.CurrentValue.Value <= 0f)
-            {
-                Die();
-                return;
-            }
+        if (currHp <= 0f){
+            Debug.Log($"[Monster] 처치");
+            Destroy(this.gameObject);
         }
+            
     }
 
-    private void Die()
+    private System.Collections.IEnumerator Flash()
     {
-        Debug.Log($"[Monster] 처치");
-        Destroy(this.gameObject);
+        var prev = spriteRenderer.color;
+        spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = prev;
+    }
+
+    public void SetAggroState(bool state)
+    {
+        isAggro = state;
     }
 }

@@ -45,29 +45,26 @@ public class MonsterAttack : GameplayAbility, ITickable
         float angleRad = attackDirDeg * Mathf.Deg2Rad;
         Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
 
-        // ✅ 살짝 더 앞으로 검사
+        
         Vector2 offset = attackDir * new Vector2(attackRangeX / 2f + 0.2f, attackRangeY / 2f);
         Vector2 origin = (Vector2)Actor.transform.position + offset;
 
-        // ✅ 여러 개 체크해서 직접 플레이어 탐색
+        
         Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(attackRangeX, attackRangeY), 0f);
         foreach (var hit in hits)
         {
             if (hit.CompareTag("Player"))
             {
-                Debug.Log("[MonsterAttack] ✅ 플레이어 범위 안에 감지됨!");
                 return true;
             }
         }
 
-        // 혹시 모르니 한 번 더 → 몬스터 자기 위치 기준으로도 검사
         Vector2 fallbackOrigin = (Vector2)Actor.transform.position;
         Collider2D[] fallbackHits = Physics2D.OverlapBoxAll(fallbackOrigin, new Vector2(attackRangeX, attackRangeY), 0f);
         foreach (var hit in fallbackHits)
         {
             if (hit.CompareTag("Player"))
             {
-                Debug.Log("[MonsterAttack] ✅ Fallback 검사에서도 감지됨!");
                 return true;
             }
         }

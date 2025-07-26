@@ -13,17 +13,16 @@ public class UI_MonsterHpBar : MonoBehaviour
     private GameAbilitySystem.Attribute hp;
     private CanvasGroup canvasGroup;
     private CompositeDisposable _disposables = new();
+    private Monster monster;
 
     private float damagedTime;
 
     private IEnumerator Start()
     {
-        // ASC가 초기화될 때까지 기다림
-        var monster = GetComponent<Monster>();
+        monster = GetComponent<Monster>();
+
         while (!monster.asc.Attribute.Attributes.ContainsKey("HP"))
-        {
             yield return null;
-        }
 
         hp = monster.asc.Attribute.Attributes["HP"];
 
@@ -39,31 +38,42 @@ public class UI_MonsterHpBar : MonoBehaviour
 
     void Update()
     {
-        if (hpBar == null || Camera.main == null) return;
+        if (monster == null || hpBar == null || Camera.main == null || hp == null) return;
+
         float offsetY = 1.2f;
         if (TryGetComponent<Collider2D>(out var col))
             offsetY = col.bounds.size.y + 0.3f;
 
-        Vector3 worldPos = transform.position + new Vector3(0, offsetY, 0);
+        Vector3 worldPos = transform.position + new Vector3(0, offsetY - 0.5f, 0);
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
         screenPos.y -= 20f;
         hpBar.position = screenPos;
 
         float t = Time.time - damagedTime;
-        if (t <= 0.7f)
+
+        if (monster.isAggro)
         {
+            hpBar.gameObject.SetActive(true);
             canvasGroup.alpha = 1f;
-        }
-        else if (t <= 1.0f)
-        {
-            canvasGroup.alpha = Mathf.Lerp(1f, 0f, (t - 0.7f) / 0.3f);
         }
         else
         {
-            canvasGroup.alpha = 0f;
-            hpBar.gameObject.SetActive(false);
+            if (t <= 0.7f)
+            {
+                canvasGroup.alpha = 1f;
+            }
+            else if (t <= 1.0f)
+            {
+                canvasGroup.alpha = Mathf.Lerp(1f, 0f, (t - 0.7f) / 0.3f);
+            }
+            else
+            {
+                canvasGroup.alpha = 0f;
+                hpBar.gameObject.SetActive(false);
+            }
         }
     }
+
 
     void OnHpChanged(float newHp)
     {
