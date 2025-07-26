@@ -13,6 +13,7 @@ public class MonsterAttack : GameplayAbility, ITickable
     {
         base.InitAbility(actor, asc, abilitySo);
         IsTickable = true;
+        CanReuse = true;
 
         _movement = actor.GetComponent<MonsterMovement>();
         _monster = actor.GetComponent<Monster>();
@@ -20,47 +21,22 @@ public class MonsterAttack : GameplayAbility, ITickable
 
     protected override bool CanActivate()
     {
+        if (_cooltime > 0f) return false;
         if (_monster == null || _monster.Data == null) return false;
-
-        float viewSight = _monster.Data.ViewSight;
-        float attackRangeX = _monster.Data.AttackRangeX;
 
         Transform player = GameObject.FindWithTag("Player")?.transform;
         if (player == null) return false;
 
-        Vector2 toPlayer = (Vector2)(player.position - Actor.transform.position);
-        float angle = Vector2.Angle(GetFacingDirection(), toPlayer);
-        float distance = toPlayer.magnitude;
-
-        return angle <= viewSight * 0.5f && distance <= attackRangeX;
-    }
-
-    protected override void Activate()
-    {
-        if (_cooltime > 0f) return;
-        if (_monster == null || _monster.Data == null) return;
-
-        var data = _monster.Data;
-
-        float attackRangeX = data.AttackRangeX;
-        float attackRangeY = data.AttackRangeY;
-        int attackDirCode = data.AttackDir;
-
-        if (!Asc.Attribute.Attributes.TryGetValue("AttackSpeed", out var speedAttr) ||
-            !Asc.Attribute.Attributes.TryGetValue("Attack", out var powerAttr)) return;
-
-        float attackSpeed = speedAttr.CurrentValue.Value;
-        float attackPower = powerAttr.CurrentValue.Value;
-
-        float duration = 2f / attackSpeed;
-        _cooltime = duration;
-
+        float attackRangeX = _monster.Data.AttackRangeX * 0.75f;
+        float attackRangeY = _monster.Data.AttackRangeY * 0.75f;
+        int attackDirCode = _monster.Data.AttackDir;
         int facingDir = _movement != null ? _movement.GetDirection() : 1;
 
         float attackDirDeg = attackDirCode switch
         {
-            1 => 0f,     // 전방
-            2 => 270f,   // 수직 아래
+            1 => 0f,
+            2 => 270f,
+            _ => 0f
         };
 
         if ((attackDirCode == 1 || attackDirCode == 4) && facingDir == -1)
@@ -69,21 +45,79 @@ public class MonsterAttack : GameplayAbility, ITickable
         float angleRad = attackDirDeg * Mathf.Deg2Rad;
         Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
 
-        Vector2 size = new Vector2(attackRangeX, attackRangeY);
-        Vector2 offset = new Vector2(attackDir.x * attackRangeX / 2f, attackDir.y * attackRangeY / 2f);
+        // ✅ 살짝 더 앞으로 검사
+        Vector2 offset = attackDir * new Vector2(attackRangeX / 2f + 0.2f, attackRangeY / 2f);
         Vector2 origin = (Vector2)Actor.transform.position + offset;
 
-        Collider2D hit = Physics2D.OverlapBox(origin, size, 0f);
-        if (hit && hit.CompareTag("Player"))
+        // ✅ 여러 개 체크해서 직접 플레이어 탐색
+        Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(attackRangeX, attackRangeY), 0f);
+        foreach (var hit in hits)
         {
-            if (hit.TryGetComponent(out Damageable damageable))
+            if (hit.CompareTag("Player"))
             {
-                damageable.GetDamage(DomainKey.Player, attackPower);
-                Debug.Log($"[MonsterAttack] 플레이어 공격! {attackPower} 데미지");
+                Debug.Log("[MonsterAttack] ✅ 플레이어 범위 안에 감지됨!");
+                return true;
             }
         }
 
-        AttackEnd(duration).Forget();
+        // 혹시 모르니 한 번 더 → 몬스터 자기 위치 기준으로도 검사
+        Vector2 fallbackOrigin = (Vector2)Actor.transform.position;
+        Collider2D[] fallbackHits = Physics2D.OverlapBoxAll(fallbackOrigin, new Vector2(attackRangeX, attackRangeY), 0f);
+        foreach (var hit in fallbackHits)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                Debug.Log("[MonsterAttack] ✅ Fallback 검사에서도 감지됨!");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    protected override void Activate()
+    {
+        if (_monster == null || _monster.Data == null) return;
+
+        var data = _monster.Data;
+        float attackRangeX = data.AttackRangeX;
+        float attackRangeY = data.AttackRangeY;
+        int attackDirCode = data.AttackDir;
+
+        int facingDir = _movement != null ? _movement.GetDirection() : 1;
+
+        float attackDirDeg = attackDirCode switch
+        {
+            1 => 0f,
+            2 => 270f,
+        };
+
+        if ((attackDirCode == 1 || attackDirCode == 4) && facingDir == -1)
+            attackDirDeg = 180f - attackDirDeg;
+
+        float angleRad = attackDirDeg * Mathf.Deg2Rad;
+        Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+        Vector2 offset = attackDir * new Vector2(attackRangeX / 2f, attackRangeY / 2f);
+        Vector2 spawnPos = (Vector2)Actor.transform.position + offset;
+
+        GameObject prefab = _monster.Data.AttackHitboxPrefab;
+        if (prefab != null)
+        {
+            GameObject hitbox = GameObject.Instantiate(prefab, spawnPos, Quaternion.identity);
+
+            var box = hitbox.GetComponent<BoxCollider2D>();
+            if (box != null)
+                box.size = new Vector2(attackRangeX, attackRangeY);
+
+            var sr = hitbox.GetComponent<SpriteRenderer>();
+            if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
+                sr.size = new Vector2(attackRangeX, attackRangeY);
+
+            GameObject.Destroy(hitbox, 0.2f); //임의 설정
+        }
+        _cooltime = 1.5f;
     }
 
     private Vector2 GetFacingDirection()
@@ -92,17 +126,16 @@ public class MonsterAttack : GameplayAbility, ITickable
         return new Vector2(dir, 0f);
     }
 
-    private async UniTask AttackEnd(float duration)
-    {
-        await UniTask.Delay(TimeSpan.FromSeconds(duration));
-        _cooltime = 0f;
-        AbilityFactory.Instance.EndAbility(this);
-    }
-
     public void Update()
     {
-        if (_cooltime > 0f)
-            _cooltime -= Time.deltaTime;
+        _cooltime -= Time.deltaTime;
+
+        if (_cooltime <= 0f && CanActivate())
+        {
+            Activate();
+        }
+
+        AbilityFactory.Instance.RegisterTickable(this);
     }
 
     public void FixedUpdate() { }

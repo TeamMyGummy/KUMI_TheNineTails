@@ -6,6 +6,7 @@ public class MonsterSO : ScriptableObject
     [Header("기본 정보")]
     [SerializeField] private string monsterName = "";
     [SerializeField] private bool isParrying = true;
+    
 
     public string MonsterName => monsterName;
     public bool IsParrying => isParrying;
@@ -27,6 +28,8 @@ public class MonsterSO : ScriptableObject
     [SerializeField] private float attackRangeX = 2f; // 공격 가로 범위
     [SerializeField] private float attackRangeY = 2f; // 공격 세로 범위
     [SerializeField] private int attackDir = 1; // 몹 중앙 기준 공격 방향 (1=전방, 2=하단)
+    [SerializeField] private GameObject attackHitboxPrefab;
+    public GameObject AttackHitboxPrefab => attackHitboxPrefab;
 
     public float AttackRangeX => attackRangeX;
     public float AttackRangeY => attackRangeY;

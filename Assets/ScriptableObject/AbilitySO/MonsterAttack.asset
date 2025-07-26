@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23776631c23f7554995d02461d37f094, type: 3}
   m_Name: MonsterAttack
   m_EditorClassIdentifier: 
-  skillKey: 5
-  skillName: 5
+  skillKey: 6
+  skillName: 6
   UnlockFloor: 0
