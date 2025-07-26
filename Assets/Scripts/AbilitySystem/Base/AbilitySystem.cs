@@ -39,7 +39,7 @@ namespace GameAbilitySystem
         public bool GrantAbility(AbilityKey key, AbilityName name)
         {
             if (!_abilities.TryGetValue(name, out var abilitySo)) return false;
-            _grantedAbilities.Add(key, name);
+            _grantedAbilities[key] = name;
             _grantedAbilityCount.Value = _grantedAbilities.Count;
             return true;
         }
