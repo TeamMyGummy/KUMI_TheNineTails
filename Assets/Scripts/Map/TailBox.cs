@@ -26,7 +26,7 @@ public class TailBox : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[LanternObject] interactionUI == null");
+            Debug.LogWarning("[TailBox] interactionUI == null");
         }
     }
 
