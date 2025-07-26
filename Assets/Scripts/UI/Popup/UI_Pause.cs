@@ -14,6 +14,13 @@ public class UI_Pause : MonoBehaviour
 
     private bool isPaused = false;
 
+    private PlayerController player;
+
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerController>();
+    } 
+
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -22,12 +29,18 @@ public class UI_Pause : MonoBehaviour
         }
     }
 
-   public void TogglePause()
+    public void TogglePause()
     {
-        if (pausePopupInstance != null && pausePopupInstance.activeInHierarchy) return;
-
-        ShowPausePopup();
-        isPaused = true;
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            ShowPausePopup();
+            isPaused = true;
+            player?.OnDisableAllInput();
+        }
     }
 
     private void ShowPausePopup()
@@ -55,6 +68,7 @@ public class UI_Pause : MonoBehaviour
             pausePopupInstance = null;
         }
         isPaused = false;
+        player?.OnEnableAllInput();
     }
 
     public void OnClickSettings()
