@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fdbf9efdbb90134b9a5271bae419745, type: 3}
+  m_Name: Monster6SO
+  m_EditorClassIdentifier: 
+  monsterName: Monster6
+  isParrying: 1
+  viewSight: 90
+  aggroRange: 8
+  aggroReleaseRange: 14
+  isFlying: 0
+  pausedTime: 3
+  attackRangeX: 4
+  attackRangeY: 2
+  attackDir: 1
+  attackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
+  patrolRange: 6
