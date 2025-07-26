@@ -28,7 +28,9 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        _asc.GrantAllAbilities();
+        _asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
+        _asc.GrantAbility(AbilityKey.Dash, AbilityName.Dash);
+        _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);
     }
 
     /*
