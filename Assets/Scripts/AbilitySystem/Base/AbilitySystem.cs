@@ -17,10 +17,10 @@ namespace GameAbilitySystem
         public readonly TagContainer TagContainer = new();
         public readonly GameplayAttribute Attribute = new();
         private GameObject _actor;
-        
+
         private readonly ReactiveProperty<int> _grantedAbilityCount = new(0);
         public ReadOnlyReactiveProperty<int> GrantedAbilityCount { get; private set; }
-        
+
         /// <summary>
         /// Ability System에서 현재 씬 상태에 맞게 내부 상태를 변경
         /// </summary>
@@ -50,9 +50,9 @@ namespace GameAbilitySystem
         /// </summary>
         public bool GrantAllAbilities()
         {
-            foreach(var ac in _abilities)
+            foreach (var ac in _abilities)
             {
-                if(ac.Value != null)
+                if (ac.Value != null)
                 {
                     GrantAbility(ac.Value.skillKey, ac.Key);
                 }
@@ -68,15 +68,15 @@ namespace GameAbilitySystem
         {
             if (!_grantedAbilities.TryGetValue(key, out var abilityName)) return;
             if (!_abilities.TryGetValue(abilityName, out var abilitySo)) return;
-            
+
             if (!_abilityCache.TryGetValue(abilitySo.skillName, out var ability))
             {
                 ability = AbilityFactory.Instance.GetAbility(abilitySo.skillName);
                 ability.InitAbility(_actor, this, abilitySo);
-                if(ability.CanReuse) _abilityCache.Add(abilitySo.skillName, ability);
+                if (ability.CanReuse) _abilityCache.Add(abilitySo.skillName, ability);
             }
 
-            if(ability.TryActivate() && ability.IsTickable)
+            if (ability.TryActivate() && ability.IsTickable)
                 AbilityFactory.Instance.RegisterTickable(ability as ITickable);
         }
 
@@ -127,6 +127,11 @@ namespace GameAbilitySystem
             }
 
             GrantedAbilityCount = _grantedAbilityCount.ToReadOnlyReactiveProperty();
+        }
+        
+        public bool IsGranted(AbilityKey key)
+        {
+            return _grantedAbilities.ContainsKey(key);
         }
     }
 }
