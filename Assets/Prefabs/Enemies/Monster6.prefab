@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2082380748744202796}
   - component: {fileID: 3324790190364519552}
-  - component: {fileID: 2700281690868055709}
   - component: {fileID: 3403843081990806836}
   - component: {fileID: 4769906858628143433}
   - component: {fileID: 6361325025435587433}
@@ -92,41 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &2700281690868055709
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3486313033222118600}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.006104231, y: 0.09755182}
-  m_Size: {x: 1, y: 1.7966123}
-  m_Direction: 0
 --- !u!50 &3403843081990806836
 Rigidbody2D:
   serializedVersion: 4
@@ -223,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af33d3b385b442e4daff2d4932ea3f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: d455b07442dff6d429221acf8828283a, type: 2}
+  monsterData: {fileID: 11400000, guid: d23c1825d09459e4c816ea5230106ec6, type: 2}
   abilitySystemPath: Monster/Monster6
 --- !u!114 &6503694486092639447
 MonoBehaviour:
