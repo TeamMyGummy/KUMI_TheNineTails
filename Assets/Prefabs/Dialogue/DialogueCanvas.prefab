@@ -209,7 +209,7 @@ MonoBehaviour:
   lineView: {fileID: 5731724710338871042}
   characterImage: {fileID: 4945185092777343313}
   characterScreen: {fileID: 9122492195949630765}
-  dialogue: {fileID: 519856357637396455}
+  dialogue: {fileID: 5676860972408675182}
 --- !u!1001 &3592379465054430018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -700,7 +700,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1360987690126651574, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 519856357637396455}
+      addedObject: {fileID: 5676860972408675182}
   m_SourcePrefab: {fileID: 100100000, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
 --- !u!224 &2177330948830712860 stripped
 RectTransform:
@@ -723,7 +723,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1360987690126651574, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
   m_PrefabInstance: {fileID: 5568903335037274241}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &519856357637396455
+--- !u!114 &5676860972408675182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -732,7 +732,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6893756504265930807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c539d09600de0cf4d978ca1de019c672, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b082afdbbb168d449773ea881e663db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 0}
