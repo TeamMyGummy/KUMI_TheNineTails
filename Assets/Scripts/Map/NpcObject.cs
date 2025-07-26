@@ -1,16 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameAbilitySystem;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class HPRefillStation : MonoBehaviour
+public class NpcObject : MonoBehaviour
 {
-    
     [SerializeField] private GameObject interactionUI;
-    [SerializeField] private GameObject beforeUseImage;
-    [SerializeField] private GameObject afterUseImage;
+    
+    
+    // TODO: 대화창 띄우는 함수 가져와서 NpcInteraction에 추가
     
     private bool _playerInRange = false;
     private bool _isUsed = false;
@@ -23,43 +20,17 @@ public class HPRefillStation : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[LanternObject] interactionUI == null");
-        }
-        
-        if (beforeUseImage != null)
-        {
-            beforeUseImage.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("[LanternObject] beforeUseImage == null");
-        }
-        
-        if (afterUseImage != null)
-        {
-            afterUseImage.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("[LanternObject] afterUseImage == null");
+            Debug.LogWarning("[NpcObject] interactionUI == null");
         }
     }
-
-    public void RefillHp()
+    
+    public void NpcInteraction()
     {
         if (_playerInRange == true && _isUsed == false)
         {
-            beforeUseImage.SetActive(false);
-            afterUseImage.SetActive(true);
+            Debug.Log("NpcInteraction 실행");
             
-            AbilitySystem asc;
-            DomainFactory.Instance.GetDomain(DomainKey.Player, out asc);
-            GameplayAttribute att = asc.Attribute;
-            
-            var effect = new HpRefillEffect("HP");
-            effect.Apply(att);
-        
-            Debug.Log("[HP] 최대 회복 완료");
+            YarnManager.Instance.RunDialogue("Start");
             
             _isUsed = true;
             interactionUI.SetActive(false);
@@ -79,7 +50,7 @@ public class HPRefillStation : MonoBehaviour
             var controller = other.GetComponent<PlayerController>();
             if (controller != null)
             {
-                controller.SetHpRefillStation(this);
+                controller.SetNpc(this);
             }
         }
     }

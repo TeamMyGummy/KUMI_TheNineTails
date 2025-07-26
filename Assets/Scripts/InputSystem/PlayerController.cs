@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private AbilitySystem _asc;
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
+    private TailBox _tailBox;
+    private NpcObject _npcObject;
 
     public static event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
@@ -170,6 +172,11 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
+            if (_lanternObject == null)
+            {
+                /*Debug.Log("[LanternInteraction] _lanternObject가 null입니다.");*/
+                return;
+            }
             _lanternObject.InteractWithLantern();
         }
     }
@@ -199,6 +206,55 @@ public class PlayerController : MonoBehaviour
         if (station != null || _hpRefillStation != station)
         {
             _hpRefillStation = station;
+        }
+    }
+    
+    // Tail Box
+    public void OnTailBoxInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (_tailBox != null)
+            {
+                _tailBox.TailBoxInteraction();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] _tailBox == null");
+            }
+        }
+    }
+    
+    public void SetTailBox(TailBox tailbox)
+    {
+        if (tailbox != null || _tailBox != tailbox)
+        {
+            _tailBox = tailbox;
+        }
+    }
+    
+    
+    // NPC Interaction
+    public void OnNpcInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (_npcObject != null)
+            {
+                _npcObject.NpcInteraction();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] NPC == null");
+            }
+        }
+    }
+    
+    public void SetNpc(NpcObject npc)
+    {
+        if (npc != null || _npcObject != npc)
+        {
+            _npcObject = npc;
         }
     }
     

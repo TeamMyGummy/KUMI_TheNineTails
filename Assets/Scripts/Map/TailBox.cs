@@ -1,19 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameAbilitySystem;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class HPRefillStation : MonoBehaviour
+public class TailBox : MonoBehaviour
 {
-    
     [SerializeField] private GameObject interactionUI;
-    [SerializeField] private GameObject beforeUseImage;
-    [SerializeField] private GameObject afterUseImage;
+    [SerializeField] private AbilityKey key = AbilityKey.PlayerAttack;
+    [SerializeField] private AbilityName name = AbilityName.PlayerAttack;
     
+    private AbilitySystem _playerModel;
     private bool _playerInRange = false;
     private bool _isUsed = false;
+    
+    public void Awake()
+    {
+        DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
+    }
     
     private void Start()
     {
@@ -23,43 +26,24 @@ public class HPRefillStation : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[LanternObject] interactionUI == null");
-        }
-        
-        if (beforeUseImage != null)
-        {
-            beforeUseImage.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("[LanternObject] beforeUseImage == null");
-        }
-        
-        if (afterUseImage != null)
-        {
-            afterUseImage.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("[LanternObject] afterUseImage == null");
+            Debug.LogWarning("[TailBox] interactionUI == null");
         }
     }
 
-    public void RefillHp()
+    public void TailBoxInteraction()
     {
         if (_playerInRange == true && _isUsed == false)
         {
-            beforeUseImage.SetActive(false);
-            afterUseImage.SetActive(true);
-            
-            AbilitySystem asc;
-            DomainFactory.Instance.GetDomain(DomainKey.Player, out asc);
-            GameplayAttribute att = asc.Attribute;
-            
-            var effect = new HpRefillEffect("HP");
-            effect.Apply(att);
-        
-            Debug.Log("[HP] 최대 회복 완료");
+            bool success = _playerModel.GrantAbility(key, name);
+
+            if (success)
+            {
+                Debug.Log("스킬 부여 성공!");
+            }
+            else
+            {
+                Debug.LogWarning("스킬 부여 실패: 해당 키/이름에 맞는 스킬이 존재하지 않음.");
+            }
             
             _isUsed = true;
             interactionUI.SetActive(false);
@@ -79,7 +63,7 @@ public class HPRefillStation : MonoBehaviour
             var controller = other.GetComponent<PlayerController>();
             if (controller != null)
             {
-                controller.SetHpRefillStation(this);
+                controller.SetTailBox(this);
             }
         }
     }
