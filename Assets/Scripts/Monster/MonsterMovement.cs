@@ -12,6 +12,7 @@ public class MonsterMovement : MonoBehaviour
 {
     private CharacterMovement cm;
     private Monster monster;
+    private Collider2D monsterCollider;
 
     private int dir = 1;
     private Vector2 spawnPos;
@@ -28,6 +29,7 @@ public class MonsterMovement : MonoBehaviour
     {
         cm = GetComponent<CharacterMovement>();
         monster = GetComponent<Monster>();
+        monsterCollider = GetComponent<Collider2D>();
 
         spawnPos = transform.position;
         patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
@@ -119,10 +121,29 @@ public class MonsterMovement : MonoBehaviour
             return;
         }
 
-        cm.Move(Vector2.right * dir);
+        if (IsPlayerTouched())
+        {
+            cm.Move(Vector2.zero); // 플레이어랑 부딪혔으면 멈춤
+        }
+        else
+        {
+            cm.Move(Vector2.right * dir);
+        }
+
         monster.asc.TryActivateAbility(AbilityKey.MonsterAttack);
-        
     }
+
+
+    private bool IsPlayerTouched()
+    {
+        if (player == null || monsterCollider == null) return false;
+
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+        if (playerCollider == null) return false;
+
+        return monsterCollider.IsTouching(playerCollider);
+    }
+
 
     private void ReturnMove()
     {
