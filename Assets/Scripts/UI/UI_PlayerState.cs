@@ -32,7 +32,7 @@ public class UI_PlayerState : MonoBehaviour
 
         if (_playerVM.SkillCount == null)
         {
-            Debug.LogError("[UI] SkillCount is null");
+            //Debug.LogError("[UI] SkillCount is null");
             return;
         }
 
@@ -58,7 +58,7 @@ public class UI_PlayerState : MonoBehaviour
 
     private void UpdateSkillProfile(int skillCount)
     {
-        Debug.Log($"[SkillUI] SkillCount: {skillCount}, SpriteCount: {skillSprites.Count}");
+        //Debug.Log($"[SkillUI] SkillCount: {skillCount}, SpriteCount: {skillSprites.Count}");
 
         if (skillCount >= 0 && skillCount < skillSprites.Count)
         {
@@ -66,7 +66,7 @@ public class UI_PlayerState : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"[SkillUI] 스킬 수 {skillCount}가 skillSprites 범위를 벗어남");
+            //Debug.LogWarning($"[SkillUI] 스킬 수 {skillCount}가 skillSprites 범위를 벗어남");
         }
     }
 

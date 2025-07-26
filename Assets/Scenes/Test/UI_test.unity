@@ -206,8 +206,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1454383823}
-        m_TargetAssemblyTypeName: UI_StartDialogue, Assembly-CSharp
+      - m_Target: {fileID: 1872498173}
+        m_TargetAssemblyTypeName: UI_Dialogue, Assembly-CSharp
         m_MethodName: ApplyDialogueOverlay
         m_Mode: 1
         m_Arguments:
@@ -337,6 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 134208118}
   - component: {fileID: 134208119}
+  - component: {fileID: 134208121}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -357,7 +358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1454383822}
+  m_Father: {fileID: 857090423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &134208119
 MonoBehaviour:
@@ -374,6 +375,26 @@ MonoBehaviour:
   pausePopup: {fileID: 8320787055283786393, guid: d477267dd7acb41828b3c1b972b6257c, type: 3}
   settingsPopup: {fileID: 3328791667321931522, guid: 54c15ebe0f8bd4d0d996885bff124dfa, type: 3}
   canvas: {fileID: 857090423}
+--- !u!114 &134208121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134208117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784afe93471364f0ea6a4eff1ed218c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 148425229}
+  uiSkillPrefab: {fileID: 7440300192586805678, guid: 42d61cbcca2ea41da82a5a1d9ac32698, type: 3}
+  canvas: {fileID: 857090423}
+--- !u!1 &148425229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2384312483337340385, guid: a26cacc722720824abf1e6b05e88716d, type: 3}
+  m_PrefabInstance: {fileID: 1962800959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &342581574
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,8 +478,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1454383823}
-        m_TargetAssemblyTypeName: UI_StartDialogue, Assembly-CSharp
+      - m_Target: {fileID: 1872498173}
+        m_TargetAssemblyTypeName: UI_Dialogue, Assembly-CSharp
         m_MethodName: RemoveDialogueOverlay
         m_Mode: 1
         m_Arguments:
@@ -659,6 +680,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4474515677566109307, guid: c53a21dfd0e09664ebcf1f84cda3fc6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 134208118}
     - targetCorrespondingSourceObject: {fileID: 4474515677566109307, guid: c53a21dfd0e09664ebcf1f84cda3fc6d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 116218999}
@@ -1081,7 +1105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d84719bbce9264ac9a41e58243f198f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d5ab8744ce58475cb4028c5921cd567, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1576,7 +1600,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1574713191}
-  - {fileID: 134208118}
   - {fileID: 1872498171}
   m_Father: {fileID: 857090423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1651,7 +1674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1497216746
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2166,7 +2189,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1872498173}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SkillTestButton, Assembly-CSharp
         m_MethodName: OnClick_GetSkill
         m_Mode: 1
@@ -2373,7 +2396,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1872498170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac45a520a88848dab3a228c724cc2cf, type: 3}
+  m_Script: {fileID: 11500000, guid: b7af7404fd097408998acc69b5b764b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1962800959
@@ -2482,7 +2505,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2677374988490091879, guid: a26cacc722720824abf1e6b05e88716d, type: 3}
   m_PrefabInstance: {fileID: 1962800959}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 148425229}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9430db4e1184cc548b7548daa9c083a7, type: 3}
@@ -2700,6 +2723,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1795284798}
     m_Modifications:
+    - target: {fileID: 821780820791739754, guid: 90334fdf476fa4f55ad0197e0c3ed0cb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dce40174dc1254177be18274518e5c2b, type: 3}
     - target: {fileID: 859489154886244889, guid: 90334fdf476fa4f55ad0197e0c3ed0cb, type: 3}
       propertyPath: m_SizeDelta.y
       value: 73.6547
