@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
     private TailBox _tailBox;
+    private NpcObject _npcObject;
 
     public static event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
@@ -231,6 +232,32 @@ public class PlayerController : MonoBehaviour
             _tailBox = tailbox;
         }
     }
+    
+    
+    // NPC Interaction
+    public void OnNpcInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            if (_npcObject != null)
+            {
+                _npcObject.NpcInteraction();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] NPC == null");
+            }
+        }
+    }
+    
+    public void SetNpc(NpcObject npc)
+    {
+        if (npc != null || _npcObject != npc)
+        {
+            _npcObject = npc;
+        }
+    }
+    
 
     // ----------------------------------------------------------------
     public void OnEnableAllInput()
