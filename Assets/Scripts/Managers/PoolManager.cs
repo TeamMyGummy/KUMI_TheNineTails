@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Util;
+using Object = UnityEngine.Object;
 
 public class PoolManager : SceneSingleton<PoolManager>
 {
@@ -74,16 +77,19 @@ public class PoolManager : SceneSingleton<PoolManager>
         _pools.Add(original.name, pool);
     }
 
-    public void Push(Poolable poolable)
+    public async UniTaskVoid Push(Poolable poolable, float delay)
     {
         string name = poolable.gameObject.name;
+        
+        if(delay > 0f) await UniTask.Delay(TimeSpan.FromSeconds(delay));
+        
         if (_pools.TryGetValue(name, out var pool))
         {
             pool.Push(poolable);
         }
         else
         {
-            Destroy(poolable.gameObject);
+            Destroy(poolable.gameObject, delay);
         }
     }
 

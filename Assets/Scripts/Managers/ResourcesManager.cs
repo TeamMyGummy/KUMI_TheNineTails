@@ -52,7 +52,7 @@ public class ResourcesManager : Singleton<ResourcesManager>
         return go;
     }
 
-    public void Destroy(GameObject go)
+    public void Destroy(GameObject go, float delay = 0f)
     {
         if (go == null)
             return;
@@ -60,10 +60,10 @@ public class ResourcesManager : Singleton<ResourcesManager>
         Poolable poolable = go.GetComponent<Poolable>();
         if (poolable != null)
         {
-            PoolManager.Instance.Push(poolable);
+            PoolManager.Instance.Push(poolable, delay).Forget();
             return;
         }
 
-        Object.Destroy(go);
+        Object.Destroy(go, delay);
     }
 }
