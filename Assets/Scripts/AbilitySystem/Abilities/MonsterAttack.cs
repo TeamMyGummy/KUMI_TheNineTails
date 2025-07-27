@@ -102,7 +102,8 @@ public class MonsterAttack : GameplayAbility, ITickable
         GameObject prefab = _monster.Data.AttackHitboxPrefab;
         if (prefab != null)
         {
-            GameObject hitbox = GameObject.Instantiate(prefab, spawnPos, Quaternion.identity);
+            GameObject hitbox = ResourcesManager.Instance.Instantiate(prefab);
+            hitbox.transform.position = spawnPos;
 
             var box = hitbox.GetComponent<BoxCollider2D>();
             if (box != null)
@@ -112,7 +113,7 @@ public class MonsterAttack : GameplayAbility, ITickable
             if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
                 sr.size = new Vector2(attackRangeX, attackRangeY);
 
-            GameObject.Destroy(hitbox, 0.2f); //임의 설정
+            ResourcesManager.Instance.Destroy(hitbox, 0.2f); //임의 설정
         }
         _cooltime = 1.5f;
     }
