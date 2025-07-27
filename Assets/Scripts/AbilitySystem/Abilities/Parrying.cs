@@ -54,7 +54,7 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void StartParrying()
     {
         Asc.TagContainer.Add(GameplayTags.BlockRunningAbility);
-        _hitbox.SetActive(true);
+        SetHitbox();
         _gaugeBar.SetActive(true);
         _playerController.OnDisableMove();
 
@@ -129,6 +129,12 @@ public class Parrying : GameplayAbility<ParryingSO>
         catch (OperationCanceledException)
         {
         }
+    }
+
+    private void SetHitbox()
+    {
+        _hitbox.SetActive(true);
+        _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.direction.x * 0.7f, 0.7f, 0f);
     }
 
     private void SetGaugeBar()

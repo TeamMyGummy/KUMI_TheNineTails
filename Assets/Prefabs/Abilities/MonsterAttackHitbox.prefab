@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1542994825678788832}
   - component: {fileID: 7877459647528676109}
   - component: {fileID: 2275648542072403135}
+  - component: {fileID: -6956411535062409754}
   m_Layer: 6
   m_Name: MonsterAttackHitbox
   m_TagString: Untagged
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0cd73c55874975b360e8073ea60453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parryLayerName: Parrying
 --- !u!212 &2275648542072403135
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -143,3 +145,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6956411535062409754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5257110030182595671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca2849116b24d3fb06f90532ad5286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
