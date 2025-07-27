@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 2338418821292249031}
   - component: {fileID: 9037348421667397432}
   - component: {fileID: 3375186237103327657}
-  - component: {fileID: 3627740718070094219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ParryingHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,15 +130,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3627740718070094219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3144560449005721106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67da8d1385b94151a50114bca40b9e8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

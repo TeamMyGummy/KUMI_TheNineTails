@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public static event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
 
+    public Vector2 direction = Vector2.right;
+
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
+        if(inputDirection.x != 0) direction = inputDirection;
         _characterMovement.Move(inputDirection);
     }
 
