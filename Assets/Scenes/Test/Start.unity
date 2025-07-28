@@ -1261,7 +1261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1960500301}
         m_TargetAssemblyTypeName: UI_StartMenu, Assembly-CSharp
-        m_MethodName: OnClick_settingsBtn
+        m_MethodName: OnClick_exitBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -20,6 +20,7 @@ public enum AbilityName
 
 public enum AbilityKey
 {
+    None = -1,
     TestBlock,
     Attack,
     PlayerAttack,

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 5
   skillName: 5
+  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
+  description: nmixx
   BlockTimer: 0.1

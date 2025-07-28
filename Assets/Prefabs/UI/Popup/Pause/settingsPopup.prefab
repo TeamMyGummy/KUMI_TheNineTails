@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 5774714597672337320}
   - component: {fileID: 8819858394321658684}
   - component: {fileID: 6621131405854291931}
+  - component: {fileID: 5473885865355075338}
   m_Layer: 5
   m_Name: settingsPopup
   m_TagString: Untagged
@@ -391,6 +392,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &5473885865355075338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328791667321931522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a74009f09cc84ab28587eed49dad475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeBtn: {fileID: 2109788841230892169}
 --- !u!1 &5132163474898681245
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +527,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5473885865355075338}
         m_TargetAssemblyTypeName: UI_SettingsPopup, Assembly-CSharp
         m_MethodName: ClosePopup
         m_Mode: 1

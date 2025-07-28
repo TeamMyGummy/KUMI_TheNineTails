@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     {
         abilitySystem = new AbilitySystem();
         abilitySystem.Init("Domain/Player");
+        abilitySystem.GrantAllAbilities();
         abilitySystem.SetSceneState(player);
     }
 
@@ -34,10 +35,16 @@ public class InputManager : MonoBehaviour
             go.SetActive(true); 
             uiSkillInstance = go.GetComponent<UI_Skill>();
             uiSkillInstance.SetAbilitySystem(abilitySystem);
-            
+            uiSkillInstance.ForceReferenceReconnect();
+
+            player.GetComponent<PlayerInput>().enabled = false;
+
             return;
         }
 
+        bool willClose = uiSkillInstance.gameObject.activeSelf;
         uiSkillInstance.TogglePopupExternally();
-}
+
+        player.GetComponent<PlayerInput>().enabled = willClose;
+    }
 }
