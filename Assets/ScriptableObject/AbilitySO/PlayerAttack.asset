@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 2
   skillName: 2
+  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
+  description: on Titan
   BlockTimer: 0

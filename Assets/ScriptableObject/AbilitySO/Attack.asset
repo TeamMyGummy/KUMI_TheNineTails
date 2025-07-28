@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23776631c23f7554995d02461d37f094, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  Name: Attack
+  skillKey: 0
+  skillName: 0
+  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
+  description: on Titan
   UnlockFloor: 0
-  Ability: {fileID: 11400000, guid: 463a7fcd1a9d0f9409ff98607f284376, type: 2}
