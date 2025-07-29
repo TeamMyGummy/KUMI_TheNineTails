@@ -12,7 +12,6 @@ public class StripPrefabComments : IProcessSceneWithReport
     {
         foreach (var comment in Object.FindObjectsOfType<PrefabComment>())
         {
-            Debug.Log($"[Strip] Removing PrefabComment from: {comment.gameObject.name}");
             Object.DestroyImmediate(comment);  // 컴포넌트만 제거
         }
     }
