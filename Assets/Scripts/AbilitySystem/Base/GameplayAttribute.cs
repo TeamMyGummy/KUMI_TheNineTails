@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using R3;
 using UnityEngine;
@@ -19,7 +20,8 @@ namespace GameAbilitySystem
         private AttributeSO _attributeSo;
         public float BaseValue => _attributeSo.BaseValue;
         public ReactiveProperty<float> CurrentValue { get; private set; }
-        public float MaxValue => _attributeSo.MaxValue;
+        public float MaxValue => _maxValue is null ? _attributeSo.MaxValue : _maxValue.CurrentValue.Value;
+        [CanBeNull] public Attribute _maxValue { private get; set; }
         
         //public event Action<float>? OnValueChanged;
 
@@ -83,6 +85,10 @@ namespace GameAbilitySystem
             foreach (var att in dict)
             {
                 Attributes[att.Key].SetCurrentValue(att.Value);
+                if(Attributes.TryGetValue($"Max{att.Key}", out var maxAtt))
+                {
+                    Attributes[att.Key]._maxValue = maxAtt;
+                }
             }
         }
 
