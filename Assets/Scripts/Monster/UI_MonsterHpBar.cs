@@ -6,7 +6,7 @@ using System.Collections;
 public class UI_MonsterHpBar : MonoBehaviour
 {
     public GameObject prfHpBar;
-    public GameObject canvas;
+    private GameObject canvas;
 
     private RectTransform hpBar;
     private Image hpImage;
@@ -20,10 +20,15 @@ public class UI_MonsterHpBar : MonoBehaviour
     private IEnumerator Start()
     {
         monster = GetComponent<Monster>();
+        if (canvas == null)
+        {
+            GameObject found = GameObject.Find("BaseCanvas");
+            if (found != null)
+                canvas = found;
+        }
 
         while (!monster.asc.Attribute.Attributes.ContainsKey("HP"))
             yield return null;
-
         hp = monster.asc.Attribute.Attributes["HP"];
 
         hpBar = Instantiate(prfHpBar, canvas.transform).GetComponent<RectTransform>();
@@ -44,7 +49,7 @@ public class UI_MonsterHpBar : MonoBehaviour
         if (TryGetComponent<Collider2D>(out var col))
             offsetY = col.bounds.size.y + 0.3f;
 
-        Vector3 worldPos = transform.position + new Vector3(0, offsetY - 0.5f, 0);
+        Vector3 worldPos = transform.position + new Vector3(0, offsetY - 0.3f, 0);
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
         screenPos.y -= 20f;
         hpBar.position = screenPos;

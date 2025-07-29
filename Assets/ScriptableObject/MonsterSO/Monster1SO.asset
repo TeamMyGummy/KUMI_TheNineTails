@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Monster1
   isParrying: 1
-  viewSight: 90
+  viewStartAngle: -22.5
+  viewSight: 45
   aggroRange: 8
   aggroReleaseRange: 14
   isFlying: 0
   pausedTime: 3
-  attackRangeX: 2
-  attackRangeY: 2
-  attackDir: 1
-  attackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
   patrolRange: 6
+  detectRangeX: 1.5
+  detectRangeY: 1.5
