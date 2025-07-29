@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
+using Util;
 using Debug = UnityEngine.Debug;
 
 public interface IDomain
@@ -70,29 +71,30 @@ public class DomainFactory : Singleton<DomainFactory>
     private GameState _gameState;
     private readonly Dictionary<DomainKey, IDomain> _domains = new();
     public SingletonData Data;
+    public const string Savekey = "gamedata_0";
 
     new void Awake()
     {
         base.Awake();
-        //todo: 구체적인 저장 기획 방식이 나오면 수정하기
-        DataManager.Load("gamedata_0", out _gameState);
+        DataManager.Load(Savekey, out _gameState);
         if (_gameState is null) _gameState = new();
         Data = _gameState.SingletonData;
     }
     
-    public void SaveGameData(string key)
+    public void SaveGameData()
     {
         foreach (var domain in _domains)
         {
             _gameState.Set(domain.Key, domain.Value.Save());
         }
-        DataManager.Save(key, _gameState);
+        DataManager.Save(Savekey, _gameState);
     }
 
-    public void ClearStateAndReload(string key)
+    public void ClearStateAndReload()
     {
         _domains.Clear();
-        DataManager.Load(key, out _gameState);
+        DataManager.Load(Savekey, out _gameState);
+        SceneLoader.LoadScene(Data.LanternState.RecentScene);
     }
 
     public T GetDomain<T>(DomainKey key, Func<T> factory) where T : IDomain

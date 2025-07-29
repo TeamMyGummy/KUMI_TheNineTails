@@ -33,6 +33,23 @@ public class PlayerController : MonoBehaviour
         _asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
         _asc.GrantAbility(AbilityKey.Dash, AbilityName.Dash);
         _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);
+
+#if !UNITY_EDITOR
+        RespawnPlayer();
+#endif
+        Debug.Log("[Player] 개발 중에는 E로 저장된 포인트로 돌아가지 않습니다. ");
+        //이런 종류의 것들이 더 생기면 에디터 단에서 설정할 수 있는 걸 만들겠음
+    }
+
+    //스폰된 플레이어를 영구 저장 위치(마지막으로 저장한 호롱불)로 옮김
+    private void RespawnPlayer()
+    {
+        int checkPoint = DomainFactory.Instance.Data.LanternState.RecentCheckPoint;
+        if (checkPoint != -1)
+        {
+            Debug.Log("[Player] 영구 저장된 위치로 돌아왔습니다." + Lantern.Instance.GetLanternPos(checkPoint));
+            transform.position = Lantern.Instance.GetLanternPos(checkPoint);
+        }
     }
 
     /*

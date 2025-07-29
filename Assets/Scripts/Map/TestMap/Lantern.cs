@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
 
-//⚠️LanternObject가 존재하는 씬에 반드시 붙어있어야 함
 public class Lantern : SceneSingleton<Lantern>
 {
     private Action<int> Interacted;
@@ -16,6 +15,12 @@ public class Lantern : SceneSingleton<Lantern>
         _lanternState = DomainFactory.Instance.Data.LanternState;
         Interacted -= Interact;
         Interacted += Interact;
+    }
+
+    public Vector3 GetLanternPos(int key)
+    {
+        if(!_lanternsObjects.TryGetValue(key, out var lantern)) Debug.Log("현재 씬에서 호롱불을 찾을 수 없습니다. ");
+        return lantern.transform.position;
     }
 
     public void Register(LanternObject lantern)
@@ -45,5 +50,7 @@ public class Lantern : SceneSingleton<Lantern>
         _lanternState.PassedCheckPoint.Add(interactLantern);
         _lanternState.RecentCheckPoint = interactLantern;
         _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
+        
+        DomainFactory.Instance.SaveGameData();
     }
 }
