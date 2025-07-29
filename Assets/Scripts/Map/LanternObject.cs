@@ -26,7 +26,7 @@ public class LanternObject : MonoBehaviour
 
     public Action<int> Interacted;
 
-    void Start()
+    void Awake()
     {
         ChangeLanternState(LanternAppearance.Off);
 
@@ -39,7 +39,7 @@ public class LanternObject : MonoBehaviour
             Debug.LogWarning("[LanternObject] interactionUI == null");
         }
 
-        LanternKey = transform.GetSiblingIndex();
+        LanternKey = int.Parse(name.Split('_', StringSplitOptions.None)[1].Trim());
         
         Lantern.Instance.Register(this);
     }
