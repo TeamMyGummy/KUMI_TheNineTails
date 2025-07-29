@@ -3,103 +3,69 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-public class MonsterAttack : GameplayAbility, ITickable
+public class MonsterAttack : BlockAbility
 {
     private MonsterMovement _movement;
     private Monster _monster;
-    private float _cooltime = 0f;
+    private MonsterAttackSO _attackData;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
-        IsTickable = true;
         CanReuse = true;
 
         _movement = actor.GetComponent<MonsterMovement>();
         _monster = actor.GetComponent<Monster>();
+        _attackData = abilitySo as MonsterAttackSO;
     }
 
     protected override bool CanActivate()
     {
-        if (_cooltime > 0f) return false;
-        if (_monster == null || _monster.Data == null) return false;
-
-        Transform player = GameObject.FindWithTag("Player")?.transform;
-        if (player == null) return false;
-
-        float attackRangeX = _monster.Data.AttackRangeX * 0.75f;
-        float attackRangeY = _monster.Data.AttackRangeY * 0.75f;
-        int attackDirCode = _monster.Data.AttackDir;
-        int facingDir = _movement != null ? _movement.GetDirection() : 1;
-
-        float attackDirDeg = attackDirCode switch
-        {
-            1 => 0f,
-            2 => 270f,
-            _ => 0f
-        };
-
-        if ((attackDirCode == 1 || attackDirCode == 4) && facingDir == -1)
-            attackDirDeg = 180f - attackDirDeg;
-
-        float angleRad = attackDirDeg * Mathf.Deg2Rad;
-        Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
-
-        
-        Vector2 offset = attackDir * new Vector2(attackRangeX / 2f + 0.2f, attackRangeY / 2f);
-        Vector2 origin = (Vector2)Actor.transform.position + offset;
-
-        
-        Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(attackRangeX, attackRangeY), 0f);
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                return true;
-            }
-        }
-
-        Vector2 fallbackOrigin = (Vector2)Actor.transform.position;
-        Collider2D[] fallbackHits = Physics2D.OverlapBoxAll(fallbackOrigin, new Vector2(attackRangeX, attackRangeY), 0f);
-        foreach (var hit in fallbackHits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        //BlockAbility중이면 다시 못 씀
+        return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
-
-
 
     protected override void Activate()
     {
-        if (_monster == null || _monster.Data == null) return;
+        base.Activate();
+        
+        if (_attackData == null) return;
 
-        var data = _monster.Data;
-        float attackRangeX = data.AttackRangeX;
-        float attackRangeY = data.AttackRangeY;
-        int attackDirCode = data.AttackDir;
-
+        //실제 공격 범위
+        float attackRangeX = _attackData.AttackRangeX;
+        float attackRangeY = _attackData.AttackRangeY;
+        //공격 방향 (전방, 하단) >> 방식을 수정하고싶은데... 일단 냅둠
+        AttackDirection attackDirCode = _attackData.AttackDir;
+        GameObject prefab = _attackData.AttackHitboxPrefab;
         int facingDir = _movement != null ? _movement.GetDirection() : 1;
 
-        float attackDirDeg = attackDirCode switch
+        
+        //공격 방향 계산
+        //-------------------------------------------------------
+        float attackDirDeg = 0f;
+
+        switch (_attackData.AttackDir)
         {
-            1 => 0f,
-            2 => 270f,
-        };
-
-        if ((attackDirCode == 1 || attackDirCode == 4) && facingDir == -1)
-            attackDirDeg = 180f - attackDirDeg;
-
+            case AttackDirection.Front:
+                attackDirDeg = (facingDir == 1) ? 0f : 180f;
+                break;
+            case AttackDirection.Up:
+                attackDirDeg = 90f;
+                break;
+            case AttackDirection.Down:
+                attackDirDeg = 270f;
+                break;
+        }
         float angleRad = attackDirDeg * Mathf.Deg2Rad;
         Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
-        Vector2 offset = attackDir * new Vector2(attackRangeX / 2f, attackRangeY / 2f);
-        Vector2 spawnPos = (Vector2)Actor.transform.position + offset;
 
-        GameObject prefab = _monster.Data.AttackHitboxPrefab;
+        Vector2 offset = attackDir * new Vector2(attackRangeX / 2f, attackRangeY / 2f);
+        Vector2 spawnPos = (Vector2)_monster.transform.position + offset;
+        //-------------------------------------------------------
+        
+        
+        //히트박스 프리팹 생성
+        //-------------------------------------------------------
         if (prefab != null)
         {
             GameObject hitbox = ResourcesManager.Instance.Instantiate(prefab);
@@ -113,28 +79,9 @@ public class MonsterAttack : GameplayAbility, ITickable
             if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
                 sr.size = new Vector2(attackRangeX, attackRangeY);
 
-            ResourcesManager.Instance.Destroy(hitbox, 0.2f); //임의 설정
+            ResourcesManager.Instance.Destroy(hitbox, 0.2f);
         }
-        _cooltime = 1.5f;
+        //-------------------------------------------------------
     }
 
-    private Vector2 GetFacingDirection()
-    {
-        int dir = _movement != null ? _movement.GetDirection() : 1;
-        return new Vector2(dir, 0f);
-    }
-
-    public void Update()
-    {
-        _cooltime -= Time.deltaTime;
-
-        if (_cooltime <= 0f && CanActivate())
-        {
-            Activate();
-        }
-
-        AbilityFactory.Instance.RegisterTickable(this);
-    }
-
-    public void FixedUpdate() { }
 }
