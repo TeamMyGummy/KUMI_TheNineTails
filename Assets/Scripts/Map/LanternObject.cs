@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Util;
 
@@ -39,7 +40,7 @@ public class LanternObject : MonoBehaviour
             Debug.LogWarning("[LanternObject] interactionUI == null");
         }
 
-        LanternKey = int.Parse(name.Split('_', StringSplitOptions.None)[1].Trim());
+        LanternKey = SceneLoader.GetCurrentSceneName().StringToInt() + transform.GetSiblingIndex();
         
         Lantern.Instance.Register(this);
     }
@@ -83,8 +84,9 @@ public class LanternObject : MonoBehaviour
             _playerInRange = true;
 
             if (interactionUI != null)
+            {
                 interactionUI.SetActive(true);
-
+            }
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
             {
