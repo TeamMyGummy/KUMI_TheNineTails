@@ -33,7 +33,7 @@ public class Jump : GameplayAbility, ITickable
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();    
         
-        PlayerController.OnJumpCanceled += JumpCanceled;
+        _playerController.OnJumpCanceled += JumpCanceled;
         isJumpKeyDown = true;
 
         if (_jumpCount < _maxJumpCount)

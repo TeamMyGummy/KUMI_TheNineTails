@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -5,18 +6,22 @@ using GameAbilitySystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+/*
+ * 플레이어의 Input을 관리하는 파일입니다.
+ */
 
 public class PlayerController : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
+    private WallClimb _wallClimb;
     private AbilitySystem _asc;
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
     private TailBox _tailBox;
     private NpcObject _npcObject;
 
-    public static event System.Action OnJumpCanceled;
+    public event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
 
     public Vector2 Direction { get; private set; }= Vector2.right;
@@ -25,6 +30,8 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _characterMovement = GetComponent<CharacterMovement>();
+        _wallClimb = new WallClimb(gameObject);
+        
         DomainFactory.Instance.GetDomain(DomainKey.Player, out _asc);
         _asc.SetSceneState(gameObject);
     }
@@ -33,12 +40,24 @@ public class PlayerController : MonoBehaviour
         _asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
         _asc.GrantAbility(AbilityKey.Dash, AbilityName.Dash);
         _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);
+        
+        OnDisableWallClimb();
 
 #if !UNITY_EDITOR
         RespawnPlayer();
 #endif
         Debug.Log("[Player] 개발 중에는 E로 저장된 포인트로 돌아가지 않습니다. ");
         //이런 종류의 것들이 더 생기면 에디터 단에서 설정할 수 있는 걸 만들겠음
+    }
+
+    private void FixedUpdate()
+    {
+        // WallClimb
+        if (_characterMovement.CheckIsWallClimbing() && _wallClimb.IsCharacterReachedTop() && _wallClimb.GetState() == WallClimb.WallClimbState.Climbing)
+        {
+            _wallClimb.OnReachedTop();
+            OnDisableAllInput();
+        }
     }
 
     //스폰된 플레이어를 영구 저장 위치(마지막으로 저장한 호롱불)로 옮김
@@ -63,7 +82,21 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
         if(inputDirection.x != 0) Direction = inputDirection;
-        _characterMovement.Move(inputDirection);
+        
+        if (_characterMovement.CheckIsWallClimbing())
+        {
+            if (ctx.started && inputDirection != _characterMovement.GetCharacterSpriteDirection())
+            {
+                // sprite가 바라보는 방향의 반대 방향일 때 성립
+                _wallClimb.SetWallClimbState(inputDirection);
+                OnEnableJump();
+            }
+            if (ctx.canceled) OnDisableJump();
+        }
+        else
+        {
+            _characterMovement.Move(inputDirection);
+        }
     }
 
     public void OnEnableMove()
@@ -79,10 +112,24 @@ public class PlayerController : MonoBehaviour
     // ------------------------- WallClimb ------------------------
     public void OnWallClimb(InputAction.CallbackContext ctx)
     {
-        
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        Debug.Log(inputDirection);
+        
         _characterMovement.Move(inputDirection);
+        _wallClimb.SetWallClimbState(inputDirection);           
+    }
+
+    public void StartWallClimb(GameObject wall)
+    {
+        _wallClimb.SetCurrentWall(wall);
+        OnEnableWallClimb();
+        OnDisableJump();
+    }
+
+    public void EndWallClimb()
+    {
+        _wallClimb.Reset();
+        OnEnableAllInput();
+        OnDisableWallClimb();
     }
 
     public void OnEnableWallClimb()
@@ -99,6 +146,13 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
+        {
+            if (_characterMovement.CheckIsWallClimbing())
+            {
+                _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * (-1));
+            }
+        }
+        else if (ctx.performed)
         {
             _asc.TryActivateAbility(AbilityKey.DoubleJump);
         }
