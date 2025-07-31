@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 5015354470505412458}
   - component: {fileID: 3252359202633447540}
   m_Layer: 0
-  m_Name: Lantern
+  m_Name: OBJ_Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -386,10 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comment: "\uBC30\uCE58 \uC2DC \uC624\uBE0C\uC81D\uD2B8 \uC774\uB984\uC744 Lantern_(\uCE35\uC218)(3\uC790\uB9AC\uACE0\uC720\uBC88\uD638)
-    \uD615\uC2DD\uC73C\uB85C \uD560 \uAC83\r\n(Ex. \uCE35\uC218 B2, \uACE0\uC720\uBC88\uD638
-    5 -> Lantern_2005)\r\n\uACE0\uC720\uBC88\uD638\uB294 \uC52C \uB0B4\uC5D0\uC11C
-    \uACB9\uCE58\uBA74 \uC548 \uB428(\uB79C\uD134 \uCC3E\uB294 \uD0A4\uB85C \uC0AC\uC6A9\uB428)"
+  comment: "\uD638\uB871\uBD88"
 --- !u!61 &5015354470505412458
 BoxCollider2D:
   m_ObjectHideFlags: 0
