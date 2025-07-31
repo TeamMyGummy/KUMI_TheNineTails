@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 4745927349487541999}
   - component: {fileID: 5592025991325121479}
   m_Layer: 0
-  m_Name: Steam
+  m_Name: OBJ_Steam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
