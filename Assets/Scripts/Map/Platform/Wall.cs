@@ -23,10 +23,9 @@ public class Wall : MonoBehaviour
                  // 벽타기 활성화
                  if (other.gameObject.CompareTag("Player"))
                  {
-                     other.gameObject.GetComponent<PlayerController>().OnEnableWallClimb();
-                     other.gameObject.GetComponent<Player>().SetWallClimb(true);
+                     other.gameObject.GetComponent<PlayerController>().StartWallClimb(gameObject);
                  }
-                 cm.StartWallClimb();               
+                 cm.StartWallClimbState();               
             }
         }
     }
@@ -36,13 +35,12 @@ public class Wall : MonoBehaviour
         CanWallClimb = false;
         if(other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
         {
-            // 벽타기 활성화
+            // 벽타기 비활성화
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<PlayerController>().OnDisableWallClimb();
-                other.gameObject.GetComponent<Player>().SetWallClimb(false);
+                other.gameObject.GetComponent<PlayerController>().EndWallClimb();
             }
-            cm.EndWallClimb();
+            cm.EndWallClimbState();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,10 +15,10 @@ public class CharacterMovement : MonoBehaviour
     [Range(0.0f, 3.0f)] private float gravity;
 
     private Vector2 _nextDirection;
-    private bool isGround;
+    private bool _isGround;
+    private bool _isWallClimbing;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _rigidBody.gravityScale = gravity;
@@ -36,13 +37,28 @@ public class CharacterMovement : MonoBehaviour
         }
 
         // Jump
-        isGround = CheckIsGround();
-
+        _isGround = CheckIsGround();
     }
 
+    /// <summary>
+    /// 캐릭터가 실제 이동하는 방향(인풋)
+    /// </summary>
+    /// <returns>Vector2 방향</returns>
     public Vector2 GetCharacterDirection()
     {
         return _nextDirection;
+    }
+    
+    /// <summary>
+    /// Sprite가 바라보는 x방향
+    /// (1, 0) -> 오른쪽을 보고 있음
+    /// (-1, 0) -> 왼쪽을 보고 있음
+    /// </summary>
+    /// <returns>Vector2 Sprite 방향</returns>
+    public Vector2 GetCharacterSpriteDirection()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        return new Vector2(sprite.flipX ? -1 : 1, 0);
     }
 
     public void Move(Vector2 direction)
@@ -55,17 +71,24 @@ public class CharacterMovement : MonoBehaviour
         float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
         _rigidBody.AddForce(Vector2.up * (cancelForce + jumpPower), ForceMode2D.Impulse);
     }
-
-    public void StartWallClimb()
+    
+    public void StartWallClimbState()
     {
         // 벽타기 상태
-         _rigidBody.velocity = Vector2.zero;
-         _rigidBody.gravityScale = 0;           
+        _rigidBody.velocity = Vector2.zero;
+        _rigidBody.gravityScale = 0;
+        _isWallClimbing = true;
     }
 
-    public void EndWallClimb()
+    public void EndWallClimbState()
     {
         _rigidBody.gravityScale = gravity;
+        _isWallClimbing = false;
+    }
+
+    public bool CheckIsWallClimbing()
+    {
+        return _isWallClimbing;
     }
     
     /// <summary>
