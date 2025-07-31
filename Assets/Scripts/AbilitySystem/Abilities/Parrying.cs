@@ -134,7 +134,7 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void SetHitbox()
     {
         _hitbox.SetActive(true);
-        _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.direction.x * 0.7f, 0.7f, 0f);
+        _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.Direction.x * 0.7f, 0.7f, 0f);
     }
 
     private void SetGaugeBar()
