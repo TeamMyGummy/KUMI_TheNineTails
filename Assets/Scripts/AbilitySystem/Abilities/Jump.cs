@@ -36,7 +36,7 @@ public class Jump : GameplayAbility, ITickable
         _playerController.OnJumpCanceled += JumpCanceled;
         isJumpKeyDown = true;
 
-        if (_jumpCount < _maxJumpCount)
+        if (_jumpCount < _maxJumpCount || _characterMovement.CheckIsWallClimbing())
         {
             _jumpCount++;
             _characterMovement.Jump(_jumpPower);
@@ -75,6 +75,7 @@ public class Jump : GameplayAbility, ITickable
                 }
             }
         }
+        
     }
 
     public void ExtraJump()
