@@ -11,6 +11,11 @@ public static class Extensions
         return component;
     }
 
+    public static void Move(this GameObject go, Vector3 position)
+    {
+        go.transform.position = position;
+    }
+
     public static int StringToInt(this String str)
     {
         int result = 0;
