@@ -37,9 +37,10 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        _asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
+        /*_asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
         _asc.GrantAbility(AbilityKey.Dash, AbilityName.Dash);
-        _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);
+        _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);*/
+        _asc.GrantAllAbilities();
         
         OnDisableWallClimb();
 
@@ -121,8 +122,9 @@ public class PlayerController : MonoBehaviour
     public void StartWallClimb(GameObject wall)
     {
         _wallClimb.SetCurrentWall(wall);
+        OnDisableAllInput();
         OnEnableWallClimb();
-        OnDisableJump();
+        OnEnableMove();
     }
 
     public void EndWallClimb()
