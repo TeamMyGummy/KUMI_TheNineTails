@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 
     private UI_Skill uiSkillInstance;
     private AbilitySystem abilitySystem;
+    private bool hasTabOpenedUI = false;
 
     void Start()
     {
@@ -23,7 +24,16 @@ public class InputManager : MonoBehaviour
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
+            hasTabOpenedUI = true;
             ToggleSkillUI();
+        }
+        else if (hasTabOpenedUI && Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            uiSkillInstance.OnClickSkillBtn();
+        }
+        else if (hasTabOpenedUI && Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            uiSkillInstance.OnClickJournalBtn();
         }
     }
 
