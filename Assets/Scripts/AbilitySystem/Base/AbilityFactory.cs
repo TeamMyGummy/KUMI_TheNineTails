@@ -16,7 +16,8 @@ public enum AbilityName
     Dash,
     MonsterAttack,
     Parrying,
-    FoxFire
+    FoxFire,
+    MonsterRush
 }
 
 public enum AbilityKey
@@ -31,6 +32,7 @@ public enum AbilityKey
     MonsterAttack,
     Parrying,
     FoxFire,
+    MonsterRush
 }
 
 public interface ITickable
@@ -86,6 +88,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.MonsterAttack => new MonsterAttack(),
             AbilityName.Parrying => new Parrying(),
             AbilityName.FoxFire => new FoxFlame(),
+            AbilityName.MonsterRush => new MonsterRush(),
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }
