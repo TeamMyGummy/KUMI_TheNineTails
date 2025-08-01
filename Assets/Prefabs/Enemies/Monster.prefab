@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5049139005124257613}
   - component: {fileID: 489620775718804199}
-  - component: {fileID: 7717712328055240948}
   - component: {fileID: 1261465579931845632}
+  - component: {fileID: 5292661265641981011}
   - component: {fileID: 5513022581248739754}
-  - component: {fileID: 186341297792406129}
+  - component: {fileID: 6565338221165662618}
   - component: {fileID: 868580089823097190}
   - component: {fileID: -6546838180170112804}
   - component: {fileID: 3908813324651643552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Monster
   m_TagString: Enemies
   m_Icon: {fileID: 0}
@@ -33,9 +33,9 @@ Transform:
   m_GameObject: {fileID: 1721104532692786635}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.46, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 3.93, y: -0.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80,19 +80,46 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 154bd2d4a2b70aa49b6b0341f7ebd53e, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 0.8, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7717712328055240948
-CapsuleCollider2D:
+--- !u!50 &1261465579931845632
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721104532692786635}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1000
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &5292661265641981011
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,35 +151,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
---- !u!50 &1261465579931845632
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1721104532692786635}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8, y: 1.6}
+    newSize: {x: 0.8, y: 1.6}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 1.6}
+  m_EdgeRadius: 0
 --- !u!114 &5513022581248739754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &186341297792406129
+--- !u!114 &6565338221165662618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,11 +184,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1721104532692786635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af33d3b385b442e4daff2d4932ea3f4b, type: 3}
+  m_Script: {fileID: 11500000, guid: f210e56167f7ea746bd281bf660d3487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterName: 
-  isParrying: 1
+  monsterData: {fileID: 11400000, guid: 487333a7b33cd654aaa8061057143775, type: 2}
+  abilitySystemPath: Monster/Monster1
+  abilityKey: 6
 --- !u!114 &868580089823097190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prfHpBar: {fileID: 2815187603987094077, guid: 8260bc7f9fd2772468b340f4a54ff28f, type: 3}
-  canvas: {fileID: 0}
 --- !u!114 &-6546838180170112804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,11 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3e0a28a460dbe49bd7662fbf893258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRange: 6
   platformLayer:
     serializedVersion: 2
     m_Bits: 8
-  player: {fileID: 0}
 --- !u!114 &3908813324651643552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,5 +230,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b4d6b24e35b0845b3a9ef4a97a0175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 0.05
   gravity: 1

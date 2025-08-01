@@ -29,6 +29,14 @@ public abstract class Monster : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         _movement = GetComponent<MonsterMovement>();
         player = GameObject.FindWithTag("Player")?.transform;
+        
+        var playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            var monsterCollider = GetComponent<Collider2D>();
+            var playerCollider = playerObj.GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(monsterCollider, playerCollider, true);
+        }
     }
 
     private void Update()
