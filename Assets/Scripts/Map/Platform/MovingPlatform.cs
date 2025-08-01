@@ -20,6 +20,7 @@ public class MovingPlatform : MonoBehaviour
     
     private IEnumerator MovePlatform()
     {
+        Debug.Log("MovePlatform실행");
         while (true)
         {
             Vector3 startPosition = transform.position;
@@ -45,16 +46,6 @@ public class MovingPlatform : MonoBehaviour
             _target = (_target == pointA.position) ? pointB.position : pointA.position;
             
             yield return new WaitForSeconds(waitTime);
-            
-            /*while (Vector3.Distance(transform.position, _target) > 0.1f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, _target, speed * Time.deltaTime);
-                yield return null;
-            }
-            
-            _target = (_target == pointA.position) ? pointB.position : pointA.position;
-            
-            yield return new WaitForSeconds(waitTime);*/
         }
     }
     
