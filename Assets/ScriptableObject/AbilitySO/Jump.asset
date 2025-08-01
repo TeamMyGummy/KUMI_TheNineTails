@@ -15,7 +15,7 @@ MonoBehaviour:
   skillKey: 3
   skillName: 3
   skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
-  description: Jump
+  description: "\uC810\uD504\uB97C \uD55C\uBC88 \uD558\uBA74 \uADF8\uB0E5 \uC810\uD504"
   UnlockFloor: 0
   MaxJumpCount: 1
   JumpPower: 7
