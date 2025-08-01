@@ -49,11 +49,9 @@ public class UI_Pause : MonoBehaviour
 
         pausePopupInstance = Instantiate(pausePopup, canvas);
 
-
         var resumeBtn = pausePopupInstance.transform.Find("Panel/resumeBtn")?.GetComponent<Button>();
         var settingsBtn = pausePopupInstance.transform.Find("Panel/settingsBtn")?.GetComponent<Button>();
         var mainBtn = pausePopupInstance.transform.Find("Panel/mainBtn")?.GetComponent<Button>();
-
 
         if (resumeBtn != null) resumeBtn.onClick.AddListener(ResumeGame);
         if (settingsBtn != null) settingsBtn.onClick.AddListener(OnClickSettings);
@@ -81,6 +79,7 @@ public class UI_Pause : MonoBehaviour
 
     public void OnClickSaveAndMain()
     {
+        DomainFactory.Instance.SaveGameData();
         SceneLoader.LoadScene("Start");
     }
 }
