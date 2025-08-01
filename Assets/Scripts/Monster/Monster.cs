@@ -11,6 +11,9 @@ public abstract class Monster : MonoBehaviour
     [SerializeField] private string abilitySystemPath = "";
     private SpriteRenderer spriteRenderer;
     private float prevHp;
+    
+    private bool isDead = false;
+    
     public bool isAggro { get; private set; } = false; //hp바 띄우는 것 때문에 넣어둠
 
     private MonsterMovement _movement;
@@ -49,8 +52,7 @@ public abstract class Monster : MonoBehaviour
         // 사망 처리
         if (currHp <= 0f)
         {
-            Debug.Log("[Monster] 처치");
-            Destroy(this.gameObject);
+            Die();
         }
 
         if (player == null) return;
@@ -68,7 +70,11 @@ public abstract class Monster : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
         //플레이어가 시야에 들어오면 어그로 처리
-        if (dist <= Data.AggroRange && inSight)
+        if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
+        {
+            EnterAttackRange();
+        }
+        else if (dist <= Data.AggroRange && inSight)
         {
             isAggro = true;
         }
@@ -78,7 +84,7 @@ public abstract class Monster : MonoBehaviour
         }
 
         //어그로 걸려 있고, 공격범위 안에 들어오면 Ability 실행
-        if (isAggro && IsPlayerInAttackRange())
+        if (isAggro && IsPlayerInAttackRange() && !monsterData.IsTriggerAttack)
         {
             EnterAttackRange();
         }
@@ -162,6 +168,13 @@ public abstract class Monster : MonoBehaviour
         spriteRenderer.color = Color.white;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = prev;
+    }
+
+    protected void Die()
+    {
+        Debug.Log("[Monster] 처치");
+        isDead = true;
+        Destroy(this.gameObject);
     }
     
     //디버깅용 기즈모
