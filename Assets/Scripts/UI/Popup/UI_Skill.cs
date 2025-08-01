@@ -13,6 +13,8 @@ public class UI_Skill : MonoBehaviour
     [SerializeField] private Image skillIcon;
     [SerializeField] private TextMeshProUGUI skillName;
     [SerializeField] private TextMeshProUGUI skillDescriptionText;
+    [SerializeField] private GameObject SkillPanel;
+    [SerializeField] private GameObject JournalPanel;
 
     private List<SkillSlot> skillSlots = new();
     private int selectedSkillIndex = -1;
@@ -31,7 +33,7 @@ public class UI_Skill : MonoBehaviour
         gameObject.SetActive(!gameObject.activeSelf);
         if (gameObject.activeSelf)
         {
-            SelectFirstGrantedSkill();
+            OpenSkillView();
         }
     }
 
@@ -60,7 +62,7 @@ public class UI_Skill : MonoBehaviour
                     var so = soList[i];
                     var key = so.skillKey;
 
-                    bool granted = abilitySystem.IsGranted(key); 
+                    bool granted = abilitySystem.IsGranted(key);
 
                     slot.SetSkill(key, so, granted);
                     slot.OnClick = granted ? () => TrySelectSkill(slot) : null;
@@ -97,15 +99,15 @@ public class UI_Skill : MonoBehaviour
 
     public void ForceReferenceReconnect()
     {
-        skillDescriptionText = transform.Find("canvas/Canvas/DescriptionPanel/Text")?.GetComponent<TMPro.TextMeshProUGUI>();
-        skillName = transform.Find("canvas/Canvas/DescriptionPanel/Name")?.GetComponent<TMPro.TextMeshProUGUI>();
-        skillIcon = transform.Find("canvas/Canvas/DescriptionPanel/Icon")?.GetComponent<Image>();
-        skillDescriptionPanel = transform.Find("canvas/Canvas/DescriptionPanel")?.gameObject;
+        skillDescriptionText = transform.Find("Skill/Canvas/DescriptionPanel/Text")?.GetComponent<TMPro.TextMeshProUGUI>();
+        skillName = transform.Find("Skill/Canvas/DescriptionPanel/Name")?.GetComponent<TMPro.TextMeshProUGUI>();
+        skillIcon = transform.Find("Skill/Canvas/DescriptionPanel/Icon")?.GetComponent<Image>();
+        skillDescriptionPanel = transform.Find("Skill/Canvas/DescriptionPanel")?.gameObject;
     }
 
     private void ShowSkillDescription(GameplayAbilitySO so)
     {
-        Debug.Log("[ShowSkillDescription] 호출됨");
+        //Debug.Log("[ShowSkillDescription] 호출됨");
 
         if (skillDescriptionPanel != null)
         {
@@ -145,7 +147,7 @@ public class UI_Skill : MonoBehaviour
             if (skillSlots[i].IsGranted)
             {
                 //Debug.Log($"[UI_Skill] 첫 선택 슬롯: {i}");
-                TrySelectSkill(skillSlots[i]); 
+                TrySelectSkill(skillSlots[i]);
                 return;
             }
         }
@@ -181,5 +183,23 @@ public class UI_Skill : MonoBehaviour
                 break;
             }
         }
+    }
+    public void OnClickJournalBtn()
+    {
+        JournalPanel.SetActive(true);
+        SkillPanel.SetActive(false);
+    }
+
+    public void OnClickSkillBtn()
+    {
+        JournalPanel.SetActive(false);
+        SkillPanel.SetActive(true);
+    }
+
+    public void OpenSkillView()
+    {
+        gameObject.SetActive(true);
+        OnClickSkillBtn();
+        SelectFirstGrantedSkill();
     }
 }
