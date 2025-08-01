@@ -3,6 +3,7 @@ using System.Resources;
 using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using Mono.Cecil;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -40,14 +41,22 @@ public class Projectile : MonoBehaviour
             await UniTask.Yield(PlayerLoopTiming.Update);
             timer += Time.deltaTime; 
         }
-        
-        ResourcesManager.Instance.Destroy(gameObject);
-        //todo. 터지는 애니메이션 후 Destroy
+
+        DestroyProjectile();
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
+    private void DestroyProjectile()
+    {
+        ResourcesManager.Instance.Destroy(gameObject);
+        //todo. 터지는 애니메이션 후 Destroy, 등... 필요에 따라서 알아서 상속받아서 작성하십쇼
+        //todo. 근데 터지는 애니메이션은 아마 100%로 여따 넣을 것 같아서 아트 나오면 애니메이션을 SO로 갈아낄 수 있게 하겠음
+    }
+
+    public virtual void OnTriggerEnter2D(Collider2D other)
     {
         isEnded = true;
+        //todo. 마찬가지... 관통이면 맞았을 때 바로 터지면 안됨...
+        //todo. 만약 경우에 수가 너무 심하게 늘어날 것 같다 싶으면 관통 옵션을 그냥 추가하거나 합성으로 넣도록 하겠음 그때 가서 리팩토링 할게
     }
 
     private void OnDisable()
