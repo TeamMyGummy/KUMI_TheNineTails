@@ -24,6 +24,10 @@ public class MonsterMovement : MonoBehaviour
 
     [SerializeField] private LayerMask platformLayer;
 
+    private bool canChangeDirection = true;
+    private float directionCheckTimer = 0f;
+    private readonly float directionCheckDelay = 0.2f;
+    
     private void Start()
     {
         cm = GetComponent<CharacterMovement>();
@@ -117,18 +121,23 @@ public class MonsterMovement : MonoBehaviour
 
     private void AggroMove()
     {
-        dir = player.position.x > transform.position.x ? 1 : -1;
+        if (canChangeDirection)
+        {
+            directionCheckTimer -= Time.deltaTime;
+            if (directionCheckTimer <= 0f)
+            {
+                directionCheckTimer = directionCheckDelay;
+                dir = player.position.x > transform.position.x ? 1 : -1;
+            }
+        }
 
         if (!monster.Data.IsFlying && !CheckGroundAhead())
         {
             cm.Move(Vector2.zero);
             return;
         }
-        
-        else
-        {
-            cm.Move(Vector2.right * dir);
-        }
+
+        cm.Move(Vector2.right * dir);
     }
 
 
@@ -149,7 +158,7 @@ public class MonsterMovement : MonoBehaviour
         cm.Move(Vector2.right * dir);
     }
 
-    private bool CheckGroundAhead()
+    public bool CheckGroundAhead()
     {
         Vector2 checkPos = (Vector2)transform.position + new Vector2(dir * 0.8f, -0.2f);
         float checkDistance = 1.2f;
@@ -159,4 +168,9 @@ public class MonsterMovement : MonoBehaviour
     }
 
     public int GetDirection() => dir;
+    
+    public void LockDirection(bool lockDir)
+    {
+        canChangeDirection = !lockDir;
+    }
 }

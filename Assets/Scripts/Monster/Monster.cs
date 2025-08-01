@@ -54,6 +54,16 @@ public abstract class Monster : MonoBehaviour
         }
 
         if (player == null) return;
+        
+        if (asc.TagContainer.Has(GameplayTags.BlockRunningAbility))
+        {
+            _movement?.LockDirection(true);
+        }
+        else
+        {
+            _movement?.LockDirection(false);
+        }
+
 
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
@@ -145,8 +155,8 @@ public abstract class Monster : MonoBehaviour
     }
     //---------------------------------------------------
 
-    //피격 시 반짝
-    private System.Collections.IEnumerator Flash()
+    //피격 시 반짝 이펙트 / 공격 직전 반짝 이펙트
+    public System.Collections.IEnumerator Flash()
     {
         var prev = spriteRenderer.color;
         spriteRenderer.color = Color.white;
