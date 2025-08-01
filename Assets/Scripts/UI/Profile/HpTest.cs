@@ -14,7 +14,6 @@ public class HpTestButton : MonoBehaviour
         }
     }
 
-
     public void OnClick_Heal()
     {
         DomainFactory.Instance.GetDomain(DomainKey.Player, out AbilitySystem asc);
