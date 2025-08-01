@@ -4,14 +4,15 @@ using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using Mono.Cecil;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve curve;
-    [SerializeField] private float duration = 0.5f; 
-    [SerializeField] private float maxDistance = 3f;
-    [FormerlySerializedAs("Offset")] [SerializeField] private Vector3 offset = Vector3.zero;
+    [SerializeField] private AnimationCurve curve; //날아갈 때 x축의 위치 곡선
+    [SerializeField] private float duration = 0.5f; //날아가는 시간
+    [SerializeField] private float maxDistance = 3f; //날아가는 거리
+    [SerializeField] private Vector3 offset = Vector3.zero; //히트박스 최초 생성 위치 offset / x값에 바라보고 있는 방향 반영됨
     private bool isEnded = false;
     private Vector2 _direction;
 
@@ -46,10 +47,7 @@ public class Projectile : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.gameObject.CompareTag("Player"))
-        {
-            isEnded = true;
-        }
+        isEnded = true;
     }
 
     private void OnDisable()
