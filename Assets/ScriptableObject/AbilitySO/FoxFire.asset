@@ -16,4 +16,4 @@ MonoBehaviour:
   skillName: 8
   skillIcon: {fileID: 0}
   description: "\uC5EC\uC6B0\uBD88\uC785\uB2C8\uB2F9"
-  Projectile: {fileID: 3144560449005721106, guid: 0dc2900bd20decb4581e9c680fc97fc7, type: 3}
+  projectile: {fileID: 1762829811770736879, guid: 0dc2900bd20decb4581e9c680fc97fc7, type: 3}
