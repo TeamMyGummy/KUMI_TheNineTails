@@ -20,7 +20,8 @@ public class Monster3Movement : MonoBehaviour
     private Transform player;
 
     [SerializeField] private LayerMask platformLayer;
-
+    [SerializeField] private Transform headPivot;
+    
     private bool canChangeDirection = true;
     private float directionCheckTimer = 0f;
     private readonly float directionCheckDelay = 0.2f;
@@ -100,12 +101,12 @@ public class Monster3Movement : MonoBehaviour
             return;
         }
 
-        if (!monster.Data.IsFlying && !CheckGroundAhead())
+        /*if (!monster.Data.IsFlying && !CheckGroundAhead())
         {
             isPaused = true;
             cm.Move(Vector2.zero);
             return;
-        }
+        }*/
 
         cm.Move(Vector2.right * dir);
 
@@ -125,15 +126,15 @@ public class Monster3Movement : MonoBehaviour
             if (directionCheckTimer <= 0f)
             {
                 directionCheckTimer = directionCheckDelay;
-                directionToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                directionToPlayer = ((Vector2)headPivot.position - (Vector2)transform.position).normalized;
             }
         }
         
-        if (!monster.Data.IsFlying && !CheckGroundAhead())
+        /*if (!monster.Data.IsFlying && !CheckGroundAhead())
         {
             cm.Move(Vector2.zero);
             return;
-        }
+        }*/
         
         /*cm.Move(Vector2.right * dir);*/
         cm.Move(directionToPlayer);
@@ -157,16 +158,17 @@ public class Monster3Movement : MonoBehaviour
         cm.Move(Vector2.right * dir);
     }
 
-    public bool CheckGroundAhead()
+    /*public bool CheckGroundAhead()
     {
         Vector2 checkPos = (Vector2)transform.position + new Vector2(dir * 0.8f, -0.2f);
         float checkDistance = 1.2f;
 
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, checkDistance, platformLayer);
         return hit.collider != null;
-    }
+    }*/
 
-    public int GetDirection() => dir;
+    /*public int GetDirection() => dir;*/
+    public Vector2 GetDirection() => directionToPlayer;
     
     public void LockDirection(bool lockDir)
     {
