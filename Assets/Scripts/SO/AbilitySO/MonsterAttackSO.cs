@@ -5,7 +5,8 @@ public enum AttackDirection
 {
     Front = 1,
     Up = 2,
-    Down = 3
+    Down = 3,
+    myself = 4,
 }
 [CreateAssetMenu(menuName = "Ability/MonsterAttackSO")]
 

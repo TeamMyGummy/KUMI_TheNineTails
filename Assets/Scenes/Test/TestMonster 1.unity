@@ -1562,26 +1562,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285527571}
   m_CullTransparentMesh: 1
---- !u!1 &1354765210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1721104532692786635, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
-  m_PrefabInstance: {fileID: 1948905808}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1354765220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354765210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 446495789f94b9c45a8a6277a3921f55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: 58bdf94a66f504420a5211b96c454b31, type: 2}
-  abilitySystemPath: Monster/Monster5
-  abilityKey: 6
 --- !u!1 &1454383821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2274,17 +2254,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1721104532692786635, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3908813324651643552, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
       propertyPath: speed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049139005124257613, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.11
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5049139005124257613, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.58
+      value: -1.23
       objectReference: {fileID: 0}
     - target: {fileID: 5049139005124257613, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2322,10 +2306,7 @@ PrefabInstance:
     - {fileID: 186341297792406129, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1721104532692786635, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1354765220}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e356a47e4199bf47a1b5b70d371c443, type: 3}
 --- !u!1 &2065612633
 GameObject:
