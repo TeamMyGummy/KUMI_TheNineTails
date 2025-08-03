@@ -57,14 +57,7 @@ public abstract class Monster : MonoBehaviour
 
         if (player == null) return;
         
-        if (asc.TagContainer.Has(GameplayTags.BlockRunningAbility))
-        {
-            _movement?.LockDirection(true);
-        }
-        else
-        {
-            _movement?.LockDirection(false);
-        }
+        
 
 
         float dist = Vector2.Distance(transform.position, player.position);
@@ -145,9 +138,10 @@ public abstract class Monster : MonoBehaviour
         float detectX = Data.DetectRangeX;
         float detectY = Data.DetectRangeY;
         int facingDir = _movement != null ? _movement.GetDirection() : 1;
-
-        Vector2 offset = new Vector2(facingDir * (detectX / 2f + 0.2f), 0f);
+        
+        Vector2 offset = new Vector2(Data.DetectOffset.x * facingDir, Data.DetectOffset.y);
         Vector2 origin = (Vector2)transform.position + offset;
+
         Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(detectX, detectY), 0f);
 
         foreach (var hit in hits)
@@ -159,6 +153,8 @@ public abstract class Monster : MonoBehaviour
         }
         return false;
     }
+
+
     //---------------------------------------------------
 
     //피격 시 반짝 이펙트 / 공격 직전 반짝 이펙트
@@ -177,22 +173,21 @@ public abstract class Monster : MonoBehaviour
         Destroy(this.gameObject);
     }
     
-    //디버깅용 기즈모
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (monsterData == null) return;
 
-        //공격 시작 범위
         int facingDir = Application.isPlaying && _movement != null ? _movement.GetDirection() : 1;
-        float detectX = monsterData.DetectRangeX;
-        float detectY = monsterData.DetectRangeY;
-        Vector2 offset = new Vector2(facingDir * (detectX / 2f + 0.2f), 0f);
+
+        // 공격 인식 범위
+        Vector2 offset = new Vector2(monsterData.DetectOffset.x * facingDir, monsterData.DetectOffset.y);
         Vector2 origin = (Vector2)transform.position + offset;
+
         Gizmos.color = new Color(1f, 0.3f, 0.2f, 0.4f);
-        Gizmos.DrawCube(origin, new Vector3(detectX, detectY, 0.1f));
-        
-        //몬스터 시야 범위
+        Gizmos.DrawCube(origin, new Vector3(monsterData.DetectRangeX, monsterData.DetectRangeY, 0.1f));
+
+        // 시야 범위
         float startAngle = monsterData.ViewStartAngle;
         float viewAngle = monsterData.ViewSight;
 
@@ -204,5 +199,7 @@ public abstract class Monster : MonoBehaviour
         UnityEditor.Handles.color = new Color(1f, 1f, 0f, 0.25f);
         UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.forward, Quaternion.Euler(0, 0, startAngle) * Vector3.right, viewAngle, monsterData.AggroRange);
     }
-    #endif
+#endif
+
+
 }
