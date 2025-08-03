@@ -4,7 +4,7 @@ using UnityEngine;
 using GameAbilitySystem;
 
 [CreateAssetMenu(menuName = "Ability/Jump")]
-public class JumpSO : AbilitySO
+public class JumpSO : GameplayAbilitySO
 {
     public int MaxJumpCount;
     public float JumpPower;
