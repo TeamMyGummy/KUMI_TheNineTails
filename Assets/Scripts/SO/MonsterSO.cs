@@ -37,7 +37,10 @@ public class MonsterSO : ScriptableObject
     [Header("공격 시작 인식 범위")]
     [SerializeField] private float detectRangeX = 1.5f;
     [SerializeField] private float detectRangeY = 1.5f;
+    [SerializeField] private Vector2 detectOffset = Vector2.zero; 
+    
     public float DetectRangeX => detectRangeX;
     public float DetectRangeY => detectRangeY;
+    public Vector2 DetectOffset => detectOffset;
     
 }
