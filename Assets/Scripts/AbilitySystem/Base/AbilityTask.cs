@@ -9,10 +9,10 @@ public class AbilityTask
     // GA Activate() 함수에서 실행할 수 있게
     // execute(), canceled()
     private GameObject _actor;
-    private readonly AbilitySequenceSO _sequence;
+    private readonly AbilitySequenceSO _sequenceSO;
     private Camera _camera;
     private Animator _animator;
-    private Sequence _dTsequence;
+    private Sequence _mainSequence;
     
     private readonly int _endSkillID =  Animator.StringToHash("EndSkill");
 
@@ -20,11 +20,11 @@ public class AbilityTask
     /// 기본 생성자
     /// </summary>
     /// <param name="actor"></param>
-    /// <param name="sequence"></param>
-    public AbilityTask(GameObject actor, AbilitySequenceSO sequence)
+    /// <param name="sequenceSO"></param>
+    public AbilityTask(GameObject actor, AbilitySequenceSO sequenceSO)
     {
         _actor = actor;
-        _sequence = sequence;
+        _sequenceSO = sequenceSO;
         _animator = _actor.GetComponent<Animator>();
         
         Initialize();
@@ -35,12 +35,12 @@ public class AbilityTask
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="camera"></param>
-    /// <param name="sequence"></param>
-    public AbilityTask(GameObject actor, Camera camera, AbilitySequenceSO sequence)
+    /// <param name="sequenceSO"></param>
+    public AbilityTask(GameObject actor, Camera camera, AbilitySequenceSO sequenceSO)
     {
         _actor = actor;
         _camera = camera;
-        _sequence = sequence;
+        _sequenceSO = sequenceSO;
         _animator = _actor.GetComponent<Animator>();
         
         Initialize();
@@ -48,77 +48,113 @@ public class AbilityTask
 
     private void Initialize()
     {
-        _dTsequence = DOTween.Sequence();
+        _mainSequence = DOTween.Sequence();
         
-        if (_sequence != null)
+        if (_sequenceSO != null)
         {
             // Animation
-            for (int i = 0; i < _sequence.animations.Count; i++)
+            for (int i = 0; i < _sequenceSO.animations.Count; i++)
             {
-                var animation = _sequence.animations[i].source;
-                var delay = _sequence.animations[i].delay;
-                _dTsequence.InsertCallback(delay, () => PlayAnimation(animation));
+                AbilitySequenceSO.AnimationSq data =  _sequenceSO.animations[i];
+                _mainSequence.InsertCallback(data.delay, () => PlayAnimation(data));
             }
             
             // Sound
-            for (int i = 0; i < _sequence.sounds.Count; i++)
+            for (int i = 0; i < _sequenceSO.sounds.Count; i++)
             {
-                var sound = _sequence.sounds[i].source;
-                var delay = _sequence.sounds[i].delay;
-                _dTsequence.InsertCallback(delay, () => PlaySound(sound));
+                AbilitySequenceSO.SoundSq data = _sequenceSO.sounds[i];
+                _mainSequence.InsertCallback(data.delay, () => PlaySound(data));
+            }
+            
+            // Effect
+            for (int i = 0; i < _sequenceSO.effects.Count; i++)
+            {
+                AbilitySequenceSO.EffectSq data = _sequenceSO.effects[i];
+                _mainSequence.InsertCallback(data.delay, () => PlayEffect(data));
             }
             
             // Slow
-            for (int i = 0; i < _sequence.slows.Count; i++)
+            for (int i = 0; i < _sequenceSO.slows.Count; i++)
             {
-                var duration = _sequence.slows[i].duration;
-                var delay = _sequence.slows[i].delay;
-                _dTsequence.InsertCallback(delay, () => PlaySlow(duration).Forget());
+                _mainSequence.Join(PlaySlow(_sequenceSO.slows[i]));
+                /*AbilitySequenceSO.SlowSq data =  _sequenceSO.slows[i];
+                _mainSequence.InsertCallback(data.delay, () => PlaySlow(data));*/
             }
             
             // Camera Task
-            for (int i = 0; i < _sequence.cameras.Count; i++)
+            for (int i = 0; i < _sequenceSO.cameras.Count; i++)
             {
-                var camera = _sequence.cameras[i].cameraTask;
-                var delay = _sequence.cameras[i].delay;
-                _dTsequence.InsertCallback(delay, () => PlayCameraTask(camera));
+                AbilitySequenceSO.CameraSq data = _sequenceSO.cameras[i];
+                _mainSequence.InsertCallback(data.delay, () => PlayCameraTask(data));
             }
         }
 
-        _dTsequence.SetAutoKill(false);
+        _mainSequence.SetAutoKill(false);
     }
     
     public void Execute()
     {
-        _dTsequence.Play();
+        _mainSequence.Play();
     }
 
     public void Canceled()
     {
-        _dTsequence.Pause();
-        _dTsequence.Rewind();
+        _mainSequence.Pause();
+        _mainSequence.Rewind();
         
         _animator.SetTrigger(_endSkillID);
     }
 
-    private void PlayAnimation(AnimationClip source)
+    private void PlayAnimation(AbilitySequenceSO.AnimationSq data)
     {
-        _animator.Play(source.name, 0, 0);
+        _animator.Play(data.source.name, 0, 0);
     }
 
-    private void PlaySound(AudioClip source)
+    private void PlaySound(AbilitySequenceSO.SoundSq data)
+    {
+        
+    }
+
+    private void PlayEffect(AbilitySequenceSO.EffectSq data)
     {
         
     }
     
-    private async UniTask PlaySlow(float duration)
+    private Sequence PlaySlow(AbilitySequenceSO.SlowSq data)
     {
-        await UniTask.Delay((int)(duration * 1000));
+        float originalTimeScale = Time.timeScale;
+        
+        var sequence = DOTween.Sequence();
+        sequence.SetUpdate(true); // UnscaledTime 사용
+        
+        if (data.delay > 0)
+            sequence.AppendInterval(data.delay);
+        
+        // Slow In
+        //sequence.AppendCallback(()=> Time.timeScale = data.targetTimeScale);
+        sequence.Append(DOTween.To(() => Time.timeScale, x =>
+            {
+                Time.timeScale = x;
+                //Debug.Log(Time.timeScale);
+            }
+                , data.targetTimeScale, 0.1f)
+            .SetEase(Ease.InOutQuad).SetUpdate(true));
+        
+        // Slow Duration 유지
+        sequence.AppendInterval(data.duration);
+        
+        /*// Slow Out
+        sequence.Append(DOTween.To(() => Time.timeScale, x => Time.timeScale = x, originalTimeScale, 0.1f)
+            .SetEase(Ease.InOutQuad).SetUpdate(true));*/
+
+        sequence.OnComplete(() => { Time.timeScale = originalTimeScale; });
+        
+        return sequence;
     }
 
-    private void PlayCameraTask(CameraTask cameraTask)
+    private void PlayCameraTask(AbilitySequenceSO.CameraSq data)
     {
-        cameraTask.Initialize(_camera);
-        cameraTask.Execute();
+        data.cameraTask.Initialize(_camera);
+        data.cameraTask.Execute();
     }
 }

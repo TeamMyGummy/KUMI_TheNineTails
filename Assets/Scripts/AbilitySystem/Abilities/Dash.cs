@@ -42,6 +42,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _playerController = Actor.GetComponent<PlayerController>();
 
         InitDash();
+        _task.Execute();
         //_animator.SetBool(_dashID, true);
         Vector2 currentPosition = _rigid.position;
         float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
@@ -49,7 +50,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _rigid.velocity = Vector2.zero;
         _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);
         
-        _task.Execute();
+        
     }
 
     public void Update()

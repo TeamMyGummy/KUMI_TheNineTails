@@ -17,4 +17,4 @@ MonoBehaviour:
   skillSequence: {fileID: 11400000, guid: 78d55a5b660dd4546b9c9d2b577da2eb, type: 2}
   skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: nmixx
-  BlockTimer: 0.1
+  BlockTimer: 0.3
