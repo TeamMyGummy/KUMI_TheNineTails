@@ -14,5 +14,6 @@ namespace GameAbilitySystem
         public AbilitySequenceSO skillSequence;
         public Sprite skillIcon;
         public string description;
+        public int unlockFloor;
     }
 }
