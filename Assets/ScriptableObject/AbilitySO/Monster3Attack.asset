@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: 6
   skillIcon: {fileID: 0}
   description: 
-  BlockTimer: 0
+  BlockTimer: 2
   AttackRangeX: 1
   AttackRangeY: 1
   AttackDir: 3
