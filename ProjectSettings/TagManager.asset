@@ -18,9 +18,9 @@ TagManager:
   - Hitbox
   - Parrying
   - Monster
-  - 
-  - 
-  - 
+  - MonsterHitbox
+  - Player
+  - PlayerHitbox
   - 
   - 
   - 
