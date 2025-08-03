@@ -21,8 +21,17 @@ public class AbilitySequenceSO : ScriptableObject
     }
     
     [System.Serializable]
+    public struct EffectSq
+    {
+        public GameObject source;
+        public Vector2 spawnPosition;
+        public float delay;
+    }
+    
+    [System.Serializable]
     public struct SlowSq
     {
+        public float targetTimeScale;
         public float duration;
         public float delay;
     }
@@ -45,6 +54,9 @@ public class AbilitySequenceSO : ScriptableObject
     
     [Header("Sound")]
     public List<SoundSq> sounds;
+
+    [Header("Sound")]
+    public List<EffectSq> effects;
 
     [Header("Slow")] 
     public List<SlowSq> slows;
