@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 9100064898656960644}
   - component: {fileID: 5537918733458322441}
   - component: {fileID: 2105771039037868481}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 1740163853874696707}
   - component: {fileID: 5302310441355276073}
   - component: {fileID: 501097482602220033}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 8368606157360877661}
   - component: {fileID: 4675256570011598279}
   - component: {fileID: 2234055792613288173}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
