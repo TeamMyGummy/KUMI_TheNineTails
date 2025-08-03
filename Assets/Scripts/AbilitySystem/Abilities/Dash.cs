@@ -13,9 +13,10 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private Animator _animator;
     private readonly int _dashID =  Animator.StringToHash("Dash");
 
+    private DashSO _dashSO;
     private float _dashPower;
     private float _dashTime;
-    private float _delayTime;
+    private float _endDelayTime;
 
     private AbilitySequenceSO _sequenceSO;
     private AbilityTask _task;
@@ -25,6 +26,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         base.InitAbility(actor, asc, abilitySo);
 
         IsTickable = true;
+        _dashSO = (DashSO) abilitySo;
         _animator = Actor.GetComponent<Animator>();
     
         // Task
@@ -65,8 +67,8 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
             _rigid.velocity = Vector2.zero;
             _playerController.OnDisableAllInput();
 
-            _delayTime -= Time.deltaTime;
-            if( _delayTime < 0 )
+            _endDelayTime -= Time.deltaTime;
+            if( _endDelayTime < 0 )
             {
                 this.DelayOneFrame().Forget();
                 EndDash();
@@ -77,9 +79,9 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
     private void InitDash()
     {
-        _dashPower = 15.0f;
+        _dashPower = _dashSO.dashPower;
         _dashTime = _so.BlockTimer;
-        _delayTime = 0.4f;
+        _endDelayTime = _dashSO.endDelay;
     }
 
     private void EndDash()

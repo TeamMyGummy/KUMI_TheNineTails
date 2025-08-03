@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e9e052dde6249bf8fd464e93a5f8328, type: 3}
+  m_Script: {fileID: 11500000, guid: 78f79c6d0f37ad947ae0fbe4e8f22341, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
   skillKey: 5
   skillName: 5
   skillSequence: {fileID: 11400000, guid: 78d55a5b660dd4546b9c9d2b577da2eb, type: 2}
-  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
-  description: nmixx
+  skillIcon: {fileID: 0}
+  description: Player Dash Skill
+  unlockFloor: 0
   BlockTimer: 0.3
+  dashPower: 10
+  endDelay: 0.4
