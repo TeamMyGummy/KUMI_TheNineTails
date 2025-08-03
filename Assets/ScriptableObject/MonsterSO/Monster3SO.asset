@@ -20,5 +20,6 @@ MonoBehaviour:
   viewSight: 135
   aggroRange: 8
   aggroReleaseRange: 14
-  detectRangeX: 1.5
-  detectRangeY: 1.5
+  detectRangeX: 0.8
+  detectRangeY: 0.8
+  detectOffset: {x: 0, y: -0.4}
