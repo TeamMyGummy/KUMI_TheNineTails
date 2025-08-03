@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameAbilitySystem;
@@ -16,6 +16,9 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private float _dashPower;
     private float _dashTime;
     private float _delayTime;
+
+    private AbilitySequenceSO _sequenceSO;
+    private AbilityTask _task;
     
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -23,6 +26,10 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         IsTickable = true;
         _animator = Actor.GetComponent<Animator>();
+    
+        // Task
+        _sequenceSO = abilitySo.skillSequence;
+        _task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
     }
 
     // 점프와 대쉬를 동시에 눌렀을 때 대각선으로 나간다는 문제가 있음
@@ -35,12 +42,14 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _playerController = Actor.GetComponent<PlayerController>();
 
         InitDash();
-        _animator.SetBool(_dashID, true);
+        //_animator.SetBool(_dashID, true);
         Vector2 currentPosition = _rigid.position;
         float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
 
         _rigid.velocity = Vector2.zero;
         _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);
+        
+        _task.Execute();
     }
 
     public void Update()
@@ -75,7 +84,8 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private void EndDash()
     {
         InitDash();
-        _animator.SetBool(_dashID, false);
+        _task.Canceled();
+        //_animator.SetBool(_dashID, false);
         //AbilityFactory.Instance.EndAbility(this);
     }
 
