@@ -22,6 +22,11 @@ public class AttackRange : MonoBehaviour
             AbilitySystem asc = collision.GetComponent<Monster>().asc;
             collision.gameObject.GetComponent<Damageable>().GetDamage(asc, 10.0f);
         }
+
+        if (collision.gameObject.CompareTag("BreakableWall"))
+        {
+            collision.gameObject.GetComponent<BreakableWall>().AttackCount();
+        }
     }
 
     public void SpawnAttackRange()

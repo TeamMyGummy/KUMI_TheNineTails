@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Enemies
   - UI
+  - BreakableWall
   layers:
   - Default
   - TransparentFX
