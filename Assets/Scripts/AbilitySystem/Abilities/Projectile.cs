@@ -17,19 +17,17 @@ public class Projectile : MonoBehaviour
     private bool isEnded = false;
     private Vector2 _direction;
 
-    public void InitProjectile(GameObject actor, Vector2 direction)
+    //Instantiate이 선행되어야 함
+    public void FireProjectile(GameObject actor, Vector2 direction)
     {
         _direction = direction;
-        offset.x *= direction.x;
+        offset.x *= _direction.x;
         gameObject.Move(actor.transform.position + offset);
-    }
-    
-    void OnEnable()
-    {
-        FireProjectile().Forget();
+        
+        Fire().Forget();
     }
 
-    private async UniTaskVoid FireProjectile()
+    private async UniTaskVoid Fire()
     {
         float timer = 0f;
         Vector3 startPos = transform.position;
