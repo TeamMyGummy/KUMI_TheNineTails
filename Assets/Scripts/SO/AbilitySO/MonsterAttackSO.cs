@@ -18,4 +18,6 @@ public class MonsterAttackSO : BlockAbilitySO
     public AttackDirection AttackDir = AttackDirection.Front;
     public GameObject AttackHitboxPrefab;
     
+    public bool isStoppingWhileAttack = false;
+    
 }

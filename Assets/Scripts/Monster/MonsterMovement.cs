@@ -49,7 +49,14 @@ public class MonsterMovement : MonoBehaviour
         if (player == null) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
-
+        
+        
+        if (isPaused)
+        {
+            cm.Move(Vector2.zero);
+            return;
+        }
+        
         if (monster.isAggro)
         {
             moveState = MovePattern.Aggro;
@@ -158,6 +165,14 @@ public class MonsterMovement : MonoBehaviour
         cm.Move(Vector2.right * dir);
     }
 
+    public void SetPaused(bool paused)
+    {
+        isPaused = paused;
+
+        if (paused)
+            cm.Move(Vector2.zero);
+    }
+    
     public bool CheckGroundAhead()
     {
         Vector2 checkPos = (Vector2)transform.position + new Vector2(dir * 0.8f, -0.2f);

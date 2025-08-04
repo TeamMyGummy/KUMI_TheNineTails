@@ -5,9 +5,9 @@ using System;
 
 public class MonsterAttack : BlockAbility
 {
-    private MonsterMovement _movement;
-    private Monster _monster;
-    private MonsterAttackSO _attackData;
+    protected MonsterMovement _movement;
+    protected Monster _monster;
+    protected MonsterAttackSO _attackData;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -21,30 +21,43 @@ public class MonsterAttack : BlockAbility
 
     protected override bool CanActivate()
     {
-        //BlockAbility중이면 다시 못 씀
         return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
 
-    protected override void Activate()
+    protected async override void Activate()
     {
         base.Activate();
-
         if (_attackData == null) return;
+        
+        if (_attackData.isStoppingWhileAttack) 
+        {
+            _movement?.SetPaused(true);
+        }
 
-        //실제 공격 범위
-        float attackRangeX = _attackData.AttackRangeX;
-        float attackRangeY = _attackData.AttackRangeY;
-        //공격 방향 (전방, 하단) >> 방식을 수정하고싶은데... 일단 냅둠
-        AttackDirection attackDirCode = _attackData.AttackDir;
-        GameObject prefab = _attackData.AttackHitboxPrefab;
+        Attack();
+
+        if (_attackData.isStoppingWhileAttack)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            _movement?.SetPaused(false);
+        }
+    }
+
+    protected virtual void Attack()
+    {
         int facingDir = _movement != null ? _movement.GetDirection() : 1;
 
+        Vector2 attackDir = GetAttackDirection(facingDir);
 
-        //공격 방향 계산
-        //-------------------------------------------------------
+        Vector2 spawnPos = HitboxSpawnPos(attackDir);
+
+        SpawnHitbox(spawnPos);
+    }
+
+    // 공격 방향 계산
+    protected virtual Vector2 GetAttackDirection(int facingDir)
+    {
         float attackDirDeg = 0f;
-
-        
         switch (_attackData.AttackDir)
         {
             case AttackDirection.Front:
@@ -56,37 +69,43 @@ public class MonsterAttack : BlockAbility
             case AttackDirection.Down:
                 attackDirDeg = 270f;
                 break;
-            case AttackDirection.myself: // 제자리에서 공격할 경우 offset이 0이 되게 하기 위함
+            case AttackDirection.myself:
                 attackDirDeg = 0f;
                 break;
         }
 
         float angleRad = attackDirDeg * Mathf.Deg2Rad;
-        Vector2 attackDir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+        return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+    }
+
+    // 공격 위치 계산
+    protected virtual Vector2 HitboxSpawnPos(Vector2 attackDir)
+    {
+        float attackRangeX = _attackData.AttackRangeX;
+        float attackRangeY = _attackData.AttackRangeY;
 
         Vector2 offset;
         float monsterHeight = _monster.GetComponent<BoxCollider2D>().size.y;
 
         if (_attackData.AttackDir == AttackDirection.myself)
-        {
-            offset = new Vector2(0f, (attackRangeY - monsterHeight) / 2f); // 박스 콜라이더 밑 기준
-        }
+            offset = new Vector2(0f, (attackRangeY - monsterHeight) / 2f);
         else
-        {
             offset = attackDir * new Vector2(attackRangeX / 2f, attackRangeY / 2f);
-        }
-        Vector2 spawnPos = (Vector2)_monster.transform.position + offset;
-        //-------------------------------------------------------
 
-        //히트박스 프리팹 생성
-        //-------------------------------------------------------
+        return (Vector2)_monster.transform.position + offset;
+    }
+
+    // 히트박스 생성
+    protected virtual void SpawnHitbox(Vector2 spawnPos)
+    {
+        GameObject prefab = _attackData.AttackHitboxPrefab;
+        float attackRangeX = _attackData.AttackRangeX;
+        float attackRangeY = _attackData.AttackRangeY;
+
         if (prefab != null)
         {
             GameObject hitbox = ResourcesManager.Instance.Instantiate(prefab);
             hitbox.transform.position = spawnPos;
-            
-            Debug.Log(offset);
-            Debug.Log(spawnPos);
 
             var box = hitbox.GetComponent<BoxCollider2D>();
             if (box != null)
@@ -98,9 +117,5 @@ public class MonsterAttack : BlockAbility
 
             ResourcesManager.Instance.Destroy(hitbox, 0.2f);
         }
-        //-------------------------------------------------------
-
     }
-
-
 }
