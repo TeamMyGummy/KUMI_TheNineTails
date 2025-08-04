@@ -19,15 +19,6 @@ public class MovingPlatformCollider : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                /* Vector2 contactPoint = other.contacts[0].point;
-                Vector2 platformCenter = transform.position;
-                
-                if (contactPoint.y > platformCenter.y)
-                { 
-    				_movingPlatform.SetPlayer(other.transform);
-    			} */
-                
-                /*Debug.Log("실행은 되고 있니?");*/
                 _movingPlatform.SetPlayer(other.transform);
             }
         }
