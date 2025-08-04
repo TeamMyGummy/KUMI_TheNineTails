@@ -4,6 +4,7 @@ using Managers;
 using UnityEngine;
 using Util;
 using Debug = UnityEngine.Debug;
+using UnityEngine.SceneManagement;
 
 public interface IDomain
 {
@@ -80,7 +81,7 @@ public class DomainFactory : Singleton<DomainFactory>
         if (_gameState is null) _gameState = new();
         Data = _gameState.SingletonData;
     }
-    
+
     public void SaveGameData()
     {
         foreach (var domain in _domains)
@@ -88,6 +89,7 @@ public class DomainFactory : Singleton<DomainFactory>
             _gameState.Set(domain.Key, domain.Value.Save());
         }
         DataManager.Save(Savekey, _gameState);
+        Data.LanternState.RecentScene = SceneManager.GetActiveScene().name;
     }
 
     public void ClearStateAndReload()
@@ -110,10 +112,10 @@ public class DomainFactory : Singleton<DomainFactory>
         domain.Load(dto);
 
         _domains.TryAdd(key, domain);
-        
+
         return domain;
     }
-    
+
     public void GetDomain<T>(DomainKey key, out T domain) where T : IDomain, new()
     {
         if (_domains.TryGetValue(key, out var value))

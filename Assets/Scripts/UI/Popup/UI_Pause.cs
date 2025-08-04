@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Util;
+using UnityEngine.SceneManagement;
 
 public class UI_Pause : MonoBehaviour
 {
@@ -79,6 +80,7 @@ public class UI_Pause : MonoBehaviour
 
     public void OnClickSaveAndMain()
     {
+        DomainFactory.Instance.Data.LanternState.RecentScene = SceneManager.GetActiveScene().name;
         DomainFactory.Instance.SaveGameData();
         SceneLoader.LoadScene("Start");
     }

@@ -107,7 +107,6 @@ public class UI_StartMenu : MonoBehaviour
             string path = Util.JsonLoader.GetDynamicDataPath("gamedata_0");
             System.IO.File.Delete(path);
         }
-        DomainFactory.Instance.Data.LanternState.RecentScene = "B2";
         DomainFactory.Instance.ClearStateAndReload();
     }
 
