@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Monster1SO
   m_EditorClassIdentifier: 
   monsterName: Monster1
-  isParrying: 1
+  isFlying: 0
+  isBomb: 0
+  isTriggerAttack: 0
   viewStartAngle: -22.5
   viewSight: 45
   aggroRange: 8
   aggroReleaseRange: 14
-  isFlying: 0
-  pausedTime: 3
-  patrolRange: 6
-  detectRangeX: 1.5
-  detectRangeY: 1.5
+  detectRangeX: 1.2
+  detectRangeY: 1.2
+  detectOffset: {x: 0.6, y: 0}
