@@ -15,24 +15,29 @@ public class Monster3Movement : MonoBehaviour
     private Vector2 patrolPos;
     private MovePattern moveState = MovePattern.Patrol;
 
-    private bool isPaused = false;
+    private bool _isPaused = false;
     private float pauseTimer = 0;
     private Transform player;
+    private Transform _headPivot;
 
     [SerializeField] private LayerMask platformLayer;
-    [SerializeField] private Transform headPivot;
     
     private bool canChangeDirection = true;
     private float directionCheckTimer = 0f;
     private readonly float directionCheckDelay = 0.2f;
-    
-    
-    private void Start()
+
+
+    private void Awake()
     {
         cm = GetComponent<CharacterMovement>();
         monster = GetComponent<Monster>();
         monsterCollider = GetComponent<Collider2D>();
-
+        _headPivot = GetComponent<Transform>();
+    }
+    
+    
+    private void Start()
+    {
         spawnPos = transform.position;
         Debug.Log($"spawnPos: {spawnPos}");
         patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
@@ -41,6 +46,19 @@ public class Monster3Movement : MonoBehaviour
 
         if (player == null)
             player = GameObject.FindWithTag("Player")?.transform;
+        
+        if (player != null)
+        {
+            Transform found = player.Find("HeadPivot");
+            if (found != null)
+            {
+                _headPivot = found;
+            }
+            else
+            {
+                Debug.LogWarning("HeadPivot == null");
+            }
+        }
 
     }
 
@@ -81,12 +99,12 @@ public class Monster3Movement : MonoBehaviour
     
     private void PatrolMove()
     {
-        if (isPaused)
+        if (_isPaused)
         {
             pauseTimer += Time.deltaTime;
             if (pauseTimer >= monster.Data.PausedTime)
             {
-                isPaused = false;
+                _isPaused = false;
                 pauseTimer = 0;
                 dir *= -1;
                 patrolPos = transform.position;
@@ -114,7 +132,7 @@ public class Monster3Movement : MonoBehaviour
             if (directionCheckTimer <= 0f)
             {
                 directionCheckTimer = directionCheckDelay;
-                directionToPlayer = ((Vector2)headPivot.position - (Vector2)transform.position).normalized;
+                directionToPlayer = ((Vector2)_headPivot.position - (Vector2)transform.position).normalized;
             }
         }
         
@@ -130,7 +148,7 @@ public class Monster3Movement : MonoBehaviour
         float dist = Vector2.Distance(transform.position, spawnPos);
         if (dist <= 0.1f)
         {
-            isPaused = false;
+            _isPaused = false;
             dir = spawnPos.x > transform.position.x ? 1 : -1; //어그로 풀리고 돌아갈 때 방향 자연스럽게
             patrolPos = spawnPos + new Vector2(-dir * monster.Data.PatrolRange / 2f, 0);
            
