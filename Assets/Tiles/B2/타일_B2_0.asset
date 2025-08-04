@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: B2BasicTile
+  m_Name: "\uD0C0\uC77C_B2_0"
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 3c31c89dcbaf93c4583d20efc6efa53a, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -1858360538, guid: 3ab54dd9f47ce35448e62631887bf344, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
