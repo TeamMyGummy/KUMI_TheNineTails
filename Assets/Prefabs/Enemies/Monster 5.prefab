@@ -229,6 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446495789f94b9c45a8a6277a3921f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: 58bdf94a66f504420a5211b96c454b31, type: 2}
+  monsterData: {fileID: 11400000, guid: 2cac617a1bd227d48a19c2ab25aabb68, type: 2}
   abilitySystemPath: Monster/Monster5
   abilityKey: 6

@@ -17,11 +17,11 @@ public class AttackRange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemies"))
-        {
+        /*if(collision.gameObject.CompareTag("Enemies"))
+        {*/
             AbilitySystem asc = collision.GetComponent<Monster>().asc;
             collision.gameObject.GetComponent<Damageable>().GetDamage(asc, 10.0f);
-        }
+        //}
 
         if (collision.gameObject.CompareTag("BreakableWall"))
         {
