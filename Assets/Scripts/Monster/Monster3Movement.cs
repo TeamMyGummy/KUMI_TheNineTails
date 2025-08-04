@@ -32,7 +32,6 @@ public class Monster3Movement : MonoBehaviour
         cm = GetComponent<CharacterMovement>();
         monster = GetComponent<Monster>();
         monsterCollider = GetComponent<Collider2D>();
-        _headPivot = GetComponent<Transform>();
     }
     
     
