@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UI_Dialogue : MonoBehaviour
 {
-    //[SerializeField] private CanvasGroup background; // 뒷화면 서서히 어둡게하는  검은색 image + CanvasGroup
+    //[SerializeField] private CanvasGroup background; // 뒷화면 서서히 어둡게하는 검은색 image + CanvasGroup
     private GameObject[] uiToHide; // 숨길 UI들 - 오브젝트 태그 UI로 설정해야함
     private PlayerController player;
     private Coroutine fadeRoutine;
