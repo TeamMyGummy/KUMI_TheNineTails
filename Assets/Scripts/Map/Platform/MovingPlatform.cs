@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField] private Transform pointA;
-    [SerializeField] private Transform pointB;
     [SerializeField] private float speed = 2f;
     [SerializeField] private float waitTime = 0.5f;
 
+    private Transform _pointA;
+    private Transform _pointB;
+    
     private Vector2 _currentTarget;
     private Vector2 _worldPointA;
     private Vector2 _worldPointB;
@@ -22,12 +23,15 @@ public class MovingPlatform : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        
+        _pointA = transform.GetChild(1);
+        _pointB = transform.GetChild(2);
     }
 
     private void Start()
     {
-        _worldPointA = pointA.position;
-        _worldPointB = pointB.position;
+        _worldPointA = _pointA.position;
+        _worldPointB = _pointB.position;
         
         _currentTarget = _worldPointB;
         /*StartCoroutine(MovePlatform());*/
