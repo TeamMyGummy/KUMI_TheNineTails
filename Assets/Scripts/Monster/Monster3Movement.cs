@@ -15,31 +15,49 @@ public class Monster3Movement : MonoBehaviour
     private Vector2 patrolPos;
     private MovePattern moveState = MovePattern.Patrol;
 
-    private bool isPaused = false;
+    private bool _isPaused = false;
     private float pauseTimer = 0;
     private Transform player;
+    private Transform _headPivot;
 
     [SerializeField] private LayerMask platformLayer;
-    [SerializeField] private Transform headPivot;
     
     private bool canChangeDirection = true;
     private float directionCheckTimer = 0f;
     private readonly float directionCheckDelay = 0.2f;
-    
-    
-    private void Start()
+
+
+    private void Awake()
     {
         cm = GetComponent<CharacterMovement>();
         monster = GetComponent<Monster>();
         monsterCollider = GetComponent<Collider2D>();
-
+    }
+    
+    
+    private void Start()
+    {
         spawnPos = transform.position;
+        Debug.Log($"spawnPos: {spawnPos}");
         patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
 
         player = monster.Player;
 
         if (player == null)
             player = GameObject.FindWithTag("Player")?.transform;
+        
+        if (player != null)
+        {
+            Transform found = player.Find("HeadPivot");
+            if (found != null)
+            {
+                _headPivot = found;
+            }
+            else
+            {
+                Debug.LogWarning("HeadPivot == null");
+            }
+        }
 
     }
 
@@ -68,12 +86,6 @@ public class Monster3Movement : MonoBehaviour
                 break;
             case MovePattern.Return:
                 ReturnMove();
-                if (Mathf.Abs(transform.position.x - spawnPos.x) < 0.1f)
-                {
-                    moveState = MovePattern.Patrol;
-                    dir = 1;
-                    patrolPos = spawnPos + new Vector2(-monster.Data.PatrolRange / 2f, 0);
-                }
 
                 break;
         }
@@ -86,12 +98,12 @@ public class Monster3Movement : MonoBehaviour
     
     private void PatrolMove()
     {
-        if (isPaused)
+        if (_isPaused)
         {
             pauseTimer += Time.deltaTime;
             if (pauseTimer >= monster.Data.PausedTime)
             {
-                isPaused = false;
+                _isPaused = false;
                 pauseTimer = 0;
                 dir *= -1;
                 patrolPos = transform.position;
@@ -100,13 +112,6 @@ public class Monster3Movement : MonoBehaviour
             cm.Move(Vector2.zero);
             return;
         }
-
-        /*if (!monster.Data.IsFlying && !CheckGroundAhead())
-        {
-            isPaused = true;
-            cm.Move(Vector2.zero);
-            return;
-        }*/
 
         cm.Move(Vector2.right * dir);
 
@@ -126,48 +131,31 @@ public class Monster3Movement : MonoBehaviour
             if (directionCheckTimer <= 0f)
             {
                 directionCheckTimer = directionCheckDelay;
-                directionToPlayer = ((Vector2)headPivot.position - (Vector2)transform.position).normalized;
+                directionToPlayer = ((Vector2)_headPivot.position - (Vector2)transform.position).normalized;
             }
         }
         
-        /*if (!monster.Data.IsFlying && !CheckGroundAhead())
-        {
-            cm.Move(Vector2.zero);
-            return;
-        }*/
-        
-        /*cm.Move(Vector2.right * dir);*/
         cm.Move(directionToPlayer);
     }
 
 
     private void ReturnMove()
     {
+        Vector2 directionToSpawn = ((Vector2)spawnPos - (Vector2)transform.position).normalized;
+        cm.Move(directionToSpawn);
+        
         float dist = Vector2.Distance(transform.position, spawnPos);
-
         if (dist <= 0.1f)
         {
-            isPaused = false;
-            patrolPos = transform.position;
-            dir = 1;
+            _isPaused = false;
+            dir = spawnPos.x > transform.position.x ? 1 : -1; //어그로 풀리고 돌아갈 때 방향 자연스럽게
+            patrolPos = spawnPos + new Vector2(-dir * monster.Data.PatrolRange / 2f, 0);
+           
             moveState = MovePattern.Patrol;
             return;
         }
-
-        dir = spawnPos.x > transform.position.x ? 1 : -1;
-        cm.Move(Vector2.right * dir);
     }
-
-    /*public bool CheckGroundAhead()
-    {
-        Vector2 checkPos = (Vector2)transform.position + new Vector2(dir * 0.8f, -0.2f);
-        float checkDistance = 1.2f;
-
-        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, checkDistance, platformLayer);
-        return hit.collider != null;
-    }*/
-
-    /*public int GetDirection() => dir;*/
+    
     public Vector2 GetDirection() => directionToPlayer;
     
     public void LockDirection(bool lockDir)
