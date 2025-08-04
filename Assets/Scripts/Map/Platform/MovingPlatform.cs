@@ -9,41 +9,45 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] private float speed = 2f;
     [SerializeField] private float waitTime = 0.5f;
 
-    private Vector3 _target;
+    private Vector2 _target;
+    private Vector2 _worldPointA;
+    private Vector2 _worldPointB;
     private Transform _playerOnPlatform;
     
     private void Start()
     {
-        _target = pointB.position;
+        _worldPointA = pointA.parent.TransformPoint(pointA.localPosition);
+        _worldPointB = pointA.parent.TransformPoint(pointB.localPosition);
+        
+        _target = _worldPointB;
         StartCoroutine(MovePlatform());
     }
     
     private IEnumerator MovePlatform()
     {
-        Debug.Log("MovePlatform실행");
         while (true)
         {
-            Vector3 startPosition = transform.position;
-            Vector3 targetPosition = _target;
+            Vector2 startPosition = transform.position;
+            Vector2 targetPosition = _target;
             float journey = 0f;
-            float totalDistance = Vector3.Distance(startPosition, targetPosition);
+            float totalDistance = Vector2.Distance(startPosition, targetPosition);
             
             while (journey < totalDistance)
             {
                 float distanceThisFrame = speed * Time.deltaTime;
                 journey += distanceThisFrame;
                 
-                Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, distanceThisFrame);
-                Vector3 deltaPosition = newPosition - transform.position;
-                transform.position = newPosition;
+                Vector2 newPosition = Vector2.MoveTowards((Vector2)transform.position, targetPosition, distanceThisFrame);
+                Vector2 deltaPosition = newPosition - (Vector2)transform.position;
                 
+                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
                 
                 MovePlayerWithPlatform(deltaPosition);
                 
                 yield return null;
             }
             
-            _target = (_target == pointA.position) ? pointB.position : pointA.position;
+            _target = (_target == _worldPointA) ? _worldPointB : _worldPointA;
             
             yield return new WaitForSeconds(waitTime);
         }
@@ -51,13 +55,13 @@ public class MovingPlatform : MonoBehaviour
     
     private void MovePlayerWithPlatform(Vector3 deltaPosition)
     {
-        _playerOnPlatform.position += deltaPosition;
-        
-        /*if (_playerOnPlatform != null)
+        if (_playerOnPlatform != null)
         {
-            _playerOnPlatform.position += deltaPosition;
-        }*/
+            _playerOnPlatform.position += (Vector3)deltaPosition;
+        }
     }
+    
+    
     
     public void SetPlayer(Transform player)
     {
