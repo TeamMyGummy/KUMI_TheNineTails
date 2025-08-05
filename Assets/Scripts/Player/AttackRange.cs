@@ -17,16 +17,16 @@ public class AttackRange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("BreakableWall"))
+        {
+            collision.gameObject.GetComponent<BreakableWall>().AttackCount();
+            return;
+        }
         /*if(collision.gameObject.CompareTag("Enemies"))
         {*/
             AbilitySystem asc = collision.GetComponent<Monster>().asc;
             collision.gameObject.GetComponent<Damageable>().GetDamage(asc, 10.0f);
         //}
-
-        if (collision.gameObject.CompareTag("BreakableWall"))
-        {
-            collision.gameObject.GetComponent<BreakableWall>().AttackCount();
-        }
     }
 
     public void SpawnAttackRange()
