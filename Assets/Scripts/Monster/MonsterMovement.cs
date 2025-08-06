@@ -7,7 +7,7 @@ public enum MovePattern
     Return
 }
 
-public class MonsterMovement : MonoBehaviour
+public class MonsterMovement : MonoBehaviour, IMovement
 {
     private CharacterMovement cm;
     private Monster monster;
@@ -28,6 +28,8 @@ public class MonsterMovement : MonoBehaviour
     private float directionCheckTimer = 0f;
     private readonly float directionCheckDelay = 0.2f;
     
+    Vector2 IMovement.Direction => new Vector2(dir, 0f);
+
     private void Start()
     {
         cm = GetComponent<CharacterMovement>();
@@ -188,4 +190,6 @@ public class MonsterMovement : MonoBehaviour
     {
         canChangeDirection = !lockDir;
     }
+
+
 }

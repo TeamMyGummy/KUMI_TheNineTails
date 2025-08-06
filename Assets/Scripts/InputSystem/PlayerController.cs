@@ -10,7 +10,7 @@ using UnityEngine.InputSystem.Interactions;
  * 플레이어의 Input을 관리하는 파일입니다.
  */
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IMovement
 {
     private PlayerInput _playerInput;
     private CharacterMovement _characterMovement;
@@ -20,11 +20,12 @@ public class PlayerController : MonoBehaviour
     private HPRefillStation _hpRefillStation;
     private TailBox _tailBox;
     private NpcObject _npcObject;
+    private Vector2 _direction;
 
     public event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
-
-    public Vector2 Direction { get; private set; }= Vector2.right;
+    
+    public Vector2 Direction => _direction;
 
     private void Awake()
     {
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        if(inputDirection.x != 0) Direction = inputDirection;
+        if(inputDirection.x != 0) _direction = inputDirection;
         
         if (_characterMovement.CheckIsWallClimbing())
         {
@@ -346,5 +347,4 @@ public class PlayerController : MonoBehaviour
     {
         _playerInput.DeactivateInput();
     }
-
 }
