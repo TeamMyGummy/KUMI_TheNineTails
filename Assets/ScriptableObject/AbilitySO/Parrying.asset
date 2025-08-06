@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88124fa338fa4bab88f639962e032099, type: 3}
   m_Name: Parrying
   m_EditorClassIdentifier: 
-  skillKey: 7
-  skillName: 7
+  skillKey: 6
+  skillName: 6
   skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: Parryeeing
   Hitbox: {fileID: 3144560449005721106, guid: 12a3c12e541d61646993955dfcff8b44, type: 3}
