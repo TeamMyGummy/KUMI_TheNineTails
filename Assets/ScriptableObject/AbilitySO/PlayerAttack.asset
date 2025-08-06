@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9e052dde6249bf8fd464e93a5f8328, type: 3}
   m_Name: PlayerAttack
   m_EditorClassIdentifier: 
-  skillKey: 1
-  skillName: 1
+  skillKey: 2
+  skillName: 2
   skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: on Titan
   BlockTimer: 0

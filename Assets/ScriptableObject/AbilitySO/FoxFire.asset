@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df9b00a1b0f49ac8db30dfeb03a930e, type: 3}
   m_Name: FoxFire
   m_EditorClassIdentifier: 
-  skillKey: 7
-  skillName: 7
+  skillKey: 8
+  skillName: 8
   skillIcon: {fileID: 0}
   description: "\uC5EC\uC6B0\uBD88\uC785\uB2C8\uB2F9"
-  BlockTimer: 0
   projectile: {fileID: 1762829811770736879, guid: 0dc2900bd20decb4581e9c680fc97fc7, type: 3}

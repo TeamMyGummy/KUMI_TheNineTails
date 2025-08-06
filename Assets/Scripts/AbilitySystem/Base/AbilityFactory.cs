@@ -8,7 +8,7 @@ using Util;
 
 public enum AbilityName
 {
-    Attack,
+    Attack = 1,
     PlayerAttack,
     Jump,
     DoubleJump,
@@ -23,7 +23,7 @@ public enum AbilityName
 public enum AbilityKey
 {
     None = -1,
-    Attack,
+    Attack = 1,
     PlayerAttack,
     Jump,
     DoubleJump,
