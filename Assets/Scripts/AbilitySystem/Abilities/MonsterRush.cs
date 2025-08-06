@@ -2,7 +2,7 @@ using GameAbilitySystem;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class MonsterRush : BlockAbility
+public class MonsterRush : BlockAbility<MonsterRushSO>
 {
     private MonsterMovement _movement;
     private Monster _monster;

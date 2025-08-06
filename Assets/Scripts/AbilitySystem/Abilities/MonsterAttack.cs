@@ -3,7 +3,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-public class MonsterAttack : BlockAbility
+public class MonsterAttack : BlockAbility<MonsterAttackSO>
 {
     protected MonsterMovement _movement;
     protected Monster _monster;

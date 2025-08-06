@@ -8,7 +8,6 @@ using Util;
 
 public enum AbilityName
 {
-    TestBlock,
     Attack,
     PlayerAttack,
     Jump,
@@ -24,7 +23,6 @@ public enum AbilityName
 public enum AbilityKey
 {
     None = -1,
-    TestBlock,
     Attack,
     PlayerAttack,
     Jump,
@@ -81,7 +79,6 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
     {
         return abilityName switch
         {
-            AbilityName.TestBlock => new BlockAbility(),
             AbilityName.Attack => new PlayerAttack(),
             AbilityName.PlayerAttack => new PlayerAttack(),
             AbilityName.Jump => new Jump(),

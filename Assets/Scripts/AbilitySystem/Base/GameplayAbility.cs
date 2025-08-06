@@ -9,7 +9,7 @@ namespace GameAbilitySystem
             base.InitAbility(actor, asc, abilitySo);
             if (abilitySo is not TSO)
             {
-                Debug.LogError("[BlockAbility] 타입이 일치하지 않거나 Null입니다. (AbilityFactory의 GetAbility에 정상적으로 스킬이 등록되었는지 확인 요망)");
+                Debug.LogError("[GameplayAbility] SO의 타입이 일치하지 않거나 Null입니다. (AbilityFactory의 GetAbility에 정상적으로 스킬이 등록되었는지 확인 요망)");
             }
         }
     }

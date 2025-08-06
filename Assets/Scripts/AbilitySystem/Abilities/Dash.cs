@@ -5,7 +5,7 @@ using GameAbilitySystem;
 using System.Xml.Serialization;
 using Cysharp.Threading.Tasks;
 
-public class Dash : BlockAbility, ITickable
+public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 {
     private Rigidbody2D _rigid;
     private CharacterMovement _characterMovement;

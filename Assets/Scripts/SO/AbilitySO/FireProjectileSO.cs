@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Ability/FireProjectile")]
-public class FireProjectileSO : GameplayAbilitySO
+public class FireProjectileSO : BlockAbilitySO
 {
     public Projectile projectile;
 }

@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using UnityEngine;
 
-public class PlayerAttack : BlockAbility, ITickable
+public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
 {
     private Animator _animator;
     private AnimatorStateInfo _animatorStateInfo;

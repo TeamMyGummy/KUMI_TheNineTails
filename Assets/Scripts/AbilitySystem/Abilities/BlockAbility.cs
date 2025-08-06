@@ -9,7 +9,7 @@ using UnityEngine;
 /// 스킬 사용 중일 시 다른 스킬 블락 목적으로 만들어짐 <br/>
 /// 점프, 등을 제외한 모든 스킬이 해당 클래스를 상속받아야 됨 (250701 기획 상)
 /// </summary>
-public class BlockAbility : GameplayAbility<BlockAbilitySO>
+public class BlockAbility<TSO> : GameplayAbility<TSO> where TSO : BlockAbilitySO
 {
     protected BlockAbilitySO _so;
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
@@ -24,6 +24,9 @@ public class BlockAbility : GameplayAbility<BlockAbilitySO>
     /// </summary>
     protected override void Activate()
     {
-        Asc.TagContainer.AddWithDuration(GameplayTags.BlockRunningAbility, _so.BlockTimer).Forget();
+        if (_so.BlockTimer > 0)
+        {
+            Asc.TagContainer.AddWithDuration(GameplayTags.BlockRunningAbility, _so.BlockTimer).Forget();
+        }
     }
 }
