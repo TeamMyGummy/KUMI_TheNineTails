@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour, IMovement
         _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);*/
         _asc.GrantAllAbilities();
         
-        OnDisableWallClimb();
+        OnEnableAllInput();
 
 #if !UNITY_EDITOR
         RespawnPlayer();
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour, IMovement
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
         if(inputDirection.x != 0) _direction = inputDirection;
         
-        if (_characterMovement.CheckIsWallClimbing())
+        /*if (_characterMovement.CheckIsWallClimbing())
         {
             if (ctx.started && inputDirection != _characterMovement.GetCharacterSpriteDirection())
             {
@@ -94,8 +94,8 @@ public class PlayerController : MonoBehaviour, IMovement
                 OnEnableJump();
             }
             if (ctx.canceled) OnDisableJump();
-        }
-        else
+        }*/
+        if (!_characterMovement.CheckIsWallClimbing())
         {
             _characterMovement.Move(inputDirection);
         }
@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour, IMovement
         _wallClimb.SetCurrentWall(wall);
         OnDisableAllInput();
         OnEnableWallClimb();
+        OnEnableJump();
         OnEnableMove();
     }
 
@@ -132,7 +133,6 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         _wallClimb.Reset();
         OnEnableAllInput();
-        OnDisableWallClimb();
     }
 
     public void OnEnableWallClimb()
@@ -339,9 +339,13 @@ public class PlayerController : MonoBehaviour, IMovement
     
 
     // ----------------------------------------------------------------
+    /// <summary>
+    /// 벽타기를 제외한 모든 Player Input 활성화
+    /// </summary>
     public void OnEnableAllInput()
     {
         _playerInput.ActivateInput();
+        OnDisableWallClimb();
     }
     public void OnDisableAllInput()
     {
