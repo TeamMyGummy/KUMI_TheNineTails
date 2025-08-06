@@ -13,31 +13,34 @@ public class Wall : MonoBehaviour
         CanWallClimb = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        CanWallClimb = true;
-        if(other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
+        if (!CanWallClimb)
         {
-            if (!cm.CheckIsGround())
+            if(other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
             {
-                 // 벽타기 활성화
-                 if (other.gameObject.CompareTag("Player"))
-                 {
-                     other.gameObject.GetComponent<PlayerController>().StartWallClimb(gameObject);
-                 }
-                 cm.StartWallClimbState();               
-            }
+                if (!cm.CheckIsGround())
+                {
+                     // 벽타기 활성화
+                     if (other.gameObject.CompareTag("Player"))
+                     {
+                         CanWallClimb = true;
+                         other.gameObject.GetComponent<PlayerController>().StartWallClimb(gameObject);
+                     }
+                     cm.StartWallClimbState();               
+                }
+            }    
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        CanWallClimb = false;
         if(other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
         {
             // 벽타기 비활성화
             if (other.gameObject.CompareTag("Player"))
             {
+                CanWallClimb = false;
                 other.gameObject.GetComponent<PlayerController>().EndWallClimb();
             }
             cm.EndWallClimbState();
