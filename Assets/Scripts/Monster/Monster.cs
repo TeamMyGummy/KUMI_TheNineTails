@@ -30,7 +30,7 @@ public abstract class Monster : MonoBehaviour
 
         prevHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        _movement = GetComponent<MonsterMovement>();
+        _movement = GetComponent<MonsterMovement>(); 
         player = GameObject.FindWithTag("Player")?.transform;
         
         var playerObj = GameObject.FindWithTag("Player");
@@ -97,8 +97,9 @@ public abstract class Monster : MonoBehaviour
 
         float startAngle = Data.ViewStartAngle;
         float viewAngle = Data.ViewSight;
-
-        int dir = _movement != null ? _movement.GetDirection() : 1;
+        
+        //int --> Vector2 수정
+        int dir = _movement != null ? _movement.HorizontalDir : 1;
 
         if (dir == -1)
         {
@@ -137,8 +138,8 @@ public abstract class Monster : MonoBehaviour
 
         float detectX = Data.DetectRangeX;
         float detectY = Data.DetectRangeY;
-        int facingDir = _movement != null ? _movement.GetDirection() : 1;
-        
+        int facingDir = _movement != null ? _movement.HorizontalDir : 1;
+
         Vector2 offset = new Vector2(Data.DetectOffset.x * facingDir, Data.DetectOffset.y);
         Vector2 origin = (Vector2)transform.position + offset;
 
@@ -178,7 +179,7 @@ public abstract class Monster : MonoBehaviour
     {
         if (monsterData == null) return;
 
-        int facingDir = Application.isPlaying && _movement != null ? _movement.GetDirection() : 1;
+        int facingDir = Application.isPlaying && _movement != null ? _movement.HorizontalDir : 1;
 
         // 공격 인식 범위
         Vector2 offset = new Vector2(monsterData.DetectOffset.x * facingDir, monsterData.DetectOffset.y);

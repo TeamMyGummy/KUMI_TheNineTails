@@ -38,7 +38,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         //임의로 넣은 딜레이
         await UniTask.Delay(1000);
         
-        int facingDir = _movement.GetDirection();
+        int facingDir = _movement.HorizontalDir;
         float rushDistance = _rushData.RushDistance;
         float rushSpeed = 20f;
         Vector2 startPos = _monster.transform.position;
@@ -63,7 +63,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
 
     private GameObject SpawnHitbox()
     {
-        int facingDir = _movement.GetDirection();
+        int facingDir = _movement.HorizontalDir;
         Vector2 hitboxPos = new Vector2(facingDir * 1f, 0f);
         float attackRangeX = _rushData.AttackRangeX;
         float attackRangeY = _rushData.AttackRangeY;
