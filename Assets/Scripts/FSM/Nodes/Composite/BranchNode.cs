@@ -1,4 +1,4 @@
-[CreateNodeMenu("FSM/Branch Node")]
+[CreateNodeMenu("FSM/Composite/Branch Node")]
 public class BranchNode : BaseNode
 {
     [Input] public ActionNode input;
@@ -7,12 +7,8 @@ public class BranchNode : BaseNode
     
     public override BaseNode Execute()
     {
-        if (result.HasValue)
-        {
-            var nextNode = result.Value ? GetTrueOutput() : GetFalseOutput();
-            result = null; // 초기화
+            var nextNode = result ? GetTrueOutput() : GetFalseOutput();
             return nextNode;
-        }
         
         return this;
     }

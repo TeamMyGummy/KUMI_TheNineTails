@@ -16,7 +16,7 @@ public class WaitNode : ActionNode
         if (timer > delay)
         {
             isCompleted = true;
-            actionResult = true;
+            result = true;
         }
     }
 }
