@@ -9,23 +9,21 @@ public abstract class ActionNode : BaseNode
     [SerializeField] private bool sequential = false;
     
     protected bool isCompleted = false;
-    protected bool actionResult = true;
     
     //OnEnter 로직
     protected abstract void OnEnterAction();
     
     public override void OnEnter()
     {
-        if (sequential && result.HasValue && !result.Value)
+        if (sequential && !result)
         {
-            result = null; // 초기화
+            result = true;
             isCompleted = true;
-            actionResult = false;
             return;
         }
         
+        result = true;
         isCompleted = false;
-        actionResult = true;
         Debug.Log($"{actionName} 노드 시작");
         
         // TODO: 행동 시작 로직 구현
@@ -47,7 +45,7 @@ public abstract class ActionNode : BaseNode
         if (isCompleted)
         {
             var nextBranch = GetNextBranch();
-            nextBranch?.SetResult(actionResult);
+            nextBranch?.SetResult(result);
             Debug.Log("다음 노드로 넘어갑니다" + nextBranch);
             return nextBranch;
         }
@@ -59,7 +57,7 @@ public abstract class ActionNode : BaseNode
     public virtual void ForceComplete(bool success)
     {
         isCompleted = true;
-        actionResult = success;
+        result = success;
     }
     
     // 현재 실행 중인지 확인

@@ -1,7 +1,7 @@
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("FSM/Mono Action")]
+[CreateNodeMenu("FSM/Leaf/Mono Action")]
 public class MonoNode : ActionNode
 {
     [SerializeField]
@@ -16,7 +16,7 @@ public class MonoNode : ActionNode
         {
             Debug.LogError($"[MonoActionNode] 실행 핸들러({handlerKey})가 주입되지 않았습니다.");
             isCompleted = true;
-            actionResult = false;
+            result = false;
             return;
         }
 
@@ -28,7 +28,7 @@ public class MonoNode : ActionNode
         if (runtimeHandler == null)
         {
             isCompleted = true;
-            actionResult = false;
+            result = false;
             return;
         }
 
@@ -37,7 +37,7 @@ public class MonoNode : ActionNode
         {
             runtimeHandler.OnExitAction();
             isCompleted = true;
-            actionResult = true;
+            result = true;
         }
     }
 }

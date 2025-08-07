@@ -45,6 +45,7 @@ public class FSMController : MonoBehaviour
 
         _asc?.Init(so);
         _asc?.GrantAllAbilities();
+        _asc?.SetSceneState(gameObject);
         fsmGraph.InitGraph(_asc);
         fsmGraph?.Start();
     }

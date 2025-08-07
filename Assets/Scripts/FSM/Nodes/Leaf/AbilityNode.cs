@@ -21,7 +21,7 @@ public class AbilityNode : ActionNode
         if (_ability is null)
         {
             isCompleted = true;
-            actionResult = false;
+            result = false;
             Debug.Log("[BossFSM] 스킬이 존재하지 않아 노드가 비정상 종료됩니다. ");
             return;
         }
@@ -44,6 +44,6 @@ public class AbilityNode : ActionNode
     private void NormalComplete()
     {
         isCompleted = true;
-        actionResult = true;
+        result = true;
     }
 }
