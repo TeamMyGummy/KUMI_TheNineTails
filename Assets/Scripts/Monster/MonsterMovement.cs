@@ -42,7 +42,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _monsterCollider = GetComponent<Collider2D>();
     }
     
-    Vector2 IMovement.Direction => new Vector2(dir, 0f);
+    Vector2 IMovement.Direction => new Vector2(HorizontalDir, 0f);
 
     private void Start()
     {
