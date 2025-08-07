@@ -135,10 +135,20 @@ namespace GameAbilitySystem
 
             GrantedAbilityCount = _grantedAbilityCount.ToReadOnlyReactiveProperty();
         }
-        
+
         public bool IsGranted(AbilityKey key)
         {
             return _grantedAbilities.ContainsKey(key);
+        }
+        
+        public GameplayAbilitySO GetSkillSO(AbilityKey key)
+        {
+            if (_grantedAbilities.TryGetValue(key, out var name))
+            {
+                _abilities.TryGetValue(name, out var so);
+                return so;
+            }
+            return null;
         }
     }
 }
