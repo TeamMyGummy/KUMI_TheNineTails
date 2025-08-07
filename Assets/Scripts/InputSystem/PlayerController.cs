@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         if (ctx.performed)
         {
-            if (_characterMovement.GetCharacterDirection() != Vector2.zero && _characterMovement.CheckIsGround())
+            if (_characterMovement.CheckIsGround())
             {
                 _asc.TryActivateAbility(AbilityKey.Dash);
                 OnDisableJump();

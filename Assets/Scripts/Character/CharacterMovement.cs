@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
+    private SpriteRenderer _sprite;
 
     [SerializeField]
     [Range(0.0f, 3.0f)] private float speed;
@@ -21,6 +22,7 @@ public class CharacterMovement : MonoBehaviour
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
         _rigidBody.gravityScale = gravity;
     }
 
@@ -57,8 +59,7 @@ public class CharacterMovement : MonoBehaviour
     /// <returns>Vector2 Sprite 방향</returns>
     public Vector2 GetCharacterSpriteDirection()
     {
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-        return new Vector2(sprite.flipX ? -1 : 1, 0);
+        return new Vector2(_sprite.flipX ? -1 : 1, 0);
     }
 
     public void Move(Vector2 direction)

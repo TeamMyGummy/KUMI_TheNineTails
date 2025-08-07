@@ -40,7 +40,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
 
         _rigid.velocity = Vector2.zero;
-        _rigid.AddForce(_characterMovement.GetCharacterDirection() * _dashPower, ForceMode2D.Impulse);
+        _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);
     }
 
     public void Update()
