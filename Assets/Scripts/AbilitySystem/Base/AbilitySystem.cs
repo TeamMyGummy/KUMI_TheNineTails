@@ -64,10 +64,10 @@ namespace GameAbilitySystem
         /// Ability를 실행
         /// </summary>
         /// <param name="key">실행할 스킬명</param>
-        public void TryActivateAbility(AbilityKey key)
+        public GameplayAbility TryActivateAbility(AbilityKey key)
         {
-            if (!_grantedAbilities.TryGetValue(key, out var abilityName)) return;
-            if (!_abilities.TryGetValue(abilityName, out var abilitySo)) return;
+            if (!_grantedAbilities.TryGetValue(key, out var abilityName)) return null;
+            if (!_abilities.TryGetValue(abilityName, out var abilitySo)) return null;
 
             if (!_abilityCache.TryGetValue(abilitySo.skillName, out var ability))
             {
@@ -78,6 +78,8 @@ namespace GameAbilitySystem
 
             if (ability.TryActivate() && ability.IsTickable)
                 AbilityFactory.Instance.RegisterTickable(ability as ITickable);
+
+            return ability;
         }
 
         /// <summary>
@@ -116,6 +118,11 @@ namespace GameAbilitySystem
         public override void Init(string assetKey)
         {
             var so = ResourcesManager.Instance.Load<AbilitySystemSO>(assetKey);
+            Init(so);
+        }
+        
+        public void Init(AbilitySystemSO so)
+        {
             foreach (var att in so.AddAttributeSO)
             {
                 Attribute.CreateAttribute(att);
