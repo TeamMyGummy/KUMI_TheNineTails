@@ -44,7 +44,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _playerController = Actor.GetComponent<PlayerController>();
 
         InitDash();
-        _task.Execute();
+        //_task.Execute();
         //_animator.SetBool(_dashID, true);
         Vector2 currentPosition = _rigid.position;
         float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
@@ -87,7 +87,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private void EndDash()
     {
         InitDash();
-        _task.Canceled();
+        //_task.Canceled();
         //_animator.SetBool(_dashID, false);
         //AbilityFactory.Instance.EndAbility(this);
     }

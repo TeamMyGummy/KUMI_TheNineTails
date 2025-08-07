@@ -55,7 +55,7 @@ public class AbilitySequenceSO : ScriptableObject
     [Header("Sound")]
     public List<SoundSq> sounds;
 
-    [Header("Sound")]
+    [Header("Effect")]
     public List<EffectSq> effects;
 
     [Header("Slow")] 
