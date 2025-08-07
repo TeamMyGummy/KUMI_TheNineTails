@@ -45,7 +45,7 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
 
     protected virtual void Attack()
     {
-        int facingDir = _movement != null ? _movement.GetDirection() : 1;
+        int facingDir = _movement != null ? _movement.HorizontalDir : 1;
 
         Vector2 attackDir = GetAttackDirection(facingDir);
 
