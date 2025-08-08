@@ -233,7 +233,8 @@ public class MonsterMovement : MonoBehaviour, IMovement
             {
                 case MovePattern.Aggro:
                 {
-                    Vector2 dirVec = ((Vector2)_headPivot.position - (Vector2)transform.position).normalized;
+                    //HeadPivot보다 살짝 아래 따라가게
+                    Vector2 dirVec = ((Vector2)_headPivot.position - (Vector2)transform.position + new Vector2(0f, -0.3f)).normalized;
                     HorizontalDir = dirVec.x < 0 ? -1 : 1;
                     return dirVec;
                 }
