@@ -15,14 +15,7 @@ MonoBehaviour:
   animations:
   - source: {fileID: 7400000, guid: 991895931801ab542bc7e993bf2ba483, type: 2}
     delay: 0
-  - source: {fileID: 7400000, guid: 10573f78446dc8d48bdd19cad83f3ef0, type: 2}
-    delay: 0.3
   sounds: []
   effects: []
-  slows:
-  - targetTimeScale: 0.2
-    duration: 0.3
-    delay: 0
-  cameras:
-  - cameraTask: {fileID: 11400000, guid: d147c901b17bc9e4bb27f90fbad23c20, type: 2}
-    delay: 0.1
+  slows: []
+  cameras: []

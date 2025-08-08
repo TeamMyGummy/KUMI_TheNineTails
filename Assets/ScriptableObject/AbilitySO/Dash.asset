@@ -18,6 +18,7 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   description: Player Dash Skill
   unlockFloor: 0
-  BlockTimer: 0.3
-  dashPower: 10
-  endDelay: 0.4
+  skillKeyboard: {fileID: 0}
+  BlockTimer: 0.1
+  dashPower: 15
+  endDelay: 0.3
