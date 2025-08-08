@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fdbf9efdbb90134b9a5271bae419745, type: 3}
-  m_Name: Monster 5SO
+  m_Name: Monster5SO
   m_EditorClassIdentifier: 
   monsterName: Monster5
   isFlying: 0

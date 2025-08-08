@@ -15,8 +15,11 @@ public class MonsterAttackSO : BlockAbilitySO
     [Header("공격 관련")]
     public float AttackRangeX = 2f;
     public float AttackRangeY = 2f;
-    public AttackDirection AttackDir = AttackDirection.Front;
+    
+    public Vector2 HitboxOffset = Vector2.zero;
     public GameObject AttackHitboxPrefab;
+    
+    
     
     public bool isStoppingWhileAttack = false;
     
