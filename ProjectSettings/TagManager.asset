@@ -22,7 +22,7 @@ TagManager:
   - MonsterHitbox
   - Player
   - PlayerHitbox
-  - 
+  - BlockingObject
   - 
   - 
   - 
