@@ -222,9 +222,9 @@ public class MonsterMovement : MonoBehaviour, IMovement
     }*/
     
     /// <summary>
-    /// 
+    /// HorizontalDir: 몬스터가 바라보는 방향(int) 저장
     /// </summary>
-    /// <returns></returns>
+    /// <returns>몬스터가 바라보는 방향 (2d벡터)</returns>
     private Vector2 GetDirection()
     {
         if (_monster.Data.IsFlying)
