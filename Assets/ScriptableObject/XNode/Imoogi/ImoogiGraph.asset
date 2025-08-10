@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -24, y: 184}
+  position: {x: -104, y: 136}
   ports:
     keys:
     - input
@@ -1067,7 +1067,10 @@ MonoBehaviour:
       _node: {fileID: -1201055075169469143}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 6859105116371313634}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -2224,6 +2227,9 @@ MonoBehaviour:
       - fieldName: nextNode
         node: {fileID: 4194973088129212547}
         reroutePoints: []
+      - fieldName: nextBranch
+        node: {fileID: -1201055075169469143}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -2517,7 +2523,7 @@ MonoBehaviour:
   actionName: Action
   sequential: 1
   handlerKey: Targeting
-  dest: {x: -4.620001, y: -0.483869, z: 0}
+  dest: {x: -8.62, y: -0.483869, z: 0}
 --- !u!114 &8883669560038428332
 MonoBehaviour:
   m_ObjectHideFlags: 0
