@@ -18,6 +18,6 @@ public class FireProjectile : GameplayAbility<FireProjectileSO>
     {
         GameObject go = ResourcesManager.Instance.Instantiate(_so.projectile.gameObject);
         Vector2 direction = _movement.Direction;
-        go.GetComponent<Projectile>().FireProjectile(Actor, direction);
+        go.GetComponent<IProjectile>().FireProjectile(Actor, direction);
     }
 }
