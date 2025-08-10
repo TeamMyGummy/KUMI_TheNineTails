@@ -99,25 +99,4 @@ public class MovingPlatform : MonoBehaviour
             Debug.Log("MovePlayerWithPlatform 실행");
         }
     }*/
-    
-    
-
-    // 끝부분 도착했을 때 플레이어 미끄러지거나 튀어오르지 않게 보정
-    // rb 캐싱이 비용이 많이 든다길래 mp에다 적었는데 굳이이럴필요없나... 서희언니 보고있나요? 알려주실래요?
-    /*public void ApplyPlatformVelocity()
-    {
-        Vector2 platformVelocity = _platformRb.velocity;
-        
-        if (_isVertical)
-        {
-            _playerRb.velocity = new Vector2(_playerRb.velocity.x, platformVelocity.y);
-        }
-        else
-        {
-            _playerRb.velocity = new Vector2(platformVelocity.x, _playerRb.velocity.y);
-        }
-        
-    }*/
-    
-    
 }
