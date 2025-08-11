@@ -19,6 +19,7 @@ public enum AbilityName
     MonsterRush,
     MonsterDoubleAttack,
     FireVariousProjectile,
+    FireProjectile,
 }
 
 public enum AbilityKey
@@ -36,6 +37,7 @@ public enum AbilityKey
     MonsterDoubleAttack,
     BossTestAbility,
     FireVariousProjectile,
+    FireProjectile,
 }
 
 public interface ITickable
@@ -93,6 +95,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.MonsterRush => new MonsterRush(),
             AbilityName.MonsterDoubleAttack => new MonsterDoubleAttack(),
             AbilityName.FireVariousProjectile => new FireVariousProjectile(),
+            AbilityName.FireProjectile => new FireProjectile(),
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }
