@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GameAbilitySystem;
 using UnityEngine;
 
-public class FireProjectile : GameplayAbility<FireProjectileSO>
+public class FireProjectile : BlockAbility<FireProjectileSO>
 {
     protected FireProjectileSO _so;
     protected IMovement _movement;
@@ -16,8 +16,9 @@ public class FireProjectile : GameplayAbility<FireProjectileSO>
 
     protected override void Activate()
     {
+        base.Activate();
         GameObject go = ResourcesManager.Instance.Instantiate(_so.projectile.gameObject);
         Vector2 direction = _movement.Direction;
-        go.GetComponent<IProjectile>().FireProjectile(Actor, direction);
+        go.GetComponent<Projectile>().FireProjectile(Actor, direction);
     }
 }
