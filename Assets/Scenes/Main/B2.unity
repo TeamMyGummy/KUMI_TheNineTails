@@ -841,6 +841,7 @@ MonoBehaviour:
   foxFireContainer: {fileID: 2027390444}
   foxFireFilled: {fileID: 21300000, guid: 98a7dbeab501345d48380eb0b5a254dc, type: 3}
   foxFireEmpty: {fileID: 21300000, guid: b092b5007f6bb499c824e64124a39e4e, type: 3}
+  HonbulCountText: {fileID: 0}
 --- !u!114 &565336426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,6 +1126,10 @@ PrefabInstance:
     - target: {fileID: 4572241603367076480, guid: a26cacc722720824abf1e6b05e88716d, type: 3}
       propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4675256570011598279, guid: a26cacc722720824abf1e6b05e88716d, type: 3}
+      propertyPath: orthographic size
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6949076173635677489, guid: a26cacc722720824abf1e6b05e88716d, type: 3}
       propertyPath: m_LocalPosition.x
