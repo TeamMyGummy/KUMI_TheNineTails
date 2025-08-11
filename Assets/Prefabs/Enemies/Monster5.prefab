@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6546838180170112804}
   - component: {fileID: 3908813324651643552}
   - component: {fileID: 8593353358979303172}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Monster5
   m_TagString: Enemies
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
