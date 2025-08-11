@@ -14,7 +14,7 @@ public abstract class Monster : MonoBehaviour
     
     private bool isDead = false;
     
-    public bool isAggro { get; private set; } = false; //hp바 띄우는 것 때문에 넣어둠
+    public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
 
     private MonsterMovement _movement;
     private Transform player;
@@ -46,7 +46,7 @@ public abstract class Monster : MonoBehaviour
     {
         float currHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
         if (currHp < prevHp)
-            StartCoroutine(Flash()); //공격받았을 때 반짝 이펙트
+            StartCoroutine(Flash()); // 공격받았을 때 반짝 이펙트
         prevHp = currHp;
 
         // 사망 처리
@@ -54,63 +54,76 @@ public abstract class Monster : MonoBehaviour
         {
             Die();
         }
-
+        
         if (player == null) return;
-        
-        
-
-
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
-        //플레이어가 시야에 들어오면 어그로 처리
+        bool wallInFront = IsWallInFront();
+
         if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
         {
             EnterAttackRange();
         }
-        else if (dist <= Data.AggroRange && inSight)
+        if (dist <= Data.AggroRange && inSight)
         {
             isAggro = true;
         }
-        else if (isAggro && dist >= Data.AggroReleaseRange)
+        else if (isAggro)
         {
-            isAggro = false;
+            if (dist >= Data.AggroReleaseRange || wallInFront)
+            {
+                isAggro = false;
+                _movement.ChangeMovePattern(MovePattern.Return);
+            }
         }
 
-        //어그로 걸려 있고, 공격범위 안에 들어오면 Ability 실행
-        if (isAggro && IsPlayerInAttackRange() && !monsterData.IsTriggerAttack)
+        if (isAggro && IsPlayerInAttackRange())
         {
             EnterAttackRange();
         }
     }
 
+
+
+
     protected abstract void EnterAttackRange();
 
-    //플레이어가 시야 안에 들어오는지 체크 (부채꼴 범위)
-    //---------------------------------------------------
+    // 플레이어가 시야 안에 들어오는지 체크 (부채꼴 범위)
     public bool IsPlayerInSight()
     {
         if (player == null) return false;
 
-        Vector2 toPlayer = (player.position - transform.position).normalized;
-        float angleToPlayer = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg;
+        Vector2 toPlayer = (player.position - transform.position);
+        Vector2 toPlayerNormalized = toPlayer.normalized;
+        float distanceToPlayer = toPlayer.magnitude;
+
+        // 시야 각도 체크
+        float angleToPlayer = Mathf.Atan2(toPlayerNormalized.y, toPlayerNormalized.x) * Mathf.Rad2Deg;
         angleToPlayer = NormalizeAngle(angleToPlayer);
 
         float startAngle = Data.ViewStartAngle;
         float viewAngle = Data.ViewSight;
-        
-        //int --> Vector2 수정
+    
         int dir = _movement != null ? _movement.HorizontalDir : 1;
 
         if (dir == -1)
         {
             startAngle = 180f - (startAngle + viewAngle);
         }
-
         startAngle = NormalizeAngle(startAngle);
         float endAngle = NormalizeAngle(startAngle + viewAngle);
 
-        return IsAngleInRange(angleToPlayer, startAngle, endAngle);
+        bool inAngle = IsAngleInRange(angleToPlayer, startAngle, endAngle);
+        if (!inAngle) return false;
+
+        //플레이어/몬스터 시야 사이에 벽 있나 검사
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayerNormalized, distanceToPlayer, LayerMask.GetMask("Platform"));
+        if (hit.collider != null)
+            return false;
+
+        return true;
     }
+
 
     private float NormalizeAngle(float angle)
     {
@@ -126,12 +139,20 @@ public abstract class Monster : MonoBehaviour
         else
             return angle >= start || angle <= end;
     }
-    //---------------------------------------------------
+    
+    // 앞에 벽 있는지 체크(어그로 해제용)
+    private bool IsWallInFront()
+    {
+        Vector2 origin = transform.position;
+        Vector2 target = player.position;
+        Vector2 direction = target - origin;
+        float distance = direction.magnitude;
+        
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction.normalized, distance, LayerMask.GetMask("Platform"));
+        return hit.collider != null;
+    }
 
-    
-    
-    //플레이어가 공격 범위 안에 들어오는지 체크 (사각 범위)
-    //---------------------------------------------------
+    // 플레이어가 공격 범위 안에 들어오는지 체크 (사각 범위)
     private bool IsPlayerInAttackRange()
     {
         if (player == null) return false;
@@ -144,7 +165,6 @@ public abstract class Monster : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + offset;
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(detectX, detectY), 0f);
-
         foreach (var hit in hits)
         {
             if (hit.CompareTag("Player"))
@@ -155,10 +175,6 @@ public abstract class Monster : MonoBehaviour
         return false;
     }
 
-
-    //---------------------------------------------------
-
-    //피격 시 반짝 이펙트 / 공격 직전 반짝 이펙트
     public System.Collections.IEnumerator Flash()
     {
         var prev = spriteRenderer.color;
@@ -173,7 +189,6 @@ public abstract class Monster : MonoBehaviour
         isDead = true;
 
         float spacing = 0.5f; 
-
         float startX = -(monsterData.DropCount - 1) * spacing * 0.5f;
         for (int i = 0; i < monsterData.DropCount; i++)
         {
@@ -184,7 +199,6 @@ public abstract class Monster : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
@@ -212,6 +226,4 @@ public abstract class Monster : MonoBehaviour
         UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.forward, Quaternion.Euler(0, 0, startAngle) * Vector3.right, viewAngle, monsterData.AggroRange);
     }
 #endif
-
-
 }
