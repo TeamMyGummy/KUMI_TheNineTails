@@ -7,7 +7,7 @@ public class PlayerRespawnController : MonoBehaviour
 {
     [SerializeField] private GameObject respawnGround;
 
-    private Vector2 RespawnPosition;
+    private Vector2 _respawnPosition;
     private GameObject _col;
     /*private float x=0f, y=0f;*/
     
@@ -34,14 +34,14 @@ public class PlayerRespawnController : MonoBehaviour
             float y = yCol.bounds.max.y;
             float x = other.bounds.center.x;
             
-            RespawnPosition = new Vector2(x, y);
-            Debug.Log($"[RespawnPoint] 저장된 위치: {RespawnPosition}");
+            _respawnPosition = new Vector2(x, y);
+            Debug.Log($"[RespawnPoint] 저장된 위치: {_respawnPosition}");
         }
     }
     
     public void Respawn()
     {
-        transform.position = RespawnPosition;
-        Debug.Log($"[Player] 리스폰 위치로 이동: {RespawnPosition}");
+        transform.position = _respawnPosition;
+        Debug.Log($"[Player] 리스폰 위치로 이동: {_respawnPosition}");
     }
 }

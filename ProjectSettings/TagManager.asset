@@ -10,6 +10,7 @@ TagManager:
   - UI
   - BreakableWall
   - FoxFlame
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
@@ -24,8 +25,8 @@ TagManager:
   - Player
   - PlayerHitbox
   - BlockingObject
-  - 
-  - 
+  - FloatingPlatform
+  - MovingPlatform
   - 
   - 
   - 
