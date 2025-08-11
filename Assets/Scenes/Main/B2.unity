@@ -532,6 +532,14 @@ PrefabInstance:
       propertyPath: name
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6366667828363013891, guid: 398f98008a8efdb408febb319ad9d1f5, type: 3}
+      propertyPath: baseCanvas
+      value: 
+      objectReference: {fileID: 1015863234}
+    - target: {fileID: 6366667828363013891, guid: 398f98008a8efdb408febb319ad9d1f5, type: 3}
+      propertyPath: skillInfoPrefab
+      value: 
+      objectReference: {fileID: 126084867550842414, guid: 7e67847c5ffbc4e93a54b5ffb84e6ca6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2040,6 +2048,14 @@ PrefabInstance:
       propertyPath: name
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6366667828363013891, guid: 398f98008a8efdb408febb319ad9d1f5, type: 3}
+      propertyPath: baseCanvas
+      value: 
+      objectReference: {fileID: 1015863234}
+    - target: {fileID: 6366667828363013891, guid: 398f98008a8efdb408febb319ad9d1f5, type: 3}
+      propertyPath: skillInfoPrefab
+      value: 
+      objectReference: {fileID: 126084867550842414, guid: 7e67847c5ffbc4e93a54b5ffb84e6ca6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
