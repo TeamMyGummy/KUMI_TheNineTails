@@ -58,7 +58,6 @@ public abstract class Monster : MonoBehaviour
         if (player == null) return;
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
-        bool wallInFront = IsWallInFront();
 
         if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
         {
@@ -70,7 +69,7 @@ public abstract class Monster : MonoBehaviour
         }
         else if (isAggro)
         {
-            if (dist >= Data.AggroReleaseRange || wallInFront)
+            if (dist >= Data.AggroReleaseRange)
             {
                 isAggro = false;
                 _movement.ChangeMovePattern(MovePattern.Return);
@@ -140,6 +139,7 @@ public abstract class Monster : MonoBehaviour
             return angle >= start || angle <= end;
     }
     
+    /*
     // 앞에 벽 있는지 체크(어그로 해제용)
     private bool IsWallInFront()
     {
@@ -151,7 +151,9 @@ public abstract class Monster : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, direction.normalized, distance, LayerMask.GetMask("Platform"));
         return hit.collider != null;
     }
-
+    */
+    
+    
     // 플레이어가 공격 범위 안에 들어오는지 체크 (사각 범위)
     public bool IsPlayerInAttackRange()
     {
