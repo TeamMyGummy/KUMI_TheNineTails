@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72d0ec486180ab46bd80dcbca803c4a, type: 3}
   m_Name: Monster4Rush
   m_EditorClassIdentifier: 
-  skillKey: 9
-  skillName: 9
+  skillKey: 101
+  skillName: 101
+  skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: 
+  unlockFloor: 0
+  skillKeyboard: {fileID: 0}
   BlockTimer: 1.2
   AttackRangeX: 1
   AttackRangeY: 1
