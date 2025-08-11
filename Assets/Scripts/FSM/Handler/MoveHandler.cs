@@ -1,5 +1,3 @@
-
-    using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
     using UnityEngine;
 
     //todo: (강승연) 상황 봐서... 동작방식 나눌 거면 나누겠음
