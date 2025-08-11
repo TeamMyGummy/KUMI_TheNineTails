@@ -20,7 +20,13 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
 
     protected override bool CanActivate()
     {
-        return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
+        if (Asc.TagContainer.Has(GameplayTags.BlockRunningAbility))
+            return false;
+        
+        if (!_monster.Data.IsFlying && _movement != null && !_movement.CheckGroundAhead())
+            return false;
+        
+        return true;
     }
 
     protected override void Activate()
@@ -65,8 +71,8 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         }
         else
         {
-            float sx = Mathf.Sign(playerPos.x - startPos.x);
-            rushDir  = new Vector2(sx, 0f);
+            float dirX = (_movement != null) ? Mathf.Sign(_movement.HorizontalDir) : 1f;
+            rushDir = new Vector2(dirX, 0f);
             targetPos = startPos + rushDir * _rushData.RushDistance;
         }
 
