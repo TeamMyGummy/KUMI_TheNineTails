@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpikeLaserObject : MonoBehaviour
 {
     [SerializeField] private float damage = 1.0f;
+    [SerializeField] private float respawnDelay = 1.0f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,8 +16,15 @@ public class SpikeLaserObject : MonoBehaviour
             var controller = collision.GetComponent<PlayerRespawnController>();
             if (controller != null)
             {
-                controller.Respawn();
+                StartCoroutine(RespawnAfterDelay(controller));
             }
         }
+    }
+    
+    // 장애물에 닿으면 딜레이 후 리스폰
+    private IEnumerator RespawnAfterDelay(PlayerRespawnController controller)
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        controller.Respawn();
     }
 }
