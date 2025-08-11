@@ -389,6 +389,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     /// <returns>몬스터가 바라보는 방향 (2d벡터)</returns>
     private Vector2 GetDirection()
     {
+        //비행몹(몬3)
         if (_monster.Data.IsFlying)
         {
             switch (_moveState)
