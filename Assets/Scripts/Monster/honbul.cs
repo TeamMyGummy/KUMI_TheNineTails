@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Honbul : MonoBehaviour
 {
+    public static event System.Action<int> OnCollected; // 혼불 획득 이벤트
     [SerializeField] private float pickupRadius = 0.2f; //이 거리 안으로 들어오면 획득됨
     [SerializeField] private float magnetRadius = 3f;  //이 거리 안으로 들어오면 빨려옴
     [SerializeField] private float baseSpeed = 2f;
@@ -64,9 +65,12 @@ public class Honbul : MonoBehaviour
     private void Absorb()
     {
         var pc = _player?.GetComponent<PlayerController>();
-        
+
         Destroy(gameObject);
         honbulCount++;
+
+        OnCollected?.Invoke(honbulCount);
+        
         Debug.Log($"[Honbul] 현재 혼불 개수: {honbulCount}");
     }
 }

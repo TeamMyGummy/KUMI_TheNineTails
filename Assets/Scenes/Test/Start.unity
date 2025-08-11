@@ -795,10 +795,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAD6C\uBBF8 : \uC804\uC790\uACF5\uC5C5\uC758 \uB3C4\uC2DC"
+  m_text: "\uAD6C\uBBF8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58bdf94a66f504420a5211b96c454b31, type: 2}
-  m_sharedMaterial: {fileID: 1893005941578349513, guid: 58bdf94a66f504420a5211b96c454b31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

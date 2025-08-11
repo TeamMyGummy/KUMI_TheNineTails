@@ -4,6 +4,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using TMPro;
 
 public class UI_PlayerState : MonoBehaviour
 {
@@ -17,16 +18,18 @@ public class UI_PlayerState : MonoBehaviour
     [SerializeField] private List<Sprite> skillSprites;
     [SerializeField] private Image skillImage;
 
-    [Header("FoxFire Gauge (고정 단계)")]
+    [Header("FoxFire Gauge")]
     [SerializeField] private Image foxFireGaugeImage;
     [SerializeField] private Sprite[] foxFireGaugeSprites;
 
-    [Header("FoxFire Count (동적 슬롯)")]
+    [Header("FoxFire Count")]
     [SerializeField] private Transform foxFireContainer;
     [SerializeField] private Sprite foxFireFilled;
     [SerializeField] private Sprite foxFireEmpty;
     private readonly List<Image> _foxFireImages = new();
 
+    [Header("Honbul Count")]
+    [SerializeField] private TextMeshProUGUI HonbulCountText;
     private CompositeDisposable _disposables = new();
     private VM_PlayerState _playerVM;
 
@@ -51,7 +54,7 @@ public class UI_PlayerState : MonoBehaviour
             return;
         }
 
-        // HP: 현재값 변경 시, 최신 MaxHp를 읽어 동적 슬롯 갱신
+        // HP
         _playerVM.Hp
             .Subscribe(current => UpdateHp(current, _playerVM.MaxHp))
             .AddTo(_disposables);
@@ -63,7 +66,7 @@ public class UI_PlayerState : MonoBehaviour
             .AddTo(_disposables);
         _disposables.Add(_playerVM.SkillCount.Subscribe(UpdateSkillProfile));
 
-        // 여우불 게이지(고정 단계)
+        // 여우불 게이지
         _disposables.Add(_playerVM.FoxFireGauge.Subscribe(UpdateFoxFireGauge));
 
         // 여우불 개수
@@ -73,11 +76,20 @@ public class UI_PlayerState : MonoBehaviour
             {
                 RefreshFoxFire(t.current, t.max);
             }));
-
-        // 초기 한 번 렌더
         UpdateFoxFireGauge(_playerVM.FoxFireGauge.CurrentValue);
         UpdateHp(_playerVM.Hp.CurrentValue, _playerVM.MaxHp);
         RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
+
+        // 혼불 개수
+        _disposables.Add(
+        _playerVM.HonbulCount.Subscribe(n =>
+            {
+                if (HonbulCountText != null)
+                    HonbulCountText.text = $"X {n}";
+            })
+        );
+        if (HonbulCountText != null)
+            HonbulCountText.text = $"X {_playerVM.HonbulCount.Value}";
     }
 
     private void OnDisable()
@@ -86,7 +98,7 @@ public class UI_PlayerState : MonoBehaviour
         _disposables = new CompositeDisposable();
     }
 
-    // ------ HP (동적 슬롯) ------
+    // ------ HP ------
     private void UpdateHp(float current, float max)
     {
         int maxHp = Mathf.FloorToInt(max);
@@ -119,20 +131,20 @@ public class UI_PlayerState : MonoBehaviour
             skillImage.sprite = skillSprites[skillCount];
     }
 
-    // ------ 여우불 게이지(고정 단계) ------
+    // ------ 여우불 게이지 ------
     private void UpdateFoxFireGauge(float value)
     {
         int stage = Mathf.Clamp(Mathf.FloorToInt(value), 0, foxFireGaugeSprites.Length - 1);
         foxFireGaugeImage.sprite = foxFireGaugeSprites[stage];
     }
 
-    // ------ 여우불 개수(동적 슬롯) ------
+    // ------ 여우불 개수 ------
     private void RefreshFoxFire(int current, int max)
     {
         int cur = Mathf.Max(0, current);
         int mx = Mathf.Max(0, max);
 
-        // 부족하면 슬롯 생성
+        // 슬롯 생성
         while (_foxFireImages.Count < mx)
         {
             var go = new GameObject("FoxFire");

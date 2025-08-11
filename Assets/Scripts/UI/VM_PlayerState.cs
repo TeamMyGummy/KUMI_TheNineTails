@@ -12,16 +12,8 @@ namespace UI
         public ReadOnlyReactiveProperty<int> SkillCount { get; private set; }
         public ReadOnlyReactiveProperty<float> FoxFireGauge { get; private set; }
         public ReadOnlyReactiveProperty<int> FoxFireCount { get; private set; }
-        public ReadOnlyReactiveProperty<int> MaxFoxFireCountRP { get; private set; } // 🔹 Reactive MaxValue
-
-        public float MaxHp
-        {
-            get
-            {
-                if (_playerModel == null) return 0f;
-                return _playerModel.Attribute.Attributes["HP"].MaxValue;
-            }
-        }
+        public ReadOnlyReactiveProperty<int> MaxFoxFireCountRP { get; private set; }
+        public ReactiveProperty<int> HonbulCount { get; private set; } = new(0);
 
         public void Awake()
         {
@@ -44,6 +36,23 @@ namespace UI
                 .CurrentValue.ToReadOnlyReactiveProperty();
 
             SkillCount = _playerModel.GrantedAbilityCount;
+
+            // 혼불 갯수
+            Observable.FromEvent<int>(
+                h => Honbul.OnCollected += h,
+                h => Honbul.OnCollected -= h
+            )
+            .Subscribe(total => HonbulCount.Value = total)
+            .AddTo(this.destroyCancellationToken);
+        }
+
+        public float MaxHp
+        {
+            get
+            {
+                if (_playerModel == null) return 0f;
+                return _playerModel.Attribute.Attributes["HP"].MaxValue;
+            }
         }
     }
 }
