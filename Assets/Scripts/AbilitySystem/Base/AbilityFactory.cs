@@ -6,38 +6,50 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using Util;
 
+//Player용 스킬 = 1~99
+//Monster용 스킬 = 100~699 - 몬스터 번호가 백의 자리
+//Boss용 스킬 = 1000 - 층수가 천의 자리
 public enum AbilityName
 {
+    //플레이어
     Attack = 1,
     PlayerAttack,
     Jump,
     DoubleJump,
     Dash,
-    MonsterAttack,
     Parrying,
     FoxFire,
+    FireProjectile,
+    
+    //몬스터
+    MonsterAttack = 100,
     MonsterRush,
     MonsterDoubleAttack,
-    FireVariousProjectile,
-    FireProjectile,
+    
+    //보스
+    FireVariousProjectile = 1000,
 }
 
 public enum AbilityKey
 {
     None = -1,
+    //플레이어
     Attack = 1,
     PlayerAttack,
     Jump,
     DoubleJump,
     Dash,
-    MonsterAttack,
     Parrying,
     FoxFire,
+    FireProjectile,
+    
+    //몬스터
+    MonsterAttack = 100,
     MonsterRush,
     MonsterDoubleAttack,
-    BossTestAbility,
-    FireVariousProjectile,
-    FireProjectile,
+    
+    //보스
+    FireVariousProjectile = 1000,
 }
 
 public interface ITickable
