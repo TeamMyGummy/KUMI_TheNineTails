@@ -41,7 +41,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private Vector2 _retreatTargetPos;
     private bool _hasReachedRetreatTarget = false;
     private const float RetreatDistance = 2f;            // 후퇴할 거리
-    private const float CloseRangeThreshold = 2f;        // 플레이어가 가까이 있다고 판단하는 거리
+    private const float CloseRangeThreshold = 3f;        // 플레이어가 가까이 있다고 판단하는 거리
     private const float FleeRangeThreshold = 4f;         // 도망을 멈추는 거리
     private const float RetreatArrivalThreshold = 0.2f;  // 후퇴 목표점 도착 판정
     private const float RetreatSpeedMultiplier = 3.0f;
