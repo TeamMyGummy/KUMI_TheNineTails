@@ -154,7 +154,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 1.6}
+    oldSize: {x: 1, y: 2}
     newSize: {x: 0.8, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: 487333a7b33cd654aaa8061057143775, type: 2}
   abilitySystemPath: Monster/Monster1
-  abilityKey: 6
+  abilityKey: 100
 --- !u!114 &868580089823097190
 MonoBehaviour:
   m_ObjectHideFlags: 0
