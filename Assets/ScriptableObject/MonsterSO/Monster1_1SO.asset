@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fdbf9efdbb90134b9a5271bae419745, type: 3}
-  m_Name: Monster3SO
+  m_Name: Monster1_1SO
   m_EditorClassIdentifier: 
-  monsterName: Monster3
-  isFlying: 1
+  monsterName: Monster1_1
+  isFlying: 0
   isBomb: 0
   isTriggerAttack: 0
-  dropCount: 2
+  dropCount: 4
   honbulPrefab: {fileID: 5739550877967227833, guid: dbbc841980c40634fac68af51ac3441e, type: 3}
-  viewStartAngle: -90
-  viewSight: 135
+  viewStartAngle: -22.5
+  viewSight: 45
   aggroRange: 8
   aggroReleaseRange: 14
-  detectRangeX: 0.8
-  detectRangeY: 0.8
-  detectOffset: {x: 0, y: -0.4}
+  detectRangeX: 1.5
+  detectRangeY: 1.5
+  detectOffset: {x: 0.75, y: 0}

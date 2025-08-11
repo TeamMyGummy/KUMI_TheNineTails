@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Monster4
   isFlying: 0
+  isBomb: 0
+  isTriggerAttack: 0
+  dropCount: 2
+  honbulPrefab: {fileID: 5739550877967227833, guid: dbbc841980c40634fac68af51ac3441e, type: 3}
   viewStartAngle: -22.5
   viewSight: 45
   aggroRange: 8
   aggroReleaseRange: 14
   detectRangeX: 2
   detectRangeY: 1
+  detectOffset: {x: 0, y: 0}

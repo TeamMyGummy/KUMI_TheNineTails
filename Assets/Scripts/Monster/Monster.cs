@@ -171,8 +171,19 @@ public abstract class Monster : MonoBehaviour
     {
         Debug.Log("[Monster] 처치");
         isDead = true;
-        Destroy(this.gameObject);
+
+        float spacing = 0.5f; 
+
+        float startX = -(monsterData.DropCount - 1) * spacing * 0.5f;
+        for (int i = 0; i < monsterData.DropCount; i++)
+        {
+            Vector3 spawnPos = transform.position + new Vector3(startX + i * spacing, 0f, 0f);
+            Instantiate(monsterData.HonbulPrefab, spawnPos, Quaternion.identity);
+        }
+
+        Destroy(gameObject);
     }
+
     
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

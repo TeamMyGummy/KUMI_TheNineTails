@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Monster/MonsterSO")]
@@ -9,10 +10,15 @@ public class MonsterSO : ScriptableObject
     [SerializeField] private bool isBomb = false;
     [SerializeField] private bool isTriggerAttack =  false;       // 공격 범위가 따로 존재하지 않고 시야에 들어오면 공격하는 경우
     
+    [Header("드랍템")]
+    [SerializeField] private int dropCount = 2;
+    [SerializeField] private GameObject honbulPrefab;
     public string MonsterName => monsterName;
     public bool IsFlying => isFlying;
     public bool IsBomb => isBomb;
     public bool IsTriggerAttack => isTriggerAttack;
+    public int DropCount => dropCount;
+    public  GameObject HonbulPrefab => honbulPrefab;
 
     [Header("시야각")]
     [SerializeField] private float viewStartAngle = -45f; // 시작 각도 (왼쪽부터)
