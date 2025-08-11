@@ -12,22 +12,38 @@ namespace UI
         public ReadOnlyReactiveProperty<int> SkillCount { get; private set; }
         public ReadOnlyReactiveProperty<float> FoxFireGauge { get; private set; }
         public ReadOnlyReactiveProperty<int> FoxFireCount { get; private set; }
+        public ReadOnlyReactiveProperty<int> MaxFoxFireCountRP { get; private set; } // 🔹 Reactive MaxValue
+
+        public float MaxHp
+        {
+            get
+            {
+                if (_playerModel == null) return 0f;
+                return _playerModel.Attribute.Attributes["HP"].MaxValue;
+            }
+        }
 
         public void Awake()
         {
             DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
+            if (_playerModel == null) return;
 
-            if (_playerModel == null)
-            {
-                return;
-            }
+            var hpAttr = _playerModel.Attribute.Attributes["HP"];
+            Hp = hpAttr.CurrentValue; // HP 변화 구독
 
-            Hp = _playerModel.Attribute.Attributes["HP"].CurrentValue;
-            FoxFireGauge = _playerModel.Attribute.Attributes["FoxFireGauge"].CurrentValue.ToReadOnlyReactiveProperty();
-            FoxFireCount = _playerModel.Attribute.Attributes["FoxFireCount"].CurrentValue.Select(x => (int)x).ToReadOnlyReactiveProperty();
+            var ffAttr = _playerModel.Attribute.Attributes["FoxFireCount"];
+            MaxFoxFireCountRP = ffAttr.MaxValueRP
+                .Select(v => Mathf.FloorToInt(v))
+                .ToReadOnlyReactiveProperty();
+
+            FoxFireCount = ffAttr.CurrentValue
+                .Select(v => (int)v)
+                .ToReadOnlyReactiveProperty();
+
+            FoxFireGauge = _playerModel.Attribute.Attributes["FoxFireGauge"]
+                .CurrentValue.ToReadOnlyReactiveProperty();
 
             SkillCount = _playerModel.GrantedAbilityCount;
         }
-
     }
 }

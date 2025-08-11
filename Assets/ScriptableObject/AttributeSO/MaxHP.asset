@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MaxHP
   m_EditorClassIdentifier: 
   AttributeName: MaxHP
-  BaseValue: 5
-  MaxValue: 6
+  BaseValue: 3
+  MaxValue: 3

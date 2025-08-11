@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour, IMovement
     private TailBox _tailBox;
     private NpcObject _npcObject;
     private Vector2 _direction;
+    private MaxHpItem _maxHpItem;
+    private FoxFireItem _foxFireItem;
 
     public event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
@@ -311,8 +313,48 @@ public class PlayerController : MonoBehaviour, IMovement
             _tailBox = tailbox;
         }
     }
-    
-    
+
+    // Max HP Item
+    public void OnMaxHpItemInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            Debug.Log("[Input] E 키 눌림");
+            if (_maxHpItem != null)
+            {
+                _maxHpItem.ApplyMaxHpIncrease();
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerController] _maxHpItem == null");
+            }
+        }
+    }
+
+    public void SetMaxHpItem(MaxHpItem HPitem)
+    {
+        if (HPitem != null || _maxHpItem != HPitem)
+        {
+            _maxHpItem = HPitem;
+        }
+    }
+
+    public void OnFoxFireItemInteraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started && _foxFireItem != null)
+        {
+            _foxFireItem.ApplyFoxFireIncrease();
+        }
+    }
+
+    public void SetFoxFireItem(FoxFireItem item)
+    {
+        if (item != null || _foxFireItem != item)
+        {
+            _foxFireItem = item;
+        }
+    }
+        
     // NPC Interaction
     public void OnNpcInteraction(InputAction.CallbackContext ctx)
     {
