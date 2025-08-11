@@ -94,16 +94,19 @@ public abstract class Monster : MonoBehaviour
         if (player == null) return false;
 
         Vector2 toPlayer = (player.position - transform.position);
-        Vector2 toPlayerNormalized = toPlayer.normalized;
         float distanceToPlayer = toPlayer.magnitude;
 
-        // 시야 각도 체크
+        if (distanceToPlayer > Data.AggroRange)
+            return false;
+
+        Vector2 toPlayerNormalized = toPlayer.normalized;
+
         float angleToPlayer = Mathf.Atan2(toPlayerNormalized.y, toPlayerNormalized.x) * Mathf.Rad2Deg;
         angleToPlayer = NormalizeAngle(angleToPlayer);
 
         float startAngle = Data.ViewStartAngle;
         float viewAngle = Data.ViewSight;
-    
+
         int dir = _movement != null ? _movement.HorizontalDir : 1;
 
         if (dir == -1)
@@ -113,16 +116,18 @@ public abstract class Monster : MonoBehaviour
         startAngle = NormalizeAngle(startAngle);
         float endAngle = NormalizeAngle(startAngle + viewAngle);
 
-        bool inAngle = IsAngleInRange(angleToPlayer, startAngle, endAngle);
-        if (!inAngle) return false;
+        if (!IsAngleInRange(angleToPlayer, startAngle, endAngle))
+            return false;
 
-        //플레이어/몬스터 시야 사이에 벽 있나 검사
+        /*
+        // 장애물 체크
         RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayerNormalized, distanceToPlayer, LayerMask.GetMask("Platform"));
         if (hit.collider != null)
             return false;
-
+        */
         return true;
     }
+
 
 
     private float NormalizeAngle(float angle)
