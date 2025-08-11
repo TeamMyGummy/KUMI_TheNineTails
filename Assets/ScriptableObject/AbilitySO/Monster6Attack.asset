@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 6
   skillName: 6
+  skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: 
+  unlockFloor: 0
+  skillKeyboard: {fileID: 0}
   BlockTimer: 1.5
-  AttackRangeX: 3.2
-  AttackRangeY: 1.6
-  AttackDir: 1
+  AttackRangeX: 4
+  AttackRangeY: 2
+  HitboxOffset: {x: 2, y: 0}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
   isStoppingWhileAttack: 1
