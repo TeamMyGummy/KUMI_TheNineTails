@@ -168,6 +168,13 @@ public class MonsterMovement : MonoBehaviour, IMovement
             }
         }
         
+        //플레이어가 공격범위 안에 있고, 플레이어가 움직이지 않으면 몬스터도 멈춰서 때리게
+        if (_monster.IsPlayerInAttackRange() && !IsPlayerMoving())
+        {
+            _cm.Move(Vector2.zero);
+            return;
+        }
+        
         // 지상몬스터: 발판 있으면 떨어지지 않게 멈추기 
         if (!_monster.Data.IsFlying && !CheckGroundAhead())
         {
@@ -276,5 +283,15 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _canChangeDirection = !lockDir;
     }
 
+    //플레이어 멈춰있는지 체크 (이동속도로)
+    private bool IsPlayerMoving()
+    {
+        if (_player == null) return false;
+
+        Rigidbody2D rb = _player.GetComponent<Rigidbody2D>();
+        if (rb == null) return true;
+
+        return rb.velocity.magnitude > 0.1f;
+    }
 
 }

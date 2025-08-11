@@ -153,7 +153,7 @@ public abstract class Monster : MonoBehaviour
     }
 
     // 플레이어가 공격 범위 안에 들어오는지 체크 (사각 범위)
-    private bool IsPlayerInAttackRange()
+    public bool IsPlayerInAttackRange()
     {
         if (player == null) return false;
 
