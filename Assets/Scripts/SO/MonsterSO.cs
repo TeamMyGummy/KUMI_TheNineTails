@@ -9,6 +9,7 @@ public class MonsterSO : ScriptableObject
     [SerializeField] private bool isFlying = false;               // 공중 몬스터 여부
     [SerializeField] private bool isBomb = false;
     [SerializeField] private bool isTriggerAttack =  false;       // 공격 범위가 따로 존재하지 않고 시야에 들어오면 공격하는 경우
+    [SerializeField] private bool isRanged = false;               // 원거리 공격 몹일 때
     
     [Header("드랍템")]
     [SerializeField] private int dropCount = 2;
@@ -19,6 +20,7 @@ public class MonsterSO : ScriptableObject
     public bool IsTriggerAttack => isTriggerAttack;
     public int DropCount => dropCount;
     public  GameObject HonbulPrefab => honbulPrefab;
+    public bool IsRanged => isRanged;
 
     [Header("시야각")]
     [SerializeField] private float viewStartAngle = -45f; // 시작 각도 (왼쪽부터)

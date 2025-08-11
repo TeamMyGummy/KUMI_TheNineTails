@@ -62,6 +62,7 @@ public abstract class Monster : MonoBehaviour
         if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
         {
             EnterAttackRange();
+            isAggro = true;
         }
         if (dist <= Data.AggroRange && inSight)
         {
