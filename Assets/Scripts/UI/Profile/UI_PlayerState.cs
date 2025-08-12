@@ -40,7 +40,7 @@ public class UI_PlayerState : MonoBehaviour
 
     private async void OnEnable()
     {
-        await UniTask.NextFrame(); // VM 초기화 한 프레임 뒤에 바인딩
+        await UniTask.NextFrame();
 
         if (_playerVM == null)
         {
@@ -48,48 +48,45 @@ public class UI_PlayerState : MonoBehaviour
             return;
         }
 
-        if (_playerVM.SkillCount == null)
-        {
-            Debug.LogError("[UI] SkillCount is null");
-            return;
-        }
-
-        // HP
+        // HP 
         _playerVM.Hp
             .Subscribe(current => UpdateHp(current, _playerVM.MaxHp))
             .AddTo(_disposables);
 
-        // 스킬 아이콘
+        // 여우불 게이지
+        _playerVM.FoxFireGauge
+            .Subscribe(UpdateFoxFireGauge)
+            .AddTo(_disposables);
+
+        // 스킬 아이콘 - 초기 1회만
         _playerVM.SkillCount
             .Take(1)
             .Subscribe(UpdateSkillProfile)
             .AddTo(_disposables);
-        _disposables.Add(_playerVM.SkillCount.Subscribe(UpdateSkillProfile));
 
-        // 여우불 게이지
-        _disposables.Add(_playerVM.FoxFireGauge.Subscribe(UpdateFoxFireGauge));
-
-        // 여우불 개수
-        _disposables.Add(_playerVM.FoxFireCount
-            .CombineLatest(_playerVM.MaxFoxFireCountRP, (current, max) => (current, max))
-            .Subscribe(t =>
+        // 여우불 개수 - Max 값이 변할 때만 전체 슬롯 갱신
+        _playerVM.MaxFoxFireCountRP
+            .DistinctUntilChanged()
+            .Subscribe(max =>
             {
-                RefreshFoxFire(t.current, t.max);
-            }));
+                RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
+            })
+            .AddTo(_disposables);
+
+        // 혼불
+        if (HonbulCountText != null)
+        {
+            _playerVM.HonbulCount
+                .Subscribe(n =>
+                {
+                    HonbulCountText.text = $"X {n}";
+                })
+                .AddTo(_disposables);
+        }
+
+        // ======== 초기 렌더 ========
         UpdateFoxFireGauge(_playerVM.FoxFireGauge.CurrentValue);
         UpdateHp(_playerVM.Hp.CurrentValue, _playerVM.MaxHp);
-        RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
-
-        // 혼불 개수
-        _disposables.Add(
-        _playerVM.HonbulCount.Subscribe(n =>
-            {
-                if (HonbulCountText != null)
-                    HonbulCountText.text = $"X {n}";
-            })
-        );
-        if (HonbulCountText != null)
-            HonbulCountText.text = $"X {_playerVM.HonbulCount.Value}";
     }
 
     private void OnDisable()
@@ -134,6 +131,13 @@ public class UI_PlayerState : MonoBehaviour
     // ------ 여우불 게이지 ------
     private void UpdateFoxFireGauge(float value)
     {
+        // 최대 개수인지 체크
+        if (_playerVM.FoxFireCount.CurrentValue >= _playerVM.MaxFoxFireCountRP.CurrentValue)
+        {
+            foxFireGaugeImage.sprite = foxFireGaugeSprites[foxFireGaugeSprites.Length - 1]; // Full 상태
+            return;
+        }
+
         int stage = Mathf.Clamp(Mathf.FloorToInt(value), 0, foxFireGaugeSprites.Length - 1);
         foxFireGaugeImage.sprite = foxFireGaugeSprites[stage];
     }

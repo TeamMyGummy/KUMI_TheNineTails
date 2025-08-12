@@ -56,12 +56,10 @@ public class MaxHpItem : MonoBehaviour
             float prevMax = hp.MaxValue;
             float newMax = prevMax + increaseAmount;
 
+            float current = hp.CurrentValue.Value;
             hp.SetMaxValue(newMax);
-
-            float newValue = hp.CurrentValue.Value + increaseAmount;
-            hp.Modify(newValue, ModOperation.Override);
-
-            Debug.Log($"이전 최대 hp : {prevMax} → {newMax}, 현재 hp: {newValue}");
+            hp.SetCurrentValue(current);
+            Debug.Log($"최대 hp : {prevMax} → {newMax}, 현재 hp: {current}");
         }
         else
         {
