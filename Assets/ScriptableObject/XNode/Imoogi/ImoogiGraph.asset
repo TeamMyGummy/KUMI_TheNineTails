@@ -95,7 +95,7 @@ MonoBehaviour:
   handlerKey: Rotate
   angle: -30
   type: 0
-  speed: 0
+  speed: 10
 --- !u!114 &-8076641291279256618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   handlerKey: Rotate
   angle: 30
   type: 0
-  speed: 2
+  speed: 10
 --- !u!114 &2559255003687656722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,7 +2021,7 @@ MonoBehaviour:
   handlerKey: Rotate
   angle: -30
   type: 0
-  speed: 0
+  speed: 10
 --- !u!114 &5817378462548943609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2523,7 +2523,7 @@ MonoBehaviour:
   actionName: Action
   sequential: 1
   handlerKey: Targeting
-  dest: {x: -8.62, y: -0.483869, z: 0}
+  dest: {x: -8.62, y: -0.71189374, z: 0}
 --- !u!114 &8883669560038428332
 MonoBehaviour:
   m_ObjectHideFlags: 0

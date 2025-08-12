@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class RotateHandler : ActionHandler
 {
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float speed = 10f;
     private float _angle;
     private RotationType _type;
-    private float _currentDest; // 최종 절대 회전각도
+    
+    private Quaternion _targetRotation;
     private bool _rotationComplete = false;
 
     public void SetRotation(float angle, RotationType type, float speed)
@@ -18,42 +19,40 @@ public class RotateHandler : ActionHandler
     public override void OnEnterAction()
     {
         _rotationComplete = false;
+        
+        float finalTargetAngle;
 
         if (_type == RotationType.Absolute)
         {
-            _currentDest = _angle;
+            finalTargetAngle = _angle;
         }
-        else if (_type == RotationType.OffSet)
+        else // _type == RotationType.OffSet
         {
-            _currentDest = transform.eulerAngles.z + _angle;
+            finalTargetAngle = transform.eulerAngles.z + _angle;
         }
+
+        Vector3 currentEuler = transform.eulerAngles;
+        _targetRotation = Quaternion.Euler(currentEuler.x, currentEuler.y, finalTargetAngle);
     }
 
     public override bool OnExecuteAction()
     {
         if (_rotationComplete) return true;
 
-        float currentAngles = transform.eulerAngles.z;
-        float targetAngles = _currentDest;
-
-        // X, Y, Z 축 각각 최단 회전 방향 계산
-        float deltaZ = Mathf.DeltaAngle(currentAngles, targetAngles);
-
-        // 회전 속도 계산
+        // 1. 이번 프레임에 회전할 최대 각도를 계산합니다.
         float step = speed * Time.deltaTime;
 
-        // 회전 속도만큼 목표 각도를 초과하지 않게 회전
-        float newZ = Mathf.MoveTowardsAngle(currentAngles, targetAngles, step * Mathf.Abs(deltaZ));
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, newZ);
+        // 2. 목표 지점까지 회전시킵니다.
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, step);
 
-        // 목표 회전 도달 체크 (오차 범위 0.1도)
-        if (Mathf.Abs(Mathf.DeltaAngle(newZ, targetAngles)) < 0.1f)
+        // 3. 목표에 거의 도달했는지 Quaternion.Angle로 확인합니다.
+        if (Quaternion.Angle(transform.rotation, _targetRotation) < 0.01f)
         {
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, targetAngles);
+            transform.rotation = _targetRotation; // 오차 보정
             _rotationComplete = true;
-            return true; // Action 완료
+            return true;
         }
 
-        return false; // 아직 회전 중
+        return false;
     }
 }
