@@ -20,8 +20,9 @@ public class Player : MonoBehaviour
     private readonly int _runID = Animator.StringToHash("Run");
     private readonly int _isGroundID =  Animator.StringToHash("IsGround");
     private readonly int _wallClimbID =  Animator.StringToHash("WallClimb");
-    private readonly int _isWallClimbingID =  Animator.StringToHash("IsWallClimbing");
-    private readonly int _endWallClimbID =  Animator.StringToHash("EndWallClimb");
+    private readonly int _ropeClimbID =  Animator.StringToHash("RopeClimb");
+    private readonly int _isClimbingID =  Animator.StringToHash("IsClimbing");
+    private readonly int _endClimbID =  Animator.StringToHash("EndClimb");
 
     private bool _canFlip;
     
@@ -45,17 +46,28 @@ public class Player : MonoBehaviour
         _animator.SetBool(_isGroundID, _characterMovement.CheckIsGround());
 
         SetWallClimb(_characterMovement.CheckIsWallClimbing());
+        _animator.SetBool(_ropeClimbID, _characterMovement.CheckIsRopeClimbing());
         _animator.SetBool
         (
-            _isWallClimbingID,
-            _animator.GetBool(_wallClimbID) && _characterMovement.GetCharacterDirection().y != 0 ? true : false
+            _isClimbingID,
+            (_animator.GetBool(_wallClimbID) || _animator.GetBool(_ropeClimbID)) && _characterMovement.GetCharacterDirection().y != 0 ? true : false
         );
         
-        if (_characterMovement.GetCharacterDirection().x != 0 && _canFlip)
+        if (_playerController.Direction.x != 0 && _canFlip)
         {
-          _spriteRenderer.flipX = _characterMovement.GetCharacterDirection().x > 0 ? false : true;  
+            _spriteRenderer.flipX = _playerController.Direction.x > 0 ? false : true;
+            //_spriteRenderer.flipX = _characterMovement.GetCharacterDirection().x > 0 ? false : true;  
         }
         
+    }
+
+    /// <summary>
+    /// Sprite를 현재 바라보는 방향의 반대로 뒤집는 함수
+    /// </summary>
+    public void FlipSprite()
+    {
+        //_spriteRenderer.flipX = _characterMovement.GetCharacterSpriteDirection().x > 0 ? true : false;
+        _playerController.SetDirection(_characterMovement.GetCharacterSpriteDirection() * (-1));
     }
 
     public void SetWallClimb(bool wallClimb)
@@ -66,7 +78,7 @@ public class Player : MonoBehaviour
 
     private void EndWallClimb()
     {
-        _animator.SetTrigger(_endWallClimbID);
+        _animator.SetTrigger(_endClimbID);
     }
-
+    
 }
