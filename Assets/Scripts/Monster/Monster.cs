@@ -12,7 +12,7 @@ public abstract class Monster : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float prevHp;
     
-    private bool isDead = false;
+    protected bool isDead = false;
     
     public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
 
@@ -246,7 +246,7 @@ public abstract class Monster : MonoBehaviour
         spriteRenderer.color = prev;
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         Debug.Log("[Monster] 처치");
         isDead = true;
