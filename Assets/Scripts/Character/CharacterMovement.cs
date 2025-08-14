@@ -9,15 +9,14 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _sprite;
 
-    [SerializeField]
-    [Range(0.0f, 3.0f)] private float speed;
+    [SerializeField] [Range(0.0f, 3.0f)] private float speed;
 
-    [SerializeField]
-    [Range(0.0f, 3.0f)] private float gravity;
+    [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
 
     private Vector2 _nextDirection;
     private bool _isGround;
     private bool _isWallClimbing;
+    private bool _isRopeClimbing;
 
     private void Awake()
     {
@@ -29,7 +28,7 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         //  Move
-        if(_nextDirection != Vector2.zero)
+        if (_nextDirection != Vector2.zero)
         {
             Vector2 currMove = _rigidBody.position;
             Vector2 nextMove = _nextDirection * speed;
@@ -50,7 +49,7 @@ public class CharacterMovement : MonoBehaviour
     {
         return _nextDirection;
     }
-    
+
     /// <summary>
     /// Sprite가 바라보는 x방향
     /// (1, 0) -> 오른쪽을 보고 있음
@@ -73,23 +72,63 @@ public class CharacterMovement : MonoBehaviour
         _rigidBody.AddForce(Vector2.up * (cancelForce + jumpPower), ForceMode2D.Impulse);
     }
     
+    public void Jump(float jumpPower, Vector2 direction)
+    {
+        float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
+        _rigidBody.AddForce(direction * (cancelForce + jumpPower), ForceMode2D.Impulse);
+    }
+
+    public void PhysicsFrozen()
+    {
+        _nextDirection = Vector2.zero;
+        _rigidBody.velocity = Vector2.zero;
+        _rigidBody.gravityScale = 0;
+    }
+
+    public void PhysicsRelease()
+    {
+        _rigidBody.gravityScale = gravity;
+    }
+
     public void StartWallClimbState()
     {
         // 벽타기 상태
-        _rigidBody.velocity = Vector2.zero;
-        _rigidBody.gravityScale = 0;
+        PhysicsFrozen();
         _isWallClimbing = true;
     }
 
     public void EndWallClimbState()
     {
-        _rigidBody.gravityScale = gravity;
+        PhysicsRelease();
         _isWallClimbing = false;
+    }
+    
+    public void StartRopeClimbState()
+    {
+        // 밧줄타기 상태
+        PhysicsFrozen();
+        _isRopeClimbing = true;
+    }
+
+    public void EndRopeClimbState()
+    {
+        PhysicsRelease();
+        _isRopeClimbing = false;
     }
 
     public bool CheckIsWallClimbing()
     {
         return _isWallClimbing;
+    }
+
+    public bool CheckIsRopeClimbing()
+    {
+        return _isRopeClimbing;
+    }
+
+    public bool CheckIsClimbing()
+    {
+        return _isWallClimbing || _isRopeClimbing;
     }
     
     /// <summary>
