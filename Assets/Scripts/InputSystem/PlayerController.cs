@@ -89,20 +89,15 @@ public class PlayerController : MonoBehaviour, IMovement
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
         if(inputDirection.x != 0) _direction = inputDirection;
         
-        /*if (_characterMovement.CheckIsWallClimbing())
-        {
-            if (ctx.started && inputDirection != _characterMovement.GetCharacterSpriteDirection())
-            {
-                // sprite가 바라보는 방향의 반대 방향일 때 성립
-                _wallClimb.SetWallClimbState(inputDirection);
-                OnEnableJump();
-            }
-            if (ctx.canceled) OnDisableJump();
-        }*/
-        if (!_characterMovement.CheckIsWallClimbing())
+        if (!_characterMovement.CheckIsClimbing())
         {
             _characterMovement.Move(inputDirection);
         }
+    }
+
+    public void SetDirection(Vector2 direction)
+    {
+        _direction = direction;
     }
 
     public void OnEnableMove()
@@ -119,9 +114,18 @@ public class PlayerController : MonoBehaviour, IMovement
     public void OnWallClimb(InputAction.CallbackContext ctx)
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        
-        _characterMovement.Move(inputDirection);
-        _wallClimb.SetWallClimbState(inputDirection);           
+        if(inputDirection.x != 0) _direction = inputDirection;
+
+        if (_characterMovement.CheckIsClimbing())
+        {
+             _characterMovement.Move(inputDirection);
+             _wallClimb.SetWallClimbState(inputDirection);             
+        }
+    }
+
+    public bool IsPressedClimbKey()
+    {
+        return _playerInput.actions["WallClimb"].IsPressed();
     }
 
     public void StartWallClimb(GameObject wall)
@@ -136,6 +140,19 @@ public class PlayerController : MonoBehaviour, IMovement
     public void EndWallClimb()
     {
         _wallClimb.Reset();
+        OnEnableAllInput();
+    }
+
+    public void StartRopeClimb()
+    {
+        OnDisableAllInput();
+        OnEnableWallClimb();
+        OnEnableJump();
+        OnEnableMove();
+    }
+
+    public void EndRopeClimb()
+    {
         OnEnableAllInput();
     }
 
@@ -154,23 +171,30 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         if (ctx.started)
         {
-            if (_characterMovement.CheckIsWallClimbing())
+            if (_characterMovement.CheckIsClimbing())
             {
-                if (_characterMovement.CheckIsRopeClimbing())
+                int jumpDir = _characterMovement.CheckIsWallClimbing() ? -1 : 1;
+                
                 if(_playerInput.actions["Move"].IsPressed())
                 {
                     // climb 중 방향키를 누르고 있었을 때
-                    _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * (-1));
+                    _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * jumpDir);
                 }
                 else{
-                    _characterMovement.Jump(2.0f, _characterMovement.GetCharacterSpriteDirection() * (-1));
-                    _player.FlipSprite();
+                    _characterMovement.Jump(2.0f, _characterMovement.GetCharacterSpriteDirection() * jumpDir);
+                    if(jumpDir == -1) _player.FlipSprite();
                 }
             }
         }
         else if (ctx.performed)
         {
             _asc.TryActivateAbility(AbilityKey.DoubleJump);
+            
+            if (_characterMovement.CheckIsRopeClimbing())
+            {
+                _characterMovement.EndRopeClimbState();
+                EndRopeClimb();
+            }
         }
         else if (ctx.canceled)
         {
@@ -394,12 +418,12 @@ public class PlayerController : MonoBehaviour, IMovement
 
     // ----------------------------------------------------------------
     /// <summary>
-    /// 벽타기를 제외한 모든 Player Input 활성화
+    /// 모든 Player Input 활성화
     /// </summary>
     public void OnEnableAllInput()
     {
         _playerInput.ActivateInput();
-        OnDisableWallClimb();
+        //OnDisableWallClimb();
     }
     public void OnDisableAllInput()
     {
