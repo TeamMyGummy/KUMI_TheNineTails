@@ -13,6 +13,7 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerController : MonoBehaviour, IMovement
 {
     private PlayerInput _playerInput;
+    private Player _player;
     private CharacterMovement _characterMovement;
     private WallClimb _wallClimb;
     private AbilitySystem _asc;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour, IMovement
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _player = GetComponent<Player>();
         _characterMovement = GetComponent<CharacterMovement>();
         _wallClimb = new WallClimb(gameObject);
         
@@ -154,7 +156,16 @@ public class PlayerController : MonoBehaviour, IMovement
         {
             if (_characterMovement.CheckIsWallClimbing())
             {
-                _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * (-1));
+                if (_characterMovement.CheckIsRopeClimbing())
+                if(_playerInput.actions["Move"].IsPressed())
+                {
+                    // climb 중 방향키를 누르고 있었을 때
+                    _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * (-1));
+                }
+                else{
+                    _characterMovement.Jump(2.0f, _characterMovement.GetCharacterSpriteDirection() * (-1));
+                    _player.FlipSprite();
+                }
             }
         }
         else if (ctx.performed)
@@ -164,6 +175,7 @@ public class PlayerController : MonoBehaviour, IMovement
         else if (ctx.canceled)
         {
             OnJumpCanceled?.Invoke();
+            OnJumpCanceled = null;
         } 
     }
 
