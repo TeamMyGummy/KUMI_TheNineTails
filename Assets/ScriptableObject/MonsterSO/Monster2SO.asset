@@ -17,10 +17,15 @@ MonoBehaviour:
   isBomb: 0
   isTriggerAttack: 0
   isRanged: 1
+  dropCount: 2
+  honbulPrefab: {fileID: 0}
   viewStartAngle: -22.5
   viewSight: 45
   aggroRange: 12
   aggroReleaseRange: 14
-  detectRangeX: 10
-  detectRangeY: 1.5
-  detectOffset: {x: 5, y: 0}
+  detectShortRangeX: 10
+  detectShortRangeY: 1
+  detectShortOffset: {x: 5, y: 0}
+  detectLongStartAngle: 0
+  detectLongSight: 0
+  detectLongRange: 0

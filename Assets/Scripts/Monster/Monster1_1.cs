@@ -7,7 +7,7 @@ public class Monster1_1 : Monster
     public AbilityKey abilityKey = AbilityKey.MonsterAttack;
     public AbilityKey abilityKey2 = AbilityKey.MonsterDoubleAttack;
     
-    protected override void EnterAttackRange(){
+    protected override void EnterShortAttackRange(){
         if (UnityEngine.Random.value < 0.5f)
         {
             asc.TryActivateAbility(abilityKey);
@@ -16,6 +16,11 @@ public class Monster1_1 : Monster
         {
             asc.TryActivateAbility(abilityKey2);
         }
+        
+    }
+    
+    protected override void EnterLongAttackRange()
+    {
         
     }
     

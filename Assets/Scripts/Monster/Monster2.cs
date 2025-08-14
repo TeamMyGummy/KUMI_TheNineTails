@@ -6,12 +6,16 @@ public class Monster2 : Monster
 {
     public AbilityKey abilityKey;
     private bool isAttaking = false;
-    protected override void EnterAttackRange()
+    protected override void EnterShortAttackRange()
     {
         if (!isAttaking)
         {
             StartCoroutine(Block(2f));
         }
+    }
+
+    protected override void EnterLongAttackRange()
+    {
     }
 
     private IEnumerator Block(float time)

@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 4800026175019440683}
   - component: {fileID: 2906177190711193095}
   - component: {fileID: 5218400843696848335}
-  - component: {fileID: 5078440602873441996}
   - component: {fileID: 4654104499381024506}
   - component: {fileID: 3367588211967729655}
   - component: {fileID: 133330843044796821}
+  - component: {fileID: 7693888797821724739}
   m_Layer: 8
   m_Name: MON_Monster4_1
   m_TagString: Enemies
@@ -175,21 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5078440602873441996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 239111553257240224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f210e56167f7ea746bd281bf660d3487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: 13edc6ba440336f47baefa6f9bdcd033, type: 2}
-  abilitySystemPath: Monster/Monster4_1
-  abilityKey: 101
 --- !u!114 &4654104499381024506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +217,18 @@ MonoBehaviour:
   platformLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &7693888797821724739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239111553257240224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d617281bae4a648cca230b6e046aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterData: {fileID: 11400000, guid: 13edc6ba440336f47baefa6f9bdcd033, type: 2}
+  abilitySystemPath: Monster/Monster4_1
+  abilityKey: 101

@@ -6,10 +6,14 @@ public class Monster5 : Monster
 {
     public AbilityKey abilityKey;
     
-    protected override void EnterAttackRange()
+    protected override void EnterShortAttackRange()
     {
         StartCoroutine(WaitingExplosionDelay());
         
+    }
+
+    protected override void EnterLongAttackRange()
+    {
     }
 
     private IEnumerator WaitingExplosionDelay()

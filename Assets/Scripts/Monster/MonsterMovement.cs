@@ -324,7 +324,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         }
         
         //플레이어가 공격범위 안에 있고, 플레이어가 움직이지 않으면 몬스터도 멈춰서 때리게
-        if (_monster.IsPlayerInAttackRange() && !IsPlayerMoving())
+        if (_monster.IsPlayerInShortRange() && !IsPlayerMoving())
         {
             _cm.Move(Vector2.zero);
             return;
@@ -397,7 +397,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
                 case MovePattern.Aggro:
                 {
                     //HeadPivot보다 살짝 아래 따라가게
-                    Vector2 dirVec = ((Vector2)_headPivot.position - (Vector2)transform.position + new Vector2(0f, -0.3f)).normalized;
+                    Vector2 dirVec = ((Vector2)_headPivot.position - (Vector2)transform.position + new Vector2(0f, -0.1f)).normalized;
                     HorizontalDir = dirVec.x < 0 ? -1 : 1;
                     return dirVec;
                 }
