@@ -42,13 +42,22 @@ public class MonsterSO : ScriptableObject
     public float PatrolRange => patrolRange;
 
     
-    [Header("공격 시작 인식 범위")]
-    [SerializeField] private float detectRangeX = 1.5f;
-    [SerializeField] private float detectRangeY = 1.5f;
-    [SerializeField] private Vector2 detectOffset = Vector2.zero; 
+    [Header("근거리 공격 시작 인식 범위")]
+    [SerializeField] private float detectShortRangeX = 1.5f;
+    [SerializeField] private float detectShortRangeY = 1.5f;
+    [SerializeField] private Vector2 detectShortOffset = Vector2.zero; 
     
-    public float DetectRangeX => detectRangeX;
-    public float DetectRangeY => detectRangeY;
-    public Vector2 DetectOffset => detectOffset;
+    public float DetectShortRangeX => detectShortRangeX;
+    public float DetectShortRangeY => detectShortRangeY;
+    public Vector2 DetectShortOffset => detectShortOffset;
+    
+    [Header("원거리 공격 시작 인식 범위")]
+    [SerializeField] private float detectLongStartAngle = 0f;
+    [SerializeField] private float detectLongSight = 0f;
+    [SerializeField] private float detectLongRange = 0f; 
+    
+    public float DetectLongStartAngle => detectLongStartAngle;
+    public float DetectLongSight => detectLongSight;
+    public float DetectLongRange => detectLongRange;
     
 }
