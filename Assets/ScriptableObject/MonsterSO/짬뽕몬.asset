@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fdbf9efdbb90134b9a5271bae419745, type: 3}
+  m_Name: "\uC9EC\uBF55\uBAAC"
+  m_EditorClassIdentifier: 
+  monsterName: "\uD14C\uC2A4\uD2B8\uC6A9"
+  isFlying: 0
+  isBomb: 0
+  isTriggerAttack: 0
+  isRanged: 0
+  dropCount: 2
+  honbulPrefab: {fileID: 5739550877967227833, guid: dbbc841980c40634fac68af51ac3441e, type: 3}
+  viewStartAngle: -180
+  viewSight: 180
+  aggroRange: 8
+  aggroReleaseRange: 14
+  detectShortRangeX: 2
+  detectShortRangeY: 2
+  detectShortOffset: {x: 0, y: -1}
+  detectLongStartAngle: -180
+  detectLongSight: 180
+  detectLongRange: 6
