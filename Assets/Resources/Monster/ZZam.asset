@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b9273313cb4ee5aad949a3b6ff4e13, type: 3}
+  m_Name: ZZam
+  m_EditorClassIdentifier: 
+  AddAttributeSO:
+  - {fileID: 11400000, guid: 2a59aaa23e46f9c4fb0e484b817a3f1e, type: 2}
+  AbilitySO:
+  - {fileID: 11400000, guid: 788512af2fb53a944988a39389fea45f, type: 2}
+  - {fileID: 11400000, guid: 0259533dbfae1674b96f8ce7f87bf429, type: 2}
