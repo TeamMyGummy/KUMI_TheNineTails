@@ -26,6 +26,7 @@ public class Rope : MonoBehaviour
                 {
                     pc.StartRopeClimb();
                     cm.StartRopeClimbState();
+                    cm.Move(Vector2.up);
                     other.transform.position = new Vector2(transform.position.x, other.transform.position.y);
 
                     for (int i = 0; i < transform.childCount; i++)
