@@ -22,7 +22,7 @@ public class ParallelNode : BaseNode
 
     private List<BaseNode> runningChildren = new List<BaseNode>();
     private bool isCompleted = false;
-    protected bool actionResult = true;
+    protected bool actionResult = true; 
 
     public override void OnEnter()
     {
@@ -30,7 +30,7 @@ public class ParallelNode : BaseNode
         isCompleted = false;
         actionResult = resultRequireAll;
 
-        if (sequential && result == false)
+        if (sequential && !result)
         {
             isCompleted = true;
             actionResult = false;

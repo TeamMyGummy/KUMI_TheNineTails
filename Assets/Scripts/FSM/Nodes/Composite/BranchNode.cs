@@ -1,14 +1,18 @@
+using UnityEngine;
+
 [CreateNodeMenu("FSM/Composite/Branch Node")]
 public class BranchNode : BaseNode
 {
     [Input] public ActionNode input;
     [Output] public BaseNode trueOutput;
     [Output] public BaseNode falseOutput;
+    [SerializeField] private bool sequential = false;
     
     public override BaseNode Execute()
     {
-            var nextNode = result ? GetTrueOutput() : GetFalseOutput();
-            return nextNode;
+        var nextNode = result ? GetTrueOutput() : GetFalseOutput();
+        if(!result && sequential) nextNode.SetResult(false);
+        return nextNode;
         
         return this;
     }

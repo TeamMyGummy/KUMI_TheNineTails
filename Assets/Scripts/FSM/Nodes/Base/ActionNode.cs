@@ -5,6 +5,7 @@ public abstract class ActionNode : BaseNode
     [Input] public BaseNode input;
     [Output] public BaseNode nextBranch;
     
+    [TextArea(2, 10)]
     [SerializeField] private string actionName = "Action";
     [SerializeField] private bool sequential = false;
     
@@ -17,14 +18,10 @@ public abstract class ActionNode : BaseNode
     {
         if (sequential && !result)
         {
-            result = true;
             isCompleted = true;
+            GetNextBranch().SetResult(false);
             return;
         }
-        
-        result = true;
-        isCompleted = false;
-        Debug.Log($"{actionName} 노드 시작");
         
         // TODO: 행동 시작 로직 구현
         OnEnterAction();
@@ -51,6 +48,12 @@ public abstract class ActionNode : BaseNode
         }
         
         return this;
+    }
+
+    public override void OnExit()
+    {
+        result = true;
+        isCompleted = false;
     }
     
     // 외부에서 노드를 강제 종료할 때 사용

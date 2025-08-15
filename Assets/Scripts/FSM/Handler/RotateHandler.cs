@@ -40,7 +40,7 @@ public class RotateHandler : ActionHandler
         if (_rotationComplete) return true;
 
         // 1. 이번 프레임에 회전할 최대 각도를 계산합니다.
-        float step = speed * Time.deltaTime;
+        float step = speed * Time.deltaTime * 10;
 
         // 2. 목표 지점까지 회전시킵니다.
         transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, step);
