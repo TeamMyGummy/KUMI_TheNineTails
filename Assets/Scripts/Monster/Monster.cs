@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using GameAbilitySystem;
 
-public abstract class Monster : MonoBehaviour
+public abstract class Monster : MonoBehaviour, IAbilitySystem
 {
     public AbilitySystem asc { get; private set; }
 
