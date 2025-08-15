@@ -24,7 +24,7 @@ public class AttackRange : MonoBehaviour
         }
         /*if(collision.gameObject.CompareTag("Enemies"))
         {*/
-            AbilitySystem asc = collision.GetComponent<Monster>().asc;
+            AbilitySystem asc = collision.GetComponent<IAbilitySystem>().asc;
             collision.gameObject.GetComponent<Damageable>().GetDamage(asc, 10.0f);
         //}
     }
