@@ -11,11 +11,13 @@ public class HandlerBinding
     public ActionHandler handler;
 }
 
-public class FSMController : MonoBehaviour
+public class FSMController : MonoBehaviour, IAbilitySystem
 {
     [SerializeField] private FSMGraph fsmGraph;
     [SerializeField] private AbilitySystemSO so;
     private readonly AbilitySystem _asc = new();
+
+    public AbilitySystem asc => _asc;
 
     [Header("핸들러 매핑")]
     [SerializeField] protected HandlerBinding[] handlerBindings;
@@ -77,4 +79,5 @@ public class FSMController : MonoBehaviour
             }
         }
     }
+
 }

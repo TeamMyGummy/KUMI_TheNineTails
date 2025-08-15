@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b9273313cb4ee5aad949a3b6ff4e13, type: 3}
-  m_Name: ImoogiGAS
+  m_Script: {fileID: 11500000, guid: 7755f0eb93a0da648bfa6f2271526407, type: 3}
+  m_Name: HP
   m_EditorClassIdentifier: 
-  AddAttributeSO:
-  - {fileID: 11400000, guid: 6e3fb95231b705c4a8de3bae7c8d479e, type: 2}
-  AbilitySO:
-  - {fileID: 11400000, guid: 67315da5c564882408cb8cd47d75a838, type: 2}
+  AttributeName: HP
+  BaseValue: 100
+  MaxValue: 100
