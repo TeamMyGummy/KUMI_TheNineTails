@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0c827ce48ab934dac2347f4033c387, type: 3}
+  m_Name: Monster1_2Attack
+  m_EditorClassIdentifier: 
+  skillKey: 103
+  skillName: 103
+  skillSequence: {fileID: 0}
+  skillIcon: {fileID: 0}
+  description: 
+  unlockFloor: 0
+  skillKeyboard: {fileID: 0}
+  BlockTimer: 1.5
+  AttackRangeX: 1
+  AttackRangeY: 2
+  HitboxOffset: {x: 2.5, y: 0}
+  AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
+  isStoppingWhileAttack: 1

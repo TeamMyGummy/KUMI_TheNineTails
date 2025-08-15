@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6341505062458276174}
   - component: {fileID: 4981719801117348745}
   - component: {fileID: 6332346728151343494}
-  - component: {fileID: 587479795588964804}
+  - component: {fileID: 3733030995896122453}
   - component: {fileID: 4455798029593503710}
   - component: {fileID: 1637802669671784048}
   - component: {fileID: 5604168195167317945}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &587479795588964804
+--- !u!114 &3733030995896122453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,13 +184,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7517215775904943170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f22a494d14356a7be6529ce2be9c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d3ae23d051797b42979c2e8a1ded841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: d581c2cde37f0434d8791e08f79f30e1, type: 2}
   abilitySystemPath: Monster/Monster1_2
   abilityKey: 100
   abilityKey2: 102
+  abilityKey3: 103
 --- !u!114 &4455798029593503710
 MonoBehaviour:
   m_ObjectHideFlags: 0
