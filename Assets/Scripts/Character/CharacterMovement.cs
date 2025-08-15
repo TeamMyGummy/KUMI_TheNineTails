@@ -78,41 +78,36 @@ public class CharacterMovement : MonoBehaviour
         _rigidBody.AddForce(direction * (cancelForce + jumpPower), ForceMode2D.Impulse);
     }
 
-    public void PhysicsFrozen()
+    public void ClimbState()
     {
         _nextDirection = Vector2.zero;
         _rigidBody.velocity = Vector2.zero;
         _rigidBody.gravityScale = 0;
     }
 
-    public void PhysicsRelease()
-    {
-        _rigidBody.gravityScale = gravity;
-    }
-
     public void StartWallClimbState()
     {
         // 벽타기 상태
-        PhysicsFrozen();
+        ClimbState();
         _isWallClimbing = true;
     }
 
     public void EndWallClimbState()
     {
-        PhysicsRelease();
+        _rigidBody.gravityScale = gravity;
         _isWallClimbing = false;
     }
-    
+
     public void StartRopeClimbState()
     {
-        // 밧줄타기 상태
-        PhysicsFrozen();
+        // 밧줄 타기 상태
+        ClimbState();
         _isRopeClimbing = true;
     }
 
     public void EndRopeClimbState()
     {
-        PhysicsRelease();
+        _rigidBody.gravityScale = gravity;
         _isRopeClimbing = false;
     }
 

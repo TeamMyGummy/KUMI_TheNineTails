@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         Vector2 inputDirection = ctx.ReadValue<Vector2>();
         if(inputDirection.x != 0) _direction = inputDirection;
-
+        
         if (_characterMovement.CheckIsClimbing())
         {
              _characterMovement.Move(inputDirection);
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour, IMovement
 
     public void StartRopeClimb()
     {
-        OnDisableAllInput();
+        //OnDisableAllInput();
         OnEnableWallClimb();
         OnEnableJump();
         OnEnableMove();
