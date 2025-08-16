@@ -171,7 +171,9 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         if (ctx.started)
         {
-            if (_characterMovement.CheckIsClimbing())
+            if (_characterMovement.CheckIsClimbing() &&
+                _characterMovement.GetCharacterDirection() != Vector2.up &&
+                _characterMovement.GetCharacterDirection() != Vector2.down)
             {
                 int jumpDir = _characterMovement.CheckIsWallClimbing() ? -1 : 1;
                 
@@ -188,13 +190,18 @@ public class PlayerController : MonoBehaviour, IMovement
         }
         else if (ctx.performed)
         {
-            _asc.TryActivateAbility(AbilityKey.DoubleJump);
-            
-            if (_characterMovement.CheckIsRopeClimbing())
+            if (_characterMovement.GetCharacterDirection() != Vector2.up &&
+                _characterMovement.GetCharacterDirection() != Vector2.down)
             {
-                _characterMovement.EndRopeClimbState();
-                EndRopeClimb();
+                _asc.TryActivateAbility(AbilityKey.DoubleJump);
+            
+                if (_characterMovement.CheckIsRopeClimbing())
+                {
+                    _characterMovement.EndRopeClimbState();
+                    EndRopeClimb();
+                }                
             }
+
         }
         else if (ctx.canceled)
         {
