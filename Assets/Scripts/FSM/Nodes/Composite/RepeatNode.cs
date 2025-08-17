@@ -1,115 +1,73 @@
+using System;
 using UnityEngine;
+using XNode;
 
 [CreateNodeMenu("FSM/Composite/Repeat Node")]
-public class RepeatNode : BaseNode
+public class RepeatNode : CompositeNode
 {
-    [Input] public BaseNode input; // 이전 노드 연결
-    [Input] public BaseNode child; // 반복할 자식 노드 연결
-    [Output] public BaseNode next; // 반복이 끝나면 이동할 노드
-
-    [SerializeField] private int repeatCount = 0; // 0 = 무한 반복
-    [SerializeField] private float delay = 0f; // 반복 간 대기 시간(초)
+    [SerializeField] private int repeatCount = 1;
 
     private int currentCount;
-    private float delayTimer;
-    private bool waiting;
-    private bool isCompleted;
-    private bool actionResult = true;
+    [NonSerialized] private BaseNode childNode;
 
-    public override void OnEnter()
+    protected override void OnEnterAction()
     {
-        isCompleted = false;
         currentCount = 0;
-        waiting = false;
-        delayTimer = 0f;
-        actionResult = true;
-
-        var childNode = GetChildNode();
+        result = true;
+        childNode = GetChild(0);
         if (childNode != null)
         {
-            childNode.SetResult(true);
+            childNode.SetResult(true); 
             childNode.OnEnter();
         }
         else
         {
-            Debug.LogWarning("RepeatNode: 연결된 자식 노드가 없습니다.");
+            Debug.LogWarning("RepeatNode: 자식 노드가 연결되지 않았습니다.");
+        }
+    }
+    
+    protected override void OnExecuteAction()
+    {
+        if (childNode is null)
+        {
+            result = false;
             isCompleted = true;
+            return;
         }
-    }
-
-    public override BaseNode Execute()
-    {
-        if (isCompleted)
+        
+        var next = childNode.Execute();
+        
+        if (next != childNode)
         {
-            var nextBranch = GetNextNode();
-            nextBranch?.SetResult(actionResult);
-            return nextBranch;
-        }
+            childNode.OnExit();
 
-        if (waiting)
-        {
-            delayTimer -= Time.deltaTime;
-            if (delayTimer <= 0f)
+            // 결과 확인
+            bool childResult = true;
+            if (childNode is BaseNode actionChild)
+                childResult = actionChild.GetResult();
+
+            if (!childResult)
             {
-                waiting = false;
-                var childNode = GetChildNode();
-                if (childNode != null)
-                {
-                    childNode.SetResult(true);
-                    childNode.OnEnter();
-                }
+                // 실패 → 반복 종료
+                result = false;
+                isCompleted = true;
+                return;
             }
-            return this;
-        }
 
-        var childNodeExec = GetChildNode();
-        if (childNodeExec != null)
-        {
-            var nextNode = childNodeExec.Execute();
-
-            if (nextNode != childNodeExec) // 자식 종료 시
+            // 성공 → 카운트 증가
+            currentCount++;
+            if (currentCount < repeatCount)
             {
-                childNodeExec.OnExit();
-
-                // 자식 결과 반영
-                actionResult &= childNodeExec.GetResult();
-
-                currentCount++;
-
-                // 반복 종료 조건
-                if (repeatCount > 0 && currentCount >= repeatCount)
-                {
-                    isCompleted = true;
-                    return this;
-                }
-
-                // delay 대기
-                if (delay > 0f)
-                {
-                    waiting = true;
-                    delayTimer = delay;
-                }
-                else
-                {
-                    // 즉시 다음 반복
-                    childNodeExec.SetResult(true);
-                    childNodeExec.OnEnter();
-                }
+                // 다시 실행
+                childNode.SetResult(true);
+                childNode.OnEnter();
+            }
+            else
+            {
+                // 반복 완료
+                result = true;
+                isCompleted = true;
             }
         }
-
-        return this;
-    }
-
-    private BaseNode GetChildNode()
-    {
-        var port = GetInputPort("child");
-        return port != null && port.IsConnected ? port.Connection.node as BaseNode : null;
-    }
-
-    private BaseNode GetNextNode()
-    {
-        var port = GetOutputPort("next");
-        return port != null && port.IsConnected ? port.Connection.node as BaseNode : null;
     }
 }
