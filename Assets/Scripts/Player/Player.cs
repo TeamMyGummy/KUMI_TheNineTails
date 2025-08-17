@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private readonly int _ropeClimbID =  Animator.StringToHash("RopeClimb");
     private readonly int _isClimbingID =  Animator.StringToHash("IsClimbing");
     private readonly int _endClimbID =  Animator.StringToHash("EndClimb");
+    private bool _onReachedTop;
 
     private bool _canFlip;
     
@@ -35,8 +36,9 @@ public class Player : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
+        _onReachedTop = false;
         _canFlip = true;
-        WallClimb.WallClimbEndAnimation += EndWallClimb;
+        //WallClimb.WallClimbEndAnimation += EndWallClimb;
     }
 
     void FixedUpdate()
@@ -52,10 +54,11 @@ public class Player : MonoBehaviour
             _isClimbingID,
             (_animator.GetBool(_wallClimbID) || _animator.GetBool(_ropeClimbID)) && _characterMovement.GetCharacterDirection().y != 0 ? true : false
         );
+        _animator.SetBool(_endClimbID, _onReachedTop);
         
         if (_playerController.Direction.x != 0 && _canFlip)
         {
-            _spriteRenderer.flipX = _playerController.Direction.x > 0 ? false : true;
+            _spriteRenderer.flipX = _playerController.Direction.x < 0;
             //_spriteRenderer.flipX = _characterMovement.GetCharacterDirection().x > 0 ? false : true;  
         }
         
@@ -79,6 +82,11 @@ public class Player : MonoBehaviour
     private void EndWallClimb()
     {
         _animator.SetTrigger(_endClimbID);
+    }
+
+    public void LedgeClimb(bool ledge)
+    {
+        _onReachedTop = ledge;
     }
     
 }
