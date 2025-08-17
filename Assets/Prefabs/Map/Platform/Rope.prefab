@@ -187,7 +187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4318da0fcf67c4ebbc3d1a3bf09b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
 --- !u!1 &1896055266056057567
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +258,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004989326, y: 0.4726653}
-  m_Size: {x: 0.11083138, y: 3.8664865}
+  m_Offset: {x: 0.0046320856, y: 0.4726653}
+  m_Size: {x: 0.2647739, y: 3.8664865}
   m_Direction: 0
 --- !u!114 &5945225904501065132
 MonoBehaviour:
@@ -546,7 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4318da0fcf67c4ebbc3d1a3bf09b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
 --- !u!1 &7270799223626584584
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,7 +732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4318da0fcf67c4ebbc3d1a3bf09b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
 --- !u!1 &8114133222245854778
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,7 +919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4318da0fcf67c4ebbc3d1a3bf09b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
 --- !u!1 &9111771530180232428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,4 +1106,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4318da0fcf67c4ebbc3d1a3bf09b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
