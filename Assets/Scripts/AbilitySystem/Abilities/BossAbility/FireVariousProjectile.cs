@@ -7,19 +7,16 @@ using Random = UnityEngine.Random;
 
 //유연하지 않은 지점(Ex. Offset 설정, 등...)이 존재함. 변경해야 할 일이 생길 경우 _so 자체를 새로 파서 수정할 것
 //(강승연 호출)
-public class FireVariousProjectile : GameplayAbility<FireProjectileSO>, IBossAbility
+public class FireVariousProjectile : GameplayAbility<FireVariousProjectileSO>, IBossAbility
 {
-    protected FireProjectileSO _so;
-    
-    private int projectileCount = 15; // 3초 동안 발사할 총 투사체 개수
-    private float totalDuration = 3f; // 투사체를 발사하는 데 걸리는 총 시간
+    protected FireVariousProjectileSO _so;
 
     private CancellationTokenSource _cts; // UniTask 취소를 관리하는 객체
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
-        _so = abilitySo as FireProjectileSO;
+        _so = abilitySo as FireVariousProjectileSO;
     }
 
     protected override void Activate()
@@ -55,16 +52,15 @@ public class FireVariousProjectile : GameplayAbility<FireProjectileSO>, IBossAbi
     /// </summary>
     private async UniTask FireRoutine(CancellationToken token)
     {
-        // 45도 왼쪽 아래 방향 벡터를 계산하고 정규화합니다.
-        Vector2 direction = new Vector2(-1, -1).normalized;
+        Vector2 direction = _so.direction.normalized;
         // 각 투사체 사이의 지연 시간을 계산합니다.
-        float delayPerShot = totalDuration / projectileCount;
+        float delayPerShot = _so.totalDuration / _so.projectileCount;
 
-        for (int i = 0; i < projectileCount; i++)
+        for (int i = 0; i < _so.projectileCount; i++)
         {
             // 투사체를 생성하고 발사합니다.
             Projectile projectile = ResourcesManager.Instance.Instantiate(_so.projectile.gameObject).GetComponent<Projectile>();
-            projectile.SetOffset(new Vector3(Random.Range(-20, 20) ,10f, 0f));
+            projectile.SetOffset(new Vector3(Random.Range(-_so.delta.x, _so.delta.x), _so.delta.y, 0f));
             projectile.FireProjectile(Actor, direction);
             
             // 다음 투사체를 발사하기 전까지 계산된 시간만큼 대기합니다.
