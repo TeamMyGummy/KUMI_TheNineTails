@@ -289,7 +289,26 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         _playerInput.actions["Parrying"].Disable();
     }
+    
+    // --------------------------- FoxFire ---------------------------
+    public void OnFoxFire(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            _asc.TryActivateAbility(AbilityKey.FoxFire);
+        }
+    }
+    
+    public void OnEnableFoxFire()
+    {
+        _playerInput.actions["FoxFire"].Enable();
+    }
 
+    public void OnDisableFoxFire()
+    {
+        _playerInput.actions["FoxFire"].Disable();
+    }
+    
     // -------------------- Map Interaction -----------------------
     // Lantern
     public void OnLanternInteraction(InputAction.CallbackContext ctx)

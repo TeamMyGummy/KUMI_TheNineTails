@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "WallClimb",
+                    "type": "Button",
+                    "id": "293a2033-a89a-4a7d-9c76-c5347ead7036",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "242d6c85-53ae-465d-8e95-ca2b657c2e85",
@@ -51,9 +60,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WallClimb",
+                    "name": "FoxFire",
                     "type": "Button",
-                    "id": "293a2033-a89a-4a7d-9c76-c5347ead7036",
+                    "id": "418007b8-9b5c-46a6-ae4b-1e1d29bfee7d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -148,6 +157,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "eeba3bc8-9086-46a9-85fd-71e39aa9775b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "MapInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38843afd-fb25-45d3-861a-8cae4e1dfb2b",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "FoxFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "WS",
                     "id": "581ab4c1-e543-417b-aa65-1fd856c423ab",
                     "path": "2DVector",
@@ -179,17 +210,6 @@
                     "action": "WallClimb",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "eeba3bc8-9086-46a9-85fd-71e39aa9775b",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "MapInteraction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
