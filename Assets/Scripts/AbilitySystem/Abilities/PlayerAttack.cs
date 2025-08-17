@@ -9,7 +9,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
     private AnimatorStateInfo _animatorStateInfo;
     private AttackRange _attackRange;
     
-    private readonly String[] _animationNames = new [] {"AirSlash", "AirSlashUp", "AirSlashDown"};
+    private readonly String[] _animationNames = new [] {"Attack1", "Attack2", "Attack3"};
     private String _currentAnimationName;
     private readonly int _parameterID = Animator.StringToHash("AttackCount");
     private int _attackCount;
