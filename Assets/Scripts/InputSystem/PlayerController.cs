@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour, IMovement
         //이런 종류의 것들이 더 생기면 에디터 단에서 설정할 수 있는 걸 만들겠음
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         // WallClimb
         if (_characterMovement.CheckIsWallClimbing() && _wallClimb.IsCharacterReachedTop() && _wallClimb.GetState() == WallClimb.WallClimbState.Climbing)
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour, IMovement
             _wallClimb.OnReachedTop();
             OnDisableAllInput();
         }
-    }
+    }*/
 
     //스폰된 플레이어를 영구 저장 위치(마지막으로 저장한 호롱불)로 옮김
     private void RespawnPlayer()
