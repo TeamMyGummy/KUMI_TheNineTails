@@ -62,9 +62,14 @@ public class FSMController : MonoBehaviour, IAbilitySystem
         return fsmGraph?.currentNode as ActionNode;
     }
 
-    public void CancelCurrentAction(bool success)
+    public IForceCancel GetCurrentCancelableNode()
     {
-        var currentAction = GetCurrentActionNode();
+        return fsmGraph?.currentNode as IForceCancel;
+    }
+
+    public void CancelCurrentNode(bool success)
+    {
+        var currentAction = GetCurrentCancelableNode();
         currentAction?.ForceComplete(success);
     }
 

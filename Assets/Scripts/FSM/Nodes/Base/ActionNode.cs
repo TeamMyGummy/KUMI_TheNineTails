@@ -3,26 +3,12 @@ using UnityEngine;
 public abstract class ActionNode : BaseNode
 {
     [Input] public BaseNode input;
-    [Output] public BaseNode nextBranch;
-    
-    [TextArea(2, 10)]
-    [SerializeField] private string actionName = "Action";
-    [SerializeField] private bool sequential = false;
-    
-    protected bool isCompleted = false;
     
     //OnEnter 로직
     protected abstract void OnEnterAction();
     
     public override void OnEnter()
     {
-        if (sequential && !result)
-        {
-            isCompleted = true;
-            GetNextBranch().SetResult(false);
-            return;
-        }
-        
         // TODO: 행동 시작 로직 구현
         OnEnterAction();
     }
@@ -41,10 +27,8 @@ public abstract class ActionNode : BaseNode
             
         if (isCompleted)
         {
-            var nextBranch = GetNextBranch();
-            nextBranch?.SetResult(result);
-            Debug.Log("다음 노드로 넘어갑니다" + nextBranch);
-            return nextBranch;
+            var inputNode = GetInputBranch();
+            return inputNode;
         }
         
         return this;
@@ -56,19 +40,10 @@ public abstract class ActionNode : BaseNode
         isCompleted = false;
     }
     
-    // 외부에서 노드를 강제 종료할 때 사용
-    public virtual void ForceComplete(bool success)
-    {
-        isCompleted = true;
-        result = success;
-    }
     
-    // 현재 실행 중인지 확인
-    public bool IsRunning() => !isCompleted;
-    
-    private BaseNode GetNextBranch()
+    private BaseNode GetInputBranch()
     {
-        var port = GetOutputPort("nextBranch");
+        var port = GetInputPort("input");
         return port?.IsConnected == true ? port.Connection.node as BaseNode : null;
     }
 }

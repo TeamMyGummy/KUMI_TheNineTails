@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9180933090710300122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde9b1b545af4526a5695786001b4eb6, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 120, y: 680}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: -9180933090710300122}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: -5317941769782985164}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  delay: 3
 --- !u!114 &-8529025486481794813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,11 +46,10 @@ MonoBehaviour:
   m_Name: Rotate
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1544, y: 568}
+  position: {x: -2280, y: 584}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -8529025486481794813}
@@ -31,83 +63,12 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -8529025486481794813}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Rotate
-  sequential: 0
   handlerKey: Rotate
   angle: 0
   type: 0
   speed: 5
---- !u!114 &-8455839430695540857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
-  m_Name: Branch
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 744, y: 824}
-  ports:
-    keys:
-    - input
-    - trueOutput
-    - falseOutput
-    values:
-    - _fieldName: input
-      _node: {fileID: -8455839430695540857}
-      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: nextBranch
-        node: {fileID: 6128197735781873381}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: trueOutput
-      _node: {fileID: -8455839430695540857}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -6078739654150582520}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: falseOutput
-      _node: {fileID: -8455839430695540857}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -7471663532742763102}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  trueOutput: {fileID: 0}
-  falseOutput: {fileID: 0}
-  sequential: 1
 --- !u!114 &-8076641291279256618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,11 +82,10 @@ MonoBehaviour:
   m_Name: Hitbox
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 408, y: 584}
+  position: {x: -744, y: -72}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -8076641291279256618}
@@ -139,24 +99,13 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -8076641291279256618}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
   handlerKey: Hitbox
   size: {x: 2, y: 2}
   offset: {x: 0, y: -1}
   timer: 1.5
---- !u!114 &-7732180407149833054
+--- !u!114 &-7813416528214994901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,15 +114,295 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
+  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
+  m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 408, y: 328}
+  position: {x: -2680, y: -248}
   ports:
-    keys: []
-    values: []
-  comment: "\uC2E4\uC81C \uACF5\uACA9\uC740 \uC9C0\uAE08 \uBE60\uC9C4 \uC0C1"
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: -7813416528214994901}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 3
+        node: {fileID: -233464601890144266}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Move
+  x: 0
+  xType: 3
+  y: 3
+  yType: 3
+  speed: 18
+--- !u!114 &-7773496302135966877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
+  m_Name: Move
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2680, y: -280}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: -7773496302135966877}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 2
+        node: {fileID: -233464601890144266}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Move
+  x: 0
+  xType: 3
+  y: 0
+  yType: 2
+  speed: 30
+--- !u!114 &-7723670903974570645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1016, y: 1304}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    - children 2
+    values:
+    - _fieldName: input
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: -4164431954260267409}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6078739654150582520}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -2620398737924812990}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: -7723670903974570645}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 8367575991393880611}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uBE44\uB0B4\uB9AC\uAE30"
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-7718815739797694946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -812.1535, y: 967.09393}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    - children 2
+    - children 3
+    - children 4
+    values:
+    - _fieldName: input
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: -4164431954260267409}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6165776955234324965}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 8883669560038428332}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 3770704274137625537}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 3
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5817378462548943609}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 4
+      _node: {fileID: -7718815739797694946}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6128197735781873381}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uAF2C\uB9AC\uC4F8\uAE30"
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &-7506259042371760206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,11 +416,10 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 376, y: 552}
+  position: {x: -744, y: -104}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -7506259042371760206}
@@ -205,19 +433,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -7506259042371760206}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC791\uAE30\uBB3C\uAE30-\uCC98\uBC15"
-  sequential: 1
   handlerKey: Move
   x: 0
   xType: 3
@@ -237,47 +454,32 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1400, y: 872}
+  position: {x: -2280, y: 616}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -7471663532742763102}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: falseOutput
-        node: {fileID: -8455839430695540857}
+      - fieldName: children 3
+        node: {fileID: 6859105116371313634}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -7471663532742763102}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -130003373205256810}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30\uC911\uB2E8"
-  sequential: 0
   handlerKey: MoveTail
   x: -6
   xType: 1
   y: -6
   yType: 1
   speed: 5
---- !u!114 &-6713870991752081938
+--- !u!114 &-7336388885278452450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,68 +488,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
-  m_Name: Move
+  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
+  m_Name: Branch
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 152, y: -328}
+  position: {x: -456, y: 456}
   ports:
     keys:
     - input
-    - nextBranch
+    - trueOutput
+    - falseOutput
     values:
     - _fieldName: input
-      _node: {fileID: -6713870991752081938}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      _node: {fileID: -7336388885278452450}
+      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -2226925755547032696}
+      - fieldName: next
+        node: {fileID: 8103676080585694217}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -6713870991752081938}
+    - _fieldName: trueOutput
+      _node: {fileID: -7336388885278452450}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: -4522668798474227095}
+        node: {fileID: 6859105116371313634}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: falseOutput
+      _node: {fileID: -7336388885278452450}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5317941769782985164}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: "\uD328\uD134 3 \uADF8\uB85C\uAE30 \uBD84\uAE30"
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD06C\uAC8C\uBB3C\uAE30-\uC9C1\uAC01\uC704"
-  sequential: 1
-  handlerKey: Move
-  x: 0
-  xType: 3
-  y: 0
-  yType: 2
-  speed: 30
---- !u!114 &-6691775409994548490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -536, y: 744}
-  ports:
-    keys: []
-    values: []
-  comment: "\uD328\uD134 3 - \uAF2C\uB9AC\uC4F8\uAE30 + \uBE44\uB0B4\uB9AC\uAE30"
+  trueOutput: {fileID: 0}
+  falseOutput: {fileID: 0}
 --- !u!114 &-6165776955234324965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,11 +552,10 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -344, y: 792}
+  position: {x: -568, y: 1048}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -6165776955234324965}
@@ -373,28 +563,14 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: children 0
-        node: {fileID: 2559255003687656722}
+        node: {fileID: -7718815739797694946}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -6165776955234324965}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 8883669560038428332}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30-\uC900\uBE44"
-  sequential: 0
   handlerKey: Move
   x: 0
   xType: 2
@@ -414,7 +590,7 @@ MonoBehaviour:
   m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 760, y: 1112}
+  position: {x: -776, y: 1400}
   ports:
     keys:
     - input
@@ -428,8 +604,8 @@ MonoBehaviour:
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: trueOutput
-        node: {fileID: -8455839430695540857}
+      - fieldName: children 0
+        node: {fileID: -7723670903974570645}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -439,10 +615,7 @@ MonoBehaviour:
       _node: {fileID: -6078739654150582520}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -2620398737924812990}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -481,11 +654,222 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
   next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
   finishRequireAll: 1
   resultRequireAll: 1
-  sequential: 1
+--- !u!114 &-6074041159599762593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1256, y: -312}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    - children 2
+    - children 3
+    - children 4
+    values:
+    - _fieldName: input
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: -5879030282358217841}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 4714080363906611040}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 8208231538322630965}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -1163092317635562638}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 3
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5789187941546601320}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 4
+      _node: {fileID: -6074041159599762593}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -3066640770291873582}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uC791\uAC8C \uBB3C\uAE30"
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-5879030282358217841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1544, y: -184}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    values:
+    - _fieldName: input
+      _node: {fileID: -5879030282358217841}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: 2559255003687656722}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -5879030282358217841}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 303788053902375358}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -5879030282358217841}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -5879030282358217841}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6074041159599762593}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -5879030282358217841}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -233464601890144266}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uD328\uD134 2"
+  input: {fileID: 0}
+  next: {fileID: 0}
   children:
   - {fileID: 0}
   - {fileID: 0}
@@ -502,47 +886,32 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 600, y: 488}
+  position: {x: -1000, y: -152}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -5789187941546601320}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: next
-        node: {fileID: -1163092317635562638}
+      - fieldName: children 3
+        node: {fileID: -6074041159599762593}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -5789187941546601320}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -3066640770291873582}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC791\uAC8C\uBB3C\uAE30-2\uD2B8"
-  sequential: 1
   handlerKey: Move
   x: 0
   xType: 2
   y: 2
   yType: 2
   speed: 3
---- !u!114 &-5704363413150657025
+--- !u!114 &-5486610695964312483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -555,49 +924,126 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -328, y: -328}
+  position: {x: -2680, y: -344}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
-      _node: {fileID: -5704363413150657025}
+      _node: {fileID: -5486610695964312483}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: next
-        node: {fileID: -3066640770291873582}
-        reroutePoints: []
-      - fieldName: falseOutput
-        node: {fileID: 3041824153929037626}
+      - fieldName: children 0
+        node: {fileID: -233464601890144266}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -5704363413150657025}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -2226925755547032696}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD06C\uAC8C\uBB3C\uAE30-\uC900\uBE441"
-  sequential: 0
   handlerKey: Move
   x: 0
   xType: 2
   y: 8
   yType: 1
   speed: 3
+--- !u!114 &-5317941769782985164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -120, y: 456}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    values:
+    - _fieldName: input
+      _node: {fileID: -5317941769782985164}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: falseOutput
+        node: {fileID: -130003373205256810}
+        reroutePoints: []
+      - fieldName: falseOutput
+        node: {fileID: 6112229163082773655}
+        reroutePoints: []
+      - fieldName: falseOutput
+        node: {fileID: -7336388885278452450}
+        reroutePoints: []
+      - fieldName: falseOutput
+        node: {fileID: 303788053902375358}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -5317941769782985164}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6859105116371313634}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -5317941769782985164}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -5317941769782985164}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 9125211703534046652}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -5317941769782985164}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -9180933090710300122}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: Action
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &-4980849640840290809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,42 +1057,27 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -760, y: -488}
+  position: {x: -1912, y: -328}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -4980849640840290809}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 8247135216126387349}
+      - fieldName: children 1
+        node: {fileID: 3954361499682248783}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -4980849640840290809}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -963681226950128012}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
   delay: 0.3
---- !u!114 &-4522668798474227095
+--- !u!114 &-4164431954260267409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -655,50 +1086,189 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
-  m_Name: Move
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 392, y: -328}
+  position: {x: -1240, y: 920}
   ports:
     keys:
     - input
-    - nextBranch
+    - next
+    - children
+    - children 0
+    - children 1
     values:
     - _fieldName: input
-      _node: {fileID: -4522668798474227095}
+      _node: {fileID: -4164431954260267409}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -6713870991752081938}
+      - fieldName: children 0
+        node: {fileID: 2559255003687656722}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -4522668798474227095}
+    - _fieldName: next
+      _node: {fileID: -4164431954260267409}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 9071877527153455692}
+        node: {fileID: -130003373205256810}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -4164431954260267409}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -4164431954260267409}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7718815739797694946}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -4164431954260267409}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7723670903974570645}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uD328\uD134 1"
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD06C\uAC8C\uBB3C\uAE30-\uC900\uBE442"
-  sequential: 1
-  handlerKey: Move
-  x: 0
-  xType: 3
-  y: 3
-  yType: 3
-  speed: 18
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-3441479482135161390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7237effe83634a55a59a58c3962ed28a, type: 3}
+  m_Name: Hitbox
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2456, y: -24}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: -3441479482135161390}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 2
+        node: {fileID: 4549824017360541442}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Hitbox
+  size: {x: 3, y: 3}
+  offset: {x: 0, y: 0}
+  timer: 2
+--- !u!114 &-3403450415403514535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca4265f97474ab197abecfd4fef8088, type: 3}
+  m_Name: Repeat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2408, y: -536}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    values:
+    - _fieldName: input
+      _node: {fileID: -3403450415403514535}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: 8103676080585694217}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -3403450415403514535}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -3403450415403514535}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -3403450415403514535}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 3954361499682248783}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uBC88\uAC1C\uCE58\uAE30"
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  repeatCount: 3
 --- !u!114 &-3066640770291873582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,7 +1282,7 @@ MonoBehaviour:
   m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 824, y: 488}
+  position: {x: -1000, y: -120}
   ports:
     keys:
     - input
@@ -726,8 +1296,8 @@ MonoBehaviour:
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -5789187941546601320}
+      - fieldName: children 4
+        node: {fileID: -6074041159599762593}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -737,10 +1307,7 @@ MonoBehaviour:
       _node: {fileID: -3066640770291873582}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -5704363413150657025}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -779,32 +1346,14 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
   next: {fileID: 0}
-  finishRequireAll: 1
-  resultRequireAll: 1
-  sequential: 1
   children:
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &-2869680360785759808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 536, y: 1144}
-  ports:
-    keys: []
-    values: []
-  comment: "\uBE44\uB0B4\uB9AC\uAE30"
+  finishRequireAll: 1
+  resultRequireAll: 1
 --- !u!114 &-2620398737924812990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,155 +1367,26 @@ MonoBehaviour:
   m_Name: Ability
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1144, y: 1128}
+  position: {x: -776, y: 1544}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -2620398737924812990}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: next
-        node: {fileID: -6078739654150582520}
+      - fieldName: children 1
+        node: {fileID: -7723670903974570645}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -2620398737924812990}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 8367575991393880611}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
   abilityKey: 1000
---- !u!114 &-2226925755547032696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fde9b1b545af4526a5695786001b4eb6, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -104, y: -328}
-  ports:
-    keys:
-    - input
-    - nextBranch
-    values:
-    - _fieldName: input
-      _node: {fileID: -2226925755547032696}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: nextBranch
-        node: {fileID: -5704363413150657025}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -2226925755547032696}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -6713870991752081938}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD06C\uAC8C\uBB3C\uAE30-\uC9C0\uC5F0"
-  sequential: 1
-  delay: 0.7
---- !u!114 &-2099327486977058722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -216, y: 376}
-  ports:
-    keys: []
-    values: []
-  comment: "\uB530\uB77C\uAC00\uAE30 \uBE60\uC84C\uC74C(\uC598\uB294 \uB530\uB85C
-    \uB178\uB4DC\uB97C \uB9CC\uB4E4\uB4E0 \uD574\uC57C \uD560 \uB4EF;)\n\uC784\uC2DC\uB85C
-    \uD50C\uB808\uC774\uC5B4 \uC704\uCE58\uB85C \uC774\uB3D9"
---- !u!114 &-1648702032116057122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1a5af92ffc4bb58532c1055dec9dd7, type: 3}
-  m_Name: Count
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -40, y: -632}
-  ports:
-    keys:
-    - input
-    - next
-    values:
-    - _fieldName: input
-      _node: {fileID: -1648702032116057122}
-      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: nextBranch
-        node: {fileID: 696791648152188512}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: next
-      _node: {fileID: -1648702032116057122}
-      _typeQualifiedName: BranchNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 3041824153929037626}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  next: {fileID: 0}
-  limit: 2
 --- !u!114 &-1363490337988968833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,11 +1400,10 @@ MonoBehaviour:
   m_Name: Hitbox
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1048, y: 648}
+  position: {x: -760, y: 40}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -1363490337988968833}
@@ -998,76 +1417,12 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -1363490337988968833}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
   handlerKey: Hitbox
   size: {x: 2, y: 2}
   offset: {x: 0, y: -1}
   timer: 1.5
---- !u!114 &-1201055075169469143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
-  m_Name: Move
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1432, y: 280}
-  ports:
-    keys:
-    - input
-    - nextBranch
-    values:
-    - _fieldName: input
-      _node: {fileID: -1201055075169469143}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: falseOutput
-        node: {fileID: -130003373205256810}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -1201055075169469143}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 6859105116371313634}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uADF8\uB85C\uAE30\uC790\uB9AC\uC774\uB3D9"
-  sequential: 0
-  handlerKey: Move
-  x: 3
-  xType: 1
-  y: 1
-  yType: 1
-  speed: 2
 --- !u!114 &-1163092317635562638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,7 +1436,7 @@ MonoBehaviour:
   m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: 456}
+  position: {x: -1000, y: -184}
   ports:
     keys:
     - input
@@ -1095,8 +1450,8 @@ MonoBehaviour:
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 8208231538322630965}
+      - fieldName: children 2
+        node: {fileID: -6074041159599762593}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1106,10 +1461,7 @@ MonoBehaviour:
       _node: {fileID: -1163092317635562638}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -5789187941546601320}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -1148,14 +1500,14 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
   next: {fileID: 0}
-  finishRequireAll: 1
-  resultRequireAll: 1
-  sequential: 1
   children:
   - {fileID: 0}
   - {fileID: 0}
+  finishRequireAll: 1
+  resultRequireAll: 1
 --- !u!114 &-963681226950128012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1169,12 +1521,11 @@ MonoBehaviour:
   m_Name: Spawn
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -520, y: -664}
+  position: {x: -1912, y: -296}
   ports:
     keys:
     - spawnPosition
     - input
-    - nextBranch
     values:
     - _fieldName: spawnPosition
       _node: {fileID: -963681226950128012}
@@ -1193,29 +1544,15 @@ MonoBehaviour:
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -4980849640840290809}
+      - fieldName: children 2
+        node: {fileID: 3954361499682248783}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -963681226950128012}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 696791648152188512}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uBC88\uAC1C\uCE58\uAE30"
-  sequential: 1
   handlerKey: Spawn
   delay: 2
   spawnPosition: {x: 0, y: 0, z: 0}
@@ -1232,11 +1569,10 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1064, y: 616}
+  position: {x: -760, y: 8}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: -748785094689299242}
@@ -1250,8 +1586,56 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: -748785094689299242}
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Move
+  x: 0
+  xType: 3
+  y: 0
+  yType: 3
+  speed: 10
+--- !u!114 &-233464601890144266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2904, y: -376}
+  ports:
+    keys:
+    - input
+    - next
+    - children
+    - children 0
+    - children 1
+    - children 2
+    - children 3
+    - children 4
+    values:
+    - _fieldName: input
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: 8103676080585694217}
+        reroutePoints: []
+      - fieldName: children 1
+        node: {fileID: -5879030282358217841}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -233464601890144266}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections: []
@@ -1259,16 +1643,85 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5486610695964312483}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6464462775971382699}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7773496302135966877}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 3
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7813416528214994901}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 4
+      _node: {fileID: -233464601890144266}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 4549824017360541442}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uD06C\uAC8C \uBB3C\uAE30"
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC791\uAE30\uBB3C\uAE30-\uCC98\uBC15"
-  sequential: 1
-  handlerKey: Move
-  x: 0
-  xType: 3
-  y: 0
-  yType: 3
-  speed: 10
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &-130003373205256810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,7 +1735,7 @@ MonoBehaviour:
   m_Name: Branch
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1192, y: 200}
+  position: {x: -456, y: 776}
   ports:
     keys:
     - input
@@ -1295,13 +1748,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: 9071877527153455692}
-        reroutePoints: []
-      - fieldName: nextBranch
-        node: {fileID: -7471663532742763102}
-        reroutePoints: []
-      - fieldName: nextBranch
-        node: {fileID: 8367575991393880611}
+        node: {fileID: -4164431954260267409}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1325,16 +1772,16 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: -1201055075169469143}
+        node: {fileID: -5317941769782985164}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  NodeName: "\uADF8\uB85C\uAE30 \uBD84\uAE30"
   input: {fileID: 0}
   trueOutput: {fileID: 0}
   falseOutput: {fileID: 0}
-  sequential: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,42 +1796,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 4194973088129212547}
-  - {fileID: -5704363413150657025}
-  - {fileID: -4522668798474227095}
-  - {fileID: -2226925755547032696}
-  - {fileID: -6713870991752081938}
-  - {fileID: 4590787885531181653}
-  - {fileID: 6079582229076599680}
-  - {fileID: -1201055075169469143}
   - {fileID: -130003373205256810}
   - {fileID: 4714080363906611040}
-  - {fileID: 2714771345317597754}
-  - {fileID: -2099327486977058722}
   - {fileID: 8208231538322630965}
   - {fileID: -7506259042371760206}
-  - {fileID: -5789187941546601320}
-  - {fileID: -7732180407149833054}
   - {fileID: 7468127020744038352}
   - {fileID: 2559255003687656722}
   - {fileID: -8529025486481794813}
   - {fileID: 6859105116371313634}
-  - {fileID: 1689653035584632125}
   - {fileID: -6165776955234324965}
   - {fileID: 8883669560038428332}
   - {fileID: 3770704274137625537}
   - {fileID: 5817378462548943609}
   - {fileID: 6128197735781873381}
-  - {fileID: 9071877527153455692}
-  - {fileID: 4370194701613456735}
-  - {fileID: 3551142291321036664}
   - {fileID: -1163092317635562638}
   - {fileID: -8076641291279256618}
-  - {fileID: -3066640770291873582}
   - {fileID: -748785094689299242}
   - {fileID: -1363490337988968833}
-  - {fileID: -2620398737924812990}
-  - {fileID: -6691775409994548490}
-  - {fileID: -2869680360785759808}
   - {fileID: -6078739654150582520}
   - {fileID: 24291426924233711}
   - {fileID: 4882926496751844267}
@@ -1393,11 +1821,36 @@ MonoBehaviour:
   - {fileID: -963681226950128012}
   - {fileID: 7306768651284578572}
   - {fileID: 696791648152188512}
-  - {fileID: -1648702032116057122}
-  - {fileID: 3041824153929037626}
-  - {fileID: -8455839430695540857}
   - {fileID: -7471663532742763102}
+  - {fileID: -233464601890144266}
+  - {fileID: -5486610695964312483}
+  - {fileID: 6464462775971382699}
+  - {fileID: -7773496302135966877}
+  - {fileID: 75835269905898601}
+  - {fileID: 1680643487009560939}
+  - {fileID: -3441479482135161390}
+  - {fileID: -7813416528214994901}
+  - {fileID: 4549824017360541442}
+  - {fileID: 3954361499682248783}
+  - {fileID: 8103676080585694217}
+  - {fileID: -3403450415403514535}
+  - {fileID: 6079582229076599680}
+  - {fileID: -5879030282358217841}
+  - {fileID: -6074041159599762593}
+  - {fileID: -5789187941546601320}
+  - {fileID: -3066640770291873582}
+  - {fileID: -7718815739797694946}
+  - {fileID: -7723670903974570645}
+  - {fileID: -2620398737924812990}
   - {fileID: 8367575991393880611}
+  - {fileID: -4164431954260267409}
+  - {fileID: -5317941769782985164}
+  - {fileID: 9125211703534046652}
+  - {fileID: 5441581859432153765}
+  - {fileID: 6112229163082773655}
+  - {fileID: -7336388885278452450}
+  - {fileID: 303788053902375358}
+  - {fileID: -9180933090710300122}
 --- !u!114 &24291426924233711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,11 +1864,10 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1016, y: 1336}
+  position: {x: -552, y: 1496}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 24291426924233711}
@@ -1429,25 +1881,110 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 24291426924233711}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
   handlerKey: Move
   x: 0
   xType: 2
   y: 3
   yType: 2
   speed: 0
+--- !u!114 &75835269905898601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079b98271b6042b5a564d7bb3a176f41, type: 3}
+  m_Name: Rotate
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2456, y: -88}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: 75835269905898601}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: 4549824017360541442}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Rotate
+  angle: 30
+  type: 0
+  speed: 5
+--- !u!114 &303788053902375358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
+  m_Name: Branch
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -456, y: 296}
+  ports:
+    keys:
+    - input
+    - trueOutput
+    - falseOutput
+    values:
+    - _fieldName: input
+      _node: {fileID: 303788053902375358}
+      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -5879030282358217841}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: trueOutput
+      _node: {fileID: 303788053902375358}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6859105116371313634}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: falseOutput
+      _node: {fileID: 303788053902375358}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5317941769782985164}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: "\uADF8\uB85C\uAE30 \uBD84\uAE30"
+  input: {fileID: 0}
+  trueOutput: {fileID: 0}
+  falseOutput: {fileID: 0}
 --- !u!114 &696791648152188512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,42 +1998,27 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -280, y: -648}
+  position: {x: -1912, y: -264}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 696791648152188512}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -963681226950128012}
+      - fieldName: children 3
+        node: {fileID: 3954361499682248783}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 696791648152188512}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -1648702032116057122}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC9C0\uC5F0"
-  sequential: 1
   delay: 0.7
---- !u!114 &1689653035584632125
+--- !u!114 &1680643487009560939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1505,44 +2027,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 079b98271b6042b5a564d7bb3a176f41, type: 3}
-  m_Name: Rotate
+  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
+  m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 696, y: -616}
+  position: {x: -2456, y: -56}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
-      _node: {fileID: 1689653035584632125}
+      _node: {fileID: 1680643487009560939}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: children 0
-        node: {fileID: 9071877527153455692}
+      - fieldName: children 1
+        node: {fileID: 4549824017360541442}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 1689653035584632125}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
-  handlerKey: Rotate
-  angle: 30
-  type: 0
+  handlerKey: Move
+  x: 0
+  xType: 2
+  y: -2
+  yType: 2
   speed: 5
 --- !u!114 &2559255003687656722
 MonoBehaviour:
@@ -1557,7 +2069,7 @@ MonoBehaviour:
   m_Name: Random
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1176, y: 312}
+  position: {x: -1880, y: 360}
   ports:
     keys:
     - input
@@ -1565,14 +2077,15 @@ MonoBehaviour:
     - children 0
     - children 1
     - children 2
+    - next
     values:
     - _fieldName: input
       _node: {fileID: 2559255003687656722}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 6079582229076599680}
+      - fieldName: next
+        node: {fileID: 6859105116371313634}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1594,7 +2107,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: -6165776955234324965}
+        node: {fileID: -4164431954260267409}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -1606,7 +2119,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 4714080363906611040}
+        node: {fileID: -5879030282358217841}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -1618,143 +2131,31 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 8247135216126387349}
+        node: {fileID: 8103676080585694217}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: next
+      _node: {fileID: 2559255003687656722}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6859105116371313634}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
+  next: {fileID: 0}
   children:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &2714771345317597754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -568, y: 504}
-  ports:
-    keys: []
-    values: []
-  comment: "\uD328\uD134 2 - \uC791\uAC8C \uBB3C\uAE30 \uD6C4 \uD06C\uAC8C \uBB3C\uAE30"
---- !u!114 &3041824153929037626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
-  m_Name: Branch
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 216, y: -616}
-  ports:
-    keys:
-    - input
-    - trueOutput
-    - falseOutput
-    values:
-    - _fieldName: input
-      _node: {fileID: 3041824153929037626}
-      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: next
-        node: {fileID: -1648702032116057122}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: trueOutput
-      _node: {fileID: 3041824153929037626}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 8247135216126387349}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: falseOutput
-      _node: {fileID: 3041824153929037626}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -5704363413150657025}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  trueOutput: {fileID: 0}
-  falseOutput: {fileID: 0}
-  sequential: 0
---- !u!114 &3551142291321036664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7237effe83634a55a59a58c3962ed28a, type: 3}
-  m_Name: Hitbox
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 792, y: -552}
-  ports:
-    keys:
-    - input
-    - nextBranch
-    values:
-    - _fieldName: input
-      _node: {fileID: 3551142291321036664}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: children 2
-        node: {fileID: 9071877527153455692}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 3551142291321036664}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
-  handlerKey: Hitbox
-  size: {x: 3, y: 3}
-  offset: {x: 0, y: 0}
-  timer: 2
 --- !u!114 &3770704274137625537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1768,46 +2169,142 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: 808}
+  position: {x: -568, y: 1112}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 3770704274137625537}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 8883669560038428332}
+      - fieldName: children 2
+        node: {fileID: -7718815739797694946}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 3770704274137625537}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 5817378462548943609}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30-\uCE58\uAE30"
-  sequential: 1
   handlerKey: MoveTail
   x: 6
   xType: 1
   y: -2
   yType: 1
   speed: 5
+--- !u!114 &3954361499682248783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2168, y: -376}
+  ports:
+    keys:
+    - children
+    - input
+    - next
+    - children 0
+    - children 1
+    - children 2
+    - children 3
+    values:
+    - _fieldName: children
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: -3403450415403514535}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 8247135216126387349}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -4980849640840290809}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -963681226950128012}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 3
+      _node: {fileID: 3954361499682248783}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 696791648152188512}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: Action
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &4194973088129212547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1821,7 +2318,7 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1928, y: 280}
+  position: {x: -2856, y: 392}
   ports:
     keys:
     - nextNode
@@ -1838,8 +2335,9 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  NodeName: Action
   nextNode: {fileID: 0}
---- !u!114 &4370194701613456735
+--- !u!114 &4549824017360541442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1848,30 +2346,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
-  m_Name: Move
+  m_Script: {fileID: 11500000, guid: 528afe7ad3474a9a801984561de5def8, type: 3}
+  m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 744, y: -584}
+  position: {x: -2680, y: -216}
   ports:
     keys:
     - input
-    - nextBranch
+    - next
+    - children
+    - children 0
+    - children 1
+    - children 2
     values:
     - _fieldName: input
-      _node: {fileID: 4370194701613456735}
+      _node: {fileID: 4549824017360541442}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: children 1
-        node: {fileID: 9071877527153455692}
+      - fieldName: children 4
+        node: {fileID: -233464601890144266}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 4370194701613456735}
+    - _fieldName: next
+      _node: {fileID: 4549824017360541442}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections: []
@@ -1879,34 +2381,61 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: children
+      _node: {fileID: 4549824017360541442}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: 4549824017360541442}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 75835269905898601}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: 4549824017360541442}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1680643487009560939}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: 4549824017360541442}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -3441479482135161390}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD06C\uAC8C\uBB3C\uAE30-\uC900\uBE442"
-  sequential: 1
-  handlerKey: Move
-  x: 0
-  xType: 2
-  y: -2
-  yType: 2
-  speed: 5
---- !u!114 &4590787885531181653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be330d565fd748c1baef57f2c3a3bf36, type: 3}
-  m_Name: Comment
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -488, y: -424}
-  ports:
-    keys: []
-    values: []
-  comment: "\uD06C\uAC8C \uBB3C\uAE30"
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  finishRequireAll: 1
+  resultRequireAll: 1
 --- !u!114 &4714080363906611040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,40 +2449,25 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -350.2239, y: 443.00244}
+  position: {x: -1000, y: -248}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 4714080363906611040}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: children 1
-        node: {fileID: 2559255003687656722}
+      - fieldName: children 0
+        node: {fileID: -6074041159599762593}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 4714080363906611040}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 8208231538322630965}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC791\uAC8C \uBB3C\uAE30-\uC900\uBE441"
-  sequential: 0
   handlerKey: Move
   x: 0
   xType: 2
@@ -1973,11 +2487,10 @@ MonoBehaviour:
   m_Name: Rotate
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 984, y: 1368}
+  position: {x: -552, y: 1528}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 4882926496751844267}
@@ -1991,8 +2504,43 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 4882926496751844267}
+  NodeName: Action
+  input: {fileID: 0}
+  handlerKey: Rotate
+  angle: -30
+  type: 0
+  speed: 10
+--- !u!114 &5441581859432153765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
+  m_Name: Branch
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2200, y: 168}
+  ports:
+    keys:
+    - input
+    - trueOutput
+    - falseOutput
+    values:
+    - _fieldName: input
+      _node: {fileID: 5441581859432153765}
+      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: trueOutput
+      _node: {fileID: 5441581859432153765}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections: []
@@ -2000,14 +2548,22 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: falseOutput
+      _node: {fileID: 5441581859432153765}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6112229163082773655}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: Action
-  sequential: 1
-  handlerKey: Rotate
-  angle: -30
-  type: 0
-  speed: 10
+  trueOutput: {fileID: 0}
+  falseOutput: {fileID: 0}
 --- !u!114 &5817378462548943609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,40 +2577,25 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 280, y: 808}
+  position: {x: -568, y: 1144}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 5817378462548943609}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 3770704274137625537}
+      - fieldName: children 3
+        node: {fileID: -7718815739797694946}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 5817378462548943609}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 6128197735781873381}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30-\uB044\uAE30"
-  sequential: 1
   handlerKey: MoveTail
   x: 6
   xType: 1
@@ -2074,41 +2615,86 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1432, y: 296}
+  position: {x: -2280, y: 648}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 6079582229076599680}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: next
+      - fieldName: children 2
         node: {fileID: 6859105116371313634}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 6079582229076599680}
+  NodeName: Action
+  input: {fileID: 0}
+  delay: 1.5
+--- !u!114 &6112229163082773655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e40fe1113b448996faa5a140eff4d4, type: 3}
+  m_Name: Branch
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -456, y: 616}
+  ports:
+    keys:
+    - input
+    - trueOutput
+    - falseOutput
+    values:
+    - _fieldName: input
+      _node: {fileID: 6112229163082773655}
+      _typeQualifiedName: ActionNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: falseOutput
+        node: {fileID: 5441581859432153765}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: trueOutput
+      _node: {fileID: 6112229163082773655}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 2559255003687656722}
+        node: {fileID: 6859105116371313634}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: falseOutput
+      _node: {fileID: 6112229163082773655}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5317941769782985164}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: "\uADF8\uB85C\uAE30 \uBD84\uAE30"
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAE30\uBCF8"
-  sequential: 0
-  delay: 1.5
+  trueOutput: {fileID: 0}
+  falseOutput: {fileID: 0}
 --- !u!114 &6128197735781873381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2122,46 +2708,64 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 488, y: 808}
+  position: {x: -568, y: 1176}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 6128197735781873381}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 5817378462548943609}
+      - fieldName: children 4
+        node: {fileID: -7718815739797694946}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 6128197735781873381}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -8455839430695540857}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30-\uB044\uAE30"
-  sequential: 1
   handlerKey: MoveTail
   x: -6
   xType: 1
   y: -6
   yType: 1
   speed: 5
+--- !u!114 &6464462775971382699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde9b1b545af4526a5695786001b4eb6, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2680, y: -312}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: 6464462775971382699}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: -233464601890144266}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  NodeName: Action
+  input: {fileID: 0}
+  delay: 0.7
 --- !u!114 &6859105116371313634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2175,7 +2779,7 @@ MonoBehaviour:
   m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1672, y: 280}
+  position: {x: -2568, y: 344}
   ports:
     keys:
     - input
@@ -2183,6 +2787,8 @@ MonoBehaviour:
     - children
     - children 0
     - children 1
+    - children 2
+    - children 3
     values:
     - _fieldName: input
       _node: {fileID: 6859105116371313634}
@@ -2195,8 +2801,20 @@ MonoBehaviour:
       - fieldName: nextNode
         node: {fileID: 4194973088129212547}
         reroutePoints: []
-      - fieldName: nextBranch
-        node: {fileID: -1201055075169469143}
+      - fieldName: next
+        node: {fileID: -5317941769782985164}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: 2559255003687656722}
+        reroutePoints: []
+      - fieldName: trueOutput
+        node: {fileID: 303788053902375358}
+        reroutePoints: []
+      - fieldName: trueOutput
+        node: {fileID: -7336388885278452450}
+        reroutePoints: []
+      - fieldName: trueOutput
+        node: {fileID: 6112229163082773655}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2208,7 +2826,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 6079582229076599680}
+        node: {fileID: 2559255003687656722}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -2248,14 +2866,40 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: children 2
+      _node: {fileID: 6859105116371313634}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 6079582229076599680}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 3
+      _node: {fileID: 6859105116371313634}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7471663532742763102}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
   next: {fileID: 0}
-  finishRequireAll: 1
-  resultRequireAll: 1
-  sequential: 0
   children:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  finishRequireAll: 1
+  resultRequireAll: 1
 --- !u!114 &7306768651284578572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2269,7 +2913,7 @@ MonoBehaviour:
   m_Name: Comment
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1016, y: -648}
+  position: {x: -1096, y: -760}
   ports:
     keys: []
     values: []
@@ -2287,11 +2931,10 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1512, y: 536}
+  position: {x: -2280, y: 552}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 7468127020744038352}
@@ -2305,25 +2948,100 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 7468127020744038352}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAE30\uBCF8\uC790\uB9AC\uC774\uB3D9"
-  sequential: 0
   handlerKey: Move
   x: 3
   xType: 1
   y: 1
   yType: 1
   speed: 2
+--- !u!114 &8103676080585694217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17e82b918d84fac82a40deaa44b3399, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -2920, y: -728}
+  ports:
+    keys:
+    - children
+    - input
+    - next
+    - children 0
+    - children 1
+    values:
+    - _fieldName: children
+      _node: {fileID: 8103676080585694217}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: 8103676080585694217}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: children 2
+        node: {fileID: 2559255003687656722}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 8103676080585694217}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7336388885278452450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: 8103676080585694217}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -3403450415403514535}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: 8103676080585694217}
+      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -233464601890144266}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  NodeName: "\uD328\uD134 3"
+  input: {fileID: 0}
+  next: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &8208231538322630965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2337,40 +3055,25 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -88, y: 456}
+  position: {x: -1000, y: -216}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 8208231538322630965}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: 4714080363906611040}
+      - fieldName: children 1
+        node: {fileID: -6074041159599762593}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 8208231538322630965}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -1163092317635562638}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uC791\uAC8C\uBB3C\uAE30-\uB530\uB77C\uAC00\uAE30"
-  sequential: 1
   handlerKey: Move
   x: 0
   xType: 3
@@ -2390,12 +3093,11 @@ MonoBehaviour:
   m_Name: Targeting
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -760, y: -664}
+  position: {x: -1912, y: -360}
   ports:
     keys:
     - dest
     - input
-    - nextBranch
     values:
     - _fieldName: dest
       _node: {fileID: 8247135216126387349}
@@ -2414,32 +3116,15 @@ MonoBehaviour:
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: trueOutput
-        node: {fileID: 3041824153929037626}
-        reroutePoints: []
-      - fieldName: children 2
-        node: {fileID: 2559255003687656722}
+      - fieldName: children 0
+        node: {fileID: 3954361499682248783}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 8247135216126387349}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -4980849640840290809}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uD50C\uB808\uC774\uC5B4 \uD0C0\uAC8C\uD305"
-  sequential: 1
   handlerKey: Targeting
   dest: {x: -8.62, y: -0.71189374, z: 0}
 --- !u!114 &8367575991393880611
@@ -2455,40 +3140,25 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1384, y: 1160}
+  position: {x: -776, y: 1576}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 8367575991393880611}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -2620398737924812990}
+      - fieldName: children 2
+        node: {fileID: -7723670903974570645}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 8367575991393880611}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -130003373205256810}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uBE44\uB0B4\uB9AC\uB294 \uB3D9\uC548 \uBA48\uCDA4"
-  sequential: 1
   delay: 2
 --- !u!114 &8883669560038428332
 MonoBehaviour:
@@ -2503,47 +3173,32 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: 808}
+  position: {x: -568, y: 1080}
   ports:
     keys:
     - input
-    - nextBranch
     values:
     - _fieldName: input
       _node: {fileID: 8883669560038428332}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -6165776955234324965}
+      - fieldName: children 1
+        node: {fileID: -7718815739797694946}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: nextBranch
-      _node: {fileID: 8883669560038428332}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 3770704274137625537}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+  NodeName: Action
   input: {fileID: 0}
-  nextBranch: {fileID: 0}
-  actionName: "\uAF2C\uB9AC\uC4F8\uAE30-\uAEBC\uB0B4\uAE30"
-  sequential: 1
   handlerKey: MoveTail
   x: -6
   xType: 1
   y: -2
   yType: 1
   speed: 5
---- !u!114 &9071877527153455692
+--- !u!114 &9125211703534046652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2552,96 +3207,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528afe7ad3474a9a801984561de5def8, type: 3}
-  m_Name: Parallel
+  m_Script: {fileID: 11500000, guid: 7764df17662f463287a63e1741e39cb5, type: 3}
+  m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 616, y: -328}
+  position: {x: 120, y: 584}
   ports:
     keys:
     - input
-    - next
-    - children
-    - children 0
-    - children 1
-    - children 2
     values:
     - _fieldName: input
-      _node: {fileID: 9071877527153455692}
+      _node: {fileID: 9125211703534046652}
       _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       connections:
-      - fieldName: nextBranch
-        node: {fileID: -4522668798474227095}
+      - fieldName: children 0
+        node: {fileID: -5317941769782985164}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: next
-      _node: {fileID: 9071877527153455692}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -130003373205256810}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: children
-      _node: {fileID: 9071877527153455692}
-      _typeQualifiedName: System.Collections.Generic.List`1[[BaseNode, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: children 0
-      _node: {fileID: 9071877527153455692}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 1689653035584632125}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: children 1
-      _node: {fileID: 9071877527153455692}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 4370194701613456735}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: children 2
-      _node: {fileID: 9071877527153455692}
-      _typeQualifiedName: BaseNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: 3551142291321036664}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+  NodeName: Action
   input: {fileID: 0}
-  next: {fileID: 0}
-  finishRequireAll: 1
-  resultRequireAll: 1
-  sequential: 1
-  children:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  handlerKey: Move
+  x: 1
+  xType: 2
+  y: -1
+  yType: 2
+  speed: 2

@@ -23,11 +23,11 @@ public class ColliderTriggerHandler : MonoBehaviour
             if (!tagFound) return;
         }
         
-        var currentAction = fsmController.GetCurrentActionNode();
+        var currentAction = fsmController.GetCurrentCancelableNode();
         if (currentAction != null && currentAction.IsRunning())
         {
             Debug.Log($"[BossAI ColliderTriggerHandler] 조건이 발생해 노드 중단: 다음 노드 분기에 리턴된 값{successOnTrigger}");
-            fsmController.CancelCurrentAction(successOnTrigger);
+            fsmController.CancelCurrentNode(successOnTrigger);
         }
     }
 }
