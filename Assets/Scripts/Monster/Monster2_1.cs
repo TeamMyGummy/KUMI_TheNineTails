@@ -10,15 +10,14 @@ public class Monster2_1 : Monster
     private float attackDelay = 0.5f;
     protected override void EnterShortAttackRange()
     {
-        if (!isAttacking)
-        {
-            StartCoroutine(Block(2f));
-        }
     }
 
     protected override void EnterLongAttackRange()
     {
-        
+        if (!isAttacking)
+        {
+            StartCoroutine(Block(2f));
+        }
     }
 
     private IEnumerator Block(float time)
