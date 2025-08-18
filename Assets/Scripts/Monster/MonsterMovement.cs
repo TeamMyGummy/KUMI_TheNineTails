@@ -114,11 +114,9 @@ public class MonsterMovement : MonoBehaviour, IMovement
                 ReturnMove();
                 break;
             case MovePattern.Retreat:
-                Debug.Log("후퇴");
                 RetreatMove();
                 break;
             case MovePattern.Flee:
-                Debug.Log("도망");
                 FleeMove();
                 break;
         }
@@ -196,18 +194,21 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _retreatStartPos = transform.position;
         _hasReachedRetreatTarget = false;
         
-        // 플레이어를 바라보는 방향을 설정 (후퇴하기 전에)
-        HorizontalDir = _player.position.x > transform.position.x ? 1 : -1;
-        
         // 플레이어 반대 방향으로 후퇴 목표점 설정
         Vector2 retreatDirection = _player.position.x > transform.position.x ? Vector2.left : Vector2.right;
         _retreatTargetPos = _retreatStartPos + retreatDirection * RetreatDistance;
+        
+        // 플레이어를 바라보는 방향을 설정 (후퇴하기 전에)
+        HorizontalDir = _player.position.x > transform.position.x ? 1 : -1;
     }
     
     private void RetreatMove()
     {
         // 후퇴 목표점까지의 방향 계산
         Vector2 retreatDir = (_retreatTargetPos - (Vector2)transform.position).normalized;
+        
+        // 플레이어를 바라보는 방향은 유지 (후퇴하면서도 플레이어를 봄)
+        HorizontalDir = _player.position.x > transform.position.x ? 1 : -1;
         
         // 지상몬스터인 경우 낭떠러지 체크
         if (!_monster.Data.IsFlying && !CheckGroundAhead())

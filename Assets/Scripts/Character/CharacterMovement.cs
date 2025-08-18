@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -17,6 +17,7 @@ public class CharacterMovement : MonoBehaviour
     private bool _isGround;
     private bool _isWallClimbing;
     private bool _isRopeClimbing;
+    private bool _isKnockedBack;
 
     private void Awake()
     {
@@ -85,6 +86,63 @@ public class CharacterMovement : MonoBehaviour
         _rigidBody.gravityScale = 0;
     }
 
+    /// <summary>
+    /// 넉백 효과를 적용하는 함수
+    /// </summary>
+    /// <param name="knockbackDirection">넉백될 방향 (정규화된 벡터)</param>
+    /// <param name="knockbackDistance">넉백 거리 (기본값: 6)</param>
+    /// <param name="knockbackDuration">넉백 지속 시간 (기본값: 0.3초)</param>
+    public void ApplyKnockback(Vector2 knockbackDirection, float knockbackDistance = 6f, float knockbackDuration = 0.3f)
+    {
+        if (!_isKnockedBack)
+        {
+            StartCoroutine(KnockbackCoroutine(knockbackDirection.normalized, knockbackDistance, knockbackDuration));
+        }
+    }
+    
+    /// <summary>
+    /// 넉백 효과를 처리하는 코루틴
+    /// </summary>
+    private IEnumerator KnockbackCoroutine(Vector2 direction, float distance, float duration)
+    {
+        _isKnockedBack = true;
+        
+        // 현재 velocity 초기화
+        _rigidBody.velocity = Vector2.zero;
+        
+        Vector2 startPosition = _rigidBody.position;
+        Vector2 targetPosition = startPosition + (direction * distance);
+        
+        float elapsedTime = 0f;
+        
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            float progress = elapsedTime / duration;
+            
+            // Ease-out 효과 적용 (처음엔 빠르게, 나중엔 천천히)
+            float easeProgress = 1f - Mathf.Pow(1f - progress, 3f);
+            
+            Vector2 currentPosition = Vector2.Lerp(startPosition, targetPosition, easeProgress);
+            _rigidBody.position = currentPosition;
+            
+            yield return new WaitForFixedUpdate();
+        }
+        
+        // 최종 위치 설정
+        _rigidBody.position = targetPosition;
+        _isKnockedBack = false;
+    }
+    
+    /// <summary>
+    /// 현재 넉백 상태인지 확인하는 함수
+    /// </summary>
+    /// <returns>true: 넉백 중, false: 정상 상태</returns>
+    public bool IsKnockedBack()
+    {
+        return _isKnockedBack;
+    }
+    
     public void StartWallClimbState()
     {
         // 벽타기 상태

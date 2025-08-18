@@ -64,6 +64,20 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             EnterShortAttackRange();
             isAggro = true;
         }
+        
+        // 근거리 공격 조건 체크
+        if (isAggro && IsPlayerInShortRange())
+        {
+            EnterShortAttackRange();
+        }
+        
+        // 원거리 공격 조건 체크
+        if (isAggro && IsPlayerInLongRange())
+        {
+            // Debug.Log("원거리 공격 가능 범위에 진입");
+            EnterLongAttackRange();
+        }
+        
         if (dist <= Data.AggroRange && inSight)
         {
             isAggro = true;
@@ -76,18 +90,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
                 _movement.ChangeMovePattern(MovePattern.Return);
             }
         }
-        // 원거리 공격 조건 체크
-        if (isAggro && IsPlayerInLongRange())
-        {
-            Debug.Log("원거리 공격 가능 범위에 진입");
-            EnterLongAttackRange();
-        }
-
-        // 근거리 공격 조건 체크
-        if (isAggro && IsPlayerInShortRange())
-        {
-            EnterShortAttackRange();
-        }
+        
     }
 
 
