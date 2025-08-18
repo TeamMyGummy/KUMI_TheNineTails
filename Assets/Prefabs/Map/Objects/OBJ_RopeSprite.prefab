@@ -1171,7 +1171,7 @@ GameObject:
   - component: {fileID: 3489398462899081010}
   - component: {fileID: 1167186453759556643}
   m_Layer: 0
-  m_Name: Rope_Sprite
+  m_Name: OBJ_RopeSprite
   m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
