@@ -7,8 +7,8 @@ public class Monster2_2 : Monster
     public AbilityKey abilityKey;
 	private bool _isAttacking = false;
     private int _cnt = 0;
-    private float _attackDelay = 0.5f;
-    private float _secondDelay = 1f;
+    private float _attackDelay = 0.3f;
+    private float _secondDelay = 0.6f;
     protected override void EnterShortAttackRange()
     {
         Debug.Log("Entering short");
@@ -37,10 +37,12 @@ public class Monster2_2 : Monster
             
             if (randomAttack == 0)
             {
+                Debug.Log("Entering triple");
                 StartCoroutine(TripleAttack(2f));
             }
             else
             {
+                Debug.Log("Entering changed");
                 StartCoroutine(ChangedAttack(2f));
             }
         }
