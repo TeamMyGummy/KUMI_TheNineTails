@@ -130,7 +130,8 @@ MonoBehaviour:
     \uBAA8\uB4E0 BoxCollider2D\uC758 \uBC94\uC704\uB97C \uC870\uC815\uD574\uC57C
     \uD558\uBA74 \uD50C\uBC0D\uD300\uC5D0 \uC5F0\uB77D, \uAC1C\uBCC4 BoxCollider2D\uC758
     \uBC94\uC704\uB97C \uC870\uC815\uD574\uC57C \uD558\uBA74 \uBC11\uC758 BoxCollider2D\uC758
-    Edit Collider\uB97C \uB20C\uB7EC \uC870\uC815\uD560 \uAC83"
+    Edit Collider\uB97C \uB20C\uB7EC \uC870\uC815\uD560 \uAC83\n\n\uBC30\uCE58 \uC2DC
+    Offset-Y\uB97C 0.5\uB85C \uC218\uC815\n"
 --- !u!61 &5124536149466368117
 BoxCollider2D:
   m_ObjectHideFlags: 0
