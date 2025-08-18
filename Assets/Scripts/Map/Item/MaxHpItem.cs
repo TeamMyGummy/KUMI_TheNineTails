@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameAbilitySystem;
+using Game.Inventory;
 
 public class MaxHpItem : MonoBehaviour
 {
@@ -65,6 +66,9 @@ public class MaxHpItem : MonoBehaviour
         {
             Debug.LogWarning("[MaxHpItem] HP 속성 없음");
         }
+
+        DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);
+        inv.AddItem(ItemType.MaxHp, 1);
 
         _isUsed = true;
         interactionUI?.SetActive(false);

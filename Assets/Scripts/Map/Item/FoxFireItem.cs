@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameAbilitySystem;
+using Game.Inventory;
 
 public class FoxFireItem : MonoBehaviour
 {
@@ -32,6 +33,12 @@ public class FoxFireItem : MonoBehaviour
 
             var controller = other.GetComponent<PlayerController>();
             controller?.SetFoxFireItem(this); 
+
+            DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);
+        inv.AddItem(ItemType.FoxFire);
+        Debug.Log("[Inventory] 여우불 아이템을 인벤토리에 저장");
+        _isUsed = true;
+        Destroy(gameObject);
         }
     }
 
@@ -68,6 +75,9 @@ public class FoxFireItem : MonoBehaviour
         {
             Debug.LogWarning("[FoxFireItem] FoxFireCount 속성 없음");
         }
+
+        DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);
+        inv.AddItem(ItemType.FoxFire, 1);
 
         _isUsed = true;
         interactionUI?.SetActive(false);
