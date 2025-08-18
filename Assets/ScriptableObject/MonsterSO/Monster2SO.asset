@@ -18,7 +18,7 @@ MonoBehaviour:
   isTriggerAttack: 0
   isRanged: 1
   dropCount: 2
-  honbulPrefab: {fileID: 0}
+  honbulPrefab: {fileID: 5739550877967227833, guid: dbbc841980c40634fac68af51ac3441e, type: 3}
   viewStartAngle: -22.5
   viewSight: 45
   aggroRange: 12
