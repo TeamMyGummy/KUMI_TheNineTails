@@ -17,8 +17,6 @@ public class Hitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_boxCollider == null) return;
-        //if (other.gameObject.layer == LayerMask.NameToLayer("Player")) return;
-        //todo. 이 부분 가능하다면 그냥 설정 단의 레이어 충돌에서 제거하기 프리팹 상에서
         
         Vector2 boxCenter = (Vector2)transform.position + _boxCollider.offset;
         Vector2 boxSize = _boxCollider.size;
