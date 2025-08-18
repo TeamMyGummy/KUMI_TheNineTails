@@ -19,5 +19,5 @@ MonoBehaviour:
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
-  BlockTimer: 0.5
+  BlockTimer: 0.2
   projectile: {fileID: 1762829811770736879, guid: 459ccd1dbe56d2a4e9db2705ed4fff50, type: 3}
