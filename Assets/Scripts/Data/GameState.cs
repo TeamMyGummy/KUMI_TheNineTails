@@ -5,8 +5,10 @@ using UnityEngine;
 
 //초기화 시 에셋 로드가 필요한가 -> 도메인
 //GameState의 값을 직접 변경하지 않음(저장이 필요할 때 객체의 데이터를 긁어옴)
-public enum DomainKey{
+public enum DomainKey
+{
     Player,
+    Inventory,
 }
 
 //이곳에 저장할 객체에 Action, 등 바인딩이 가능한 정보는 넣으면 안 됨

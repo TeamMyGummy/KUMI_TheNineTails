@@ -1,4 +1,5 @@
 using UnityEngine;
+using Game.Inventory;
 
 [RequireComponent(typeof(Collider2D))]
 public class Honbul : MonoBehaviour
@@ -65,6 +66,10 @@ public class Honbul : MonoBehaviour
     private void Absorb()
     {
         var pc = _player?.GetComponent<PlayerController>();
+
+        //인벤토리 추가
+        DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);
+        inv.AddItem(ItemType.Honbul, 1);
 
         Destroy(gameObject);
         honbulCount++;

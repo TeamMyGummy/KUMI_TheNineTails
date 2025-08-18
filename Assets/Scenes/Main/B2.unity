@@ -793,7 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 565336424}
   - component: {fileID: 565336426}
-  - component: {fileID: 565336425}
+  - component: {fileID: 565336427}
   m_Layer: 0
   m_Name: UI_PlayerState
   m_TagString: Untagged
@@ -817,7 +817,7 @@ Transform:
   - {fileID: 1874243776}
   m_Father: {fileID: 73890111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &565336425
+--- !u!114 &565336426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -826,12 +826,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 565336423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4820a2a163be40ed93da21ca37f50c6, type: 3}
+  m_Script: {fileID: 11500000, guid: b123902ad6204efca3d7de1053e954d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filledHpSprite: {fileID: 21300000, guid: 2ef59c48eff5748589d32a0f7af658d3, type: 3}
-  emptyHpSprite: {fileID: 21300000, guid: 760d40fef029e4bf09ded574274dcd5f, type: 3}
-  hpContainer: {fileID: 1874243776}
+--- !u!114 &565336427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565336423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a225df974f7f448eaec6daf54a63916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filledHpSprite: {fileID: 0}
+  emptyHpSprite: {fileID: 0}
+  hpContainer: {fileID: 1842653281}
   skillSprites:
   - {fileID: 21300000, guid: 5d5ab8744ce58475cb4028c5921cd567, type: 3}
   - {fileID: 21300000, guid: 5d5ab8744ce58475cb4028c5921cd567, type: 3}
@@ -851,18 +863,6 @@ MonoBehaviour:
   foxFireFilled: {fileID: 21300000, guid: 98a7dbeab501345d48380eb0b5a254dc, type: 3}
   foxFireEmpty: {fileID: 21300000, guid: b092b5007f6bb499c824e64124a39e4e, type: 3}
   HonbulCountText: {fileID: 1959180621}
---- !u!114 &565336426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565336423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b123902ad6204efca3d7de1053e954d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &580826514
 PrefabInstance:
   m_ObjectHideFlags: 0
