@@ -23,7 +23,7 @@ public class FoxFireItem : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
+    {        
         if (_isUsed) return;
 
         if (other.CompareTag("Player"))
@@ -32,13 +32,7 @@ public class FoxFireItem : MonoBehaviour
             interactionUI?.SetActive(true);
 
             var controller = other.GetComponent<PlayerController>();
-            controller?.SetFoxFireItem(this); 
-
-            DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);
-        inv.AddItem(ItemType.FoxFire);
-        Debug.Log("[Inventory] 여우불 아이템을 인벤토리에 저장");
-        _isUsed = true;
-        Destroy(gameObject);
+            controller?.SetFoxFireItem(this);
         }
     }
 
@@ -56,24 +50,16 @@ public class FoxFireItem : MonoBehaviour
     {
         if (_isUsed || !_playerInRange) return;
 
-        var attr = _playerModel.Attribute;
-        if (attr.Attributes.TryGetValue("FoxFireCount", out var foxfire))
+        if (_playerModel.Attribute.Attributes.TryGetValue("FoxFireCount", out var foxfire))
         {
             float prevMax = foxfire.MaxValue;
             float newMax = prevMax + increaseAmount;
 
-            float current = foxfire.CurrentValue.Value;  // 유지할 값 저장
+            float current = foxfire.CurrentValue.Value;
             foxfire.SetMaxValue(newMax);
-            foxfire.SetCurrentValue(current);        
+            foxfire.SetCurrentValue(current);
 
             Debug.Log($"여우불 갯수 증가: Max {prevMax} → {newMax}, 현재: {current}");
-
-            // UI 업데이트
-            FindObjectOfType<UI.VM_PlayerState>()?.SendMessage("OnValidate", SendMessageOptions.DontRequireReceiver);
-        }
-        else
-        {
-            Debug.LogWarning("[FoxFireItem] FoxFireCount 속성 없음");
         }
 
         DomainFactory.Instance.GetDomain(DomainKey.Inventory, out InventoryDomain inv);

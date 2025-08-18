@@ -40,7 +40,7 @@ public class UI_PlayerState : MonoBehaviour
 
     private async void OnEnable()
     {
-        await UniTask.NextFrame();
+        await UniTask.NextFrame(); // VM 초기화 한 프레임 뒤에 바인딩
 
         if (_playerVM == null)
         {
@@ -64,12 +64,20 @@ public class UI_PlayerState : MonoBehaviour
             .Subscribe(UpdateSkillProfile)
             .AddTo(_disposables);
 
-        // 여우불 개수 - Max 값이 변할 때만 전체 슬롯 갱신
+        // 여우불 최대 개수 → 슬롯 생성/늘림
         _playerVM.MaxFoxFireCountRP
             .DistinctUntilChanged()
             .Subscribe(max =>
             {
-                RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
+                RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, max);
+            })
+            .AddTo(_disposables);
+
+        // 여우불 현재 개수 → 슬롯 채우기 상태 갱신
+        _playerVM.FoxFireCount
+            .Subscribe(cur =>
+            {
+                RefreshFoxFire(cur, _playerVM.MaxFoxFireCountRP.CurrentValue);
             })
             .AddTo(_disposables);
 
@@ -87,6 +95,7 @@ public class UI_PlayerState : MonoBehaviour
         // ======== 초기 렌더 ========
         UpdateFoxFireGauge(_playerVM.FoxFireGauge.CurrentValue);
         UpdateHp(_playerVM.Hp.CurrentValue, _playerVM.MaxHp);
+        RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
     }
 
     private void OnDisable()
