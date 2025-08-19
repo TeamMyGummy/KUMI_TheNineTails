@@ -20,6 +20,7 @@ public enum AbilityName
     Parrying,
     FoxFire,
     FireProjectile,
+    LiverExtraction,
     
     //몬스터
     MonsterAttack = 100,
@@ -44,6 +45,7 @@ public enum AbilityKey
     Parrying,
     FoxFire,
     FireProjectile,
+    LiverExtraction,
     
     //몬스터
     MonsterAttack = 100,
@@ -108,6 +110,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.MonsterAttack => new MonsterAttack(),
             AbilityName.Parrying => new Parrying(),
             AbilityName.FoxFire => new FoxFlame(),
+            AbilityName.LiverExtraction => new LiverExtraction(),
             AbilityName.MonsterRush => new MonsterRush(),
             AbilityName.MonsterDoubleAttack => new MonsterDoubleAttack(),
             AbilityName.FireVariousProjectile => new FireVariousProjectile(),
