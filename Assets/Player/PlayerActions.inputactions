@@ -69,6 +69,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "LiverExtraction",
+                    "type": "Button",
+                    "id": "6c725016-e784-499d-a082-c18c77b3f1df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MapInteraction",
                     "type": "Button",
                     "id": "6c4cfdc0-88b8-48b1-80b2-dc4cb60f0c7b",
@@ -210,6 +219,17 @@
                     "action": "WallClimb",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "257292e4-2003-428c-86c4-8cc80c81a74f",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "LiverExtraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

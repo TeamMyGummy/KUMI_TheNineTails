@@ -307,6 +307,25 @@ public class PlayerController : MonoBehaviour, IMovement
         _playerInput.actions["FoxFire"].Disable();
     }
     
+    // --------------------------- Liver Extraction ---------------------------
+    public void OnLiverExtraction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            _asc.TryActivateAbility(AbilityKey.LiverExtraction);
+        }
+    }
+    
+    public void OnEnableLiverExtraction()
+    {
+        _playerInput.actions["LiverExtraction"].Enable();
+    }
+
+    public void OnDisableLiverExtraction()
+    {
+        _playerInput.actions["LiverExtraction"].Disable();
+    }
+    
     // -------------------- Map Interaction -----------------------
     // Lantern
     public void OnLanternInteraction(InputAction.CallbackContext ctx)

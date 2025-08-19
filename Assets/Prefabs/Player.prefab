@@ -399,6 +399,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 418007b8-9b5c-46a6-ae4b-1e1d29bfee7d
     m_ActionName: PlayerActions/FoxFire[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLiverExtraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6c725016-e784-499d-a082-c18c77b3f1df
+    m_ActionName: PlayerActions/LiverExtraction[/Keyboard/u]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
