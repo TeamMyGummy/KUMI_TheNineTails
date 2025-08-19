@@ -177,8 +177,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2467817429872787552}
-  - component: {fileID: 7747029841939740703}
+  - component: {fileID: -5791293294123939489}
   - component: {fileID: 6366667828363013891}
+  - component: {fileID: 7747029841939740703}
   m_Layer: 0
   m_Name: OBJ_TailBox
   m_TagString: Untagged
@@ -205,6 +206,37 @@ Transform:
   - {fileID: 4089647315083890249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5791293294123939489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285671414425474171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "(Tail Box (Script)) \r\nKey, Name: \uD65C\uC131\uD654\uD560 \uC2A4\uD0AC
+    \uC774\uB984 \uC120\uD0DD\r"
+--- !u!114 &6366667828363013891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285671414425474171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b047e987a671a21468072ffbdfe1170e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionUI: {fileID: 5996464765794265479}
+  key: 2
+  name: 2
+  skillInfoPrefab: {fileID: 0}
+  baseCanvas: {fileID: 0}
 --- !u!61 &7747029841939740703
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -250,21 +282,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6366667828363013891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4285671414425474171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b047e987a671a21468072ffbdfe1170e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionUI: {fileID: 5996464765794265479}
-  key: 2
-  name: 2
 --- !u!1 &5996464765794265479
 GameObject:
   m_ObjectHideFlags: 0

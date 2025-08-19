@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8803714192076189352}
+  - component: {fileID: 5440817644444397341}
+  - component: {fileID: 7336017743330823987}
   - component: {fileID: 9144007436336811593}
   - component: {fileID: 7549788032987365097}
-  - component: {fileID: 7336017743330823987}
   m_Layer: 0
   m_Name: OnSteam
   m_TagString: Untagged
@@ -34,6 +35,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5099222604281706739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5440817644444397341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011159100761615262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "*\uB370\uC774\uD130 \uC218\uC815(Steam Child (Script))\nRespawn Delay:
+    \uB808\uC774\uC800\uC5D0 \uBD80\uB52A\uD788\uBA74 \uBA87 \uCD08 \uD6C4\uC5D0
+    \uB9AC\uC2A4\uD3F0\uD3EC\uC778\uD2B8\uB85C \uB3CC\uC544\uAC08\uC9C0"
+--- !u!114 &7336017743330823987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011159100761615262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ca85677d772ec4faf093b0568c3473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnDelay: 1
 --- !u!212 &9144007436336811593
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -131,18 +160,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7336017743330823987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5011159100761615262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ca85677d772ec4faf093b0568c3473, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8114684727415351310
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,8 +169,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5099222604281706739}
-  - component: {fileID: 1146403507996278593}
+  - component: {fileID: 1909267015253500313}
   - component: {fileID: 4745927349487541999}
+  - component: {fileID: 1146403507996278593}
   - component: {fileID: 5592025991325121479}
   m_Layer: 0
   m_Name: OBJ_Steam
@@ -178,6 +196,42 @@ Transform:
   - {fileID: 8803714192076189352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909267015253500313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114684727415351310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "\uD50C\uB808\uC774\uC5B4\uAC00 \uD770\uC0C9 \uD0C0\uC77C\uC5D0 \uB2FF\uC73C\uBA74
+    \uBE68\uAC04\uC0C9(\uC99D\uAE30) \uD65C\uC131\uD654\uB428. \uBE68\uAC04\uC0C9\uC5D0
+    \uB2FF\uC73C\uBA74 \uB370\uBBF8\uC9C0 \uC785\uC74C\r\n\r\n*\uB370\uC774\uD130
+    \uC218\uC815(Steam Object (Script))\r\nDamage: \uB370\uBBF8\uC9C0\r\nActivation
+    Delay: \uD0C0\uC77C \uBC1F\uC740 \uD6C4 \uC99D\uAE30 \uD65C\uC131\uD654\uB418\uAE30\uAE4C\uC9C0
+    \uAC78\uB9AC\uB294 \uB51C\uB808\uC774\r\nActive Duration: \uC99D\uAE30 \uD65C\uC131\uD654
+    \uC720\uC9C0\uC2DC\uAC04\r\n\n**Respawn Delay\uB294 OBJ_Steam \uC790\uC2DD \uC624\uBE0C\uC81D\uD2B8
+    OnSteam\uC5D0\uC11C \uC218\uC815"
+--- !u!114 &4745927349487541999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114684727415351310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8312c5bdb5366d4e83f9bf391a195c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSteamImage: {fileID: 5011159100761615262}
+  damage: 1
+  activationDelay: 0.5
+  activeDuration: 6
 --- !u!212 &1146403507996278593
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -230,22 +284,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4745927349487541999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8114684727415351310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8312c5bdb5366d4e83f9bf391a195c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSteamImage: {fileID: 5011159100761615262}
-  damage: 1
-  activationDelay: 0.5
-  activeDuration: 6
 --- !u!61 &5592025991325121479
 BoxCollider2D:
   m_ObjectHideFlags: 0
