@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using UnityEngine;
 
@@ -8,20 +10,34 @@ public class FireProjectile : BlockAbility<FireProjectileSO>
     protected FireProjectileSO _so;
     protected IMovement _movement;
     protected CharacterMovement _cm;
+    protected MonsterMovement _move;
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
         _so = abilitySo as FireProjectileSO;
         _movement = actor.GetComponent<IMovement>();
         _cm = actor.GetComponent<CharacterMovement>();
+        _move = actor.GetComponentInChildren<MonsterMovement>();
     }
 
-    protected override void Activate()
+    protected async override void Activate()
     {
         base.Activate();
         GameObject go = ResourcesManager.Instance.Instantiate(_so.projectile.gameObject);
         Vector2 direction = GetDirectionToPlayer();
+
+        if (_so.isStoppWhileAttack)
+        {
+            _move?.SetPaused(true);
+        }
+        
         go.GetComponent<Projectile>().FireProjectile(Actor, direction);
+
+        if (_so.isStoppWhileAttack)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.8f));
+            _move?.SetPaused(false);
+        }
     }
     
     private Vector2 GetDirectionToPlayer()

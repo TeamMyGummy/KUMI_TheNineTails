@@ -5,4 +5,6 @@ using UnityEngine;
 public class FireProjectileSO : BlockAbilitySO
 {
     public Projectile projectile;
+
+    public bool isStoppWhileAttack;
 }
