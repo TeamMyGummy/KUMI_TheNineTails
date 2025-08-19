@@ -8,14 +8,14 @@ public class Monster2 : Monster
     private bool isAttaking = false;
     protected override void EnterShortAttackRange()
     {
-        if (!isAttaking)
-        {
-            StartCoroutine(Block(2f));
-        }
     }
 
     protected override void EnterLongAttackRange()
     {
+        if (!isAttaking)
+        {
+            StartCoroutine(Block(2f));
+        }
     }
 
     private IEnumerator Block(float time)
