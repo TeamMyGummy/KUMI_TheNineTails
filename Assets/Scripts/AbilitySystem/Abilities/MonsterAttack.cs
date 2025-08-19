@@ -5,6 +5,7 @@ using System;
 
 public class MonsterAttack : BlockAbility<MonsterAttackSO>
 {
+    private GameObject _actor;
     protected MonsterMovement _movement;
     protected Monster _monster;
     protected MonsterAttackSO _attackData;
@@ -13,7 +14,8 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
     {
         base.InitAbility(actor, asc, abilitySo);
         CanReuse = true;
-
+        
+        _actor = actor;
         _movement = actor.GetComponent<MonsterMovement>();
         _monster = actor.GetComponent<Monster>();
         _attackData = abilitySo as MonsterAttackSO;
@@ -62,6 +64,7 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
             Vector2 spawnPos = (Vector2)_monster.transform.position + offset;
 
             GameObject hitbox = ResourcesManager.Instance.Instantiate(prefab);
+            hitbox.GetComponent<Hitbox>()?.SetAttacker(_actor);
             hitbox.transform.position = spawnPos;
 
             var box = hitbox.GetComponent<BoxCollider2D>();

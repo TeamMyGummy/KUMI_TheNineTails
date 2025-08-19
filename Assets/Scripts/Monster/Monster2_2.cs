@@ -24,7 +24,7 @@ public class Monster2_2 : Monster
                 Vector2 knockbackDirection = playerPosition.x > monsterPosition.x ? Vector2.right : Vector2.left;
                 
                 // 넉백 적용 (6칸, 0.3초)
-                playerMovement.ApplyKnockback(knockbackDirection, 6f, 0.3f);
+                //playerMovement.ApplyKnockback(knockbackDirection, 6f, 0.3f);
             }
         }
     }

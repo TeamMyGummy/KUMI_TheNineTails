@@ -9,9 +9,16 @@ public class Hitbox : MonoBehaviour
     private BoxCollider2D _boxCollider;
     private readonly Collider2D[] _results = new Collider2D[1];
 
+    private GameObject _attacker;
+
     private void Awake()
     {
         _boxCollider = GetComponent<BoxCollider2D>();
+    }
+
+    public void SetAttacker(GameObject attacker)
+    {
+        _attacker = attacker;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,7 +48,16 @@ public class Hitbox : MonoBehaviour
         }
         else
         {
-            other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1);
+            if (_attacker != null)
+            {
+                Transform playerTransform = GameObject.FindWithTag("Player").transform;
+                Vector2 attackDirection = playerTransform.position.x > _attacker.transform.position.x ? Vector2.right : Vector2.left;
+                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);              
+            }
+            else
+            {
+                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1);
+            }
         }
     }
 }

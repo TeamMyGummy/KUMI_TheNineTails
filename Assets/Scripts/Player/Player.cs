@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private readonly int _ropeClimbID =  Animator.StringToHash("RopeClimb");
     private readonly int _isClimbingID =  Animator.StringToHash("IsClimbing");
     private readonly int _endClimbID =  Animator.StringToHash("EndClimb");
+    private readonly int _HurtID =  Animator.StringToHash("Hurt");
     private bool _onReachedTop;
 
     private bool _canFlip;
@@ -87,6 +88,11 @@ public class Player : MonoBehaviour
     public void LedgeClimb(bool ledge)
     {
         _onReachedTop = ledge;
+    }
+
+    public void Hurt()
+    {
+        _animator.SetTrigger(_HurtID);
     }
     
 }
