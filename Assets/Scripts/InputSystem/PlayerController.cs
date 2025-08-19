@@ -177,7 +177,8 @@ public class PlayerController : MonoBehaviour, IMovement
             {
                 int jumpDir = _characterMovement.CheckIsWallClimbing() ? -1 : 1;
                 
-                if(_playerInput.actions["Move"].IsPressed())
+                if(_playerInput.actions["Move"].IsPressed() && 
+                   (jumpDir == 1 || _direction != _characterMovement.GetCharacterSpriteDirection()))
                 {
                     // climb 중 방향키를 누르고 있었을 때
                     _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * jumpDir);
