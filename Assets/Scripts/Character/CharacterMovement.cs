@@ -12,6 +12,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] [Range(0.0f, 3.0f)] private float speed;
 
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
+    public float Gravity => gravity;
 
     private Vector2 _nextDirection;
     private bool _isGround;

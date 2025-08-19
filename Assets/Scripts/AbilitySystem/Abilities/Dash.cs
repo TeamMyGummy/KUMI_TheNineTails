@@ -27,8 +27,12 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         IsTickable = true;
         _dashSO = (DashSO) abilitySo;
+        
         _animator = Actor.GetComponent<Animator>();
-    
+        _rigid = Actor.GetComponent<Rigidbody2D>();
+        _characterMovement = Actor.GetComponent<CharacterMovement>();
+        _playerController = Actor.GetComponent<PlayerController>();
+        
         // Task
         _sequenceSO = abilitySo.skillSequence;
         _task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
@@ -39,11 +43,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     {
         base.Activate();
 
-        _rigid = Actor.GetComponent<Rigidbody2D>();
-        _characterMovement = Actor.GetComponent<CharacterMovement>();
-        _playerController = Actor.GetComponent<PlayerController>();
-
-        InitDash();
+        StartDash();
         _task.Execute();
         //_animator.SetBool(_dashID, true);
         Vector2 currentPosition = _rigid.position;
@@ -51,8 +51,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         _rigid.velocity = Vector2.zero;
         _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);
-        
-        
     }
 
     public void Update()
@@ -77,17 +75,18 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         }
     }
 
-    private void InitDash()
+    private void StartDash()
     {
         _dashPower = _dashSO.dashPower;
         _dashTime = _so.BlockTimer;
         _endDelayTime = _dashSO.endDelay;
+        _rigid.gravityScale = 0;
     }
 
     private void EndDash()
     {
-        InitDash();
         _task.Canceled();
+        _rigid.gravityScale = _characterMovement.Gravity;
         //_animator.SetBool(_dashID, false);
         //AbilityFactory.Instance.EndAbility(this);
     }
