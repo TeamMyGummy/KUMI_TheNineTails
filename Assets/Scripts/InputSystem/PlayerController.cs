@@ -227,11 +227,8 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         if (ctx.performed)
         {
-            if (_characterMovement.CheckIsGround())
-            {
-                _asc.TryActivateAbility(AbilityKey.Dash);
-                OnDisableJump();
-            }
+            _asc.TryActivateAbility(AbilityKey.Dash);
+            OnDisableJump();
         }
         else if (ctx.canceled)
         {
