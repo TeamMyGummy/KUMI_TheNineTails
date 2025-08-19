@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9037348421667397432}
   - component: {fileID: 3375186237103327657}
   - component: {fileID: 1762829811770736879}
+  - component: {fileID: 5602488002535163798}
   m_Layer: 11
   m_Name: MonsterRangedHitbox
   m_TagString: Untagged
@@ -179,3 +180,16 @@ MonoBehaviour:
   duration: 0.5
   maxDistance: 7
   offset: {x: 0, y: 0, z: 0}
+--- !u!114 &5602488002535163798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3144560449005721106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0cd73c55874975b360e8073ea60453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parryLayerName: Parrying
