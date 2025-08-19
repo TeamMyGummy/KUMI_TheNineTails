@@ -244,7 +244,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     public System.Collections.IEnumerator Flash()
     {
         var prev = spriteRenderer.color;
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = prev;
     }
