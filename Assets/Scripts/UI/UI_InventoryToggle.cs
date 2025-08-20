@@ -10,10 +10,6 @@ public class UI_InventoryToggle : MonoBehaviour
 
     private GameObject _panelInstance;
 
-    private void Awake()
-    {
-    }
-
     public void OnClickInventoryIcon()
     {
         Toggle();
@@ -28,7 +24,5 @@ public class UI_InventoryToggle : MonoBehaviour
 
             return;
         }
-
-        _panelInstance.SetActive(!_panelInstance.activeSelf);
     }
 }
