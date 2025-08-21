@@ -60,6 +60,13 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
             EndAttack();
             EndSkill().Forget();
         }
+        
+        // 공격 중 피격 당했을 때
+        if (_animatorStateInfo.IsName("Hurt"))
+        {
+            EndAttack();
+            EndSkill().Forget();
+        }
     }
 
     public void FixedUpdate()

@@ -8,7 +8,7 @@ using UnityEngine;
 public class AttackRange : MonoBehaviour
 {
     private GameObject _actor;
-    private readonly Vector2 _spawnPoint = new Vector2(0.5f, 0.75f);
+    private readonly Vector2 _spawnPoint = new Vector2(0.55f, 0.98f);
 
     void Start()
     {

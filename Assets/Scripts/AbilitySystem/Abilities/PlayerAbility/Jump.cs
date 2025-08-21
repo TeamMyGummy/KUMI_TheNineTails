@@ -10,6 +10,7 @@ public class Jump : GameplayAbility, ITickable
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
     private Animator _animator;
+    private AnimatorStateInfo _animatorStateInfo;
     private JumpSO _jumpSO;
 
     private int _maxJumpCount;
@@ -17,6 +18,7 @@ public class Jump : GameplayAbility, ITickable
     private float _jumpPower;
     private bool isJumpKeyDown;
     private readonly int _parameterID = Animator.StringToHash("Jump");
+    private readonly string _animationName = "Jump";
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -81,12 +83,12 @@ public class Jump : GameplayAbility, ITickable
                 }
             }
         }
-
-        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        
+        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if (_animatorStateInfo.IsName(_animationName) && _animatorStateInfo.normalizedTime >= 1)
         {
             _characterMovement.SetIsJumping(false);
         }
-        
     }
 
     public void ExtraJump()
