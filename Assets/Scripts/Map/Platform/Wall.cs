@@ -52,7 +52,7 @@ public class Wall : MonoBehaviour
                 {
                     other.gameObject.GetComponent<Player>().LedgeClimb(true);
                     if(_cm.GetCharacterDirection() == Vector2.up)
-                        _cm.Jump(2.0f);
+                        _cm.Jump(4.0f);
                 }
                 else
                 {
