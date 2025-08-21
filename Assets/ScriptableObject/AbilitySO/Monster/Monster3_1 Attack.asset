@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df9b00a1b0f49ac8db30dfeb03a930e, type: 3}
   m_Name: Monster3_1 Attack
   m_EditorClassIdentifier: 
-  skillKey: 8
-  skillName: 8
+  skillKey: 104
+  skillName: 104
   skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: 
