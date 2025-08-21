@@ -5,7 +5,7 @@ using System;
 
 public class MonsterAttack : BlockAbility<MonsterAttackSO>
 {
-    private GameObject _actor;
+    protected GameObject _actor;
     protected MonsterMovement _movement;
     protected Monster _monster;
     protected MonsterAttackSO _attackData;
