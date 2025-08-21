@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     
     private readonly int _verticalSpeedID = Animator.StringToHash("VerticalSpeed");
     private readonly int _runID = Animator.StringToHash("Run");
+    private readonly int _jumpID =  Animator.StringToHash("Jump");
     private readonly int _isGroundID =  Animator.StringToHash("IsGround");
     private readonly int _wallClimbID =  Animator.StringToHash("WallClimb");
     private readonly int _ropeClimbID =  Animator.StringToHash("RopeClimb");
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
     {
         _animator.SetBool(_runID, _characterMovement.GetCharacterDirection() != Vector2.zero);
         _animator.SetFloat(_verticalSpeedID, _rigidbody2D.velocity.y);
+        _animator.SetBool(_jumpID, _characterMovement.GetIsJumping());
         _animator.SetBool(_isGroundID, _characterMovement.CheckIsGround());
 
         SetWallClimb(_characterMovement.CheckIsWallClimbing());

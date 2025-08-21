@@ -18,6 +18,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 _nextDirection;
     private Vector2 _currentVelocity; 
     private bool _isGround;
+    private bool _isJumping;
     private bool _isWallClimbing;
     private bool _isRopeClimbing;
     private bool _isKnockedBack;
@@ -102,6 +103,16 @@ public class CharacterMovement : MonoBehaviour
     {
         float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
         _rigidBody.AddForce(direction * (cancelForce + jumpPower), ForceMode2D.Impulse);
+    }
+
+    public void SetIsJumping(bool isJumping)
+    {
+        _isJumping = isJumping;
+    }
+
+    public bool GetIsJumping()
+    {
+        return _isJumping;
     }
 
     public void ClimbState()
