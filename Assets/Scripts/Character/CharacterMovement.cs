@@ -9,12 +9,14 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _sprite;
 
-    [SerializeField] [Range(0.0f, 3.0f)] private float speed;
-
+    [SerializeField] [Range(0.0f, 10.0f)] private float speed;
+    [SerializeField] [Range(0.0f, 10.0f)] private float acceleration; // 가속도
+    [SerializeField] [Range(0.0f, 10.0f)] private float deceleration;  // 감속도
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
     public float Gravity => gravity;
 
     private Vector2 _nextDirection;
+    private Vector2 _currentVelocity; 
     private bool _isGround;
     private bool _isWallClimbing;
     private bool _isRopeClimbing;
@@ -29,18 +31,40 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //  Move
-        if (_nextDirection != Vector2.zero)
+        _isGround = CheckIsGround();
+        
+        if (_isGround || CheckIsClimbing())
+        {
+            // Move
+            // 땅에 있을 때: 즉시 반응
+            _currentVelocity = _nextDirection * speed;
+        }
+        else
+        {
+            // Jump
+            // 공중에 있을 때
+            Vector2 targetVelocity = _nextDirection * speed;
+            
+            if (_nextDirection != Vector2.zero)
+            {
+                // 가속
+                _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, 
+                    acceleration * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // 감속
+                _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, 
+                    deceleration * Time.fixedDeltaTime);
+            }
+        }
+        
+        if (_currentVelocity.magnitude > 0.01f)
         {
             Vector2 currMove = _rigidBody.position;
-            Vector2 nextMove = _nextDirection * speed;
-
+            Vector2 nextMove = _currentVelocity * Time.fixedDeltaTime;
             _rigidBody.position = currMove + nextMove;
-            //rigid.velocity = nextMove / Time.deltaTime;
         }
-
-        // Jump
-        _isGround = CheckIsGround();
     }
 
     /// <summary>
@@ -191,8 +215,8 @@ public class CharacterMovement : MonoBehaviour
     /// <returns>true: 땅에 있음 false: 땅에 있지 않음</returns>
     public bool CheckIsGround()
     {
-        Debug.DrawRay(_rigidBody.position, Vector2.down, new Color(1, 0, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 10, LayerMask.GetMask("Platform"));
+        Debug.DrawRay(_rigidBody.position, Vector2.down * 5f, new Color(1, 0, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 5, LayerMask.GetMask("Platform"));
         if (rayHit.collider != null)
         {
             if (rayHit.distance < 0.1f)

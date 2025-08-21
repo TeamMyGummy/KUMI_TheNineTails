@@ -49,7 +49,7 @@ public class UI_MonsterHpBar : MonoBehaviour
         if (TryGetComponent<Collider2D>(out var col))
             offsetY = col.bounds.size.y + 0.3f;
 
-        Vector3 worldPos = transform.position + new Vector3(0, offsetY - 0.3f, 0);
+        Vector3 worldPos = transform.position + new Vector3(0, offsetY + 0.2f, 0);
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
         screenPos.y -= 20f;
         hpBar.position = screenPos;
