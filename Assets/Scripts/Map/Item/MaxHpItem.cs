@@ -24,6 +24,7 @@ public class MaxHpItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("[MaxHpItem] Player와 충돌 감지됨");
         if (_isUsed) return;
 
         if (other.CompareTag("Player"))

@@ -15,31 +15,42 @@ public class UI_Skill : MonoBehaviour
     [SerializeField] private TextMeshProUGUI skillDescriptionText;
     [SerializeField] private GameObject SkillPanel;
     [SerializeField] private GameObject JournalPanel;
+    [SerializeField] private GameObject InventoryPanel;
 
     private List<SkillSlot> skillSlots = new();
     private int selectedSkillIndex = -1;
     private AbilitySystem abilitySystem;
 
+    // ──────────────────────────────────────────────────────────
+    // 외부에서 ASC 주입
     public void SetAbilitySystem(AbilitySystem asc)
     {
-        //Debug.Log("[UI_Skill] InitSkillSlots() 실행됨");
         abilitySystem = asc;
         InitSkillSlots();
         SelectFirstGrantedSkill();
     }
 
+    // 외부 토글 (버튼/단축키 등)
     public void TogglePopupExternally()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
-        if (gameObject.activeSelf)
-        {
-            OpenSkillView();
-        }
+        bool next = !gameObject.activeSelf;
+        gameObject.SetActive(next);
+        if (next) OpenSkillView();
+        else      CloseSkillView();
     }
 
+    // ──────────────────────────────────────────────────────────
     private void Update()
     {
         if (!gameObject.activeSelf) return;
+
+        // 스킬창이 열려 있을 때 ESC/TAB → 스킬창만 닫기
+        if (Keyboard.current.escapeKey.wasPressedThisFrame ||
+            Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            CloseSkillView();
+            return;
+        }
 
         if (Keyboard.current.aKey.wasPressedThisFrame)
             SelectPrevious();
@@ -81,13 +92,7 @@ public class UI_Skill : MonoBehaviour
 
     private void TrySelectSkill(SkillSlot slot)
     {
-        if (!slot.IsGranted)
-        {
-            Debug.Log("[TrySelectSkill] Skill not granted");
-            return;
-        }
-
-        //Debug.Log($"[TrySelectSkill] Selecting {slot.AbilitySO.skillName}");
+        if (!slot.IsGranted) return;
 
         foreach (var s in skillSlots)
             s.SetSelected(false);
@@ -107,17 +112,8 @@ public class UI_Skill : MonoBehaviour
 
     private void ShowSkillDescription(GameplayAbilitySO so)
     {
-        //Debug.Log("[ShowSkillDescription] 호출됨");
-
         if (skillDescriptionPanel != null)
-        {
-            //Debug.Log("[ShowSkillDescription] 패널 활성화 시도");
             skillDescriptionPanel.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("[ShowSkillDescription] skillDescriptionPanel == null");
-        }
 
         if (skillDescriptionText != null)
         {
@@ -125,19 +121,9 @@ public class UI_Skill : MonoBehaviour
             skillDescriptionText.text = so?.description ?? "No Desc";
             skillDescriptionText.ForceMeshUpdate();
         }
-        else
-        {
-            Debug.LogError("[ShowSkillDescription] skillDescriptionText == null");
-        }
 
         if (skillName != null)
-        {
             skillName.text = so.skillName.ToString();
-        }
-        else
-        {
-            Debug.LogError("[ShowSkillDescription] skillDescriptionText == null");
-        }
     }
 
     private void SelectFirstGrantedSkill()
@@ -146,7 +132,6 @@ public class UI_Skill : MonoBehaviour
         {
             if (skillSlots[i].IsGranted)
             {
-                //Debug.Log($"[UI_Skill] 첫 선택 슬롯: {i}");
                 TrySelectSkill(skillSlots[i]);
                 return;
             }
@@ -184,22 +169,39 @@ public class UI_Skill : MonoBehaviour
             }
         }
     }
+
+    // ───────────────────── 탭 버튼들 ─────────────────────
     public void OnClickJournalBtn()
     {
         JournalPanel.SetActive(true);
         SkillPanel.SetActive(false);
+        InventoryPanel.SetActive(false);
     }
 
     public void OnClickSkillBtn()
     {
         JournalPanel.SetActive(false);
         SkillPanel.SetActive(true);
+        InventoryPanel.SetActive(false);
     }
 
+    public void OnClickInventoryBtn()
+    {
+        JournalPanel.SetActive(false);
+        SkillPanel.SetActive(false);
+        InventoryPanel.SetActive(true);
+    }
+
+    // ───────────────────── 열기/닫기 공통 ─────────────────────
     public void OpenSkillView()
     {
         gameObject.SetActive(true);
         OnClickSkillBtn();
         SelectFirstGrantedSkill();
+    }
+
+    private void CloseSkillView()
+    {
+        gameObject.SetActive(false);
     }
 }

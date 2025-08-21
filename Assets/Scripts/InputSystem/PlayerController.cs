@@ -396,6 +396,7 @@ public class PlayerController : MonoBehaviour, IMovement
     // Max HP Item
     public void OnMaxHpItemInteraction(InputAction.CallbackContext ctx)
     {
+        Debug.Log("[Input] OnMaxHpItemInteraction 호출됨");
         if (ctx.started)
         {
             Debug.Log("[Input] E 키 눌림");
