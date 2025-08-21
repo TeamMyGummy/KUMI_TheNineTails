@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 
 public class MonsterRush : BlockAbility<MonsterRushSO>
 {
+    protected GameObject _actor;
     private MonsterMovement _movement;   // 공통 이동 컴포넌트 (지상/비행 모두)
     private Monster _monster;
     private MonsterRushSO _rushData;
@@ -12,7 +13,8 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
     {
         base.InitAbility(actor, asc, abilitySo);
         CanReuse = true;
-
+        
+        _actor = actor;
         _movement = actor.GetComponent<MonsterMovement>();
         _monster  = actor.GetComponent<Monster>();
         _rushData = abilitySo as MonsterRushSO;
@@ -122,6 +124,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         float attackRangeY = _rushData.AttackRangeY;
 
         GameObject hitbox = ResourcesManager.Instance.Instantiate(_rushData.AttackHitboxPrefab);
+        hitbox.GetComponent<Hitbox>()?.SetAttacker(_actor);
         hitbox.transform.SetParent(_monster.transform);
         hitbox.transform.localPosition = new Vector2(direction.x * 1f, direction.y * 0.2f);
 

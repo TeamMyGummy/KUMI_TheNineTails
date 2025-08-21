@@ -48,15 +48,18 @@ public class Hitbox : MonoBehaviour
         }
         else
         {
+            Transform playerTransform = GameObject.FindWithTag("Player").transform;
             if (_attacker != null)
             {
-                Transform playerTransform = GameObject.FindWithTag("Player").transform;
+                // 몬스터가 있을 때 : 몬스터 위치 기준
                 Vector2 attackDirection = playerTransform.position.x > _attacker.transform.position.x ? Vector2.right : Vector2.left;
                 other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);              
             }
             else
             {
-                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1);
+                // 몬스터가 없을 때 (+ 투사체일 때) : HitBox 위치 기준
+                Vector2 attackDirection = playerTransform.position.x > transform.position.x ? Vector2.right : Vector2.left;
+                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);
             }
         }
     }
