@@ -19,10 +19,10 @@ public class SkillInfo : MonoBehaviour
         skillIconImage.sprite = so.skillIcon;
         skillKeyImage.sprite = so.skillKeyboard;
     }
-    
-     private void Update()
+
+    private void Update()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             OnClick_Close();
         }

@@ -29,12 +29,13 @@ public class InputManager : MonoBehaviour
         }
         else if (hasTabOpenedUI && Keyboard.current.qKey.wasPressedThisFrame)
         {
-            uiSkillInstance.OnClickSkillBtn();
+            uiSkillInstance?.CycleRight();
         }
-        else if (hasTabOpenedUI && Keyboard.current.eKey.wasPressedThisFrame)
+        else if (hasTabOpenedUI && Keyboard.current.wKey.wasPressedThisFrame)
         {
-            uiSkillInstance.OnClickJournalBtn();
+            uiSkillInstance?.CycleLeft();
         }
+
     }
 
     void ToggleSkillUI()

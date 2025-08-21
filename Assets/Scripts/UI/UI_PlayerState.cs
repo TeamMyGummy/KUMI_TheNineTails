@@ -58,9 +58,8 @@ public class UI_PlayerState : MonoBehaviour
             .Subscribe(UpdateFoxFireGauge)
             .AddTo(_disposables);
 
-        // 스킬 아이콘 - 초기 1회만
+        // 스킬 아이콘
         _playerVM.SkillCount
-            .Take(1)
             .Subscribe(UpdateSkillProfile)
             .AddTo(_disposables);
 

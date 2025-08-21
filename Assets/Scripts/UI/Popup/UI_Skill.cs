@@ -20,6 +20,8 @@ public class UI_Skill : MonoBehaviour
     private List<SkillSlot> skillSlots = new();
     private int selectedSkillIndex = -1;
     private AbilitySystem abilitySystem;
+    private enum Tab { Skill = 0, Journal = 1, Inventory = 2 }
+    private int _currentTab = (int)Tab.Skill;
 
     // ──────────────────────────────────────────────────────────
     // 외부에서 ASC 주입
@@ -192,12 +194,42 @@ public class UI_Skill : MonoBehaviour
         InventoryPanel.SetActive(true);
     }
 
+    private void SetTab(Tab tab)
+    {
+        _currentTab = (int)tab;
+
+        switch (tab)
+        {
+            case Tab.Skill:
+                OnClickSkillBtn();
+                SelectFirstGrantedSkill();
+                break;
+            case Tab.Journal:
+                OnClickJournalBtn();
+                break;
+            case Tab.Inventory:
+                OnClickInventoryBtn();
+                break;
+        }
+    }
+
+    public void CycleRight() // Q 키: 좌측 패널로 순환
+    {
+        int next = (_currentTab + 3 - 1) % 3;
+        SetTab((Tab)next);
+    }
+
+    public void CycleLeft()  // W 키: 우측 패널로 순환
+    {
+        int next = (_currentTab + 1) % 3;
+        SetTab((Tab)next);
+    }
+
     // ───────────────────── 열기/닫기 공통 ─────────────────────
     public void OpenSkillView()
     {
         gameObject.SetActive(true);
-        OnClickSkillBtn();
-        SelectFirstGrantedSkill();
+        SetTab(Tab.Skill);
     }
 
     private void CloseSkillView()
