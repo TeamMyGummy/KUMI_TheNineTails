@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 6
   skillName: 6
-  skillSequence: {fileID: 0}
+  skillSequence: {fileID: 11400000, guid: ec4656b865eefca41a825bb75e6d388b, type: 2}
   skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: Parryeeing
   unlockFloor: 0

@@ -24,6 +24,9 @@ public class Parrying : GameplayAbility<ParryingSO>
     private CancellationTokenSource _chargeGaugeCts;
 
     private PlayerController _playerController;
+    
+    private AbilitySequenceSO _sequenceSO;
+    private AbilityTask _task;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -39,6 +42,10 @@ public class Parrying : GameplayAbility<ParryingSO>
         _playerController = actor.GetComponent<PlayerController>();
         _playerController.OnParryingCanceled -= Canceled;
         _playerController.OnParryingCanceled += Canceled;
+        
+        // Task
+        _sequenceSO = abilitySo.skillSequence;
+        _task = new AbilityTask(actor, _sequenceSO);
     }
 
     protected override void Activate()
@@ -49,10 +56,12 @@ public class Parrying : GameplayAbility<ParryingSO>
     public void Canceled()
     {
         CancelReduce();
+        _task.Canceled();
     } 
 
     private void StartParrying()
     {
+        _task.Execute();
         Asc.TagContainer.Add(GameplayTags.BlockRunningAbility);
         SetHitbox();
         _gaugeBar.SetActive(true);
@@ -140,7 +149,7 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void SetGaugeBar()
     {
         _gaugeImage.fillAmount = _currentGauge / 1f; 
-        _gaugeBar.transform.position = Camera.main.WorldToScreenPoint(Actor.transform.position + new Vector3(0f, 1.5f, 0f));
+        _gaugeBar.transform.position = Camera.main.WorldToScreenPoint(Actor.transform.position + new Vector3(0f, 2.5f, 0f));
     }
     
     private void CancelReduce()
