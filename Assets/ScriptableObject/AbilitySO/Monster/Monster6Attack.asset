@@ -22,6 +22,6 @@ MonoBehaviour:
   BlockTimer: 1.5
   AttackRangeX: 4
   AttackRangeY: 2
-  HitboxOffset: {x: 2, y: 0}
+  HitboxOffset: {x: 2, y: 1.5}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
   isStoppingWhileAttack: 1

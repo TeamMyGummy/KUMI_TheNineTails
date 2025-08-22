@@ -78,7 +78,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
             targetPos = startPos + rushDir * _rushData.RushDistance;
         }
 
-        GameObject hitbox = SpawnHitbox(rushDir);
+        GameObject hitbox = SpawnHitbox();
         float rushSpeed = 20f;
 
         while (Vector2.Distance(_monster.transform.position, targetPos) > 0.05f)
@@ -118,7 +118,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         AbilityFactory.Instance.EndAbility(this);
     }
 
-    private GameObject SpawnHitbox(Vector2 direction)
+    private GameObject SpawnHitbox()
     {
         float attackRangeX = _rushData.AttackRangeX;
         float attackRangeY = _rushData.AttackRangeY;
@@ -126,7 +126,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         GameObject hitbox = ResourcesManager.Instance.Instantiate(_rushData.AttackHitboxPrefab);
         hitbox.GetComponent<Hitbox>()?.SetAttacker(_actor);
         hitbox.transform.SetParent(_monster.transform);
-        hitbox.transform.localPosition = new Vector2(direction.x * 1f, direction.y * 0.2f);
+        hitbox.transform.localPosition = _rushData.RushOffset;
 
         var box = hitbox.GetComponent<BoxCollider2D>();
         if (box != null)
@@ -138,4 +138,6 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
 
         return hitbox;
     }
+
+
 }
