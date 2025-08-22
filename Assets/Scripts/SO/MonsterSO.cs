@@ -24,7 +24,9 @@ public class MonsterSO : ScriptableObject
 
     [Header("시야각")]
     [SerializeField] private float viewStartAngle = -45f; // 시작 각도 (왼쪽부터)
-    [SerializeField] private float viewSight = 90f;               // 시야각 부채꼴 각도
+    [SerializeField] private float viewSight = 90f;
+    [SerializeField] private Vector2 viewOffset;
+    
     
     [Header("어그로 / 해제 거리")]
     [SerializeField] private float aggroRange = 8f;               // 부채꼴 반지름 (어그로 끌리는 거리)
@@ -36,6 +38,7 @@ public class MonsterSO : ScriptableObject
 
     public float ViewStartAngle => viewStartAngle;
     public float ViewSight => viewSight;
+    public Vector2 ViewOffset => viewOffset;
     public float AggroRange => aggroRange;
     public float AggroReleaseRange => aggroReleaseRange;
     public float PausedTime => pausedTime;
@@ -54,10 +57,13 @@ public class MonsterSO : ScriptableObject
     [Header("원거리 공격 시작 인식 범위")]
     [SerializeField] private float detectLongStartAngle = 0f;
     [SerializeField] private float detectLongSight = 0f;
-    [SerializeField] private float detectLongRange = 0f; 
+    [SerializeField] private float detectLongRange = 0f;
+    [SerializeField] private Vector2 detectLongOffset;
     
     public float DetectLongStartAngle => detectLongStartAngle;
     public float DetectLongSight => detectLongSight;
     public float DetectLongRange => detectLongRange;
-    
+    public Vector2 DetectLongOffset => detectLongOffset;
+
+    //
 }
