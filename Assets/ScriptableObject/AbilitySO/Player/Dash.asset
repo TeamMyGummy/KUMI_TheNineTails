@@ -21,4 +21,4 @@ MonoBehaviour:
   skillKeyboard: {fileID: 0}
   BlockTimer: 0.1
   dashPower: 40
-  endDelay: 0.3
+  endDelay: 0.2
