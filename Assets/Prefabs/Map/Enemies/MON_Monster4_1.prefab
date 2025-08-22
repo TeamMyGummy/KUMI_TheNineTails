@@ -215,8 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
-  acceleration: 0
-  deceleration: 0
+  acceleration: 0.7
+  deceleration: 1
   gravity: 0
 --- !u!114 &133330843044796821
 MonoBehaviour:
