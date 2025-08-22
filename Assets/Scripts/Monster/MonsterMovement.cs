@@ -371,7 +371,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, checkDistance, platformLayer);
         return hit.collider != null;
     }
-    private bool CheckWallAhead()
+    public bool CheckWallAhead()
     {
         if (_monster.Data.IsFlying) return false;
 

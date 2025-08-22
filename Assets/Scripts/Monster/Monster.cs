@@ -59,7 +59,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
 
-        if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
+        if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack && !IsPlayerBlockedByWall())
         {
             EnterShortAttackRange();
             isAggro = true;
@@ -84,13 +84,30 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         }
         else if (isAggro)
         {
-            if (dist >= Data.AggroReleaseRange)
+            if (dist >= Data.AggroReleaseRange||IsPlayerBlockedByWall())
             {
                 isAggro = false;
                 _movement.ChangeMovePattern(MovePattern.Return);
             }
         }
         
+    }
+
+    public bool IsPlayerBlockedByWall()
+    {
+        if (player == null) return false;
+        Vector2 monsterPos = (Vector2)transform.position + Vector2.up * 0.5f;
+        Vector2 playerPos = (Vector2)player.position + Vector2.up * 0.5f;
+
+        Vector2 direction = (playerPos - monsterPos).normalized;
+        float distance = Vector2.Distance(monsterPos, playerPos);
+
+        int platformLayerMask = LayerMask.GetMask("Platform");
+
+        RaycastHit2D hit = Physics2D.Raycast(monsterPos, direction, distance, platformLayerMask);
+
+        // 사이에 Platform(벽)이 있으면 true 반환
+        return hit.collider != null;
     }
 
 
@@ -130,6 +147,9 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
 
         if (!IsAngleInRange(angleToPlayer, startAngle, endAngle))
             return false;
+        
+        if (IsPlayerBlockedByWall())
+            return false;
 
         return true;
     }
@@ -149,8 +169,6 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         else
             return angle >= start || angle <= end;
     }
-    
-    
     
     
     // 플레이어가 근거리 공격 범위 안에 들어오는지 체크 (사각 범위)
