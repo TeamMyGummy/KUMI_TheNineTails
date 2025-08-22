@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea0c827ce48ab934dac2347f4033c387, type: 3}
-  m_Name: MonsterDoubleAttack
+  m_Name: Monster6Sweep
   m_EditorClassIdentifier: 
-  skillKey: 102
-  skillName: 102
+  skillKey: 100
+  skillName: 100
   skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
-  description: "\uBAB91-1\uAC15 \uC5F0\uC18D\uACF5\uACA9"
+  description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
   BlockTimer: 1.5
-  AttackRangeX: 2
+  AttackRangeX: 4
   AttackRangeY: 2
-  HitboxOffset: {x: 1, y: 1}
+  HitboxOffset: {x: 2, y: 0}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
-  preAttackDelay: 0.5
+  preAttackDelay: 2
   activeTime: 0.2
   postAttackDelay: 1
   betweenAttackDelay: 0.3

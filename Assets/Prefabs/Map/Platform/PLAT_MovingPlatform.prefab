@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2142875089565631286}
+  - component: {fileID: 7826553442251120191}
   m_Layer: 14
   m_Name: pointB
   m_TagString: Untagged
@@ -31,6 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4568391729641441523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7826553442251120191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208253676831353085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "*Transform > Position\r\n\uC774\uB3D9\uC9C0\uC810\uC778 pointA, pointB
+    \uC704\uCE58 \uC124\uC815"
 --- !u!1 &4819977702327815576
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,6 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6470006048886459702}
+  - component: {fileID: 4371754336777352899}
   m_Layer: 14
   m_Name: pointA
   m_TagString: Untagged
@@ -62,6 +78,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4568391729641441523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4371754336777352899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4819977702327815576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "*Transform > Position\r\n\uC774\uB3D9\uC9C0\uC810\uC778 pointA, pointB
+    \uC704\uCE58 \uC124\uC815"
 --- !u!1 &5201079798298403585
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,6 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4568391729641441523}
+  - component: {fileID: 6031410876817269708}
   - component: {fileID: 5116713352184874277}
   - component: {fileID: 2346945331424102761}
   m_Layer: 14
@@ -98,6 +129,24 @@ Transform:
   - {fileID: 2142875089565631286}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6031410876817269708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201079798298403585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04ede7c28a7c314a86a829a4013c8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: "pointA, pointB \uC0AC\uC774\uC5D0\uC11C \uACC4\uC18D \uC654\uB2E4\uAC14\uB2E4
+    \uC774\uB3D9\uD558\uB294 \uD50C\uB7AB\uD3FC\r\n\r\n*\uB370\uC774\uD130 \uC218\uC815(Moving
+    Platform (Script))\r\nSpeed: \uC774\uB3D9\uC18D\uB3C4\r\nWait Time: pointA, pointB
+    \uC9C0\uC810\uC5D0 \uB3C4\uCC29\uD588\uC744 \uB54C \uBA87 \uCD08 \uBA48\uCDC4\uB2E4\uAC00
+    \uAC08\uAE4C\r\n\r\n**Transform > Position\r\n\uD50C\uB7AB\uD3FC \uC704\uCE58\uB294
+    pointA, pointB \uC0AC\uC774\uB85C \uC124\uC815\r"
 --- !u!114 &5116713352184874277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +264,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.48397604, g: 0.5801887, b: 0.46798238, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

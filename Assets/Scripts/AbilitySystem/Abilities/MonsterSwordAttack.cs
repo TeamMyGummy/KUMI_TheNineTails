@@ -23,35 +23,58 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
 
     protected override bool CanActivate()
     {
-        return true;
+        return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
 
     protected async override void Activate()
     {
-        base.Activate();
         if (_attackData == null) return;
         
-        if (_attackData.isStoppingWhileAttack) 
+        float block =
+            Mathf.Max(0f, _attackData.PreDelay) +      
+            Mathf.Max(0f, _attackData.ActiveTime) +      
+            Mathf.Max(0f, _attackData.PreDelay);    
+        _attackData.BlockTimer = block; 
+
+        base.Activate();
+
+        _movement?.SetPaused(true); 
+        try
         {
-            _movement?.SetPaused(true);
+            // 전딜
+            if (_attackData.PreDelay > 0f)
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_attackData.PreDelay),
+                    delayType: DelayType.DeltaTime);    
+
+            // 공격(히트박스 생성)
+            Attack();
+
+            // 액티브타임
+            if (_attackData.ActiveTime > 0f)
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_attackData.ActiveTime),
+                    delayType: DelayType.DeltaTime); 
+
+            // 후딜
+            if (_attackData.PreDelay > 0f)
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_attackData.PreDelay),
+                    delayType: DelayType.DeltaTime);  
         }
-
-        Attack();
-
-        if (_attackData.isStoppingWhileAttack)
+        finally
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
             _movement?.SetPaused(false);
         }
     }
 
     protected virtual void Attack()
     {
-        SpawnHitbox();
+        SpawnHitbox(_attackData.ActiveTime);  
     }
 
     // 히트박스 생성
-    protected virtual void SpawnHitbox()
+    protected virtual void SpawnHitbox(float lifeTime)
     {
         GameObject prefab = _attackData.AttackHitboxPrefab;
         float attackRangeX = _attackData.AttackRangeX;
@@ -75,11 +98,10 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
             if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
                 sr.size = new Vector2(attackRangeX, attackRangeY);
 
-            ResourcesManager.Instance.Destroy(hitbox, 0.2f);
+            if (lifeTime <= 0f) return;  
+            ResourcesManager.Instance.Destroy(hitbox, lifeTime);
         }
     }
-    
-    
 
 #if UNITY_EDITOR
     // 히트박스 기즈모 표시

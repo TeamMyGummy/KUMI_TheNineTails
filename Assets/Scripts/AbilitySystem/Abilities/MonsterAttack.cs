@@ -9,6 +9,8 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
     protected MonsterMovement _movement;
     protected Monster _monster;
     protected MonsterAttackSO _attackData;
+    
+    protected virtual bool UseBasicAttack => true;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -26,32 +28,62 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
         return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
 
+    /// <summary>
+    /// 몬스터의 공격을 실행하는 메서드
+    /// 1. BlockTimer를 계산해서 다른 스킬 실행을 일정 시간 동안 막음
+    /// 2. UseBasicAttack == true일 경우
+    ///    - 몬스터 이동을 일시 중지하고
+    ///    - PreDelay → 공격 실행(Attack) → ActiveTime → PostDelay만큼 시간이 지나면
+    ///    - 이동 중지 해제
+    /// 3. UseBasicAttack == false일 경우:
+    ///     공격 부분 실행x. BlockAbility만 필요한 경우 사용 (ex. 더블어택코드)
+    /// 
+    /// **base.Activate()를 반드시 호출해야 BlockAbility 쪽의 블락 기능이 적용됨
+    /// </summary>
     protected async override void Activate()
     {
-        base.Activate();
         if (_attackData == null) return;
         
-        if (_attackData.isStoppingWhileAttack) 
+        // 자식이 미리 BlockTimer를 설정했다면 그대로 사용, 아니면 기본계산
+        float block =  (_attackData.BlockTimer > 0f)           
+            ? _attackData.BlockTimer               
+            : Mathf.Max(0f, _attackData.PreDelay) +
+            Mathf.Max(0f, _attackData.ActiveTime) +
+            Mathf.Max(0f, _attackData.PostDelay);        
+        _attackData.BlockTimer = block;  
+        
+        base.Activate();
+        
+        if (!UseBasicAttack) return; 
+        
+        
+        _movement?.SetPaused(true);               
+        try
         {
-            _movement?.SetPaused(true);
+            if (_attackData.PreDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime); 
+
+            Attack();
+
+            if (_attackData.ActiveTime > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackData.ActiveTime), delayType: DelayType.DeltaTime);
+
+            if (_attackData.PostDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PostDelay), delayType: DelayType.DeltaTime); 
         }
-
-        Attack();
-
-        if (_attackData.isStoppingWhileAttack)
+        finally
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
-            _movement?.SetPaused(false);
+            _movement?.SetPaused(false);                      
         }
     }
 
     protected virtual void Attack()
     {
-        SpawnHitbox();
+        SpawnHitbox(_attackData.ActiveTime);
     }
 
     // 히트박스 생성
-    protected virtual void SpawnHitbox()
+    protected virtual void SpawnHitbox(float activeTime)
     {
         GameObject prefab = _attackData.AttackHitboxPrefab;
         float attackRangeX = _attackData.AttackRangeX;
@@ -75,7 +107,8 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
             if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
                 sr.size = new Vector2(attackRangeX, attackRangeY);
 
-            ResourcesManager.Instance.Destroy(hitbox, 0.2f);
+            if (activeTime <= 0f) return;
+            ResourcesManager.Instance.Destroy(hitbox, activeTime);
         }
     }
 

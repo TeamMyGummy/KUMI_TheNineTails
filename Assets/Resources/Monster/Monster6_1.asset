@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76b9273313cb4ee5aad949a3b6ff4e13, type: 3}
-  m_Name: Monster6
+  m_Name: Monster6_1
   m_EditorClassIdentifier: 
   AddAttributeSO:
-  - {fileID: 11400000, guid: b8c2709febf5a534fb11c515cc5e42a3, type: 2}
-  - {fileID: 11400000, guid: 903f23803efa84747a5a7a86193cb2c2, type: 2}
+  - {fileID: 11400000, guid: 2a59aaa23e46f9c4fb0e484b817a3f1e, type: 2}
   - {fileID: 11400000, guid: d2aa189d48761054eb1d87b193751282, type: 2}
+  - {fileID: 11400000, guid: 903f23803efa84747a5a7a86193cb2c2, type: 2}
   AbilitySO:
-  - {fileID: 11400000, guid: c3f0d7fa3ee355842aa9ad732c87499b, type: 2}
+  - {fileID: 11400000, guid: fac071e6135d9914fa9bfc0ac51ea490, type: 2}
   - {fileID: 11400000, guid: e0dffd558fd64ef4f9453067d0c54bf1, type: 2}

@@ -24,4 +24,7 @@ MonoBehaviour:
   AttackRangeY: 2
   HitboxOffset: {x: 1, y: 1}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
-  isStoppingWhileAttack: 1
+  preAttackDelay: 0.5
+  activeTime: 0.2
+  postAttackDelay: 0.5
+  betweenAttackDelay: 0.3
