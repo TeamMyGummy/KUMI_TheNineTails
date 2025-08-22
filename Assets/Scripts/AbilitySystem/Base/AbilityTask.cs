@@ -70,7 +70,7 @@ public class AbilityTask
             for (int i = 0; i < _sequenceSO.effects.Count; i++)
             {
                 AbilitySequenceSO.EffectSq data = _sequenceSO.effects[i];
-                _mainSequence.InsertCallback(data.delay, () => PlayEffect(data));
+                _mainSequence.Join(PlayEffect(data));
             }
             
             // Slow
@@ -95,12 +95,13 @@ public class AbilityTask
     public void Execute()
     {
         _mainSequence.Play();
+        //_mainSequence.Restart();
     }
 
     public void Canceled()
     {
         _mainSequence.Pause();
-        _mainSequence.Rewind();
+        _mainSequence.Rewind(true);
         
         _animator.SetTrigger(_endSkillID);
     }
@@ -115,12 +116,35 @@ public class AbilityTask
         
     }
 
-    private void PlayEffect(AbilitySequenceSO.EffectSq data)
+    private Sequence PlayEffect(AbilitySequenceSO.EffectSq data)
     {
+        var sequence = DOTween.Sequence();
+        GameObject effect = GameObject.Instantiate(data.source);
         
+        if (data.delay > 0)
+            sequence.AppendInterval(data.delay);
+
+        sequence.AppendCallback(() =>
+        {
+             float x = _actor.GetComponent<CharacterMovement>().GetCharacterSpriteDirection().x;
+             Vector3 spawnPosition = data.spawnPosition * new Vector3(x, 1, 0);
+             effect.transform.position = _actor.transform.position + spawnPosition;
+             effect.transform.SetParent(_actor.transform);           
+        });
+
+        sequence.AppendInterval(data.duration);
+        sequence.AppendCallback(() =>
+        {
+            if (effect != null)
+            {
+                GameObject.Destroy(effect);
+            }
+        });
+        
+        return sequence;
     }
     
-    private Sequence PlaySlow(AbilitySequenceSO.SlowSq data)
+    public Sequence PlaySlow(AbilitySequenceSO.SlowSq data)
     {
         float originalTimeScale = Time.timeScale;
         
@@ -152,9 +176,10 @@ public class AbilityTask
         return sequence;
     }
 
-    private void PlayCameraTask(AbilitySequenceSO.CameraSq data)
+    public void PlayCameraTask(AbilitySequenceSO.CameraSq data)
     {
         data.cameraTask.Initialize(_camera);
         data.cameraTask.Execute();
     }
+    
 }

@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using GameAbilitySystem;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class LiverExtraction : BlockAbility<BlockAbilitySO>
 {
     private AbilitySequenceSO _sequenceSO;
     private AbilityTask _task;
+
+    private float _skillTime;
     
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -21,5 +25,19 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         base.Activate();
         
         _task.Execute();
+        
+        SkillTimer(1.0f).Forget();
+    }
+    
+    
+    private async UniTask SkillTimer(float duration)
+    {
+        _skillTime = duration;
+        while (_skillTime > 0.0f)
+        {
+            _skillTime -= Time.deltaTime;
+            await UniTask.Yield();
+        }
+        _task.Canceled();;
     }
 }

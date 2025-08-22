@@ -465,7 +465,7 @@ public class PlayerController : MonoBehaviour, IMovement
     public void OnEnableAllInput()
     {
         _playerInput.ActivateInput();
-        //OnDisableWallClimb();
+        OnDisableLiverExtraction();
     }
     public void OnDisableAllInput()
     {

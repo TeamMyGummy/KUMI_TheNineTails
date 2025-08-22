@@ -25,6 +25,7 @@ public class AbilitySequenceSO : ScriptableObject
     {
         public GameObject source;
         public Vector2 spawnPosition;
+        public float duration;
         public float delay;
     }
     
