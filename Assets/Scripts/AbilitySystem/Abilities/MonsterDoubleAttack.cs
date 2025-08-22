@@ -8,7 +8,6 @@ public class MonsterDoubleAttack : MonsterAttack
         base.Activate();
         if (_attackData == null) return;
 
-        Attack();
         await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
         Attack();
     }
