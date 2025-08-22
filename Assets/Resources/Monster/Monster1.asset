@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AddAttributeSO:
   - {fileID: 11400000, guid: b8c2709febf5a534fb11c515cc5e42a3, type: 2}
-  - {fileID: 11400000, guid: 903f23803efa84747a5a7a86193cb2c2, type: 2}
   - {fileID: 11400000, guid: d2aa189d48761054eb1d87b193751282, type: 2}
+  - {fileID: 11400000, guid: 903f23803efa84747a5a7a86193cb2c2, type: 2}
   AbilitySO:
   - {fileID: 11400000, guid: 0259533dbfae1674b96f8ce7f87bf429, type: 2}

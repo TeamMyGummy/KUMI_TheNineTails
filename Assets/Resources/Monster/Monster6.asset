@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d2aa189d48761054eb1d87b193751282, type: 2}
   AbilitySO:
   - {fileID: 11400000, guid: c3f0d7fa3ee355842aa9ad732c87499b, type: 2}
+  - {fileID: 11400000, guid: e0dffd558fd64ef4f9453067d0c54bf1, type: 2}
