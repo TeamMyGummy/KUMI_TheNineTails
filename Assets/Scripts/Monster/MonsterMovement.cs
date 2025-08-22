@@ -34,7 +34,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private bool _canChangeDirection = true;
     private float _directionCheckTimer = 0f;
     private readonly float _directionCheckDelay = 0.5f;
-    private const float ReturnArrivalThreshold = 0.1f; //끝지점 도착 판정 거리
+    private const float ReturnArrivalThreshold = 0.4f; //끝지점 도착 판정 거리
     
     // 원거리 몬스터 후퇴 관련 변수
     private Vector2 _retreatStartPos;
@@ -92,12 +92,6 @@ public class MonsterMovement : MonoBehaviour, IMovement
 
         float dist = Vector2.Distance(transform.position, _player.position);
 
-        // 일시정지 상태 처리?
-        if (_isPaused)
-        {
-            _cm.Move(Vector2.zero);
-            return;
-        }
         
         // 상태 전환 로직
         HandleStateTransition(dist);
@@ -289,7 +283,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         }
         
         // 지상몬스터: 발판 있으면 떨어지지 않게 멈추기 
-        if (!_monster.Data.IsFlying && !CheckGroundAhead())
+        if (!_monster.Data.IsFlying && ( !CheckGroundAhead() || CheckWallAhead() ))
         {
             _isPaused = true;
             _cm.Move(Vector2.zero);
@@ -377,7 +371,16 @@ public class MonsterMovement : MonoBehaviour, IMovement
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, checkDistance, platformLayer);
         return hit.collider != null;
     }
-    
+    private bool CheckWallAhead()
+    {
+        if (_monster.Data.IsFlying) return false;
+
+        Vector2 checkPos = (Vector2)transform.position + new Vector2(HorizontalDir * 0.5f, 0);
+        float checkDistance = 0.5f;
+
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.right * HorizontalDir, checkDistance, platformLayer);
+        return hit.collider != null;
+    }
     
     /*public Vector2 GetDirection()
     {
