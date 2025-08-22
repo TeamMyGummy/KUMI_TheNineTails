@@ -59,7 +59,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         float dist = Vector2.Distance(transform.position, player.position);
         bool inSight = IsPlayerInSight();
 
-        if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack && !IsPlayerBlockedByWall())
+        if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
         {
             EnterShortAttackRange();
             isAggro = true;

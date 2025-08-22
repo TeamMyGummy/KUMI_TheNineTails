@@ -34,7 +34,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private bool _canChangeDirection = true;
     private float _directionCheckTimer = 0f;
     private readonly float _directionCheckDelay = 0.5f;
-    private const float ReturnArrivalThreshold = 0.4f; //끝지점 도착 판정 거리
+    private const float ReturnArrivalThreshold = 0.9f; //끝지점 도착 판정 거리
     
     // 원거리 몬스터 후퇴 관련 변수
     private Vector2 _retreatStartPos;
@@ -341,16 +341,20 @@ public class MonsterMovement : MonoBehaviour, IMovement
     {
         _cm.Move(GetDirection());
 
-        // 도착 판정
         float dist = Vector2.Distance(transform.position, _spawnPos);
+        
         if (dist <= ReturnArrivalThreshold)
         {
-            _patrolPos = _spawnPos + new Vector2(-HorizontalDir * _monster.Data.PatrolRange / 2f, 0);
-            
+            _spawnPos = transform.position;
+            _patrolPos = _spawnPos + new Vector2(-_monster.Data.PatrolRange / 2f, 0);
+            HorizontalDir = 1;
             _isPaused = false;
             _moveState = MovePattern.Patrol;
+
+            Debug.Log("ReturnMove 완료, Patrol 시작");
         }
     }
+
     
     
     public void SetPaused(bool paused)
