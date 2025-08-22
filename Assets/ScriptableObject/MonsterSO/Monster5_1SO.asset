@@ -21,6 +21,7 @@ MonoBehaviour:
   honbulPrefab: {fileID: 5739550877967227833, guid: dbbc841980c40634fac68af51ac3441e, type: 3}
   viewStartAngle: -30
   viewSight: 240
+  viewOffset: {x: 0, y: 0.5}
   aggroRange: 2
   aggroReleaseRange: 4
   detectShortRangeX: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   detectLongStartAngle: 0
   detectLongSight: 0
   detectLongRange: 0
+  detectLongOffset: {x: 0, y: 0}

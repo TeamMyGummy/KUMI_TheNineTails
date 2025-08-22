@@ -104,7 +104,9 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     {
         if (player == null) return false;
 
-        Vector2 toPlayer = (player.position - transform.position);
+        Vector2 origin = (Vector2)transform.position + Data.ViewOffset;
+
+        Vector2 toPlayer = (Vector2)player.position - origin;
         float distanceToPlayer = toPlayer.magnitude;
 
         if (distanceToPlayer > Data.AggroRange)
@@ -119,7 +121,6 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         float viewAngle = Data.ViewSight;
 
         int dir = _movement != null ? _movement.HorizontalDir : 1;
-
         if (dir == -1)
         {
             startAngle = 180f - (startAngle + viewAngle);
@@ -130,12 +131,6 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         if (!IsAngleInRange(angleToPlayer, startAngle, endAngle))
             return false;
 
-        /*
-        // 장애물 체크
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayerNormalized, distanceToPlayer, LayerMask.GetMask("Platform"));
-        if (hit.collider != null)
-            return false;
-        */
         return true;
     }
     
@@ -155,19 +150,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             return angle >= start || angle <= end;
     }
     
-    /*
-    // 앞에 벽 있는지 체크(어그로 해제용)
-    private bool IsWallInFront()
-    {
-        Vector2 origin = transform.position;
-        Vector2 target = player.position;
-        Vector2 direction = target - origin;
-        float distance = direction.magnitude;
-        
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction.normalized, distance, LayerMask.GetMask("Platform"));
-        return hit.collider != null;
-    }
-    */
+    
     
     
     // 플레이어가 근거리 공격 범위 안에 들어오는지 체크 (사각 범위)
@@ -198,26 +181,21 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     {
         if (player == null) return false;
 
-        // 플레이어까지 벡터 및 거리 계산
-        Vector2 toPlayer = (player.position - transform.position);
+        Vector2 origin = (Vector2)transform.position + Data.DetectLongOffset;
+
+        Vector2 toPlayer = (Vector2)player.position - origin;
         float distanceToPlayer = toPlayer.magnitude;
 
-        // 원거리 사거리 체크
         if (distanceToPlayer > Data.DetectLongRange)
             return false;
 
-        // 방향 벡터 정규화
         Vector2 toPlayerNormalized = toPlayer.normalized;
-
-        // 플레이어 방향 각도 계산
         float angleToPlayer = Mathf.Atan2(toPlayerNormalized.y, toPlayerNormalized.x) * Mathf.Rad2Deg;
         angleToPlayer = NormalizeAngle(angleToPlayer);
 
-        // SO에서 가져온 원거리 시작각 / 시야각
         float startAngle = Data.DetectLongStartAngle;
         float viewAngle = Data.DetectLongSight;
 
-        // 바라보는 방향(facingDir)에 따라 시야 각도 보정
         int dir = _movement != null ? _movement.HorizontalDir : 1;
         if (dir == -1)
         {
@@ -226,16 +204,9 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         startAngle = NormalizeAngle(startAngle);
         float endAngle = NormalizeAngle(startAngle + viewAngle);
 
-        // 각도 범위 안에 있는지 확인
         if (!IsAngleInRange(angleToPlayer, startAngle, endAngle))
             return false;
 
-        /*
-        // 원거리 감지 시 장애물 체크를 하고 싶다면 활성화
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayerNormalized, distanceToPlayer, LayerMask.GetMask("Platform"));
-        if (hit.collider != null)
-            return false;
-        */
 
         return true;
     }
@@ -279,7 +250,6 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         Gizmos.color = new Color(1f, 0.3f, 0.2f, 0.4f);
         Gizmos.DrawCube(origin, new Vector3(monsterData.DetectShortRangeX, monsterData.DetectShortRangeY, 0.1f));
 
-        // [기본 시야 범위] - 노란색
         float startAngle = monsterData.ViewStartAngle;
         float viewAngle = monsterData.ViewSight;
 
@@ -288,23 +258,28 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             startAngle = 180f - (startAngle + viewAngle);
         }
         startAngle %= 360f;
+
+        Vector2 viewOrigin = (Vector2)transform.position + monsterData.ViewOffset; // 오프셋 적용
         UnityEditor.Handles.color = new Color(1f, 1f, 0f, 0.25f);
-        UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.forward,
+        UnityEditor.Handles.DrawSolidArc(viewOrigin, Vector3.forward,
             Quaternion.Euler(0, 0, startAngle) * Vector3.right, viewAngle, monsterData.AggroRange);
-
-            // [원거리 공격 범위] - 파란색
-            float longStartAngle = monsterData.DetectLongStartAngle;
-            float longViewAngle = monsterData.DetectLongSight;
-
-            if (facingDir == -1)
-            {
-                longStartAngle = 180f - (longStartAngle + longViewAngle);
-            }
-            longStartAngle %= 360f;
-            UnityEditor.Handles.color = new Color(0f, 0.5f, 1f, 0.25f); // 파란색 반투명
-            UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.forward, 
-                Quaternion.Euler(0, 0, longStartAngle) * Vector3.right, longViewAngle, monsterData.DetectLongRange);
         
+        
+        // [원거리 공격 범위] - 파란색
+        float longStartAngle = monsterData.DetectLongStartAngle;
+        float longViewAngle = monsterData.DetectLongSight;
+
+        if (facingDir == -1)
+        {
+            longStartAngle = 180f - (longStartAngle + longViewAngle);
+        }
+        longStartAngle %= 360f;
+
+        Vector2 longOrigin = (Vector2)transform.position + monsterData.DetectLongOffset; // 오프셋 적용
+        UnityEditor.Handles.color = new Color(0f, 0.5f, 1f, 0.25f);
+        UnityEditor.Handles.DrawSolidArc(longOrigin, Vector3.forward,
+            Quaternion.Euler(0, 0, longStartAngle) * Vector3.right, longViewAngle, monsterData.DetectLongRange);
+
         
     }
 #endif
