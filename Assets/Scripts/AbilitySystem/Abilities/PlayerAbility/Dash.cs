@@ -17,6 +17,9 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private float _dashPower;
     private float _dashTime;
     private float _endDelayTime;
+    private bool _canDash = true;
+    private bool _endDash;
+    private Vector2 _originVelocity;
 
     private AbilitySequenceSO _sequenceSO;
     private AbilityTask _task;
@@ -37,20 +40,33 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _sequenceSO = abilitySo.skillSequence;
         _task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
     }
-
-    // 점프와 대쉬를 동시에 눌렀을 때 대각선으로 나간다는 문제가 있음
+    
     protected override void Activate()
     {
         base.Activate();
 
-        StartDash();
-        _task.Execute();
-        //_animator.SetBool(_dashID, true);
-        Vector2 currentPosition = _rigid.position;
-        float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
-
-        _rigid.velocity = Vector2.zero;
-        _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);
+        if (_characterMovement.CheckIsGround())
+        {
+            _canDash = true;
+        }
+        
+        if (_canDash)
+        {
+            if (!_characterMovement.CheckIsGround())
+            {
+                _canDash = false;
+            }
+            StartDash();
+            _task.Execute();
+            //_animator.SetBool(_dashID, true);
+            Vector2 currentPosition = _rigid.position;
+            float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
+   
+            _rigid.velocity = Vector2.zero;
+            _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);         
+        }
+ 
+        
     }
 
     public void Update()
@@ -60,7 +76,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     public void FixedUpdate()
     {
         _dashTime -= Time.deltaTime;
-        if(_dashTime < 0)
+        if(_dashTime < 0 && !_endDash)
         {
             _rigid.velocity = Vector2.zero;
             _playerController.OnDisableAllInput();
@@ -68,9 +84,18 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
             _endDelayTime -= Time.deltaTime;
             if( _endDelayTime < 0 )
             {
-                this.DelayOneFrame().Forget();
+                if (_characterMovement.CheckIsGround())
+                    this.DelayOneFrame().Forget();
                 EndDash();
                 _playerController.OnEnableAllInput();
+            }
+        }
+        if (_characterMovement.CheckIsGround())
+        {
+            if (!_canDash)
+            {
+                this.DelayOneFrame().Forget();
+                _canDash = true;
             }
         }
     }
@@ -80,13 +105,17 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _dashPower = _dashSO.dashPower;
         _dashTime = _so.BlockTimer;
         _endDelayTime = _dashSO.endDelay;
+        _originVelocity = _rigid.velocity;
         _rigid.gravityScale = 0;
+        _endDash = false;
     }
 
     private void EndDash()
     {
         _task.Canceled();
+        _rigid.velocity = _originVelocity;
         _rigid.gravityScale = _characterMovement.Gravity;
+        _endDash = true;
         //_animator.SetBool(_dashID, false);
         //AbilityFactory.Instance.EndAbility(this);
     }
