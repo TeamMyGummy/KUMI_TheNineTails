@@ -2,7 +2,6 @@ using GameAbilitySystem;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 
 public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
 {
@@ -10,9 +9,6 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
     protected MonsterMovement _movement;
     protected Monster _monster;
     protected MonsterAttackSO _attackData;
-    
-    private bool _isAttacking;
-    private CancellationTokenSource _attackCts;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -27,82 +23,58 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
 
     protected override bool CanActivate()
     {
-        return true;
+        return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }
 
     protected async override void Activate()
     {
-        // 0) 중복 방지: 이미 공격 중이면 무시
-        if (_isAttacking) return;
-
-        // 1) 이전 공격 취소(혹시 남아있다면)
-        _attackCts?.Cancel();
-        _attackCts?.Dispose();
-        _attackCts = new CancellationTokenSource();
-
-        // 2) 파괴/디스에이블 연동 + 수동취소를 합친 토큰
-        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-            _monster.GetCancellationTokenOnDestroy(),
-            
-            _attackCts.Token
-        );
-        var tk = linkedCts.Token;
-
-        _isAttacking = true;
-
+        if (_attackData == null) return;
         
+        float block =
+            Mathf.Max(0f, _attackData.PreDelay) +      
+            Mathf.Max(0f, _attackData.ActiveTime) +      
+            Mathf.Max(0f, _attackData.PreDelay);    
+        _attackData.BlockTimer = block; 
+
         base.Activate();
 
-        _movement?.SetPaused(true); // 공격준비-공격-공격후 내내 정지
-
+        _movement?.SetPaused(true); 
         try
         {
-            // 공격 전 딜레이 
-            if (_attackData.PreAttackDelay > 0f)
+            // 전딜
+            if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(
-                    TimeSpan.FromSeconds(_attackData.PreAttackDelay),
-                    delayType: DelayType.UnscaledDeltaTime,
-                    cancellationToken: tk
-                );
+                    TimeSpan.FromSeconds(_attackData.PreDelay),
+                    delayType: DelayType.DeltaTime);    
 
             // 공격(히트박스 생성)
             Attack();
 
-            // 공격 유효시간만큼 딜레이(히트박스 파괴될 때까지) 
+            // 액티브타임
             if (_attackData.ActiveTime > 0f)
                 await UniTask.Delay(
                     TimeSpan.FromSeconds(_attackData.ActiveTime),
-                    delayType: DelayType.UnscaledDeltaTime,
-                    cancellationToken: tk
-                );
+                    delayType: DelayType.DeltaTime); 
 
-            // 공격 후 딜레이 
-            if (_attackData.PostAttackDelay > 0f)
+            // 후딜
+            if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(
-                    TimeSpan.FromSeconds(_attackData.PostAttackDelay),
-                    delayType: DelayType.UnscaledDeltaTime,
-                    cancellationToken: tk
-                );
-        }
-        catch (OperationCanceledException)
-        {
-            // (예외처리) 몬스터 사망 or 공격 취소될 경우 --> 그냥 지나가기 
+                    TimeSpan.FromSeconds(_attackData.PreDelay),
+                    delayType: DelayType.DeltaTime);  
         }
         finally
         {
-            _movement?.SetPaused(false); // 정지 해제 
-            _isAttacking = false;
-            linkedCts.Dispose();
-        }  
+            _movement?.SetPaused(false);
+        }
     }
 
     protected virtual void Attack()
     {
-        SpawnHitbox();
+        SpawnHitbox(_attackData.ActiveTime);  
     }
 
     // 히트박스 생성
-    protected virtual void SpawnHitbox()
+    protected virtual void SpawnHitbox(float lifeTime)
     {
         GameObject prefab = _attackData.AttackHitboxPrefab;
         float attackRangeX = _attackData.AttackRangeX;
@@ -126,11 +98,10 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
             if (sr != null && sr.drawMode != SpriteDrawMode.Simple)
                 sr.size = new Vector2(attackRangeX, attackRangeY);
 
-            ResourcesManager.Instance.Destroy(hitbox, 0.2f);
+            if (lifeTime <= 0f) return;  
+            ResourcesManager.Instance.Destroy(hitbox, lifeTime);
         }
     }
-    
-    
 
 #if UNITY_EDITOR
     // 히트박스 기즈모 표시

@@ -116,7 +116,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.FireVariousProjectile => new FireVariousProjectile(),
             AbilityName.FireProjectile => new FireToPlayer(),
             AbilityName.FireToPlayer => new FireToPlayer(),
-            AbilityName.MonsterSwordAttack => new MonsterSwordAttack(),
+            /*AbilityName.MonsterSwordAttack => new MonsterSwordAttack(),*/
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }

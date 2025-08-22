@@ -26,8 +26,9 @@ public class MonsterAttackSO : BlockAbilitySO
     
     
     // 읽기 전용 (외부에서 get 가능, set 불가)
-    public float PreAttackDelay => preAttackDelay;
+    public float PreDelay => preAttackDelay;
     public float ActiveTime => activeTime;
-    public float PostAttackDelay => postAttackDelay;
+    public float PostDelay => postAttackDelay;
     public float BetweenAttackDelay => betweenAttackDelay;
+
 }
