@@ -35,19 +35,23 @@ public class Hitbox : MonoBehaviour
         var size = Physics2D.OverlapBoxNonAlloc(boxCenter, boxSize, angle, _results, parryLayerMask);
         if (size > 0)
         {
-            Debug.Log("패링 성공");
-            //todo: 아직까지는 문제 없는데 이걸 여기다 두는 게 맞는가 -> 분리할 수 있다면 분리할 것
-            AbilitySystem asc;
-            DomainFactory.Instance.GetDomain(DomainKey.Player, out asc);
-            asc.ApplyGameplayEffect(asc, new InstantGameplayEffect("FoxFireGauge", 1));
-            if (Mathf.Approximately(asc.Attribute.Attributes["FoxFireGauge"].CurrentValue.Value, asc.Attribute.Attributes["FoxFireGauge"].MaxValue))
+            // 플레이어 패링 성공
+            Monster monster = _attacker?.GetComponent<Monster>();
+            if (monster != null && 
+                monster.asc.Attribute.Attributes["HP"].CurrentValue.Value <=
+                monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.4f)
             {
-                asc.Attribute.Attributes["FoxFireCount"].CurrentValue.Value += 1;
-                asc.Attribute.Attributes["FoxFireGauge"].Reset();
+                // 간 빼기 스킬 활성화
+                other.GetComponent<ParryingHitbox>()?.StartLiverExtraction();
+            }
+            else
+            {
+                other.GetComponent<ParryingHitbox>()?.Parrying();
             }
         }
         else
         {
+            // 플레이어 피격&넉백
             Transform playerTransform = GameObject.FindWithTag("Player").transform;
             if (_attacker != null)
             {
