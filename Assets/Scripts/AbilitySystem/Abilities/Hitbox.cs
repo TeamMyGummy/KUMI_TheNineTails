@@ -1,5 +1,6 @@
 ﻿using System;
 using GameAbilitySystem;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Hitbox : MonoBehaviour
@@ -30,23 +31,26 @@ public class Hitbox : MonoBehaviour
         float angle = 0f;
 
         int parryLayer = LayerMask.NameToLayer(parryLayerName);
-        int parryLayerMask = 1 << parryLayer;
-
-        var size = Physics2D.OverlapBoxNonAlloc(boxCenter, boxSize, angle, _results, parryLayerMask);
-        if (size > 0)
+        if (parryLayer != -1)
         {
-            // 플레이어 패링 성공
-            Monster monster = _attacker?.GetComponent<Monster>();
-            if (monster != null && 
-                monster.asc.Attribute.Attributes["HP"].CurrentValue.Value <=
-                monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.4f)
+            int parryLayerMask = 1 << parryLayer;
+
+            var size = Physics2D.OverlapBoxNonAlloc(boxCenter, boxSize, angle, _results, parryLayerMask);
+            if (size > 0)
             {
-                // 간 빼기 스킬 활성화
-                other.GetComponent<ParryingHitbox>()?.StartLiverExtraction();
-            }
-            else
-            {
-                other.GetComponent<ParryingHitbox>()?.Parrying();
+                // 플레이어 패링 성공
+                Monster monster = _attacker?.GetComponent<Monster>();
+                if (monster != null && 
+                    monster.asc.Attribute.Attributes["HP"].CurrentValue.Value <=
+                    monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.4f)
+                {
+                    // 간 빼기 스킬 활성화
+                    other.GetComponent<ParryingHitbox>()?.StartLiverExtraction();
+                }
+                else
+                {
+                    other.GetComponent<ParryingHitbox>()?.Parrying();
+                }
             }
         }
         else
