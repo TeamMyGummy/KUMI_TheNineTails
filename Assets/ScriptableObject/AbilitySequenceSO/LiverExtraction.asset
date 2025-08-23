@@ -16,11 +16,7 @@ MonoBehaviour:
   - source: {fileID: 7400000, guid: 2967e96b42d4b754eaadcc8d1ab7e4b8, type: 2}
     delay: 0
   sounds: []
-  effects:
-  - source: {fileID: 7626610140661006563, guid: c48da1eaa3aeaea468f5504952dd31c8, type: 3}
-    spawnPosition: {x: 3, y: 0}
-    duration: 0.3
-    delay: 0.1
+  effects: []
   slows: []
   cameras:
   - cameraTask: {fileID: 11400000, guid: d147c901b17bc9e4bb27f90fbad23c20, type: 2}

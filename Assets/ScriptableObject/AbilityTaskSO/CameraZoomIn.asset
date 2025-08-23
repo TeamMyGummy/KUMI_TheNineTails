@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe2ff307c2eea04980b2eea3f353a8f, type: 3}
   m_Name: CameraZoomIn
   m_EditorClassIdentifier: 
-  _zoomInSize: 4
+  _zoomInSize: 5
   _duration: 0.3
