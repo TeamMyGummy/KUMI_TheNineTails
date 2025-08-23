@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2338418821292249031}
   - component: {fileID: 9037348421667397432}
   - component: {fileID: 3375186237103327657}
+  - component: {fileID: 3968811803153025284}
   m_Layer: 11
   m_Name: LightningHitbox
   m_TagString: Untagged
@@ -130,3 +131,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3968811803153025284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3144560449005721106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0cd73c55874975b360e8073ea60453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parryLayerName: Parrying
