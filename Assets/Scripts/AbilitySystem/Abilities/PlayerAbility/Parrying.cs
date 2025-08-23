@@ -151,8 +151,26 @@ public class Parrying : GameplayAbility<ParryingSO>
 
     private void SetGaugeBar()
     {
-        _gaugeImage.fillAmount = _currentGauge / 1f; 
-        _gaugeBar.transform.position = Camera.main.WorldToScreenPoint(Actor.transform.position + new Vector3(0f, 2.5f, 0f));
+        _gaugeImage.fillAmount = _currentGauge / MaxGauge;
+
+        RectTransform barRT = _gaugeBar.transform as RectTransform;
+
+        // Actor 머리 위 월드 위치
+        Vector3 worldPos = Actor.transform.position + Vector3.up * 2.5f;
+
+        Camera camera = Camera.main;
+
+        foreach (var c in GameObject.FindGameObjectsWithTag("MainCamera"))
+        {
+            if (c.name == "BossCamera")
+                camera = c.GetComponent<Camera>();
+        }
+        // 스크린 좌표로 변환
+        //이거 개선하기; 카메라 시스템을 만들어야 할 필요성을 느낌;;;;
+        Vector3 screenPos = camera.WorldToScreenPoint(worldPos);
+
+        // UI Canvas에 직접 위치 지정 (Overlay 모드 기준)
+        barRT.position = screenPos;
     }
     
     private void CancelReduce()
