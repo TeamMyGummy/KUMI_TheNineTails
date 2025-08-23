@@ -5,6 +5,7 @@ using UnityEngine;
 public class NpcObject : MonoBehaviour
 {
     [SerializeField] private GameObject interactionUI;
+    [SerializeField] private string dialogueName = "Start";
     
     
     // TODO: 대화창 띄우는 함수 가져와서 NpcInteraction에 추가
@@ -30,7 +31,7 @@ public class NpcObject : MonoBehaviour
         {
             Debug.Log("NpcInteraction 실행");
             
-            YarnManager.Instance.RunDialogue("Start");
+            YarnManager.Instance.RunDialogue(dialogueName);
             
             _isUsed = true;
             interactionUI.SetActive(false);
