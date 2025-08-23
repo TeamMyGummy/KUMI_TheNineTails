@@ -112,6 +112,11 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
         }
     }
 
+    public Vector2 GetPosition()
+    {
+        return Actor.transform.position;
+    }
+
 #if UNITY_EDITOR
     // 히트박스 기즈모 표시
     protected virtual void OnDrawGizmosSelected()
