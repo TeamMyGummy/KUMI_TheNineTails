@@ -10,13 +10,16 @@ public class FSMGraph : NodeGraph
 
     [System.NonSerialized] 
     private AbilitySystem _asc;
+    
+    [System.NonSerialized]
+    public BaseNode endNode;
 
     public void InitGraph(AbilitySystem asc)
     {
         _asc = asc;
     }
     
-    public void Start()
+    public void StartGraph()
     {
         foreach (var node in nodes)
         {
@@ -33,14 +36,24 @@ public class FSMGraph : NodeGraph
             {
                 currentNode = startNode.GetNextNode();
                 currentNode?.OnEnter();
-                break;
+            }
+
+            if (node is EndNode end)
+            {
+                endNode = end;
             }
         }
     }
     
+    public void StopGraph()
+    {
+        currentNode.OnExit();
+        currentNode = endNode;
+    }
+    
     public void Update()
     {
-        if (currentNode == null) return;
+        if (currentNode is null) return;
         
         var nextNode = currentNode.Execute();
         

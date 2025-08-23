@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using GameAbilitySystem;
+using R3;
+using UnityEngine.Events;
 
 [Serializable]
 public class HandlerBinding
@@ -23,8 +25,15 @@ public class FSMController : MonoBehaviour, IAbilitySystem
     [SerializeField] protected HandlerBinding[] handlerBindings;
 
     private Dictionary<string, ActionHandler> handlerMap;
+    
+    [Header("Events")]
+    [Space(10)]
+    [Tooltip("AI 종료 후 실행됩니다. ")]
+    public UnityEvent onAfterEnd;
+    
+    private bool _isRunning = false;
 
-    void Start()
+    public void StartAI()
     {
         InitializeHandlerMap();
 
@@ -48,8 +57,28 @@ public class FSMController : MonoBehaviour, IAbilitySystem
         _asc?.Init(so);
         _asc?.GrantAllAbilities();
         _asc?.SetSceneState(gameObject);
+        asc.Attribute.Attributes["HP"].CurrentValue.Subscribe(AutoStopAI);
+        
         fsmGraph.InitGraph(_asc);
-        fsmGraph?.Start();
+        fsmGraph?.StartGraph();
+        _isRunning = true;
+    }
+
+    private void AutoStopAI(float value)
+    {
+        if (value <= 0)
+        {
+            StopAI();
+        }
+    }
+
+    public void StopAI()
+    {
+        if (!_isRunning) return;
+        
+        _isRunning = false;
+        fsmGraph.StopGraph();
+        onAfterEnd?.Invoke();
     }
 
     void Update()
