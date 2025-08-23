@@ -23,12 +23,15 @@ public class MovingPlatform : MonoBehaviour
     
     private bool _isVertical;
     private bool _isWaiting;
+    
+    private Transform _childCollider; 
    
 
     private void Awake()
     {
         _platformRb = GetComponent<Rigidbody2D>();
         
+        _childCollider = transform.GetChild(0); 
         _pointA = transform.GetChild(1);
         _pointB = transform.GetChild(2);
     }
@@ -45,6 +48,12 @@ public class MovingPlatform : MonoBehaviour
         // 이동방향 판단 (상하/좌우)
         Vector2 delta = _worldPointB - _worldPointA;
         _isVertical = Mathf.Abs(delta.y) > Mathf.Abs(delta.x) ? true : false;
+        
+        // 시작 시 콜라이더 위치 맞추기
+        if (_childCollider != null)
+        {
+            _childCollider.position = transform.position;
+        }
     }
 
     /// <summary>
