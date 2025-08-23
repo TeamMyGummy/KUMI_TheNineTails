@@ -379,11 +379,27 @@ PrefabInstance:
       value: nmixx
       objectReference: {fileID: 0}
     - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f842c342aa9e4296b35a5075f279ce0, type: 2}
+    - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
       propertyPath: m_fontColor.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
       propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2664326442662323435, guid: 1f842c342aa9e4296b35a5075f279ce0, type: 2}
+    - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792220990348761559, guid: 853590066b1ae46968672c3ffdab8507, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -487,6 +503,14 @@ PrefabInstance:
     - target: {fileID: 4390532832322087299, guid: d7e05f9967cd8420fbe833a6a28452ef, type: 3}
       propertyPath: m_Name
       value: skillName
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286068808544401019, guid: d7e05f9967cd8420fbe833a6a28452ef, type: 3}
+      propertyPath: m_fontSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286068808544401019, guid: d7e05f9967cd8420fbe833a6a28452ef, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

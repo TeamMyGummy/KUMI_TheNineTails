@@ -15,9 +15,10 @@ MonoBehaviour:
   skillKey: 7
   skillName: 7
   skillSequence: {fileID: 0}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: "\uC5EC\uC6B0\uBD88\uC785\uB2C8\uB2F9"
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
   BlockTimer: 0
   projectile: {fileID: 1762829811770736879, guid: 0dc2900bd20decb4581e9c680fc97fc7, type: 3}
+  isStoppWhileAttack: 0

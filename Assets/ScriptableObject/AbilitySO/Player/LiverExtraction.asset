@@ -15,7 +15,7 @@ MonoBehaviour:
   skillKey: 9
   skillName: 9
   skillSequence: {fileID: 11400000, guid: 109f5424c93cfb141a74b824f1fedbdd, type: 2}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
