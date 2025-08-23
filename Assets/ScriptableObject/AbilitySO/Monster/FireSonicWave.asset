@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df993e64831af8c4f85b4a0f99ce88ee, type: 3}
+  m_Name: FireSonicWave
+  m_EditorClassIdentifier: 
+  skillKey: 105
+  skillName: 105
+  skillSequence: {fileID: 0}
+  skillIcon: {fileID: 0}
+  description: 
+  unlockFloor: 0
+  skillKeyboard: {fileID: 0}
+  BlockTimer: 0.5
+  SonicWave: {fileID: 6465433477308708213, guid: e9b23f76d15f07942bcb4ff0bd0dd3f7, type: 3}
+  isStopWhileAttack: 1
