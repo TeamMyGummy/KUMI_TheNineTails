@@ -192,7 +192,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: d084a3c32ca902f4c8498427ce64f4aa, type: 2}
   abilitySystemPath: Monster/Monster3_1
   abilityKey: 100
-  abilityKey2: 8
+  abilityKey2: 104
 --- !u!114 &5348520035679768019
 MonoBehaviour:
   m_ObjectHideFlags: 0
