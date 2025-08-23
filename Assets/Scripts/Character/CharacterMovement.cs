@@ -234,7 +234,7 @@ public class CharacterMovement : MonoBehaviour
     public bool CheckIsGround()
     {
         Debug.DrawRay(_rigidBody.position, Vector2.down * 5f, new Color(1, 0, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 5, LayerMask.GetMask("Platform"));
+        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 5, LayerMask.GetMask("Platform", "MovingPlatform", "FloatingPlatform"));
         if (rayHit.collider != null)
         {
             if (rayHit.distance < 0.1f)

@@ -93,7 +93,7 @@ public class Jump : GameplayAbility, ITickable
 
     public void ExtraJump()
     {
-        _rigidBody.AddForce(Vector2.up * (_jumpPower / 50), ForceMode2D.Impulse);
+        _rigidBody.AddForce(Vector2.up * (_jumpPower / 25), ForceMode2D.Impulse);
     }
 
     public void JumpCanceled()
