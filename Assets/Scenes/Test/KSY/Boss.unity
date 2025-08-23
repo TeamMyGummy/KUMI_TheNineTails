@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1187860923bd04867bbcad71c23b2fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossObject: {fileID: 0}
+  bossObject: {fileID: 5757372680910912810}
   fillImage: {fileID: 1677844819}
   nameText: {fileID: 205429532}
 --- !u!1001 &717568970
@@ -2181,6 +2181,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf9f39cdc48c494495286c62909a9cd, type: 3}
+--- !u!1 &5757372680910912810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6246649377261576493, guid: cbf9f39cdc48c494495286c62909a9cd, type: 3}
+  m_PrefabInstance: {fileID: 5757372680910912809}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
