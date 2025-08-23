@@ -51,10 +51,10 @@ public class Hitbox : MonoBehaviour
                 {
                     other.GetComponent<ParryingHitbox>()?.Parrying();
                 }
+                return;
             }
         }
-        else
-        {
+
             // 플레이어 피격&넉백
             Transform playerTransform = GameObject.FindWithTag("Player").transform;
             if (_attacker != null)
@@ -69,6 +69,5 @@ public class Hitbox : MonoBehaviour
                 Vector2 attackDirection = playerTransform.position.x > transform.position.x ? Vector2.right : Vector2.left;
                 other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);
             }
-        }
     }
 }
