@@ -53,32 +53,25 @@ public class UI_PlayerState : MonoBehaviour
             .Subscribe(current => UpdateHp(current, _playerVM.MaxHp))
             .AddTo(_disposables);
 
-        // 여우불 게이지
-        _playerVM.FoxFireGauge
-            .Subscribe(UpdateFoxFireGauge)
-            .AddTo(_disposables);
-
         // 스킬 아이콘
         _playerVM.SkillCount
             .Subscribe(UpdateSkillProfile)
             .AddTo(_disposables);
 
-        // 여우불 최대 개수 → 슬롯 생성/늘림
-        _playerVM.MaxFoxFireCountRP
-            .DistinctUntilChanged()
-            .Subscribe(max =>
-            {
-                RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, max);
-            })
-            .AddTo(_disposables);
+        // 여우불
+        _disposables.Add(
+            _playerVM.FoxFireCount
+                .CombineLatest(_playerVM.MaxFoxFireCountRP, _playerVM.FoxFireGauge,
+                            (count, max, gauge) => (count, max, gauge))
+                .Subscribe(t =>
+                {
+                    // 슬롯 (개수/최대)
+                    RefreshFoxFire(t.count, t.max);
 
-        // 여우불 현재 개수 → 슬롯 채우기 상태 갱신
-        _playerVM.FoxFireCount
-            .Subscribe(cur =>
-            {
-                RefreshFoxFire(cur, _playerVM.MaxFoxFireCountRP.CurrentValue);
-            })
-            .AddTo(_disposables);
+                    // 게이지 (단계 계산)
+                    UpdateFoxFireGauge(t.count, t.max, t.gauge);
+                })
+        );
 
         // 혼불
         if (HonbulCountText != null)
@@ -92,9 +85,12 @@ public class UI_PlayerState : MonoBehaviour
         }
 
         // ======== 초기 렌더 ========
-        UpdateFoxFireGauge(_playerVM.FoxFireGauge.CurrentValue);
+        UpdateFoxFireGauge(
+            _playerVM.FoxFireCount.CurrentValue,
+            _playerVM.MaxFoxFireCountRP.CurrentValue,
+            _playerVM.FoxFireGauge.CurrentValue
+        );
         UpdateHp(_playerVM.Hp.CurrentValue, _playerVM.MaxHp);
-        RefreshFoxFire(_playerVM.FoxFireCount.CurrentValue, _playerVM.MaxFoxFireCountRP.CurrentValue);
     }
 
     private void OnDisable()
@@ -137,12 +133,11 @@ public class UI_PlayerState : MonoBehaviour
     }
 
     // ------ 여우불 게이지 ------
-    private void UpdateFoxFireGauge(float value)
+    private void UpdateFoxFireGauge(int count, int max, float value)
     {
-        // 최대 개수인지 체크
-        if (_playerVM.FoxFireCount.CurrentValue >= _playerVM.MaxFoxFireCountRP.CurrentValue)
+        if (count >= max)
         {
-            foxFireGaugeImage.sprite = foxFireGaugeSprites[foxFireGaugeSprites.Length - 1]; // Full 상태
+            foxFireGaugeImage.sprite = foxFireGaugeSprites[foxFireGaugeSprites.Length - 1];
             return;
         }
 
