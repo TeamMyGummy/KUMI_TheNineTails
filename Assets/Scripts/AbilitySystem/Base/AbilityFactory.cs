@@ -28,6 +28,7 @@ public enum AbilityName
     MonsterDoubleAttack,
     MonsterSwordAttack,
     FireToPlayer,
+    FireSonicWave,
     
     //보스
     FireVariousProjectile = 1000,
@@ -53,6 +54,7 @@ public enum AbilityKey
     MonsterDoubleAttack,
     MonsterSwordAttack,
     FireToPlayer,
+    FireSonicWave,
     
     //보스
     FireVariousProjectile = 1000,
@@ -117,6 +119,7 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.FireProjectile => new FireToPlayer(),
             AbilityName.FireToPlayer => new FireToPlayer(),
             /*AbilityName.MonsterSwordAttack => new MonsterSwordAttack(),*/
+            AbilityName.FireSonicWave => new FireSonicWave(),
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }
