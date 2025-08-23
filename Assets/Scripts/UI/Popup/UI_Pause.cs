@@ -14,42 +14,27 @@ public class UI_Pause : MonoBehaviour
     private GameObject settingsPopupInstance;
 
     private bool isPaused = false;
-
     private PlayerController player;
+
+    public bool IsPausePopupOpen => pausePopupInstance != null;
 
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
     } 
 
-    private void Update()
+    void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            HandleEsc();
-        }
-    }
-
-    private void HandleEsc()
     {
-        if (settingsPopupInstance != null)
-        {
-            CloseSettingsIfAny();
-            return;
-        }
+        // 다른 팝업이 열려있으면 ESC 무시
+        if (FindObjectOfType<UI_Skill>()?.gameObject.activeSelf == true) return;
+        if (FindObjectOfType<SkillInfo>()?.gameObject.activeSelf == true) return;
+        if (FindObjectOfType<UI_SettingsPopup>() != null) return;
+        if (FindObjectOfType<UI_KeyGuidePopup>() != null) return;
 
-        if (isPaused)
-        {
-            ResumeGame();
-            return;
-        }
-
-        if (TryCloseAnyOtherPopup())
-            return;
-
-        ShowPausePopup();
-        isPaused = true;
-        player?.OnDisableAllInput();
+        TogglePause();
+    }
     }
 
     public void TogglePause()
@@ -60,9 +45,6 @@ public class UI_Pause : MonoBehaviour
         }
         else
         {
-            if (TryCloseAnyOtherPopup())
-                return;
-
             ShowPausePopup();
             isPaused = true;
             player?.OnDisableAllInput();
@@ -75,13 +57,13 @@ public class UI_Pause : MonoBehaviour
 
         pausePopupInstance = Instantiate(pausePopup, canvas);
 
-        var resumeBtn   = pausePopupInstance.transform.Find("Panel/resumeBtn")  ?.GetComponent<Button>();
+        var resumeBtn = pausePopupInstance.transform.Find("Panel/resumeBtn")?.GetComponent<Button>();
         var settingsBtn = pausePopupInstance.transform.Find("Panel/settingsBtn")?.GetComponent<Button>();
-        var mainBtn     = pausePopupInstance.transform.Find("Panel/mainBtn")    ?.GetComponent<Button>();
+        var mainBtn = pausePopupInstance.transform.Find("Panel/mainBtn")?.GetComponent<Button>();
 
-        if (resumeBtn   != null) resumeBtn.onClick.AddListener(ResumeGame);
+        if (resumeBtn != null) resumeBtn.onClick.AddListener(ResumeGame);
         if (settingsBtn != null) settingsBtn.onClick.AddListener(OnClickSettings);
-        if (mainBtn     != null) mainBtn.onClick.AddListener(OnClickSaveAndMain);
+        if (mainBtn != null) mainBtn.onClick.AddListener(OnClickSaveAndMain);
     }
 
     public void ResumeGame()
@@ -91,9 +73,6 @@ public class UI_Pause : MonoBehaviour
             Destroy(pausePopupInstance);
             pausePopupInstance = null;
         }
-
-        CloseSettingsIfAny();
-
         isPaused = false;
         player?.OnEnableAllInput();
     }
@@ -104,45 +83,6 @@ public class UI_Pause : MonoBehaviour
         {
             settingsPopupInstance = Instantiate(settingsPopup, transform);
         }
-    }
-
-    private void CloseSettingsIfAny()
-    {
-        if (settingsPopupInstance != null)
-        {
-            Destroy(settingsPopupInstance);
-            settingsPopupInstance = null;
-        }
-    }
-
-    private bool TryCloseAnyOtherPopup()
-    {
-        bool closed = false;
-
-        var infos = FindObjectsOfType<SkillInfo>(true);
-        foreach (var i in infos)
-        {
-            Destroy(i.gameObject);
-            closed = true;
-        }
-        if (closed) return true;
-
-        var skill = FindObjectOfType<UI_Skill>(true);
-        if (skill != null && skill.gameObject.activeSelf)
-        {
-            skill.gameObject.SetActive(false);
-            return true;
-        }
-
-        var guides = FindObjectsOfType<UI_KeyGuidePopup>(true);
-        foreach (var g in guides)
-        {
-            Destroy(g.gameObject);
-            closed = true;
-        }
-        if (closed) return true;
-
-        return false;
     }
 
     public void OnClickSaveAndMain()

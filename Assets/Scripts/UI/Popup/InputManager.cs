@@ -24,18 +24,20 @@ public class InputManager : MonoBehaviour
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
+            if (!CanOpenSkillUI())
+                return;
+
             hasTabOpenedUI = true;
             ToggleSkillUI();
         }
         else if (hasTabOpenedUI && Keyboard.current.qKey.wasPressedThisFrame)
         {
-            uiSkillInstance?.CycleRight();
+            uiSkillInstance.OnClickSkillBtn();
         }
-        else if (hasTabOpenedUI && Keyboard.current.wKey.wasPressedThisFrame)
+        else if (hasTabOpenedUI && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            uiSkillInstance?.CycleLeft();
+            uiSkillInstance.OnClickJournalBtn();
         }
-
     }
 
     void ToggleSkillUI()
@@ -49,7 +51,6 @@ public class InputManager : MonoBehaviour
             uiSkillInstance.ForceReferenceReconnect();
 
             player.GetComponent<PlayerInput>().enabled = false;
-
             return;
         }
 
@@ -57,5 +58,19 @@ public class InputManager : MonoBehaviour
         uiSkillInstance.TogglePopupExternally();
 
         player.GetComponent<PlayerInput>().enabled = willClose;
+    }
+
+    private bool CanOpenSkillUI()
+    {
+        if (FindObjectOfType<SkillInfo>() != null) return false;
+
+        var pause = FindObjectOfType<UI_Pause>();
+        if (pause != null && pause.IsPausePopupOpen) return false;
+
+        if (FindObjectOfType<UI_SettingsPopup>() != null) return false;
+
+        if (FindObjectOfType<UI_KeyGuidePopup>() != null) return false;
+
+        return true;
     }
 }
