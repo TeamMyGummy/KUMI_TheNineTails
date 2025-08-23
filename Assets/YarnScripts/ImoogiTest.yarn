@@ -1,0 +1,34 @@
+title: Imoogi
+---
+<<show mark>>
+mark: 내 이름은 이 무기...
+mark: 나를 이기다니 대단하군...
+<<change 쿠미>>
+
+-> 별 거 아닙니다~ 하하하!
+-> 아휴 별 말씀을~
+-> 아닙니다 선배님. 다 선배님의 가르침 덕분입니다.
+ <<jump Wrong>>
+
+<<hide mark>>
+
+<<wait 1>>
+
+<<show mark>>
+mark: 그래... 너 잘났다...
+<<hide mark>>
+<<end>>
+
+===
+
+title: Imoogi_Wrong
+---
+<<hide mark>>
+
+<<wait 1>>
+
+<<show mark>>
+mark: 누가 네 선배냐?
+<<hide mark>>
+<<end>>
+===

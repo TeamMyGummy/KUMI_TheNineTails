@@ -242,6 +242,9 @@ MonoBehaviour:
     handler: {fileID: 2804707771931177179}
   - key: Spawn
     handler: {fileID: 2793481676448595512}
+  onAfterEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1071138117049308161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +508,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.57, y: 1.72}
+  m_Size: {x: 6.46, y: 4.01}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
