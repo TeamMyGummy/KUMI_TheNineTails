@@ -500,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_text
-      value: 'BOSS : Imoogi'
+      value: "BOSS : \uC774\uBB34\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_margin.x
@@ -509,11 +509,15 @@ PrefabInstance:
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 11400000, guid: 188d483e3f17b43b1961d1ec0a94f6ca, type: 2}
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 6775930500436664802, guid: 188d483e3f17b43b1961d1ec0a94f6ca, type: 2}
+    - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1217,6 +1221,18 @@ PrefabInstance:
     - target: {fileID: 942596464681717148, guid: 4ba117410e32c43868bf298c92d79eae, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095855259935540977, guid: 4ba117410e32c43868bf298c92d79eae, type: 3}
+      propertyPath: m_text
+      value: "\uC774\uBB34\uAE30"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095855259935540977, guid: 4ba117410e32c43868bf298c92d79eae, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f842c342aa9e4296b35a5075f279ce0, type: 2}
+    - target: {fileID: 2095855259935540977, guid: 4ba117410e32c43868bf298c92d79eae, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3380469828838369098, guid: 4ba117410e32c43868bf298c92d79eae, type: 3}
       propertyPath: HPbar
