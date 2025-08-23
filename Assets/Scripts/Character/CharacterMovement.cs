@@ -137,36 +137,43 @@ public class CharacterMovement : MonoBehaviour
     }
     
     /// <summary>
-    /// 넉백 효과를 처리하는 코루틴
+    /// AddForce를 사용한 넉백 효과를 처리하는 코루틴
     /// </summary>
     private IEnumerator KnockbackCoroutine(Vector2 direction, float distance, float duration)
     {
+        Debug.Log("Knockback");
         _isKnockedBack = true;
-        
+    
         // 현재 velocity 초기화
         _rigidBody.velocity = Vector2.zero;
-        
-        Vector2 startPosition = _rigidBody.position;
-        Vector2 targetPosition = startPosition + (direction * distance);
-        
+    
+        // 초기 강한 힘 계산 (전체 거리를 duration 동안 이동하도록)
+        float initialForce = (distance * _rigidBody.mass) / (duration * 0.5f);
+    
+        // 초기 강한 힘 적용
+        _rigidBody.AddForce(direction.normalized * initialForce, ForceMode2D.Impulse);
+    
         float elapsedTime = 0f;
-        
+        Vector2 initialVelocity = _rigidBody.velocity;
+    
         while (elapsedTime < duration)
         {
             elapsedTime += Time.fixedDeltaTime;
             float progress = elapsedTime / duration;
-            
-            // Ease-out 효과 적용 (처음엔 빠르게, 나중엔 천천히)
+        
+            // Ease-out 효과를 위한 감속 계산 (cubic ease-out)
             float easeProgress = 1f - Mathf.Pow(1f - progress, 3f);
-            
-            Vector2 currentPosition = Vector2.Lerp(startPosition, targetPosition, easeProgress);
-            _rigidBody.position = currentPosition;
-            
+            float velocityMultiplier = 1f - easeProgress;
+        
+            // 현재 속도를 점진적으로 감소시킴
+            Vector2 targetVelocity = initialVelocity * velocityMultiplier;
+            _rigidBody.velocity = targetVelocity;
+        
             yield return new WaitForFixedUpdate();
         }
-        
-        // 최종 위치 설정
-        _rigidBody.position = targetPosition;
+    
+        // 넉백 종료 시 velocity 초기화
+        _rigidBody.velocity = Vector2.zero;
         _isKnockedBack = false;
     }
     
