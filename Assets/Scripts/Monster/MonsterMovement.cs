@@ -92,12 +92,6 @@ public class MonsterMovement : MonoBehaviour, IMovement
 
         float dist = Vector2.Distance(transform.position, _player.position);
 
-        if (_isPaused)
-        {
-            _cm.Move(Vector2.zero);
-            return;
-        }        
-
         // 상태 전환 로직
         HandleStateTransition(dist);
 
