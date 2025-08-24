@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: 28a639f60a5dcf74abac44a9f6cf383e, type: 2}
   abilitySystemPath: Monster/Monster2
-  abilityKey: 8
+  abilityKey: 104
 --- !u!114 &4455798029593503710
 MonoBehaviour:
   m_ObjectHideFlags: 0

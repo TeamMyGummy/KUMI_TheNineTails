@@ -179,7 +179,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   duration: 0.5
   maxDistance: 7
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 1, z: 0}
 --- !u!114 &5602488002535163798
 MonoBehaviour:
   m_ObjectHideFlags: 0
