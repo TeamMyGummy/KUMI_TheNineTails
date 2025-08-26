@@ -19,13 +19,24 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private Collider2D _monsterCollider;
 
     public int HorizontalDir { private set; get; } //좌우판정용 
+    
+    //Patrol / Return 관련 변수
     private Vector2 _spawnPos;
     private Vector2 _patrolPos;
+    private Vector2 _leftPatrolLimit;
+    private Vector2 _rightPatrolLimit;
+
     private MovePattern _moveState = MovePattern.Patrol;
 
+    //멈춤 관련 변수
     private bool _isPaused = false;
-    private float _pauseTimer = 0;
-    
+    private bool _isTimerPaused = false;
+    private float _pauseTimer = 0f;
+    private float _pauseTimerTarget = 0f;
+    private bool _shouldFlipAfterPause = false; //PauseForSeconds 이후에 방향 전환되는지
+    //더좋은방법 없을까
+
+
     private Transform _player;
     private Transform _headPivot; //몬3용도
 
@@ -61,8 +72,9 @@ public class MonsterMovement : MonoBehaviour, IMovement
         HorizontalDir = 1;
         _spawnPos = transform.position;
         _patrolPos = _spawnPos + new Vector2(-_monster.Data.PatrolRange / 2f, 0);
+        _leftPatrolLimit = _spawnPos + Vector2.left * (_monster.Data.PatrolRange / 2f);
+        _rightPatrolLimit = _spawnPos + Vector2.right * (_monster.Data.PatrolRange / 2f);
 
-        
         //플레이어 오브젝트 찾기
         _player = _monster.Player;
 
@@ -89,6 +101,9 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private void Update()
     {
         if (_player == null) return;
+
+        HandlePauseTimer();
+        if (_isPaused) return;
 
         float dist = Vector2.Distance(transform.position, _player.position);
 
@@ -263,43 +278,29 @@ public class MonsterMovement : MonoBehaviour, IMovement
     {
         _moveState = pattern;
     }
-    
+
     private void PatrolMove()
     {
-        if (_isPaused)
+        if ((!_monster.Data.IsFlying && !CheckGroundAhead())|| CheckWallAhead())
         {
-            _pauseTimer += Time.deltaTime;
-            if (_pauseTimer >= _monster.Data.PausedTime)
+            if (!_isTimerPaused)
             {
-                _isPaused = false;
-                _pauseTimer = 0;
-                HorizontalDir *= -1;
-                _patrolPos = transform.position;
+                PauseForSeconds(_monster.Data.PausedTime, true);
             }
+            return;
+        }
 
-            _cm.Move(Vector2.zero);
-            return;
-        }
-        
-        // 지상몬스터: 발판 있으면 떨어지지 않게 멈추기 
-        if (!_monster.Data.IsFlying && ( !CheckGroundAhead() || CheckWallAhead() ))
-        {
-            _isPaused = true;
-            _cm.Move(Vector2.zero);
-            return;
-        }
-        
-        //이동 적용
+        // 이동 적용
         _cm.Move(GetDirection());
 
-        float movedDistance = Mathf.Abs(transform.position.x - _patrolPos.x);
-        if (movedDistance >= _monster.Data.PatrolRange)
+        if ((HorizontalDir == 1 && transform.position.x >= _rightPatrolLimit.x) ||
+            (HorizontalDir == -1 && transform.position.x <= _leftPatrolLimit.x))
         {
             HorizontalDir *= -1;
-            _patrolPos = transform.position;
         }
     }
-    
+
+
     private void AggroMove()
     {
         if (_canChangeDirection)
@@ -354,8 +355,6 @@ public class MonsterMovement : MonoBehaviour, IMovement
         }
     }
 
-    
-    
     public void SetPaused(bool paused)
     {
         _isPaused = paused;
@@ -363,7 +362,37 @@ public class MonsterMovement : MonoBehaviour, IMovement
         if (paused)
             _cm.Move(Vector2.zero);
     }
-    
+
+    public void PauseForSeconds(float time, bool flipAfterPause = false)
+    {
+        _isTimerPaused = true;
+        _pauseTimer = 0f;
+        _pauseTimerTarget = time;
+        SetPaused(true);
+        _shouldFlipAfterPause = flipAfterPause;
+    }
+
+
+    private void HandlePauseTimer()
+    {
+        if (!_isTimerPaused) return;
+
+        _pauseTimer += Time.deltaTime;
+        _cm.Move(Vector2.zero);
+
+        if (_pauseTimer >= _pauseTimerTarget)
+        {
+            _isTimerPaused = false;
+            SetPaused(false);
+
+            if (_shouldFlipAfterPause)
+            {
+                HorizontalDir *= -1;
+                _shouldFlipAfterPause = false;
+            }
+        }
+    }
+
     public bool CheckGroundAhead()
     {
         if (_monster.Data.IsFlying) return true;
@@ -376,7 +405,6 @@ public class MonsterMovement : MonoBehaviour, IMovement
     }
     public bool CheckWallAhead()
     {
-        if (_monster.Data.IsFlying) return false;
 
         Vector2 checkPos = (Vector2)transform.position + new Vector2(HorizontalDir * 0.5f, 0);
         float checkDistance = 0.5f;
