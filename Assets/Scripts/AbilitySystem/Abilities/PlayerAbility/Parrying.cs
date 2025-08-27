@@ -57,12 +57,10 @@ public class Parrying : GameplayAbility<ParryingSO>
     public void Canceled()
     {
         CancelReduce();
-        _task.Canceled();
     } 
 
     private void StartParrying()
     {
-        _task.Execute();
         Asc.TagContainer.Add(GameplayTags.BlockRunningAbility);
         SetHitbox();
         _gaugeBar.SetActive(true);

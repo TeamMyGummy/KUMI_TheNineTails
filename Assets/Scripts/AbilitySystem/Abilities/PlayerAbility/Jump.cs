@@ -17,8 +17,6 @@ public class Jump : GameplayAbility, ITickable
     private int _jumpCount;
     private float _jumpPower;
     private bool isJumpKeyDown;
-    private readonly int _parameterID = Animator.StringToHash("Jump");
-    private readonly string _animationName = "Jump";
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -36,22 +34,23 @@ public class Jump : GameplayAbility, ITickable
         _jumpCount = 0;
     }
 
+    protected override bool CanActivate()
+    {
+        if (_jumpCount < _maxJumpCount || _characterMovement.CheckIsClimbing())
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
     protected override void Activate()
     {
         _playerController.OnJumpCanceled += JumpCanceled;
         isJumpKeyDown = true;
-
-        if (_jumpCount < _maxJumpCount || _characterMovement.CheckIsClimbing())
-        {
-            _jumpCount++;
-            _characterMovement.Jump(_jumpPower);
-            _animator.SetBool(_parameterID, false);
-            _characterMovement.SetIsJumping(true);
-        }
-        else
-        {
-            _playerController.OnDisableJump();
-        }
+        
+        _jumpCount++;
+        _characterMovement.Jump(_jumpPower);
     }
 
     public void Update()
@@ -75,19 +74,11 @@ public class Jump : GameplayAbility, ITickable
             if (_characterMovement.CheckIsGround())
             {
                 _jumpCount = 0;
-                _characterMovement.SetIsJumping(false);
                 if (_playerController != null)
                 {
                     this.DelayOneFrame().Forget();
-                    _playerController.OnEnableJump();
                 }
             }
-        }
-        
-        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        if (_animatorStateInfo.IsName(_animationName) && _animatorStateInfo.normalizedTime >= 1)
-        {
-            _characterMovement.SetIsJumping(false);
         }
     }
 
