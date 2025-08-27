@@ -92,6 +92,11 @@ public class CharacterMovement : MonoBehaviour
         return new Vector2(_sprite.flipX ? -1 : 1, 0);
     }
 
+    public Vector2 GetVelocity()
+    {
+        return _rigidBody.velocity;
+    }
+
     public void Move(Vector2 direction)
     {
         _nextDirection = direction;
@@ -107,16 +112,6 @@ public class CharacterMovement : MonoBehaviour
     {
         float cancelForce = _rigidBody.velocity.y * (-1) * _rigidBody.mass;
         _rigidBody.AddForce(direction * (cancelForce + jumpPower), ForceMode2D.Impulse);
-    }
-
-    public void SetIsJumping(bool isJumping)
-    {
-        _isJumping = isJumping;
-    }
-
-    public bool GetIsJumping()
-    {
-        return _isJumping;
     }
 
     public void ClimbState()

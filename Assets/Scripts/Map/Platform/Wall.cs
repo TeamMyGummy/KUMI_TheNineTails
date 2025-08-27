@@ -50,13 +50,13 @@ public class Wall : MonoBehaviour
             {
                 if (other.bounds.center.y > _wallBounds.max.y)
                 {
-                    other.gameObject.GetComponent<Player>().LedgeClimb(true);
+                    //other.gameObject.GetComponent<Player>().LedgeClimb(true);
                     if(_cm.GetCharacterDirection() == Vector2.up)
                         _cm.Jump(4.0f);
                 }
                 else
                 {
-                    other.gameObject.GetComponent<Player>().LedgeClimb(false);
+                    //other.gameObject.GetComponent<Player>().LedgeClimb(false);
                 }
             }
         }

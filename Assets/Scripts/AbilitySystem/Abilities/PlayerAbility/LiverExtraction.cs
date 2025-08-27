@@ -25,6 +25,7 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         base.Activate();
         
         _task.Execute();
+        Actor.GetComponent<Player>().ChangeState(PlayerStateType.LiverExtraction);
         
         SkillTimer(1.0f).Forget();
     }
@@ -38,6 +39,7 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
             _skillTime -= Time.deltaTime;
             await UniTask.Yield();
         }
+        Actor.GetComponent<Player>().ChangeState(PlayerStateType.Idle);
         _task.Canceled();;
     }
 }

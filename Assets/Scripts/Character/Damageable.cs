@@ -27,7 +27,7 @@ public class Damageable : MonoBehaviour
             CharacterMovement cm = GetComponent<CharacterMovement>();
             Vector2 knockbackDirection = cm.GetCharacterSpriteDirection() * (-1);
             cm.ApplyKnockback(knockbackDirection, 6f, 0.3f);
-            GetComponent<Player>().Hurt();
+            //GetComponent<Player>().Hurt();
         }
     }
     
@@ -53,7 +53,7 @@ public class Damageable : MonoBehaviour
         {
             CharacterMovement cm = GetComponent<CharacterMovement>();
             cm.ApplyKnockback(direction, 6f, 0.3f);
-            GetComponent<Player>().Hurt();
+            //GetComponent<Player>().Hurt();
         }
     }
     
