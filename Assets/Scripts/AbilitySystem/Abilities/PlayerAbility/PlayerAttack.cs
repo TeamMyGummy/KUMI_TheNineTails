@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
 {
-    private Animator _animator;
+    private Player _player;
     private AnimatorStateInfo _animatorStateInfo;
     private AttackRange _attackRange;
     
@@ -20,7 +20,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
         IsTickable = true;
         _attackCount = 0;
         
-        _animator = Actor.GetComponent<Animator>();
+        _player = Actor.GetComponent<Player>();
         _attackRange = Actor.GetComponentInChildren<AttackRange>();
     }
     
@@ -31,7 +31,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
     {
         base.Activate();
 
-        if (_attackRange != null && _animator != null)
+        if (_attackRange != null && _player != null)
         {
             switch (_attackCount)
             {
@@ -54,7 +54,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
 
     public void Update()
     {
-        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        _animatorStateInfo = _player.Animator.GetCurrentAnimatorStateInfo(0);
         if (_animatorStateInfo.IsName(_currentAnimationName) && _animatorStateInfo.normalizedTime >= 1)
         {
             EndAttack();
@@ -88,7 +88,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
         _attackRange.EnableAttackCollider(true);
         
         // Animation 설정
-        _animator.SetInteger(_parameterID, attackCount);
+        _player.Animator.SetInteger(_parameterID, attackCount);
         _currentAnimationName =  _animationNames[attackCount - 1];
         if (attackCount == 3)
         {
@@ -101,8 +101,9 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
     private void EndAttack()
     {
         _attackRange.EnableAttackCollider(false);
-        _animator.SetInteger(_parameterID, 0);
+        _player.Animator.SetInteger(_parameterID, 0);
         ResetAttackCount();
+        _player.ChangeState(PlayerStateType.Idle);
     }
 
     private void ResetAttackCount()

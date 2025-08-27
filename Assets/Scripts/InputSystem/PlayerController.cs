@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using GameAbilitySystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 /*
@@ -16,15 +17,27 @@ public class PlayerController : MonoBehaviour, IMovement
     private Player _player;
     private CharacterMovement _characterMovement;
     private WallClimb _wallClimb;
-    private AbilitySystem _asc;
+    
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
     private TailBox _tailBox;
     private NpcObject _npcObject;
-    private Vector2 _direction;
     private MaxHpItem _maxHpItem;
     private FoxFireItem _foxFireItem;
 
+    private Vector2 _direction;
+    
+    // ------------- Input Values ---------------
+    public Vector2 MoveInput { get; private set; }
+    public Vector2 ClimbInput { get; private set; }
+    public bool JumpPressed { get; private set; }
+    public bool DashPressed { get; private set; }
+    public bool AttackPressed { get; private set; }
+    public bool ParryingPressed { get; private set; }
+    public bool FoxFirePressed { get; private set; }
+    public bool LiverExtractionPressed { get; private set; }
+    
+    
     public event System.Action OnJumpCanceled;
     public event System.Action OnParryingCanceled;
     
@@ -36,17 +49,9 @@ public class PlayerController : MonoBehaviour, IMovement
         _player = GetComponent<Player>();
         _characterMovement = GetComponent<CharacterMovement>();
         _wallClimb = new WallClimb(gameObject);
-        
-        DomainFactory.Instance.GetDomain(DomainKey.Player, out _asc);
-        _asc.SetSceneState(gameObject);
     }
     private void Start()
     {
-        /*_asc.GrantAbility(AbilityKey.Jump, AbilityName.Jump);
-        _asc.GrantAbility(AbilityKey.Dash, AbilityName.Dash);
-        _asc.GrantAbility(AbilityKey.DoubleJump, AbilityName.DoubleJump);*/
-        _asc.GrantAllAbilities();
-        
         OnEnableAllInput();
 
 #if !UNITY_EDITOR
@@ -55,16 +60,6 @@ public class PlayerController : MonoBehaviour, IMovement
         Debug.Log("[Player] 개발 중에는 E로 저장된 포인트로 돌아가지 않습니다. ");
         //이런 종류의 것들이 더 생기면 에디터 단에서 설정할 수 있는 걸 만들겠음
     }
-
-    /*private void FixedUpdate()
-    {
-        // WallClimb
-        if (_characterMovement.CheckIsWallClimbing() && _wallClimb.IsCharacterReachedTop() && _wallClimb.GetState() == WallClimb.WallClimbState.Climbing)
-        {
-            _wallClimb.OnReachedTop();
-            OnDisableAllInput();
-        }
-    }*/
 
     //스폰된 플레이어를 영구 저장 위치(마지막으로 저장한 호롱불)로 옮김
     private void RespawnPlayer()
@@ -86,18 +81,19 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- Move ---------------------------
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        if(inputDirection.x != 0) _direction = inputDirection;
+        MoveInput = ctx.ReadValue<Vector2>();
+        if (MoveInput != Vector2.zero) _direction = MoveInput;
         
-        if (!_characterMovement.CheckIsClimbing())
+        if (!_player.StateMachine.IsCurrentState(PlayerStateType.WallClimb) &&
+            !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb))
         {
-            _characterMovement.Move(inputDirection);
+            _characterMovement.Move(MoveInput);
         }
     }
 
     public void SetDirection(Vector2 direction)
     {
-        _direction = direction;
+        MoveInput = direction;
     }
 
     public void OnEnableMove()
@@ -113,13 +109,14 @@ public class PlayerController : MonoBehaviour, IMovement
     // ------------------------- WallClimb ------------------------
     public void OnWallClimb(InputAction.CallbackContext ctx)
     {
-        Vector2 inputDirection = ctx.ReadValue<Vector2>();
-        if(inputDirection.x != 0) _direction = inputDirection;
+        ClimbInput = ctx.ReadValue<Vector2>();
+        if(ClimbInput.x != 0) _direction = ClimbInput;
         
-        if (_characterMovement.CheckIsClimbing())
+        if (!_player.StateMachine.IsCurrentState(PlayerStateType.WallClimb) ||
+            !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb))
         {
-             _characterMovement.Move(inputDirection);
-             _wallClimb.SetWallClimbState(inputDirection);             
+             _characterMovement.Move(ClimbInput);
+             _wallClimb.SetWallClimbState(ClimbInput);             
         }
     }
 
@@ -169,6 +166,8 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- Jump ---------------------------
     public void OnJump(InputAction.CallbackContext ctx)
     {
+        JumpPressed = ctx.performed;
+        
         if (ctx.started)
         {
             if (_characterMovement.CheckIsClimbing() &&
@@ -194,8 +193,6 @@ public class PlayerController : MonoBehaviour, IMovement
             if (_characterMovement.GetCharacterDirection() != Vector2.up &&
                 _characterMovement.GetCharacterDirection() != Vector2.down)
             {
-                _asc.TryActivateAbility(AbilityKey.DoubleJump);
-            
                 if (_characterMovement.CheckIsRopeClimbing())
                 {
                     _characterMovement.EndRopeClimbState();
@@ -211,6 +208,13 @@ public class PlayerController : MonoBehaviour, IMovement
         } 
     }
 
+    public bool IsJumpPressed()
+    {
+        bool pressed = JumpPressed;
+        JumpPressed = false; // 한 번만 읽도록 리셋
+        return pressed;
+    }
+    
     public void OnEnableJump()
     {
         _playerInput.actions["Jump"].Enable();
@@ -225,17 +229,16 @@ public class PlayerController : MonoBehaviour, IMovement
 
     public void OnDash(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
-        {
-            _asc.TryActivateAbility(AbilityKey.Dash);
-            OnDisableJump();
-        }
-        else if (ctx.canceled)
-        {
-            OnEnableJump();
-        }
+        DashPressed = ctx.performed;
     }
 
+    public bool IsDashPressed()
+    {
+        bool pressed = DashPressed;
+        DashPressed = false; // 한 번만 읽도록 리셋
+        return pressed;
+    }
+    
     public void OnEnableDash()
     {
         _playerInput.actions["Dash"].Enable();
@@ -249,12 +252,16 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- Attack ---------------------------
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
-        {
-            _asc.TryActivateAbility(AbilityKey.PlayerAttack);
-        }
+        AttackPressed = ctx.performed;
     }
 
+    public bool IsAttackPressed()
+    {
+        bool pressed = AttackPressed;
+        AttackPressed = false; // 한 번만 읽도록 리셋
+        return pressed;
+    }
+    
     public void OnEnableAttack()
     {
         _playerInput.actions["Attack"].Enable();
@@ -268,16 +275,21 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- Parrying ---------------------------
     public void OnParrying(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
-        {
-            _asc.TryActivateAbility(AbilityKey.Parrying);
-        }
-        else if (ctx.canceled)
+        ParryingPressed = ctx.performed;
+        
+        if (ctx.canceled)
         {
             OnParryingCanceled?.Invoke();
         } 
     }
 
+    public bool IsParryingPressed()
+    {
+        bool pressed = ParryingPressed;
+        ParryingPressed = false; // 한 번만 읽도록 리셋
+        return pressed;
+    }
+    
     public void OnEnableParrying()
     {
         _playerInput.actions["Parrying"].Enable();
@@ -291,10 +303,14 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- FoxFire ---------------------------
     public void OnFoxFire(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
-        {
-            _asc.TryActivateAbility(AbilityKey.FoxFire);
-        }
+        FoxFirePressed = ctx.performed;
+    }
+    
+    public bool IsFoxFirePressed()
+    {
+        bool pressed = FoxFirePressed;
+        FoxFirePressed = false; // 한 번만 읽도록 리셋
+        return pressed;
     }
     
     public void OnEnableFoxFire()
@@ -310,10 +326,14 @@ public class PlayerController : MonoBehaviour, IMovement
     // --------------------------- Liver Extraction ---------------------------
     public void OnLiverExtraction(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
-        {
-            _asc.TryActivateAbility(AbilityKey.LiverExtraction);
-        }
+        LiverExtractionPressed = ctx.performed;
+    }
+    
+    public bool IsLiverExtractionPressed()
+    {
+        bool pressed = LiverExtractionPressed;
+        LiverExtractionPressed = false; // 한 번만 읽도록 리셋
+        return pressed;
     }
     
     public void OnEnableLiverExtraction()
