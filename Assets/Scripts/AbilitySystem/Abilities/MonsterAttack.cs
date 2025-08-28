@@ -23,7 +23,7 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
         _attackData = abilitySo as MonsterAttackSO;
     }
 
-    protected override bool CanActivate()
+    public override bool CanActivate()
     {
         return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
     }

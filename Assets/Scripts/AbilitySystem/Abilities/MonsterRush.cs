@@ -20,7 +20,7 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         _rushData = abilitySo as MonsterRushSO;
     }
 
-    protected override bool CanActivate()
+    public override bool CanActivate()
     {
         if (Asc.TagContainer.Has(GameplayTags.BlockRunningAbility))
             return false;

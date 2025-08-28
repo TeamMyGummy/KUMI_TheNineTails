@@ -46,7 +46,7 @@ namespace GameAbilitySystem
         /// 해당 함수를 override 해서 Ability 실행 여부를 결정할 수 있음.
         /// </summary>
         /// <returns>실행 가능 여부</returns>
-        protected virtual bool CanActivate()
+        public virtual bool CanActivate()
         { 
             return !Asc.TagContainer.Has(GameplayTags.BlockRunningAbility);
         }
