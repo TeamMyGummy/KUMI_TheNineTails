@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 843916133627300582}
   - component: {fileID: 4404025548794291991}
   - component: {fileID: 803589422651736938}
-  - component: {fileID: 5680982817437661527}
   - component: {fileID: 4935978686406604255}
   - component: {fileID: 7474569178510274097}
   - component: {fileID: 1875723059815297661}
@@ -190,21 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5927b46eaba8a449f61361d6ca3319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5680982817437661527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3596988480106299404}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f210e56167f7ea746bd281bf660d3487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: af74c69d85a44c140a7c4e42e2b42cf6, type: 2}
-  abilitySystemPath: Monster/Monster6_1
-  abilityKey: 102
 --- !u!114 &4935978686406604255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +233,9 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   gravity: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8200
 --- !u!114 &1018038174641037786
 MonoBehaviour:
   m_ObjectHideFlags: 0
