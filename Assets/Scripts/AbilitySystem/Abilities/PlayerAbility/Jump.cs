@@ -36,7 +36,7 @@ public class Jump : GameplayAbility, ITickable
         _jumpCount = 0;
     }
 
-    protected override bool CanActivate()
+    public override bool CanActivate()
     {
         if (_jumpCount < _maxJumpCount || 
             _player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) ||
