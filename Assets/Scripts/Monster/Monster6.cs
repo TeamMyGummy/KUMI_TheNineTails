@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster6_1 : Monster
+public class Monster6 : Monster
 {
     public AbilityKey abilityKey = AbilityKey.MonsterAttack;
     public AbilityKey abilityKey2 = AbilityKey.MonsterDoubleAttack;
