@@ -28,8 +28,8 @@ TagManager:
   - BlockingObject
   - FloatingPlatform
   - MovingPlatform
-  - 
-  - 
+  - GraspableWall
+  - Rope
   - 
   - 
   - 

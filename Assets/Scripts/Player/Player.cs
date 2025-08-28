@@ -8,7 +8,7 @@ using FixedUpdate = UnityEngine.PlayerLoop.FixedUpdate;
 
 /*
  * 플레이어의 기본 정보를 관리하는 파일입니다.
- * 변하지 않는 변수, 설정값 등
+ * Player 상태, 상수값 등
  */
 public class Player : MonoBehaviour
 {
@@ -78,13 +78,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerStateMachine.FixedUpdate();
-
         _canFlip = !StateMachine.IsCurrentState(PlayerStateType.WallClimb);
         
-        if (_playerController.Direction.x != 0 && _canFlip)
+        if (_playerController.MoveInput.x != 0 && _canFlip)
         {
-            _spriteRenderer.flipX = _playerController.Direction.x < 0;
+            _spriteRenderer.flipX = _playerController.MoveInput.x < 0;
         }
         
     }
@@ -119,8 +117,41 @@ public class Player : MonoBehaviour
     /// </summary>
     public void FlipSprite()
     {
-        //_spriteRenderer.flipX = _characterMovement.GetCharacterSpriteDirection().x > 0 ? true : false;
-        _playerController.SetDirection(_characterMovement.GetCharacterSpriteDirection() * (-1));
+        _spriteRenderer.flipX = _characterMovement.GetCharacterSpriteDirection().x > 0 ? true : false;
+        //_playerController.SetDirection(_characterMovement.GetCharacterSpriteDirection() * (-1));
     }
 
+    public Collider2D MakeOverlapHitBox(int layerMask)
+    {
+        Vector2 center = GetComponent<Collider2D>().bounds.center;
+        return Physics2D.OverlapCircle(center, 0.55f, layerMask);
+    }
+    
+    public bool CanWallClimb()
+    {
+        Collider2D hit = MakeOverlapHitBox(LayerMask.GetMask("GraspableWall"));
+        
+        if (hit != null)
+        {
+            // 오브젝트가 있는 방향으로 향할 때만 벽타기 가능
+            Vector2 objectDir = hit.transform.position.x - transform.position.x > 0 ? Vector2.right : Vector2.left;
+            return _characterMovement.GetCharacterSpriteDirection() ==  objectDir;
+        }
+
+        return false;
+    }
+    
+    public bool CanRopeClimb()
+    {
+        return MakeOverlapHitBox(LayerMask.GetMask("Rope"));
+        
+        // 윗 방향키 누르고 있을 때
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Vector2 center = GetComponent<Collider2D>().bounds.center;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(center, 0.55f);
+    }
 }

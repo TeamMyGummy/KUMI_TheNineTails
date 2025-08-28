@@ -38,7 +38,7 @@ public class CharacterMovement : MonoBehaviour
     {
         _isGround = CheckIsGround();
         
-        if (_isGround || CheckIsClimbing())
+        if (_isGround || _rigidBody.gravityScale == 0)
         {
             // Move
             // 땅에 있을 때: 즉시 반응
@@ -120,6 +120,11 @@ public class CharacterMovement : MonoBehaviour
         _rigidBody.velocity = Vector2.zero;
         _rigidBody.gravityScale = 0;
     }
+    
+    public void EndClimbState()
+    {
+        _rigidBody.gravityScale = gravity;
+    }
 
     /// <summary>
     /// 넉백 효과를 적용하는 함수
@@ -183,47 +188,6 @@ public class CharacterMovement : MonoBehaviour
     public bool IsKnockedBack()
     {
         return _isKnockedBack;
-    }
-    
-    public void StartWallClimbState()
-    {
-        // 벽타기 상태
-        ClimbState();
-        _isWallClimbing = true;
-    }
-
-    public void EndWallClimbState()
-    {
-        _rigidBody.gravityScale = gravity;
-        _isWallClimbing = false;
-    }
-
-    public void StartRopeClimbState()
-    {
-        // 밧줄 타기 상태
-        ClimbState();
-        _isRopeClimbing = true;
-    }
-
-    public void EndRopeClimbState()
-    {
-        _rigidBody.gravityScale = gravity;
-        _isRopeClimbing = false;
-    }
-
-    public bool CheckIsWallClimbing()
-    {
-        return _isWallClimbing;
-    }
-
-    public bool CheckIsRopeClimbing()
-    {
-        return _isRopeClimbing;
-    }
-
-    public bool CheckIsClimbing()
-    {
-        return _isWallClimbing || _isRopeClimbing;
     }
     
     /// <summary>
