@@ -135,7 +135,18 @@ public class Player : MonoBehaviour
         {
             // 오브젝트가 있는 방향으로 향할 때만 벽타기 가능
             Vector2 objectDir = hit.transform.position.x - transform.position.x > 0 ? Vector2.right : Vector2.left;
-            return _characterMovement.GetCharacterSpriteDirection() ==  objectDir;
+
+            if (_characterMovement.GetCharacterSpriteDirection() == objectDir)
+            {
+                // 벽과 플레이어 사이의 거리 계산
+                Collider2D playerCol = _characterMovement.GetComponent<Collider2D>();
+                Vector2 playerClosest = playerCol.ClosestPoint(hit.transform.position);
+                Vector2 wallClosest = hit.ClosestPoint(playerCol.transform.position);
+                float distance = Math.Abs(playerClosest.x - wallClosest.x);
+                
+                // 특정 거리 이내면 true
+                return distance < 0.3f && distance > 0.02f;
+            }
         }
 
         return false;
