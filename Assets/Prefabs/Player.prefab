@@ -460,6 +460,9 @@ MonoBehaviour:
   acceleration: 10
   deceleration: 8
   gravity: 2.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 57352
 --- !u!114 &5537918733458322441
 MonoBehaviour:
   m_ObjectHideFlags: 0

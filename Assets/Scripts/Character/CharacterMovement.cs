@@ -7,12 +7,15 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
+    private Collider2D _collider;
     private SpriteRenderer _sprite;
 
     [SerializeField] [Range(0.0f, 10.0f)] private float speed;
     [SerializeField] [Range(0.0f, 10.0f)] private float acceleration; // 가속도
     [SerializeField] [Range(0.0f, 10.0f)] private float deceleration;  // 감속도
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
+    [SerializeField] private LayerMask groundMask;  // 땅으로 인식되는 Layer
+
     public float Gravity => gravity;
 
     private Vector2 _nextDirection;
@@ -26,6 +29,7 @@ public class CharacterMovement : MonoBehaviour
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
         _sprite = GetComponent<SpriteRenderer>();
         _rigidBody.gravityScale = gravity;
     }
@@ -233,8 +237,10 @@ public class CharacterMovement : MonoBehaviour
     /// <returns>true: 땅에 있음 false: 땅에 있지 않음</returns>
     public bool CheckIsGround()
     {
-        Debug.DrawRay(_rigidBody.position, Vector2.down * 5f, new Color(1, 0, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(_rigidBody.position, Vector2.down, 5, LayerMask.GetMask("Platform", "MovingPlatform", "FloatingPlatform"));
+        Vector2 rayPos = new Vector2(_collider.bounds.center.x, _collider.bounds.min.y);
+        Debug.DrawRay(rayPos, Vector2.down * 2f, new Color(1, 0, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rayPos, Vector2.down, 2, groundMask);
+        
         if (rayHit.collider != null)
         {
             if (rayHit.distance < 0.1f)
