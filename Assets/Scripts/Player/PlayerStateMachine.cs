@@ -240,7 +240,7 @@ public class JumpState : PlayerState
 
     public override void Update()
     {
-        if (Player.Movement.CheckIsGround())
+        if (Player.Movement.GetVelocity().y <= 0 && Player.Movement.CheckIsGround())
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
