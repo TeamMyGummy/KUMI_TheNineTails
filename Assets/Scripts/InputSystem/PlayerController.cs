@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour, IMovement
     private PlayerInput _playerInput;
     private Player _player;
     private CharacterMovement _characterMovement;
-    private WallClimb _wallClimb;
     
     private LanternObject _lanternObject;
     private HPRefillStation _hpRefillStation;
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviour, IMovement
         _playerInput = GetComponent<PlayerInput>();
         _player = GetComponent<Player>();
         _characterMovement = GetComponent<CharacterMovement>();
-        _wallClimb = new WallClimb(gameObject);
     }
     private void Start()
     {
@@ -83,17 +81,18 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         MoveInput = ctx.ReadValue<Vector2>();
         if (MoveInput != Vector2.zero) _direction = MoveInput;
-        
+
         if (!_player.StateMachine.IsCurrentState(PlayerStateType.WallClimb) &&
             !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb))
         {
-            _characterMovement.Move(MoveInput);
+            _characterMovement.Move(MoveInput); 
         }
+        
     }
 
     public void SetDirection(Vector2 direction)
     {
-        MoveInput = direction;
+        _direction = direction;
     }
 
     public void OnEnableMove()
@@ -111,33 +110,11 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         ClimbInput = ctx.ReadValue<Vector2>();
         if(ClimbInput.x != 0) _direction = ClimbInput;
-        
-        if (!_player.StateMachine.IsCurrentState(PlayerStateType.WallClimb) ||
-            !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb))
-        {
-             _characterMovement.Move(ClimbInput);
-             _wallClimb.SetWallClimbState(ClimbInput);             
-        }
     }
 
     public bool IsPressedClimbKey()
     {
         return _playerInput.actions["WallClimb"].IsPressed();
-    }
-
-    public void StartWallClimb(GameObject wall)
-    {
-        _wallClimb.SetCurrentWall(wall);
-        OnDisableAllInput();
-        OnEnableWallClimb();
-        OnEnableJump();
-        OnEnableMove();
-    }
-
-    public void EndWallClimb()
-    {
-        _wallClimb.Reset();
-        OnEnableAllInput();
     }
 
     public void StartRopeClimb()
@@ -168,40 +145,7 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         JumpPressed = ctx.performed;
         
-        if (ctx.started)
-        {
-            if (_characterMovement.CheckIsClimbing() &&
-                _characterMovement.GetCharacterDirection() != Vector2.up &&
-                _characterMovement.GetCharacterDirection() != Vector2.down)
-            {
-                int jumpDir = _characterMovement.CheckIsWallClimbing() ? -1 : 1;
-                
-                if(_playerInput.actions["Move"].IsPressed() && 
-                   (jumpDir == 1 || _direction != _characterMovement.GetCharacterSpriteDirection()))
-                {
-                    // climb 중 방향키를 누르고 있었을 때
-                    _characterMovement.Move(_characterMovement.GetCharacterSpriteDirection() * jumpDir);
-                }
-                else{
-                    _characterMovement.Jump(2.0f, _characterMovement.GetCharacterSpriteDirection() * jumpDir);
-                    if(jumpDir == -1) _player.FlipSprite();
-                }
-            }
-        }
-        else if (ctx.performed)
-        {
-            if (_characterMovement.GetCharacterDirection() != Vector2.up &&
-                _characterMovement.GetCharacterDirection() != Vector2.down)
-            {
-                if (_characterMovement.CheckIsRopeClimbing())
-                {
-                    _characterMovement.EndRopeClimbState();
-                    EndRopeClimb();
-                }                
-            }
-
-        }
-        else if (ctx.canceled)
+        if (ctx.canceled)
         {
             OnJumpCanceled?.Invoke();
             OnJumpCanceled = null;

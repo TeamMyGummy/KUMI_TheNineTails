@@ -6,6 +6,7 @@ using GameAbilitySystem;
 
 public class Jump : GameplayAbility, ITickable
 {
+    private Player _player;
     private Rigidbody2D _rigidBody;
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
@@ -26,6 +27,7 @@ public class Jump : GameplayAbility, ITickable
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();
         _animator = Actor.GetComponent<Animator>();
+        _player = Actor.GetComponent<Player>();
         
         IsTickable = true;
         _jumpSO = (JumpSO) abilitySo;
@@ -36,7 +38,9 @@ public class Jump : GameplayAbility, ITickable
 
     protected override bool CanActivate()
     {
-        if (_jumpCount < _maxJumpCount || _characterMovement.CheckIsClimbing())
+        if (_jumpCount < _maxJumpCount || 
+            _player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) ||
+            _player.StateMachine.IsCurrentState(PlayerStateType.WallClimb))
         {
             return true;
         }

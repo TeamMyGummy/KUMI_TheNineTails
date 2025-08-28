@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameAbilitySystem;
+using Unity.VisualScripting;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 // Enum: Player State
 public enum PlayerStateType
@@ -42,7 +44,6 @@ public abstract class PlayerState
     public virtual bool CanChangeState(PlayerStateType newStateType) { return true; }
     public virtual void Enter() { }
     public virtual void Update() { }
-    public virtual void FixedUpdate() { }
     public virtual void Exit() { }
 
     public PlayerStateType GetStateType()
@@ -94,11 +95,6 @@ public class PlayerStateMachine
     public void Update()
     {
         _currentState?.Update();
-    }
-
-    public void FixedUpdate()
-    {
-        _currentState?.FixedUpdate();
     }
     
     /// <summary>
@@ -195,6 +191,8 @@ public class RunState : PlayerState
     
     public override void Update()
     {
+        Player.Movement.Move(Player.Controller.MoveInput); 
+        
         if (Player.Controller.MoveInput == Vector2.zero)
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
@@ -242,7 +240,7 @@ public class JumpState : PlayerState
 
     public override void Update()
     {
-        if (Player.Movement.GetVelocity().y < 0 && Player.Movement.CheckIsGround())
+        if (Player.Movement.CheckIsGround())
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
@@ -257,11 +255,11 @@ public class JumpState : PlayerState
         {
             Player.StateMachine.ChangeState(PlayerStateType.Fall);
         }
-        else if (Player.Movement.CheckIsWallClimbing())
+        else if (Player.CanWallClimb())
         {
             Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
         }
-        else if (Player.Movement.CheckIsRopeClimbing())
+        else if (Player.CanRopeClimb())
         {
             Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
         }
@@ -313,11 +311,11 @@ public class FallState : PlayerState
         {
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
-        else if (Player.Movement.CheckIsWallClimbing())
+        else if (Player.CanWallClimb())
         {
             Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
         }
-        else if (Player.Movement.CheckIsRopeClimbing())
+        else if (Player.CanRopeClimb())
         {
             Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
         }
@@ -399,22 +397,81 @@ public class DieState : PlayerState
 public class WallClimbState : PlayerState
 {
     public WallClimbState(Player player) : base(player, PlayerStateType.WallClimb){}
+
+    private enum WallClimbStates
+    {
+        Idle,
+        Climbing,
+        Ledge
+    }
+
+    private enum WallType
+    {
+        Normal,
+        PlatformAbove
+    }
+
+    private WallClimbStates _state;
+    private WallType _type;
+    private WallClimbActions _actions;
+    
+    private Collider2D _currentWall;
+    private Collider2D _playerCollider;
+    private bool _ledge;    // ledge에 도달했는지 확인
     
     public override void Enter()
     {
         base.Enter();
         
         Player.SetAnimatorBool(Player.WallClimbID, true);
+        Player.Movement.ClimbState();
+        
+        _state = WallClimbStates.Idle;
+        _currentWall = Player.MakeOverlapHitBox(LayerMask.GetMask("GraspableWall"));
+        _playerCollider = Player.GetComponent<Collider2D>();
+        _actions = new WallClimbActions(Player, _currentWall);
+
+        _ledge = false;
+        
+        // 벽 타입 체크
+        _type = _actions.CheckPlatformAboveWall() ? WallType.PlatformAbove : WallType.Normal;
     }
 
     public override void Update()
     {
-        if (Player.Movement.CheckIsGround())
+        switch (_state)
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Idle);
+            case WallClimbStates.Idle:
+                Idle();
+                break;
+            case WallClimbStates.Climbing:
+                Climbing();
+                break;
+            case WallClimbStates.Ledge:
+                if(!_ledge)
+                    OnLedge();
+                break;
+            default:
+                Debug.Log("WallClimbStates not implemented");
+                break;
         }
-        else if (Player.Controller.IsJumpPressed())
+        
+        if (_type == WallType.Normal && _actions.IsCharacterReachedTop())
         {
+            _state = WallClimbStates.Ledge;
+        }
+        else if (Player.Controller.ClimbInput == Vector2.zero)
+        {
+            _state = WallClimbStates.Idle;
+        }
+        else if (Player.Controller.ClimbInput != Vector2.zero)
+        {
+            _state = WallClimbStates.Climbing;
+        }
+        
+        if (Player.Controller.IsJumpPressed())
+        {
+            _actions.WallJump();
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (Player.Controller.IsAttackPressed())
@@ -432,6 +489,51 @@ public class WallClimbState : PlayerState
         base.Exit();
         
         Player.SetAnimatorBool(Player.WallClimbID, false);
+        Player.Movement.EndClimbState();
+    }
+
+    private void Idle()
+    {
+        _ledge = false;
+        Player.SetAnimatorBool(Player.EndClimbID, false);
+        Player.SetAnimatorBool(Player.IsClimbingID, false);
+    }
+    
+    private void Climbing()
+    {
+        if (_type == WallType.PlatformAbove)
+        {
+            if (!Player.CanWallClimb())
+            {
+                Player.Movement.Move(Vector2.zero);  
+                Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                return;
+            }
+        }
+        _ledge = false;
+        Player.SetAnimatorBool(Player.EndClimbID, false);
+        Player.SetAnimatorBool(Player.IsClimbingID, true);
+      
+        // 이동
+        Player.Movement.Move(Player.Controller.ClimbInput);          
+    }
+    
+    private void OnLedge()
+    {
+        _ledge = true;
+        Player.SetAnimatorBool(Player.EndClimbID, true);
+        
+        Player.Movement.Move(Vector2.zero);
+        Player.StateMachine.ChangeState(PlayerStateType.Fall);
+        
+        Vector2 startPos = _playerCollider.bounds.min;
+        Vector2 targetPos = new Vector3(
+            _currentWall.bounds.center.x,
+            _currentWall.bounds.max.y + 0.5f  // 벽 위쪽 약간 위
+        );
+        
+        // 벽 위로 위치 이동
+        _actions.MoveToWallTop(startPos, targetPos).Forget();
     }
 }
 
@@ -444,6 +546,7 @@ public class RopeClimbState : PlayerState
         base.Enter();
         
         Player.SetAnimatorBool(Player.RopeClimbID, true);
+        Player.Movement.ClimbState();
     }
     
     public override void Update()
@@ -471,6 +574,7 @@ public class RopeClimbState : PlayerState
         base.Exit();
         
         Player.SetAnimatorBool(Player.RopeClimbID, false);
+        Player.Movement.EndClimbState();
     }
 }
 
