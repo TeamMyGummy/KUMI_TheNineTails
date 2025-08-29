@@ -7,7 +7,8 @@ using UnityEngine;
 public class Rope : MonoBehaviour
 {
     private List<(Transform child, Vector2 originPos)> _segments = new List<(Transform, Vector2)>();
-    
+
+    private Player _player;
     private CharacterMovement _cm;
     private PlayerController _pc;
 
@@ -27,22 +28,21 @@ public class Rope : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _cm = other.gameObject.GetComponent<CharacterMovement>();
-            _pc = other.gameObject.GetComponent<PlayerController>();
-
-            _prePressedKey = _pc.IsPressedClimbKey(); // 미리 누르고 있었는지
+            _player = other.gameObject.GetComponent<Player>();
+            _cm = _player.Movement;
+            _pc = _player.Controller;
+            _prePressedKey = _player.Controller.ClimbInput != Vector2.zero; // 미리 누르고 있었는지
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && _cm != null && _pc != null)
+        if (other.CompareTag("Player"))
         {
-            if (!_cm.CheckIsGround() && !_cm.CheckIsRopeClimbing() && _pc.IsPressedClimbKey() && !_prePressedKey)
+            if (!_cm.CheckIsGround() && !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) && _pc.ClimbInput != Vector2.zero && !_prePressedKey)
             {
-                _cm.StartRopeClimbState();
-                _pc.StartRopeClimb();
-                _cm.Move(Vector2.up);
+                _prePressedKey = true;
+                _player.OnRopeClimbAvailable?.Invoke(true);
                 other.transform.position = new Vector2(transform.position.x, other.transform.position.y);
 
                 for (int i = 0; i < transform.childCount; i++)
@@ -57,13 +57,7 @@ public class Rope : MonoBehaviour
     {
         if (other.CompareTag("Player") && _cm != null && _pc != null)
         {
-            // 점프 안 하고 그냥 내려왔을 때
-            if (_cm.CheckIsRopeClimbing())
-            {
-                _cm.EndRopeClimbState();
-                _pc.EndRopeClimb();
-                _cm.Move(Vector2.zero);
-            }
+            _player.OnRopeClimbAvailable?.Invoke(false);
         }
     }
 }

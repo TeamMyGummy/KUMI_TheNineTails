@@ -18,6 +18,12 @@ public class WallClimbActions
         _currentWall = currentWall;
         _playerCollider = _player.GetComponent<Collider2D>();
     }
+
+    public WallClimbActions(Player player)
+    {
+        _player = player;
+        _playerCollider = _player.GetComponent<Collider2D>();
+    }
     
     /// <summary>
     /// 벽 타입 체크 (플랫폼이랑 붙어있는 벽인지, 혼자 있는 벽인지)
@@ -98,6 +104,22 @@ public class WallClimbActions
         {
             // 방향키 입력이 있을 때
             _player.Controller.SetDirection(jumpDir);
+        }
+        
+        _player.Movement.Jump(3.0f, jumpDir);
+    }
+    
+    /// <summary>
+    /// 밧줄 타기 중 점프
+    /// </summary>
+    public void RopeJump()
+    {
+        Vector2 jumpDir = _player.Movement.GetCharacterSpriteDirection();
+
+        if (_player.Controller.MoveInput == Vector2.zero || _player.Controller.ClimbInput != Vector2.zero)
+        {
+            // (방향키 입력 없이 / 위아래로 움직이면서) 점프 했을 때
+            _player.Movement.Move(Vector2.zero);
         }
         
         _player.Movement.Jump(3.0f, jumpDir);
