@@ -112,24 +112,6 @@ public class PlayerController : MonoBehaviour, IMovement
         if(ClimbInput.x != 0) _direction = ClimbInput;
     }
 
-    public bool IsPressedClimbKey()
-    {
-        return _playerInput.actions["WallClimb"].IsPressed();
-    }
-
-    public void StartRopeClimb()
-    {
-        //OnDisableAllInput();
-        OnEnableWallClimb();
-        OnEnableJump();
-        OnEnableMove();
-    }
-
-    public void EndRopeClimb()
-    {
-        OnEnableAllInput();
-    }
-
     public void OnEnableWallClimb()
     {
         _playerInput.actions["WallClimb"].Enable();

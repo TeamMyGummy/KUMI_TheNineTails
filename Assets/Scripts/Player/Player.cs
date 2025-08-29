@@ -46,7 +46,10 @@ public class Player : MonoBehaviour
     public Animator Animator => _animator;
     public AbilitySystem ASC => _asc;
 
+    public System.Action<bool> OnRopeClimbAvailable;
+    
     private bool _canFlip;
+    private bool _canRopeClimb;
 
     private void Awake()
     {
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _asc.GrantAllAbilities();
+        OnRopeClimbAvailable += SetRopeAvailability;
         _canFlip = true;
     }
 
@@ -151,14 +155,17 @@ public class Player : MonoBehaviour
 
         return false;
     }
-    
+
+    private void SetRopeAvailability(bool ropeAvailable)
+    {
+        _canRopeClimb = ropeAvailable;
+    }
     public bool CanRopeClimb()
     {
-        return MakeOverlapHitBox(LayerMask.GetMask("Rope"));
-        
-        // 윗 방향키 누르고 있을 때
+        return _canRopeClimb;
     }
     
+    // 디버깅용
     private void OnDrawGizmos()
     {
         Vector2 center = GetComponent<Collider2D>().bounds.center;

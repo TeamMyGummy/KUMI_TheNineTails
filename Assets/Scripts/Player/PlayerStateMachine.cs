@@ -127,6 +127,10 @@ public class PlayerStateMachine
     {
         return _currentState != null && _currentState.GetStateType() == stateType;
     }
+    public bool IsBeforeState(PlayerStateType stateType)
+    {
+        return _beforeState != null && _beforeState.GetStateType() == stateType;
+    }
 }
 
 
@@ -472,6 +476,7 @@ public class WallClimbState : PlayerState
         if (Player.Controller.IsJumpPressed())
         {
             _actions.WallJump();
+            Player.ASC.TryActivateAbility(AbilityKey.DoubleJump);
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (Player.Controller.IsAttackPressed())
@@ -541,23 +546,63 @@ public class RopeClimbState : PlayerState
 {
     public RopeClimbState(Player player) : base(player, PlayerStateType.RopeClimb){}
     
+    private enum RopeClimbStates
+    {
+        Idle,
+        Climbing,
+    }
+    
+    private RopeClimbStates _state;
+    private WallClimbActions _actions;
+    
     public override void Enter()
     {
         base.Enter();
         
         Player.SetAnimatorBool(Player.RopeClimbID, true);
         Player.Movement.ClimbState();
+        
+        _state = RopeClimbStates.Idle;
+        _actions = new WallClimbActions(Player);
+        
+        Player.Movement.Move(Vector2.up);
     }
     
     public override void Update()
     {
-        if (Player.Movement.CheckIsGround())
+        switch (_state)
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Idle);
+            case RopeClimbStates.Idle:
+                Idle();
+                break;
+            case RopeClimbStates.Climbing:
+                Climbing();
+                break;
+            default:
+                Debug.Log("RopeClimbStates not implemented");
+                break;
         }
-        else if (Player.Controller.IsJumpPressed())
+
+        if (Player.Controller.ClimbInput == Vector2.zero)
         {
+            _state = RopeClimbStates.Idle;
+        }
+        else if (Player.Controller.ClimbInput != Vector2.zero)
+        {
+            _state = RopeClimbStates.Climbing;
+        }
+        
+        if (Player.Controller.IsJumpPressed())
+        {
+            _actions.RopeJump();
+            Player.OnRopeClimbAvailable.Invoke(false);
+            Player.ASC.TryActivateAbility(AbilityKey.DoubleJump);
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
+        }
+        else if (!Player.CanRopeClimb())
+        {
+            Player.Movement.Move(Vector2.zero);
+            Player.StateMachine.ChangeState(PlayerStateType.Fall);
         }
         else if (Player.Controller.IsAttackPressed())
         {
@@ -575,6 +620,21 @@ public class RopeClimbState : PlayerState
         
         Player.SetAnimatorBool(Player.RopeClimbID, false);
         Player.Movement.EndClimbState();
+    }
+
+    private void Idle()
+    {
+        Player.SetAnimatorBool(Player.EndClimbID, false);
+        Player.SetAnimatorBool(Player.IsClimbingID, false);
+    }
+
+    private void Climbing()
+    {
+        Player.SetAnimatorBool(Player.EndClimbID, false);
+        Player.SetAnimatorBool(Player.IsClimbingID, true);
+        
+        // 이동
+        Player.Movement.Move(Player.Controller.ClimbInput);  
     }
 }
 
