@@ -38,9 +38,13 @@ public class Jump : GameplayAbility, ITickable
 
     public override bool CanActivate()
     {
-        if (_jumpCount < _maxJumpCount || 
-            _player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) ||
+        if (_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) ||
             _player.StateMachine.IsCurrentState(PlayerStateType.WallClimb))
+        {
+            // 벽타기 or 밧줄타기 시 무조건 점프 한 번
+            _jumpCount = _maxJumpCount - 1;
+        }
+        if (_jumpCount < _maxJumpCount)
         {
             return true;
         }
