@@ -128,8 +128,10 @@ public class PlayerStateMachine
         return _currentState != null && _currentState.GetStateType() == stateType;
     }
     public bool IsBeforeState(PlayerStateType stateType)
-    {
-        return _beforeState != null && _beforeState.GetStateType() == stateType;
+    { 
+        bool isBefore = _beforeState != null && _beforeState.GetStateType() == stateType;
+        if(isBefore) _beforeState = null; // 한 번만 체크
+        return isBefore;
     }
 }
 
@@ -156,7 +158,8 @@ public class IdleState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Jump);
+            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+                Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (!Player.Movement.CheckIsGround())
         {
@@ -164,19 +167,23 @@ public class IdleState : PlayerState
         }
         else if (Player.Controller.IsDashPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Dash);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Dash))
+                Player.StateMachine.ChangeState(PlayerStateType.Dash);
         }
         else if (Player.Controller.IsAttackPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
+            if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                Player.StateMachine.ChangeState(PlayerStateType.Attack);
         }
         else if (Player.Controller.IsParryingPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Parrying))
+                Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
         else if (Player.Controller.IsFoxFirePressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
+            if(Player.ASC.CanActivateAbility(AbilityKey.FoxFire))
+                Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
     }
     
@@ -203,7 +210,8 @@ public class RunState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Jump);
+            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+                Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (!Player.Movement.CheckIsGround())
         {
@@ -211,19 +219,23 @@ public class RunState : PlayerState
         }
         else if (Player.Controller.IsDashPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Dash);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Dash))
+                Player.StateMachine.ChangeState(PlayerStateType.Dash);
         }
         else if (Player.Controller.IsAttackPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
+            if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                Player.StateMachine.ChangeState(PlayerStateType.Attack);
         }
         else if (Player.Controller.IsParryingPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Parrying))
+                Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
         else if (Player.Controller.IsFoxFirePressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
+            if(Player.ASC.CanActivateAbility(AbilityKey.FoxFire))
+                Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
     }
 }
@@ -239,7 +251,8 @@ public class JumpState : PlayerState
         base.Enter();
         
         Player.SetAnimatorBool(Player.JumpID, true);
-        _ability = Player.ASC.TryActivateAbility(AbilityKey.DoubleJump);
+        //Player.SetAnimatorBool(Player.IsGroundID, true);
+        _ability = Player.ASC.TryActivateAbility(AbilityKey.DoubleJump); 
     }
 
     public override void Update()
@@ -269,19 +282,23 @@ public class JumpState : PlayerState
         }
         else if (Player.Controller.IsDashPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Dash);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Dash))
+                Player.StateMachine.ChangeState(PlayerStateType.Dash);
         }
         else if (Player.Controller.IsAttackPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
+            if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                Player.StateMachine.ChangeState(PlayerStateType.Attack);
         }
         else if (Player.Controller.IsParryingPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Parrying))
+                Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
         else if (Player.Controller.IsFoxFirePressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
+            if(Player.ASC.CanActivateAbility(AbilityKey.FoxFire))
+                Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
     }
     
@@ -313,7 +330,8 @@ public class FallState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Jump);
+            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+                Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (Player.CanWallClimb())
         {
@@ -325,19 +343,23 @@ public class FallState : PlayerState
         }
         else if (Player.Controller.IsDashPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Dash);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Dash))
+                Player.StateMachine.ChangeState(PlayerStateType.Dash);
         }
         else if (Player.Controller.IsAttackPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
+            if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                Player.StateMachine.ChangeState(PlayerStateType.Attack);
         }
         else if (Player.Controller.IsParryingPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
+            if(Player.ASC.CanActivateAbility(AbilityKey.Parrying))
+                Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
         else if (Player.Controller.IsFoxFirePressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
+            if(Player.ASC.CanActivateAbility(AbilityKey.FoxFire))
+                Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
     }
     
@@ -431,11 +453,12 @@ public class WallClimbState : PlayerState
         Player.Movement.ClimbState();
         
         _state = WallClimbStates.Idle;
-        _currentWall = Player.MakeOverlapHitBox(LayerMask.GetMask("GraspableWall"));
+        _currentWall = Player.DrawClimbRay(LayerMask.GetMask("GraspableWall")).collider;
         _playerCollider = Player.GetComponent<Collider2D>();
         _actions = new WallClimbActions(Player, _currentWall);
-
         _ledge = false;
+        
+        Dash.ResetDash.Invoke();
         
         // 벽 타입 체크
         _type = _actions.CheckPlatformAboveWall() ? WallType.PlatformAbove : WallType.Normal;
@@ -476,16 +499,7 @@ public class WallClimbState : PlayerState
         if (Player.Controller.IsJumpPressed())
         {
             _actions.WallJump();
-            Player.ASC.TryActivateAbility(AbilityKey.DoubleJump);
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
-        }
-        else if (Player.Controller.IsAttackPressed())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
-        }
-        else if (Player.Controller.IsParryingPressed())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
     }
     
@@ -565,6 +579,8 @@ public class RopeClimbState : PlayerState
         _state = RopeClimbStates.Idle;
         _actions = new WallClimbActions(Player);
         
+        Dash.ResetDash.Invoke();
+        
         Player.Movement.Move(Vector2.up);
     }
     
@@ -596,21 +612,12 @@ public class RopeClimbState : PlayerState
         {
             _actions.RopeJump();
             Player.OnRopeClimbAvailable.Invoke(false);
-            Player.ASC.TryActivateAbility(AbilityKey.DoubleJump);
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (!Player.CanRopeClimb())
         {
             Player.Movement.Move(Vector2.zero);
             Player.StateMachine.ChangeState(PlayerStateType.Fall);
-        }
-        else if (Player.Controller.IsAttackPressed())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.Attack);
-        }
-        else if (Player.Controller.IsParryingPressed())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.Parrying);
         }
     }
 
@@ -647,7 +654,7 @@ public class AttackState : PlayerState
         base.Enter();
         
         Player.SetAnimatorTrigger(Player.StartAttackID);
-        Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);
+        Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);  
     }
 
     public override void Update()
@@ -679,9 +686,22 @@ public class DashState : PlayerState
     }
     public override void Update()
     {
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        if (Player.CanWallClimb() && !Player.Movement.CheckIsGround())
         {
-            if (Player.Movement.CheckIsGround())
+            Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
+        }
+        else if (Player.CanRopeClimb() && !Player.Movement.CheckIsGround())
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
+        }
+        else if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        {
+            if (Player.Controller.IsAttackPressed())
+            {
+                if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                    Player.StateMachine.ChangeState(PlayerStateType.Attack);
+            }
+            else if (Player.Movement.CheckIsGround())
             {
                 Player.StateMachine.ChangeState(PlayerStateType.Idle);
             }
@@ -710,7 +730,7 @@ public class ParryingState : PlayerState
         Player.SetAnimatorTrigger(Player.StartParryingID);
         Player.SetAnimatorBool(Player.ParryingID, true);
         Player.ASC.TryActivateAbility(AbilityKey.Parrying);
-
+        
         Player.Controller.OnParryingCanceled -= ParryingCanceled;
         Player.Controller.OnParryingCanceled += ParryingCanceled;
     }
@@ -724,7 +744,8 @@ public class ParryingState : PlayerState
         }
         else if (Player.Controller.IsLiverExtractionPressed())
         {
-            Player.StateMachine.ChangeState(PlayerStateType.LiverExtraction);
+            if(Player.ASC.CanActivateAbility(AbilityKey.LiverExtraction))
+                Player.StateMachine.ChangeState(PlayerStateType.LiverExtraction);
         }
     }
 
@@ -736,7 +757,15 @@ public class ParryingState : PlayerState
 
     private void ParryingCanceled()
     {
-        Player.StateMachine.ChangeState(PlayerStateType.Idle);
+        if (Player.Controller.IsLiverExtractionPressed())
+        {
+            if(Player.ASC.CanActivateAbility(AbilityKey.LiverExtraction))
+                Player.StateMachine.ChangeState(PlayerStateType.LiverExtraction);
+        }
+        else
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Idle);
+        }
     }
 }
 
