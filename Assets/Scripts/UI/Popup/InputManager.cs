@@ -16,8 +16,8 @@ public class InputManager : MonoBehaviour
     {
         abilitySystem = new AbilitySystem();
         abilitySystem.Init("Domain/Player");
-        abilitySystem.GrantAllAbilities();
         abilitySystem.SetSceneState(player);
+        abilitySystem.GrantAllAbilities();
     }
 
     void Update()
