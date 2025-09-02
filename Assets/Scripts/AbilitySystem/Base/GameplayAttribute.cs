@@ -18,15 +18,6 @@ namespace GameAbilitySystem
     {
         private AttributeSO _attributeSo;
 
-        public float BaseValue => _attributeSo.BaseValue;
-
-        public ReactiveProperty<float> CurrentValue { get; private set; }
-        public ReactiveProperty<float> MaxValueRP { get; private set; } // 🔹 MaxValue ReactiveProperty
-        public float MaxValue => MaxValueRP.Value; // 항상 MaxValueRP 값 참조
-
-        // 다른 속성을 최대값으로 삼는 구조 (ex. HP → MaxHP)
-        [CanBeNull] public Attribute _maxValue { private get; set; }
-
         public Attribute(AttributeSO so)
         {
             _attributeSo = so;
@@ -34,8 +25,17 @@ namespace GameAbilitySystem
             MaxValueRP = new ReactiveProperty<float>(so.MaxValue);
         }
 
+        public float BaseValue => _attributeSo.BaseValue;
+        public float Value => CurrentValue.CurrentValue;
+        public ReactiveProperty<float> CurrentValue { get; private set; }
+        public ReactiveProperty<float> MaxValueRP { get; private set; } // 🔹 MaxValue ReactiveProperty
+        public float MaxValue => MaxValueRP.Value; // 항상 MaxValueRP 값 참조
+
+        // 다른 속성을 최대값으로 삼는 구조 (ex. HP → MaxHP)
+        [CanBeNull] public Attribute _maxValue { private get; set; }
+
         /// <summary>
-        /// 값 수정. Additive, Override, Multiplicative 중 선택
+        ///     값 수정. Additive, Override, Multiplicative 중 선택
         /// </summary>
         public void Modify(float delta, ModOperation op)
         {
@@ -51,11 +51,12 @@ namespace GameAbilitySystem
                     CurrentValue.Value *= delta;
                     break;
             }
+
             CurrentValue.Value = Mathf.Clamp(CurrentValue.Value, 0, MaxValue);
         }
 
         /// <summary>
-        /// 현재 값을 강제로 설정 (Clamp 포함)
+        ///     현재 값을 강제로 설정 (Clamp 포함)
         /// </summary>
         public void SetCurrentValue(float value)
         {
@@ -63,7 +64,7 @@ namespace GameAbilitySystem
         }
 
         /// <summary>
-        /// 기본값으로 초기화
+        ///     기본값으로 초기화
         /// </summary>
         public void Reset()
         {
@@ -71,7 +72,7 @@ namespace GameAbilitySystem
         }
 
         /// <summary>
-        /// 최대값 1 증가
+        ///     최대값 1 증가
         /// </summary>
         public void IncreaseMaxValue()
         {
@@ -79,7 +80,7 @@ namespace GameAbilitySystem
         }
 
         /// <summary>
-        /// 최대값을 수동으로 설정
+        ///     최대값을 수동으로 설정
         /// </summary>
         public void SetMaxValue(float value)
         {
@@ -103,20 +104,14 @@ namespace GameAbilitySystem
             foreach (var att in dict)
             {
                 Attributes[att.Key].SetCurrentValue(att.Value);
-                if (Attributes.TryGetValue($"Max{att.Key}", out var maxAtt))
-                {
-                    Attributes[att.Key]._maxValue = maxAtt;
-                }
+                if (Attributes.TryGetValue($"Max{att.Key}", out var maxAtt)) Attributes[att.Key]._maxValue = maxAtt;
             }
         }
 
         public Dictionary<string, float> GetAttributeState()
         {
             var dict = new Dictionary<string, float>();
-            foreach (var att in Attributes)
-            {
-                dict[att.Key] = att.Value.CurrentValue.Value;
-            }
+            foreach (var att in Attributes) dict[att.Key] = att.Value.CurrentValue.Value;
             return dict;
         }
     }
