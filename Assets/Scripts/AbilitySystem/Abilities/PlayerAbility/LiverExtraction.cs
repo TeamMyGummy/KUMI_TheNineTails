@@ -17,14 +17,14 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         base.InitAbility(actor, asc, abilitySo);
         
         _sequenceSO = abilitySo.skillSequence;
-        _task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
+        //_task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
     }
 
     protected override void Activate()
     {
         base.Activate();
         
-        _task.Execute();
+        //_task.Execute();
         Actor.GetComponent<Player>().ChangeState(PlayerStateType.LiverExtraction);
         
         SkillTimer(1.0f).Forget();
@@ -40,6 +40,6 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
             await UniTask.Yield();
         }
         Actor.GetComponent<Player>().ChangeState(PlayerStateType.Idle);
-        _task.Canceled();;
+        //_task.Canceled();;
     }
 }

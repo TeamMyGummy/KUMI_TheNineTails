@@ -88,7 +88,9 @@ public class Player : MonoBehaviour
         {
             _spriteRenderer.flipX = _playerController.MoveInput.x < 0;
         }
-        
+
+        Animator.SetBool(IsGroundID, Movement.CheckIsGround());
+
     }
 
     public void SetAnimatorBool(int parameterHash, bool value)
@@ -125,31 +127,27 @@ public class Player : MonoBehaviour
         //_playerController.SetDirection(_characterMovement.GetCharacterSpriteDirection() * (-1));
     }
 
-    public Collider2D MakeOverlapHitBox(int layerMask)
+    public RaycastHit2D DrawClimbRay(int layerMask)
     {
-        Vector2 center = GetComponent<Collider2D>().bounds.center;
-        return Physics2D.OverlapCircle(center, 0.55f, layerMask);
+        Collider2D playerCol = _characterMovement.GetComponent<Collider2D>();
+        
+        Vector2 playerDir = _characterMovement.GetCharacterSpriteDirection();
+        Vector2 rayPos = new Vector2(playerCol.bounds.center.x + playerCol.bounds.extents.x * (playerDir.x), playerCol.bounds.center.y);
+        
+        Debug.DrawRay(rayPos, playerDir * 1f, new Color(1, 0, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rayPos, playerDir, 1, layerMask);
+        
+        return rayHit;
     }
     
     public bool CanWallClimb()
     {
-        Collider2D hit = MakeOverlapHitBox(LayerMask.GetMask("GraspableWall"));
-        
-        if (hit != null)
+        RaycastHit2D rayHit = DrawClimbRay(LayerMask.GetMask("GraspableWall"));
+        if (rayHit.collider != null)
         {
-            // 오브젝트가 있는 방향으로 향할 때만 벽타기 가능
-            Vector2 objectDir = hit.transform.position.x - transform.position.x > 0 ? Vector2.right : Vector2.left;
-
-            if (_characterMovement.GetCharacterSpriteDirection() == objectDir)
+            if (rayHit.distance < 0.03f)
             {
-                // 벽과 플레이어 사이의 거리 계산
-                Collider2D playerCol = _characterMovement.GetComponent<Collider2D>();
-                Vector2 playerClosest = playerCol.ClosestPoint(hit.transform.position);
-                Vector2 wallClosest = hit.ClosestPoint(playerCol.transform.position);
-                float distance = Math.Abs(playerClosest.x - wallClosest.x);
-                
-                // 특정 거리 이내면 true
-                return distance < 0.3f && distance > 0.02f;
+                return true;
             }
         }
 
@@ -163,13 +161,5 @@ public class Player : MonoBehaviour
     public bool CanRopeClimb()
     {
         return _canRopeClimb;
-    }
-    
-    // 디버깅용
-    private void OnDrawGizmos()
-    {
-        Vector2 center = GetComponent<Collider2D>().bounds.center;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(center, 0.55f);
     }
 }

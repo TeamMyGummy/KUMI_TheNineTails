@@ -31,7 +31,7 @@ public class WallClimbActions
     /// <returns>True: 벽 위에 플랫폼이 붙어있는 형태</returns>
     public bool CheckPlatformAboveWall()
     {
-        Vector2 rayDir = new Vector2(_currentWall.bounds.center.x, _currentWall.bounds.max.y);
+        Vector2 rayDir = new Vector2(_currentWall.bounds.center.x, _currentWall.bounds.max.y + 0.2f);
         
         Debug.DrawRay( rayDir, Vector2.up * 1f, new Color(1, 0, 0));
         RaycastHit2D rayHit = Physics2D.Raycast(rayDir, Vector2.up, 1, LayerMask.GetMask("Platform"));
