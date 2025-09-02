@@ -28,13 +28,12 @@ namespace BehaviorTree
         [Space(10)]
         [Tooltip("AI 종료 후 실행됩니다. ")]
         public UnityEvent onAfterEnd;
-        
+
         void Start()
         {
             btGraph.Context = GetComponent<BTContext>();
-            StartAI();
         }
-        
+
         void Update()
         {
             btGraph?.Update();
