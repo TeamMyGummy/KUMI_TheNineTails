@@ -38,6 +38,14 @@ namespace GameAbilitySystem
             if (!_abilities.TryGetValue(name, out var abilitySo)) return false;
             _grantedAbilities[key] = name;
             _grantedAbilityCount.Value = _grantedAbilities.Count;
+            
+            if (!_abilityCache.TryGetValue(abilitySo.skillName, out var ability))
+            {
+                ability = AbilityFactory.Instance.GetAbility(abilitySo.skillName);
+                ability.InitAbility(_actor, this, abilitySo);
+                if (ability.CanReuse) _abilityCache.Add(abilitySo.skillName, ability);
+            }
+            
             return true;
         }
 
@@ -53,6 +61,24 @@ namespace GameAbilitySystem
             return false;
         }
 
+        /// <summary>
+        /// Ability를 실행할 수 있는지 확인
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>스킬명</returns>
+        public bool CanActivateAbility(AbilityKey key)
+        {
+            if (!_grantedAbilities.TryGetValue(key, out var abilityName)) return false;
+            if (!_abilities.TryGetValue(abilityName, out var abilitySo)) return false;
+            
+            if (!_abilityCache.TryGetValue(abilitySo.skillName, out var ability))
+            {
+                return false;
+            }
+
+            return ability.CanActivate();
+        }
+        
         /// <summary>
         ///     Ability를 실행
         /// </summary>

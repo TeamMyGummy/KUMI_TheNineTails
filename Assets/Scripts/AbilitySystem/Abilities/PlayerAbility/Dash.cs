@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 
 public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 {
+    private Player _player;
     private Rigidbody2D _rigid;
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
@@ -19,42 +20,49 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private bool _endDash;
     private Vector2 _originVelocity;
     
+    public static System.Action ResetDash;
+    
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
 
         IsTickable = true;
         _dashSO = (DashSO) abilitySo;
-        
+
+        _player = Actor.GetComponent<Player>();
         _rigid = Actor.GetComponent<Rigidbody2D>();
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();
-    }
-    
-    protected override void Activate()
-    {
-        base.Activate();
 
+        ResetDash += ResetDashCount;
+    }
+
+    public override bool CanActivate()
+    {
         if (_characterMovement.CheckIsGround())
         {
             _canDash = true;
         }
         
-        if (_canDash)
-        {
-            if (!_characterMovement.CheckIsGround())
-            {
-                _canDash = false;
-            }
-            StartDash();
-            Vector2 currentPosition = _rigid.position;
-            float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
-   
-            _rigid.velocity = Vector2.zero;
-            _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);         
-        }
- 
+        return _canDash && base.CanActivate();
+    }
+
+    protected override void Activate()
+    {
+        base.Activate();
         
+        if (!_characterMovement.CheckIsGround())
+        {
+            // 공중에서 대쉬 한 번만 가능 
+            _canDash = false;
+        }
+        
+        StartDash();
+        Vector2 currentPosition = _rigid.position;
+        float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
+
+        _rigid.velocity = Vector2.zero;
+        _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);         
     }
 
     public void Update()
@@ -79,7 +87,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         {
             if (!_canDash)
             {
-                this.DelayOneFrame().Forget();
+                this.DelayOneFrame().Forget(); 
                 _canDash = true;
             }
         }
@@ -100,6 +108,11 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _rigid.velocity = _originVelocity;
         _rigid.gravityScale = _characterMovement.Gravity;
         _endDash = true;
+    }
+
+    private void ResetDashCount()
+    {
+        _canDash = true;
     }
 
 }
