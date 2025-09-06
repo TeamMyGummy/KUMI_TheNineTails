@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using GameAbilitySystem;
 
 namespace GameAbilitySystem
 {
@@ -43,6 +44,7 @@ namespace GameAbilitySystem
     /// </summary>
     public class InstantGameplayEffect : GameplayEffect
     {
+        private AbilitySystem _asc;
         public InstantGameplayEffect(string attributeName, float delta)
             : base(attributeName, delta) { }
         public InstantGameplayEffect(string attributeName, float delta, ModOperation mod)
@@ -51,6 +53,7 @@ namespace GameAbilitySystem
         public override void Apply(GameplayAttribute attribute)
         {
             if (!attribute.Attributes.TryGetValue(AttributeName, out var att)) return;
+            if (_asc.TagContainer.Has(GameplayTags.Invincibility)) return;
             att.Modify(Delta, Mod);
         }
     }
