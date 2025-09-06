@@ -6,5 +6,6 @@
     public enum GameplayTags
     {
         BlockRunningAbility,
+        Invincibility,
     }
 }
