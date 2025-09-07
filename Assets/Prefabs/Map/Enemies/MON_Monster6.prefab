@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7994892644619939514}
   - component: {fileID: 3307159376132960214}
   - component: {fileID: 4937086510517528978}
-  - component: {fileID: 8022538108433683654}
+  - component: {fileID: 4794328399722146798}
   m_Layer: 8
   m_Name: MON_Monster6
   m_TagString: Enemies
@@ -236,7 +236,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8200
---- !u!114 &8022538108433683654
+--- !u!114 &4794328399722146798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,10 +245,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6201007571973174908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ac67034e4770a042a869f28f00da2d3, type: 3}
+  m_Script: {fileID: 11500000, guid: fc4f22a494d14356a7be6529ce2be9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: d23c1825d09459e4c816ea5230106ec6, type: 2}
   abilitySystemPath: Monster/Monster6
   abilityKey: 100
-  abilityKey2: 100
+  abilityKey2: 106
