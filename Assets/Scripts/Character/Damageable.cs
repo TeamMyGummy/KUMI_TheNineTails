@@ -13,21 +13,18 @@ public class Damageable : MonoBehaviour
     public void GetDamage(DomainKey key, float damage)
     {
         // GE
-        AbilitySystem asc;
-        DomainFactory.Instance.GetDomain(key, out asc);
-        GameplayAttribute att = asc.Attribute;
-
-        InstantGameplayEffect effect = new("HP", damage * (-1));
-        effect.Apply(att);
-        
-        Debug.Log($"Damage: {damage}, HP: {att.Attributes["HP"].CurrentValue}");
-        
-        if (key == DomainKey.Player)
+        DomainFactory.Instance.GetDomain(key, out AbilitySystem asc);
+        if (!asc.TagContainer.Has(GameplayTags.Invincibility))
         {
-            CharacterMovement cm = GetComponent<CharacterMovement>();
-            Vector2 knockbackDirection = cm.GetCharacterSpriteDirection() * (-1);
-            cm.ApplyKnockback(knockbackDirection, 6f, 0.3f);
-            //GetComponent<Player>().Hurt();
+            ApplyDamage(asc, damage);
+
+            if (key == DomainKey.Player)
+            {
+                CharacterMovement cm = GetComponent<CharacterMovement>();
+                Vector2 knockbackDirection = cm.GetCharacterSpriteDirection() * (-1);
+                cm.ApplyKnockback(knockbackDirection, 6f, 0.3f);
+                GetComponent<Player>().Hurt();
+            }
         }
     }
     
@@ -40,21 +37,20 @@ public class Damageable : MonoBehaviour
     public void GetDamage(DomainKey key, float damage, Vector2 direction)
     {
         // GE
-        AbilitySystem asc;
-        DomainFactory.Instance.GetDomain(key, out asc);
-        GameplayAttribute att = asc.Attribute;
+        DomainFactory.Instance.GetDomain(key, out AbilitySystem asc);
 
-        InstantGameplayEffect effect = new("HP", damage * (-1));
-        effect.Apply(att);
-        
-        Debug.Log($"Damage: {damage}, HP: {att.Attributes["HP"].CurrentValue}");
-
-        if (key == DomainKey.Player)
+        if (!asc.TagContainer.Has(GameplayTags.Invincibility))
         {
-            CharacterMovement cm = GetComponent<CharacterMovement>();
-            cm.ApplyKnockback(direction, 6f, 0.3f);
-            //GetComponent<Player>().Hurt();
+            ApplyDamage(asc, damage);
+   
+            if (key == DomainKey.Player)
+            {
+                CharacterMovement cm = GetComponent<CharacterMovement>();
+                cm.ApplyKnockback(direction, 6f, 0.3f);
+                GetComponent<Player>().Hurt();
+            } 
         }
+
     }
     
     /// <summary>
@@ -65,6 +61,14 @@ public class Damageable : MonoBehaviour
     public void GetDamage(AbilitySystem asc, float damage)
     {
         // GE
+        if (!asc.TagContainer.Has(GameplayTags.Invincibility))
+        {
+            ApplyDamage(asc, damage);
+        }
+    }
+
+    private void ApplyDamage(AbilitySystem asc, float damage)
+    {
         GameplayAttribute att = asc.Attribute;
 
         InstantGameplayEffect effect = new("HP", damage * (-1));

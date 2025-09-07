@@ -683,18 +683,11 @@ public class DashState : PlayerState
         
         Player.SetAnimatorTrigger(Player.DashID);
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
+        Player.Movement.SetGravityScale(0);
     }
     public override void Update()
     {
-        if (Player.CanWallClimb() && !Player.Movement.CheckIsGround())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
-        }
-        else if (Player.CanRopeClimb() && !Player.Movement.CheckIsGround())
-        {
-            Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
-        }
-        else if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Player.Controller.IsAttackPressed())
             {
@@ -716,6 +709,7 @@ public class DashState : PlayerState
         base.Exit();
         
         Player.ResetAnimatorTrigger(Player.DashID);
+        Player.Movement.ResetGravityScale();
     }
 }
 

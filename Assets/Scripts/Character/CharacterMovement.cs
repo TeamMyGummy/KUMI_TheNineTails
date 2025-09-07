@@ -15,9 +15,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] [Range(0.0f, 10.0f)] private float deceleration;  // 감속도
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
     [SerializeField] private LayerMask groundMask;  // 땅으로 인식되는 Layer
-
-    public float Gravity => gravity;
-
+    
     private Vector2 _nextDirection;
     private Vector2 _currentVelocity; 
     private bool _isGround;
@@ -97,6 +95,16 @@ public class CharacterMovement : MonoBehaviour
         return _rigidBody.velocity;
     }
 
+    public void SetGravityScale(float gravityScale)
+    {
+        _rigidBody.gravityScale = gravityScale;
+    }
+
+    public void ResetGravityScale()
+    {
+        _rigidBody.gravityScale = gravity;
+    }
+
     public void Move(Vector2 direction)
     {
         _nextDirection = direction;
@@ -118,12 +126,12 @@ public class CharacterMovement : MonoBehaviour
     {
         _nextDirection = Vector2.zero;
         _rigidBody.velocity = Vector2.zero;
-        _rigidBody.gravityScale = 0;
+        SetGravityScale(0);
     }
     
     public void EndClimbState()
     {
-        _rigidBody.gravityScale = gravity;
+        ResetGravityScale();
     }
 
     /// <summary>

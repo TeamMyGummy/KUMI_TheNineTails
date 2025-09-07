@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 {
-    private Player _player;
+    private AbilitySystem _asc;
     private Rigidbody2D _rigid;
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
@@ -28,12 +28,12 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         IsTickable = true;
         _dashSO = (DashSO) abilitySo;
-
-        _player = Actor.GetComponent<Player>();
+        
         _rigid = Actor.GetComponent<Rigidbody2D>();
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();
-
+        _asc = asc;
+        
         ResetDash += ResetDashCount;
     }
 
@@ -98,16 +98,21 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _dashPower = _dashSO.dashPower;
         _dashTime = _so.BlockTimer;
         _endDelayTime = _dashSO.endDelay;
+        
         _originVelocity = _rigid.velocity;
-        _rigid.gravityScale = 0;
+        _characterMovement.SetGravityScale(0);
         _endDash = false;
+
+        _asc.TagContainer.Add(GameplayTags.Invincibility);
     }
 
     private void EndDash()
     {
         _rigid.velocity = _originVelocity;
-        _rigid.gravityScale = _characterMovement.Gravity;
+        _characterMovement.ResetGravityScale();
         _endDash = true;
+        
+        _asc.TagContainer.Remove(GameplayTags.Invincibility);
     }
 
     private void ResetDashCount()
