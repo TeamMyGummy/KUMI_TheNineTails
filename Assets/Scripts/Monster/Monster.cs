@@ -102,7 +102,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         Vector2 direction = (playerPos - monsterPos).normalized;
         float distance = Vector2.Distance(monsterPos, playerPos);
 
-        int platformLayerMask = LayerMask.GetMask("Platform");
+        int platformLayerMask = LayerMask.GetMask("Platform", "GraspableWall");
 
         RaycastHit2D hit = Physics2D.Raycast(monsterPos, direction, distance, platformLayerMask);
 
