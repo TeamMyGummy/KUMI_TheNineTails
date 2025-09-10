@@ -83,9 +83,13 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
 
         while (Vector2.Distance(_monster.transform.position, targetPos) > 0.05f)
         {
-            //지상몹은 땅이 없으면 멈추게
-            if (!_monster.Data.IsFlying && _movement != null && !_movement.CheckGroundAhead())
-                break;
+            //지상몹은 땅이 없으면 멈추게 && 벽 앞에 있으면 돌진 멈춤
+            if (!_monster.Data.IsFlying && _movement != null)
+            {
+                if (!_movement.CheckGroundAhead() || _movement.CheckWallAhead())
+                    break;
+            }
+
 
             Vector2 nextPos = Vector2.MoveTowards(
                 _monster.transform.position, targetPos, rushSpeed * Time.deltaTime);
