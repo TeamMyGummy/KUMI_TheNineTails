@@ -231,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 32776
 --- !u!114 &5604168195167317945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +248,6 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   gravity: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8

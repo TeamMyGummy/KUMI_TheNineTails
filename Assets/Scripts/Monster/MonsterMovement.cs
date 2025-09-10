@@ -281,7 +281,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
 
     private void PatrolMove()
     {
-        if ((!_monster.Data.IsFlying && !CheckGroundAhead())|| CheckWallAhead())
+        if (CheckWallAhead() || (!_monster.Data.IsFlying && !CheckGroundAhead()))
         {
             if (!_isTimerPaused)
             {
@@ -289,6 +289,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
             }
             return;
         }
+
 
         // 이동 적용
         _cm.Move(GetDirection());
