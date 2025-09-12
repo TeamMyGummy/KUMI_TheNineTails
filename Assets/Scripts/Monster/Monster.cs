@@ -13,6 +13,14 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     private float prevHp;
     
     protected bool isDead = false;
+    protected int FacingDir
+    {
+        get
+        {
+            // _movement가 없으면 기본값 1(오른쪽)
+            return _movement != null ? _movement.HorizontalDir : 1;
+        }
+    }
     
     public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
 
@@ -172,7 +180,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     
     
     // 플레이어가 근거리 공격 범위 안에 들어오는지 체크 (사각 범위)
-    public bool IsPlayerInShortRange()
+    public virtual bool IsPlayerInShortRange()
     {
         if (player == null) return false;
 
