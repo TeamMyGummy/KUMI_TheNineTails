@@ -125,7 +125,6 @@ public class AbilityFactory : SceneSingleton<AbilityFactory>
             AbilityName.MonsterSwordAttack => new MonsterSwordAttack(),
             AbilityName.FireSonicWave => new FireSonicWave(),
             AbilityName.MonsterAttack2 => new MonsterAttack2(),
-            AbilityName.MonsterAttack3 => new MonsterAttack3(),
             _ => throw new ArgumentOutOfRangeException(nameof(abilityName), abilityName, null)
         };
     }

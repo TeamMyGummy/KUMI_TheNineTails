@@ -3,13 +3,15 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
 
-public class MonsterAttack3: BlockAbility<MonsterAttackSO>
+public class MonsterRushAttack: BlockAbility<MonsterAttackSO>
 {
-    protected GameObject _actor;
-    protected MonsterMovement _movement;
-    protected Monster _monster;
-    protected MonsterAttackSO _attackData;
+    private GameObject _actor;
+    private MonsterMovement _movement;
+    private Monster _monster;
+    private MonsterRushAttackSO _attackData;
     
+    private Vector2 _lockedRushDir;
+    private Vector2 _lockedTargetPos;
     protected virtual bool UseBasicAttack => true;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
@@ -20,7 +22,7 @@ public class MonsterAttack3: BlockAbility<MonsterAttackSO>
         _actor = actor;
         _movement = actor.GetComponent<MonsterMovement>();
         _monster = actor.GetComponent<Monster>();
-        _attackData = abilitySo as MonsterAttackSO;
+        _attackData = abilitySo as MonsterRushAttackSO;
     }
 
     public override bool CanActivate()
@@ -48,6 +50,8 @@ public class MonsterAttack3: BlockAbility<MonsterAttackSO>
         float block =  (_attackData.BlockTimer > 0f)           
             ? _attackData.BlockTimer               
             : Mathf.Max(0f, _attackData.PreDelay) +
+              Mathf.Max(0f, _attackData.RushDistance / _attackData.RushSpeed) +
+              Mathf.Max(0f, _attackData.BetweenRushAttackDelay) +
             Mathf.Max(0f, _attackData.ActiveTime) +
             Mathf.Max(0f, _attackData.PostDelay);        
         _attackData.BlockTimer = block;  
@@ -63,7 +67,15 @@ public class MonsterAttack3: BlockAbility<MonsterAttackSO>
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime); 
 
+            RushTowardsPlayer().Forget();
+            
+            if (_attackData.BetweenRushAttackDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackData.BetweenRushAttackDelay), delayType: DelayType.DeltaTime); 
+            
             Attack();
+            
+            if (_attackData.RushDistance / _attackData.RushSpeed > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_attackData.RushDistance / _attackData.RushSpeed), delayType: DelayType.DeltaTime);
 
             if (_attackData.ActiveTime > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.ActiveTime), delayType: DelayType.DeltaTime);
@@ -111,12 +123,65 @@ public class MonsterAttack3: BlockAbility<MonsterAttackSO>
             ResourcesManager.Instance.Destroy(hitbox, activeTime);
         }
     }
+    
+    /// <summary>
+    /// 플레이어 향해 돌진
+    /// </summary>
+    private async UniTaskVoid RushTowardsPlayer()
+    {
+        if (_monster == null || _attackData == null) return;
+
+        // 방향 잠금 및 이동 일시정지
+        if (_movement != null)
+        {
+            _movement.LockDirection(true);
+        }
+        
+        Vector2 startPos = _monster.transform.position;
+
+        // 플레이어 위치 찾기
+        Transform playerTr = (_monster != null && _monster.Player != null)
+            ? _monster.Player
+            : GameObject.FindWithTag("Player")?.transform;
+
+        Vector2 playerPos = playerTr != null ? (Vector2)playerTr.position : startPos;
+        Vector2 rushDir;
+        Vector2 targetPos;
+        
+        // 지상 몬스터: 수평으로만 돌진
+        float dirX = (playerPos.x - startPos.x) > 0 ? 1f : -1f;
+        rushDir = new Vector2(dirX, 0f);
+        targetPos = startPos + rushDir * _attackData.RushDistance;
+        
+        // 돌진 실행
+        float rushSpeed = _attackData.RushSpeed;
+        while (Vector2.Distance(_monster.transform.position, targetPos) > 0.05f)
+        {
+            // 지상 몬스터는 땅이 없으면 멈춤
+            if (!_monster.Data.IsFlying && _movement != null && !_movement.CheckGroundAhead())
+                break;
+
+            Vector2 nextPos = Vector2.MoveTowards(
+                _monster.transform.position, targetPos, rushSpeed * Time.deltaTime);
+
+            _monster.transform.position = nextPos;
+            await UniTask.Yield();
+        }
+
+        // 방향 잠금 해제
+        if (_movement != null)
+        {
+            _movement.LockDirection(false);
+        }
+        
+    }
 
     public Vector2 GetPosition()
     {
         return Actor.transform.position;
     }
 
+    
 #if UNITY_EDITOR
     // 히트박스 기즈모 표시
     protected virtual void OnDrawGizmosSelected()
