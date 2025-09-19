@@ -250,4 +250,4 @@ MonoBehaviour:
   gravity: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 57352

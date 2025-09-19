@@ -235,7 +235,7 @@ MonoBehaviour:
   gravity: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 8200
+    m_Bits: 57352
 --- !u!114 &1018038174641037786
 MonoBehaviour:
   m_ObjectHideFlags: 0

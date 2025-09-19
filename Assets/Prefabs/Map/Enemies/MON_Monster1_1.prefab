@@ -168,7 +168,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.51056856, y: 0.124462664}
-    oldSize: {x: 5.3333335, y: 5.3333335}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 0.8, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -249,3 +249,6 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   gravity: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 57352
