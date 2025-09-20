@@ -166,5 +166,6 @@ public class Player : MonoBehaviour
     public void Hurt()
     {
         _animator.SetTrigger(HurtID);
+        SoundManager.Instance.PlaySFX(SFXName.피격);
     }
 }

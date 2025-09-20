@@ -37,12 +37,15 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>, ITickable
             {
                 case 0:
                     Attack(1);
+                    SoundManager.Instance.PlaySFX(SFXName.공격1);
                     break;
                 case 1:
                     Attack(2);
+                    SoundManager.Instance.PlaySFX(SFXName.공격2);
                     break;
                 case 2:
                     Attack(3);
+                    SoundManager.Instance.PlaySFX(SFXName.공격3);
                     break;
                 default:
                     break;

@@ -198,6 +198,7 @@ public class RunState : PlayerState
         base.Enter();
         
         Player.SetAnimatorBool(Player.RunID, true);
+        SoundManager.Instance.PlaySFX(SFXName.달리기);
     }
     
     public override void Update()
@@ -238,6 +239,13 @@ public class RunState : PlayerState
                 Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+        
+        SoundManager.Instance.StopSFX(SFXName.달리기);
+    }
 }
 
 public class JumpState : PlayerState
@@ -253,6 +261,7 @@ public class JumpState : PlayerState
         Player.SetAnimatorBool(Player.JumpID, true);
         //Player.SetAnimatorBool(Player.IsGroundID, true);
         _ability = Player.ASC.TryActivateAbility(AbilityKey.DoubleJump); 
+        SoundManager.Instance.PlaySFX(SFXName.점프);
     }
 
     public override void Update()
@@ -266,6 +275,7 @@ public class JumpState : PlayerState
             if (_ability.TryActivate())
             {
                 Player.Animator.Play(Player.Animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0);
+                SoundManager.Instance.PlaySFX(SFXName.점프);
             }
         }
         else if (Player.Movement.GetVelocity().y < 0 && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !Player.Movement.CheckIsGround())
@@ -385,6 +395,7 @@ public class HurtState : PlayerState
         base.Enter();
         
         Player.SetAnimatorTrigger(Player.HurtID);
+        SoundManager.Instance.PlaySFX(SFXName.피격);
     }
 
     public override void Update()
@@ -450,6 +461,7 @@ public class WallClimbState : PlayerState
         base.Enter();
         
         Player.SetAnimatorBool(Player.WallClimbID, true);
+        SoundManager.Instance.PlaySFX(SFXName.벽에붙음);
         Player.Movement.ClimbState();
         
         _state = WallClimbStates.Idle;
@@ -486,14 +498,18 @@ public class WallClimbState : PlayerState
         if (_type == WallType.Normal && _actions.IsCharacterReachedTop())
         {
             _state = WallClimbStates.Ledge;
+            SoundManager.Instance.StopSFX(SFXName.벽타기);
         }
         else if (Player.Controller.ClimbInput == Vector2.zero)
         {
             _state = WallClimbStates.Idle;
+            SoundManager.Instance.StopSFX(SFXName.벽타기);
         }
         else if (Player.Controller.ClimbInput != Vector2.zero)
         {
             _state = WallClimbStates.Climbing;
+            if(!SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
+                SoundManager.Instance.PlaySFX(SFXName.벽타기);
         }
         
         if (Player.Controller.IsJumpPressed())
@@ -509,6 +525,7 @@ public class WallClimbState : PlayerState
         
         Player.SetAnimatorBool(Player.WallClimbID, false);
         Player.Movement.EndClimbState();
+        SoundManager.Instance.StopSFX(SFXName.벽타기);
     }
 
     private void Idle()
@@ -534,7 +551,7 @@ public class WallClimbState : PlayerState
         Player.SetAnimatorBool(Player.IsClimbingID, true);
       
         // 이동
-        Player.Movement.Move(Player.Controller.ClimbInput);          
+        Player.Movement.Move(Player.Controller.ClimbInput);  
     }
     
     private void OnLedge()
@@ -682,6 +699,7 @@ public class DashState : PlayerState
         base.Enter();
         
         Player.SetAnimatorTrigger(Player.DashID);
+        SoundManager.Instance.PlaySFX(SFXName.대쉬);
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
         Player.Movement.SetGravityScale(0);
     }
