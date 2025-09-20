@@ -2,6 +2,7 @@
   "dependencies": {
     "com.annulusgames.lit-motion": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.esotericsoftware.spine.urp-shaders": "file:../Assets/Spine/com.esotericsoftware.spine.urp-shaders-4.2-Unity2019.3-2025-09-01/com.esotericsoftware.spine.urp-shaders-4.2-2019.1",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.github.siccity.xnode": "https://github.com/Siccity/xNode.git",
     "com.unity.collab-proxy": "2.8.2",
