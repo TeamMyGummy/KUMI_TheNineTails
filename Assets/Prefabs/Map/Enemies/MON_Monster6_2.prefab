@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4935978686406604255}
   - component: {fileID: 7474569178510274097}
   - component: {fileID: 1875723059815297661}
-  - component: {fileID: 1018038174641037786}
+  - component: {fileID: 7301603194854398653}
   m_Layer: 8
   m_Name: MON_Monster6_2
   m_TagString: Enemies
@@ -94,7 +94,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 560074e44e798194fa122c9c7e23dd36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca3abed2a8df2bd4b92aa96030b7a5cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,20 +235,23 @@ MonoBehaviour:
   gravity: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 57352
---- !u!114 &1018038174641037786
+    m_Bits: 8200
+--- !u!114 &7301603194854398653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3596988480106299404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4f22a494d14356a7be6529ce2be9c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 910bc5ea8c841aa4b91c66f71cd951ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: af74c69d85a44c140a7c4e42e2b42cf6, type: 2}
-  abilitySystemPath: Monster/Monster6_1
-  abilityKey: 102
-  abilityKey2: 100
+  monsterData: {fileID: 11400000, guid: ef9b9b778dbee2f46972ed8db4284921, type: 2}
+  abilitySystemPath: Monster/Monster6_2
+  abilityKey: 100
+  abilityKey2: 106
+  abilityKey3: 107
+  shortAttackRange: {x: 4, y: 2}
+  longAttackRange: {x: 10, y: 2}

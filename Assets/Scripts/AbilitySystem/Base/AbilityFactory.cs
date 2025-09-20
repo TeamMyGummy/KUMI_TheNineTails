@@ -30,6 +30,7 @@ public enum AbilityName
     FireToPlayer,
     FireSonicWave,
     MonsterAttack2,
+    MonsterAttack3,
     
     //보스
     FireVariousProjectile = 1000,
@@ -57,6 +58,7 @@ public enum AbilityKey
     FireToPlayer,
     FireSonicWave,
     MonsterAttack2,
+    MonsterAttack3,
     
     //보스
     FireVariousProjectile = 1000,
