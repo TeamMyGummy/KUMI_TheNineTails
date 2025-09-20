@@ -7,6 +7,6 @@ public class SpawnWisp : MonoBehaviour
     public GameObject objectToSpawn;
     void Start()
     {
-        Instantiate(objectToSpawn, transform);
+        Instantiate(objectToSpawn, transform.position, Quaternion.identity);
     }
 }
