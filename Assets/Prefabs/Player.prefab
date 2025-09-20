@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 9100064898656960644}
   - component: {fileID: 5537918733458322441}
   - component: {fileID: 2105771039037868481}
+  - component: {fileID: 6003279077661526251}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -488,6 +489,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnGround: {fileID: 0}
+--- !u!114 &6003279077661526251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384312483337340385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6d567d9ae3a404ebafd4a50ead5095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 980016575488928043, guid: 5b4f7a4f88679cd4b844bdc33d2db7f7, type: 3}
 --- !u!1 &2608040067414076250
 GameObject:
   m_ObjectHideFlags: 0
