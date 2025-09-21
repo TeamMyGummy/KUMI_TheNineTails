@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
 
@@ -17,6 +18,8 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private CharacterMovement _cm;
     private Monster _monster;
     private Collider2D _monsterCollider;
+    private Animator _animator;
+    private SkeletonMecanim _skeletonMecanim;
 
     public int HorizontalDir { private set; get; } //좌우판정용 
     
@@ -63,6 +66,8 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _cm = GetComponent<CharacterMovement>();
         _monster = GetComponent<Monster>();
         _monsterCollider = GetComponent<Collider2D>();
+        _animator = GetComponent<Animator>();
+        _skeletonMecanim = GetComponent<SkeletonMecanim>();
     }
     
     Vector2 IMovement.Direction => new Vector2(HorizontalDir, 0f);
@@ -127,6 +132,13 @@ public class MonsterMovement : MonoBehaviour, IMovement
             case MovePattern.Flee:
                 FleeMove();
                 break;
+        }
+
+        Vector2 dir = GetDirection();
+        if (_animator != null && _skeletonMecanim != null)
+        {
+            _animator.SetBool("Run", dir != Vector2.zero);
+            _skeletonMecanim.Skeleton.ScaleX = (dir.x > 0 ? -1f : 1f) * Mathf.Abs(_skeletonMecanim.Skeleton.ScaleX);
         }
     }
 
