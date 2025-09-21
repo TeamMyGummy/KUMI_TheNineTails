@@ -29,9 +29,16 @@ namespace BehaviorTree
         [Tooltip("AI 종료 후 실행됩니다. ")]
         public UnityEvent onAfterEnd;
 
+        [Header("Developer Mode")] [Space(10)] [Tooltip("체크 시 조건 없이 바로 AI가 실행됩니다.")]
+        public bool executeAI;
+
         void Start()
         {
             btGraph.Context = GetComponent<BTContext>();
+            if (executeAI)
+            {
+                StartAI();
+            }
         }
 
         void Update()

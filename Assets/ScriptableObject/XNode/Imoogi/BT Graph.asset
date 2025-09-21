@@ -117,7 +117,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: -6131213939993798984}
+        node: {fileID: 1960301662665950810}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1560, y: 696}
+  position: {x: 1880, y: 648}
   ports:
     keys:
     - input
@@ -348,7 +348,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: children 0
-        node: {fileID: -7610714838775721704}
+        node: {fileID: 1960301662665950810}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_Name: Parallel
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1560, y: 856}
+  position: {x: 1928, y: 840}
   ports:
     keys:
     - children
@@ -1461,7 +1461,7 @@ MonoBehaviour:
   input: {fileID: 0}
   runtimeHandler: {fileID: 0}
   handlerKey: Targeting
-  dest: {x: 47.65274, y: -3.2073019, z: 0}
+  dest: {x: 48.99685, y: -3.067484, z: 0}
 --- !u!114 &-399305767253855680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,6 +1635,8 @@ MonoBehaviour:
   - {fileID: -4205941485035858017}
   - {fileID: -6145057084011374474}
   - {fileID: -8896538910010642596}
+  - {fileID: 1960301662665950810}
+  - {fileID: 3436954361788114678}
 --- !u!114 &80925589220260105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,7 +1683,7 @@ MonoBehaviour:
   m_Name: Hitbox
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1816, y: 776}
+  position: {x: 2152, y: 776}
   ports:
     keys:
     - input
@@ -2052,6 +2054,77 @@ MonoBehaviour:
       _dynamic: 0
   input: {fileID: 0}
   waitTime: 2
+--- !u!114 &1960301662665950810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba202ca622e41f29ef58ee0be87cdcc, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1496, y: 696}
+  ports:
+    keys:
+    - children
+    - input
+    - children 0
+    - children 1
+    values:
+    - _fieldName: children
+      _node: {fileID: 1960301662665950810}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BehaviorTree.Leaf.LeafNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: 1960301662665950810}
+      _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: children 0
+        node: {fileID: -7610714838775721704}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: children 0
+      _node: {fileID: 1960301662665950810}
+      _typeQualifiedName: BehaviorTree.Leaf.LeafNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6131213939993798984}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: children 1
+      _node: {fileID: 1960301662665950810}
+      _typeQualifiedName: BehaviorTree.Leaf.LeafNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 3436954361788114678}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  children:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &2654472723440585153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,6 +2170,42 @@ MonoBehaviour:
       _dynamic: 0
   input: {fileID: 0}
   child: {fileID: 0}
+--- !u!114 &3436954361788114678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0da639cb7a4aaf93d315a2a3d565a9, type: 3}
+  m_Name: Rotate
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1864, y: 712}
+  ports:
+    keys:
+    - input
+    values:
+    - _fieldName: input
+      _node: {fileID: 3436954361788114678}
+      _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: children 1
+        node: {fileID: 1960301662665950810}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  runtimeHandler: {fileID: 0}
+  handlerKey: Rotate
+  angle: 75
+  type: 0
+  speed: 30
 --- !u!114 &3902576764489439240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2418,7 +2527,7 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1816, y: 696}
+  position: {x: 2152, y: 696}
   ports:
     keys:
     - input
