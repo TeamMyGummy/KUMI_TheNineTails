@@ -1,0 +1,18 @@
+Dragon_head.png
+size:4564,2887
+filter:Linear,Linear
+pma:true
+attack size
+bounds:3699,1322,560,400
+offsets:1,1,562,402
+beard
+bounds:2,1135,3055,587
+body
+bounds:2,1724,4560,1161
+offsets:121,3,4681,1164
+lower head
+bounds:1954,216,1400,917
+lower head B
+bounds:3059,1194,638,528
+upper head
+bounds:2,2,1950,1131
