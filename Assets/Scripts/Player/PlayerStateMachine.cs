@@ -401,7 +401,7 @@ public class HurtState : PlayerState
     public override void Update()
     {
         if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt") &&
-            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }

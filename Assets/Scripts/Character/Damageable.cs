@@ -20,10 +20,10 @@ public class Damageable : MonoBehaviour
 
             if (key == DomainKey.Player)
             {
+                GetComponent<Player>().ChangeState(PlayerStateType.Hurt);
                 CharacterMovement cm = GetComponent<CharacterMovement>();
                 Vector2 knockbackDirection = cm.GetCharacterSpriteDirection() * (-1);
                 cm.ApplyKnockback(knockbackDirection, 6f, 0.3f);
-                GetComponent<Player>().Hurt();
             }
         }
     }
@@ -45,9 +45,9 @@ public class Damageable : MonoBehaviour
    
             if (key == DomainKey.Player)
             {
+                GetComponent<Player>().ChangeState(PlayerStateType.Hurt);
                 CharacterMovement cm = GetComponent<CharacterMovement>();
                 cm.ApplyKnockback(direction, 6f, 0.3f);
-                GetComponent<Player>().Hurt();
             } 
         }
 
