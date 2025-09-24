@@ -162,10 +162,4 @@ public class Player : MonoBehaviour
     {
         return _canRopeClimb;
     }
-
-    public void Hurt()
-    {
-        _animator.SetTrigger(HurtID);
-        SoundManager.Instance.PlaySFX(SFXName.피격);
-    }
 }
