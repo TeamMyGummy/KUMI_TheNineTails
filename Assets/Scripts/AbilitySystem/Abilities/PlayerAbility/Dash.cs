@@ -20,7 +20,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private bool _endDash;
     private Vector2 _originVelocity;
     
-    public static System.Action ResetDash;
+    public static System.Action OnResetDash;
     
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -34,7 +34,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _playerController = Actor.GetComponent<PlayerController>();
         _asc = asc;
         
-        ResetDash += ResetDashCount;
+        OnResetDash += ResetDash;
     }
 
     public override bool CanActivate()
@@ -115,9 +115,12 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _asc.TagContainer.Remove(GameplayTags.Invincibility);
     }
 
-    private void ResetDashCount()
+    private void ResetDash()
     {
         _canDash = true;
+
+        if(!_endDash)
+            EndDash();
     }
 
 }

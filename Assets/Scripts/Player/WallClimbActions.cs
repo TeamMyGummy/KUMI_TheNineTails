@@ -52,7 +52,7 @@ public class WallClimbActions
     /// <returns>True: Ledge 도달</returns>
     public bool IsCharacterReachedTop()
     {
-        return _playerCollider.bounds.center.y > _currentWall.bounds.max.y;
+        return _playerCollider.bounds.max.y > _currentWall.bounds.max.y;
     }
     
     /// <summary>
@@ -94,7 +94,7 @@ public class WallClimbActions
     {
         Vector2 jumpDir = _player.Movement.GetCharacterSpriteDirection() * (-1);
 
-        if (_player.Controller.MoveInput == Vector2.zero || _player.Controller.ClimbInput != Vector2.zero)
+        /*if (_player.Controller.MoveInput == Vector2.zero || _player.Controller.ClimbInput != Vector2.zero)
         {
             // (방향키 입력 없이 / 위아래로 움직이면서) 점프 했을 때
             _player.FlipSprite();
@@ -104,8 +104,9 @@ public class WallClimbActions
         {
             // 방향키 입력이 있을 때
             _player.Controller.SetDirection(jumpDir);
-        }
-        
+        }*/
+        _player.FlipSprite();
+        _player.Movement.Move(Vector2.zero);
         _player.Movement.Jump(3.0f, jumpDir);
     }
     
@@ -125,3 +126,4 @@ public class WallClimbActions
         _player.Movement.Jump(3.0f, jumpDir);
     }
 }
+

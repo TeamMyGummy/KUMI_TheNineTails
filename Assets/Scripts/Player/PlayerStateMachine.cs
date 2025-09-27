@@ -470,7 +470,7 @@ public class WallClimbState : PlayerState
         _actions = new WallClimbActions(Player, _currentWall);
         _ledge = false;
         
-        Dash.ResetDash.Invoke();
+        //Dash.ResetDash.Invoke();
         
         // 벽 타입 체크
         _type = _actions.CheckPlatformAboveWall() ? WallType.PlatformAbove : WallType.Normal;
@@ -565,7 +565,7 @@ public class WallClimbState : PlayerState
         Vector2 startPos = _playerCollider.bounds.min;
         Vector2 targetPos = new Vector3(
             _currentWall.bounds.center.x,
-            _currentWall.bounds.max.y + 0.5f  // 벽 위쪽 약간 위
+            _currentWall.bounds.max.y  // 벽 위쪽 약간 위
         );
         
         // 벽 위로 위치 이동
@@ -596,7 +596,7 @@ public class RopeClimbState : PlayerState
         _state = RopeClimbStates.Idle;
         _actions = new WallClimbActions(Player);
         
-        Dash.ResetDash.Invoke();
+        Dash.OnResetDash.Invoke();
         
         Player.Movement.Move(Vector2.up);
     }
@@ -705,6 +705,11 @@ public class DashState : PlayerState
     }
     public override void Update()
     {
+        if (Player.CanWallClimb())
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
+        }
+
         if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Player.Controller.IsAttackPressed())
@@ -728,6 +733,7 @@ public class DashState : PlayerState
         
         Player.ResetAnimatorTrigger(Player.DashID);
         Player.Movement.ResetGravityScale();
+        Dash.OnResetDash.Invoke();
     }
 }
 
