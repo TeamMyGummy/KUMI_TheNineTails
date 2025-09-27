@@ -35,32 +35,33 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _isGround = CheckIsGround();
-        
-        if (_isGround || _rigidBody.gravityScale == 0)
-        {
-            // Move
-            // 땅에 있을 때: 즉시 반응
-            _currentVelocity = _nextDirection * speed;
-        }
-        else
-        {
-            // Jump
-            // 공중에 있을 때
-            Vector2 targetVelocity = _nextDirection * speed;
-            
-            if (_nextDirection != Vector2.zero)
-            {
-                // 가속
-                _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, 
-                    acceleration * Time.fixedDeltaTime);
-            }
-            else
-            {
-                // 감속
-                _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, 
-                    deceleration * Time.fixedDeltaTime);
-            }
-        }
+
+        _currentVelocity = _nextDirection * speed;
+        //if (_isGround || _rigidBody.gravityScale == 0)
+        //{
+        //    // Move
+        //    // 땅에 있을 때: 즉시 반응
+        //    _currentVelocity = _nextDirection * speed;
+        //}
+        //else
+        //{
+        //    // Jump
+        //    // 공중에 있을 때
+        //    Vector2 targetVelocity = _nextDirection * speed;
+        //    
+        //    if (_nextDirection != Vector2.zero)
+        //    {
+        //        // 가속
+        //        _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, 
+        //            acceleration * Time.fixedDeltaTime);
+        //    }
+        //    else
+        //    {
+        //        // 감속
+        //        _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, 
+        //            deceleration * Time.fixedDeltaTime);
+        //    }
+        //}
         
         if (_currentVelocity.magnitude > 0.01f)
         {

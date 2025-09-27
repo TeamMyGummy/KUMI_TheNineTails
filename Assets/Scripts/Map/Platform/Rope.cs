@@ -11,8 +11,6 @@ public class Rope : MonoBehaviour
     private Player _player;
     private CharacterMovement _cm;
     private PlayerController _pc;
-
-    private bool _prePressedKey;
     
     private void Start()
     {
@@ -20,8 +18,6 @@ public class Rope : MonoBehaviour
         {
             _segments.Add((transform.GetChild(i), transform.GetChild(i).position));
         }
-
-        _prePressedKey = false;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,7 +27,6 @@ public class Rope : MonoBehaviour
             _player = other.gameObject.GetComponent<Player>();
             _cm = _player.Movement;
             _pc = _player.Controller;
-            _prePressedKey = _player.Controller.ClimbInput != Vector2.zero; // 미리 누르고 있었는지
         }
     }
 
@@ -39,9 +34,8 @@ public class Rope : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!_cm.CheckIsGround() && !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) && _pc.ClimbInput != Vector2.zero && !_prePressedKey)
+            if (!_cm.CheckIsGround() && !_player.StateMachine.IsCurrentState(PlayerStateType.RopeClimb) && _pc.ClimbInput != Vector2.zero)
             {
-                _prePressedKey = true;
                 _player.OnRopeClimbAvailable?.Invoke(true);
                 other.transform.position = new Vector2(transform.position.x, other.transform.position.y);
 

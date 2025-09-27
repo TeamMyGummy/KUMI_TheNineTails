@@ -435,6 +435,8 @@ public class WallClimbState : PlayerState
 {
     public WallClimbState(Player player) : base(player, PlayerStateType.WallClimb){}
 
+    private const float MOVE_INPUT_THRESHOLD = 0.1f;
+
     private enum WallClimbStates
     {
         Idle,
@@ -516,6 +518,13 @@ public class WallClimbState : PlayerState
         {
             _actions.WallJump();
             Player.StateMachine.ChangeState(PlayerStateType.Jump);
+        }
+        // move input 방향이 벽 방향과 다르면 벽에서 떨어짐
+        // 플레이어가 벽의 왼쪽에 있으면 벽 방향은 1(오른쪽), 오른쪽에 있으면 -1(왼쪽)
+        else if (Math.Abs(Player.Controller.MoveInput.x) > MOVE_INPUT_THRESHOLD && Player.Controller.MoveInput.x != (Player.transform.position.x < _currentWall.transform.position.x ? 1f : -1f))
+        {
+            Player.Movement.Move(Player.Controller.MoveInput);
+            Player.StateMachine.ChangeState(PlayerStateType.Fall);
         }
     }
     
