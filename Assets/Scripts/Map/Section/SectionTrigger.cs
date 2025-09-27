@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UltEvents;
 using System.Collections;
 
 /// <summary>
@@ -36,16 +36,16 @@ public class SectionTrigger : MonoBehaviour
     [Header("Events")]
     [Space(10)]
     [Tooltip("플레이어가 영역에 진입하는 순간 호출됩니다. (Pre-Enter 연출 시작 전)")]
-    public UnityEvent onPreEnterStart;
+    public UltEvent onPreEnterStart;
 
     [Tooltip("Pre-Enter 연출이 끝난 후 호출됩니다. (본게임 로직 시작 시점)")]
-    public UnityEvent onMainGameplayStart;
+    public UltEvent onMainGameplayStart;
 
     [Tooltip("플레이어가 영역을 나간 후, Post-Exit 연출이 시작될 때 호출됩니다.")]
-    public UnityEvent onPostExitStart;
+    public UltEvent onPostExitStart;
 
     [Tooltip("Post-Exit 연출이 모두 끝난 후 호출됩니다.")]
-    public UnityEvent onPostExitEnd;
+    public UltEvent onPostExitEnd;
 
 
     private ZoneState currentState = ZoneState.Idle;
