@@ -19,12 +19,13 @@
       "hash": "f213ff497e4ff462a77319cf677cf20cc0860ca9"
     },
     "com.esotericsoftware.spine.urp-shaders": {
-      "version": "file:../Assets/Spine/com.esotericsoftware.spine.urp-shaders-4.2-Unity2019.3-2025-09-01/com.esotericsoftware.spine.urp-shaders-4.2-2019.1",
+      "version": "https://github.com/EsotericSoftware/spine-runtimes.git?path=spine-unity/Modules/com.esotericsoftware.spine.urp-shaders#4.2",
       "depth": 0,
-      "source": "local",
+      "source": "git",
       "dependencies": {
         "com.unity.render-pipelines.universal": "7.1.5"
-      }
+      },
+      "hash": "bf26fb9683ad6f05b29a7a0b74d628ae924540a0"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
