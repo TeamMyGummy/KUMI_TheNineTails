@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6d567d9ae3a404ebafd4a50ead5095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 980016575488928043, guid: 5b4f7a4f88679cd4b844bdc33d2db7f7, type: 3}
+  objectToSpawn: {fileID: 3528586597524348064, guid: 1274d23ba9bab6140a32dc296e82840c, type: 3}
 --- !u!1 &2608040067414076250
 GameObject:
   m_ObjectHideFlags: 0
