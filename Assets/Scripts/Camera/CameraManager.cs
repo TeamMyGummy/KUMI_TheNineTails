@@ -13,6 +13,7 @@ public enum ECameraState
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Vector3 targetOffset;
+    [SerializeField] private float followSpeed = 5f;
     private const float cameraZ = -10f;
     
     //상태관리
@@ -29,11 +30,11 @@ public class CameraManager : MonoBehaviour
     {
         if (target == null) return;
         Vector3 desiredPos = GetDesiredPosition();
-        Vector3 targetPoint = Vector3.MoveTowards(transform.position, desiredPos, 3f);
+        Vector3 targetPoint = Vector3.Lerp(transform.position, desiredPos, Time.deltaTime * followSpeed);
         transform.position = new Vector3(targetPoint.x, targetPoint.y, cameraZ);
     }
 
-    public Vector3 GetDesiredPosition()
+    private Vector3 GetDesiredPosition()
     {
         return _state switch
         {
