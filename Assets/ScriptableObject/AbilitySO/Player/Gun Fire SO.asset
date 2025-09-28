@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66914dc457195cb42888cd776ec287f1, type: 3}
+  m_Name: Gun Fire SO
+  m_EditorClassIdentifier: 
+  skillKey: 108
+  skillName: 108
+  skillSequence: {fileID: 0}
+  skillIcon: {fileID: 0}
+  description: 
+  unlockFloor: 0
+  skillKeyboard: {fileID: 0}
+  BlockTimer: 0
+  projectile: {fileID: 1762829811770736879, guid: b854c34c9e7fa8b4f84e6f159fa2c5a1, type: 3}
+  projectileCount: 8
+  coverageRadius: 2
+  minDistance: 1
+  maxDistance: 10
+  useCircularPattern: 1
+  fanAngle: 120
+  trajectoryOffset: 0.5
+  isStoppWhileAttack: 1
+  stopDuration: 0.8
+  delayBetweenProjectiles: 0

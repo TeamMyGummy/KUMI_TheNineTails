@@ -193,7 +193,7 @@ MonoBehaviour:
   abilitySystemPath: Monster/Monster3_2
   abilityKey: 100
   abilityKey2: 104
-  abilityKey3: 105
+  abilityKey3: 108
 --- !u!114 &5348520035679768019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,4 +252,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 24584

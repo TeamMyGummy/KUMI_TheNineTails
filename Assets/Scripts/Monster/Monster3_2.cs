@@ -27,7 +27,7 @@ public class Monster3_2 : Monster
             }
             else
             {
-                StartCoroutine(SonicWave(2f));
+                StartCoroutine(GunFire(2f));
             }
         }
     }
@@ -40,7 +40,7 @@ public class Monster3_2 : Monster
         isAttaking = false;
     }
     
-    private IEnumerator SonicWave(float time)
+    private IEnumerator GunFire(float time)
     {
         isAttaking = true;
         asc.TryActivateAbility(abilityKey3);
