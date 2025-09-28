@@ -216,10 +216,48 @@ public class MonsterMovement : MonoBehaviour, IMovement
         
         // 플레이어 반대 방향으로 후퇴 목표점 설정
         Vector2 retreatDirection = _player.position.x > transform.position.x ? Vector2.left : Vector2.right;
-        _retreatTargetPos = _retreatStartPos + retreatDirection * RetreatDistance;
+        
+        // 지상 몬스터의 경우 후퇴 목표점이 낭떠러지가 아닌지 확인
+        if (!_monster.Data.IsFlying)
+        {
+            // 후퇴 방향으로 안전한 거리 계산
+            float safeRetreatDistance = CalculateSafeRetreatDistance(retreatDirection);
+            _retreatTargetPos = _retreatStartPos + retreatDirection * safeRetreatDistance;
+        }
+        else
+        {
+            _retreatTargetPos = _retreatStartPos + retreatDirection * RetreatDistance;
+        }
         
         // 플레이어를 바라보는 방향을 설정 (후퇴하기 전에)
         HorizontalDir = _player.position.x > transform.position.x ? 1 : -1;
+    }
+    
+    private float CalculateSafeRetreatDistance(Vector2 retreatDirection)
+    {
+        float maxSafeDistance = 0f;
+        float checkStep = 0.2f; // 0.2유닛씩 체크
+        
+        for (float distance = checkStep; distance <= RetreatDistance; distance += checkStep)
+        {
+            Vector2 checkPos = _retreatStartPos + retreatDirection * distance;
+            
+            // 해당 위치에서 바닥이 있는지 체크
+            Vector2 groundCheckPos = checkPos + new Vector2(0, -0.2f);
+            RaycastHit2D hit = Physics2D.Raycast(groundCheckPos, Vector2.down, 1.2f, platformLayer);
+            
+            if (hit.collider != null)
+            {
+                maxSafeDistance = distance;
+            }
+            else
+            {
+                break; // 바닥이 없으면 더 이상 후퇴하지 않음
+            }
+        }
+        
+        // 최소 0.5유닛은 후퇴할 수 있도록 보장
+        return Mathf.Max(maxSafeDistance, 0.5f);
     }
     
     private void RetreatMove()
@@ -230,12 +268,31 @@ public class MonsterMovement : MonoBehaviour, IMovement
         // 플레이어를 바라보는 방향은 유지 (후퇴하면서도 플레이어를 봄)
         HorizontalDir = _player.position.x > transform.position.x ? 1 : -1;
         
-        // 지상몬스터인 경우 낭떠러지 체크
-        if (!_monster.Data.IsFlying && !CheckGroundAhead())
+        // 지상몬스터인 경우 낭떠러지 체크 - 후퇴 방향으로
+        if (!_monster.Data.IsFlying)
         {
-            // 후퇴할 수 없는 상황이면 즉시 도망 상태로 전환
-            _hasReachedRetreatTarget = true;
-            return;
+            // 후퇴 방향으로 바닥이 있는지 체크
+            int retreatHorizontalDir = retreatDir.x < 0 ? -1 : 1;
+            Vector2 checkPos = (Vector2)transform.position + new Vector2(retreatHorizontalDir * 0.8f, -0.2f);
+            RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, 1.2f, platformLayer);
+            
+            if (hit.collider == null)
+            {
+                // 후퇴할 수 없는 상황이면 즉시 도망 상태로 전환
+                _hasReachedRetreatTarget = true;
+                return;
+            }
+            
+            // 벽도 체크
+            Vector2 wallCheckPos = (Vector2)transform.position + new Vector2(retreatHorizontalDir * 0.5f, 0);
+            RaycastHit2D wallHit = Physics2D.Raycast(wallCheckPos, Vector2.right * retreatHorizontalDir, 0.5f, platformLayer);
+            
+            if (wallHit.collider != null)
+            {
+                // 벽이 있으면 즉시 도망 상태로 전환
+                _hasReachedRetreatTarget = true;
+                return;
+            }
         }
         
         // 후퇴 이동
@@ -246,8 +303,8 @@ public class MonsterMovement : MonoBehaviour, IMovement
         else
         {
             // 지상 몬스터는 좌우로만 이동
-            HorizontalDir = retreatDir.x < 0 ? -1 : 1;
-            _cm.Move(Vector2.right * HorizontalDir * RetreatSpeedMultiplier);
+            int moveDir = retreatDir.x < 0 ? -1 : 1;
+            _cm.Move(Vector2.right * moveDir * RetreatSpeedMultiplier);
         }
         
         // 후퇴 목표점 도달 체크
