@@ -253,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 32776
+    m_Bits: 40968
 --- !u!114 &5604168195167317945
 MonoBehaviour:
   m_ObjectHideFlags: 0
