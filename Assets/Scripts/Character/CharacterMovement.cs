@@ -156,6 +156,8 @@ public class CharacterMovement : MonoBehaviour
     {
         Debug.Log("Knockback");
         _isKnockedBack = true;
+        
+        StartCoroutine(BlinkEffect(duration));
     
         // 현재 velocity 초기화
         _rigidBody.velocity = Vector2.zero;
@@ -188,6 +190,40 @@ public class CharacterMovement : MonoBehaviour
         // 넉백 종료 시 velocity 초기화
         _rigidBody.velocity = Vector2.zero;
         _isKnockedBack = false;
+    }
+    
+    /// <summary>
+    /// 깜빡임 효과를 처리하는 코루틴
+    /// </summary>
+    /// <param name="totalDuration">전체 깜빡임 지속 시간</param>
+    private IEnumerator BlinkEffect(float totalDuration)
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            yield break; // SpriteRenderer가 없으면 종료
+        }
+
+        Color originalColor = spriteRenderer.color;
+        Color blinkColor = Color.white;
+    
+        // 두 번 깜빡이기 위한 설정
+        int blinkCount = 2;
+        float blinkInterval = totalDuration / (blinkCount * 2); // 깜빡이는 간격 (on/off 포함)
+    
+        for (int i = 0; i < blinkCount; i++)
+        {
+            // 흰색으로 변경
+            spriteRenderer.color = blinkColor;
+            yield return new WaitForSeconds(blinkInterval);
+        
+            // 원래 색으로 복원
+            spriteRenderer.color = originalColor;
+            yield return new WaitForSeconds(blinkInterval);
+        }
+    
+        // 마지막에 원래 색으로 완전히 복원
+        spriteRenderer.color = originalColor;
     }
     
     /// <summary>
