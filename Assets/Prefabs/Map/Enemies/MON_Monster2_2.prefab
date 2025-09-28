@@ -192,6 +192,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: bb5ec6099fed11149be749eecf8d2379, type: 2}
   abilitySystemPath: Monster/Monster2_2
   abilityKey: 104
+  abilityKey2: 100
 --- !u!114 &6332346728151343494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 24584
 --- !u!114 &5604168195167317945
 MonoBehaviour:
   m_ObjectHideFlags: 0
