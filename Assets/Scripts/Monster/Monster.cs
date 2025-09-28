@@ -92,10 +92,9 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         }
         else if (isAggro)
         {
-            if (dist >= Data.AggroReleaseRange||IsPlayerBlockedByWall())
+            if (dist >= Data.AggroReleaseRange)
             {
                 isAggro = false;
-                _movement.ChangeMovePattern(MovePattern.Return);
             }
         }
         
