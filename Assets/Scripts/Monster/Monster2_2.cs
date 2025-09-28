@@ -5,6 +5,7 @@ using UnityEngine;
 public class Monster2_2 : Monster
 {
     public AbilityKey abilityKey;
+    public AbilityKey abilityKey2;
 	private bool _isAttacking = false;
     private int _cnt = 0;
     private float _attackDelay = 0.3f;
@@ -22,9 +23,11 @@ public class Monster2_2 : Monster
                 Vector2 monsterPosition = transform.position;
                 Vector2 playerPosition = (Vector2)player.transform.position + Vector2.up;
                 Vector2 knockbackDirection = playerPosition.x > monsterPosition.x ? Vector2.right : Vector2.left;
-                
+
+                asc.TryActivateAbility(abilityKey2);
+
                 // 넉백 적용 (6칸, 0.3초)
-                //playerMovement.ApplyKnockback(knockbackDirection, 6f, 0.3f);
+                playerMovement.ApplyKnockback(knockbackDirection, 12f, 0.3f);
             }
         }
     }
