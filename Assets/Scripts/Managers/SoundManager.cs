@@ -6,7 +6,7 @@ using UnityEngine;
 public enum BGMName
 {
     이무기,
-    
+    B2
 }
 
 public enum SFXName
@@ -77,16 +77,13 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
-    }
-
-    private void Start()
-    {
+        // 사운드 초기화
         CreateBGMSources();
         CreateVFXSources();
 
         InitializeDictionaries();
     }
-
+    
     private void CreateBGMSources()
     {
         if (bgmSource == null)
