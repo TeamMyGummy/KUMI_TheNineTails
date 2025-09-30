@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     public static readonly int AttackCountID = Animator.StringToHash("AttackCount");
     public static readonly int StartParryingID = Animator.StringToHash("StartParrying");
     public static readonly int ParryingID = Animator.StringToHash("Parrying");
+    public static readonly int FoxFireID = Animator.StringToHash("FoxFire");
     public static readonly int LiverExtractionID = Animator.StringToHash("LiverExtraction");
     
     public PlayerController Controller => _playerController;

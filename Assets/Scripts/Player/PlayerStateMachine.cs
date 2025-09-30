@@ -804,13 +804,15 @@ public class FoxFireState : PlayerState
     {
         base.Enter();
         
+        Player.SetAnimatorTrigger(Player.FoxFireID);
         Player.ASC.TryActivateAbility(AbilityKey.FoxFire);
     }
     
     public override void Update()
     {
         // 여우불 애니메이션 나오면 조건문 변경
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxFire") &&
+            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Player.Movement.CheckIsGround())
             {
