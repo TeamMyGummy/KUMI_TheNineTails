@@ -9,7 +9,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     public CharacterMovement _characterMovement { private set; get; }
     public Monster _monster { private set; get; }
     private Collider2D _monsterCollider;
-    private Animator _animator;
+    public Animator _animator{ private set; get; }
     private SkeletonMecanim _skeletonMecanim;
     
     public int HorizontalDir { set; get; } //좌우판정용 (set 추가)
@@ -54,6 +54,12 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private const float FleeRangeThreshold = 4f;
     public const float RetreatArrivalThreshold = 0.2f;
     public const float RetreatSpeedMultiplier = 3.0f;
+    
+    // 애니메이션 파라미터
+    public static readonly int WalkID = Animator.StringToHash("Walk");
+    public static readonly int ChaseID = Animator.StringToHash("Chase");
+    public static readonly int HitID = Animator.StringToHash("Hit");
+    public static readonly int ParryID = Animator.StringToHash("Parry");
 
 
     private void Awake()
@@ -316,6 +322,7 @@ public class StoppedState : IMonsterMovementState
     {
         _mm = monsterMovement;
         _mm.PauseForSeconds(_mm._monster.Data.PausedTime, true);
+        _mm._animator.SetBool(MonsterMovement.WalkID, false);
     }
 
     public void UpdateState()
@@ -338,6 +345,7 @@ public class PatrolState : IMonsterMovementState
     public void Enter(MonsterMovement monsterMovement)
     {
         _mm = monsterMovement;
+        _mm._animator.SetBool(MonsterMovement.WalkID, true);
     }
 
     public void UpdateState()
@@ -356,7 +364,10 @@ public class PatrolState : IMonsterMovementState
         }
     }
 
-    public void Exit() { }
+    public void Exit()
+    {
+        //_mm._animator.SetBool(MonsterMovement.WalkID, false);
+    }
 }
 
 /// <summary>
@@ -370,6 +381,7 @@ public class AggroState : IMonsterMovementState
     public void Enter(MonsterMovement monsterMovement)
     {
         _mm = monsterMovement;
+        _mm._animator.SetBool(MonsterMovement.WalkID, true);
     }
 
     public void UpdateState()
@@ -402,7 +414,10 @@ public class AggroState : IMonsterMovementState
         _mm._characterMovement.Move(_mm.GetDirection());
     }
 
-    public void Exit() { }
+    public void Exit()
+    {
+        //_mm._animator.SetBool(MonsterMovement.ChaseID, false);
+    }
 }
 
 /// <summary>
