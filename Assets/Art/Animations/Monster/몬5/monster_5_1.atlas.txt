@@ -1,7 +1,6 @@
-몹5_0강.png
+monster_5_1.png
 size:524,304
 filter:Linear,Linear
-pma:true
 L_leg
 bounds:337,26,38,80
 offsets:429,149,902,902
