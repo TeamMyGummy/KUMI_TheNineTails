@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class FireToPlayer : BlockAbility<FireProjectileSO>
 {
+    protected GameObject _actor;
+    
     protected FireProjectileSO _so;
     protected IMovement _movement;
     protected CharacterMovement _cm;
@@ -14,6 +16,8 @@ public class FireToPlayer : BlockAbility<FireProjectileSO>
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
+        _actor = actor;
+        
         _so = abilitySo as FireProjectileSO;
         _movement = actor.GetComponent<IMovement>();
         _cm = actor.GetComponent<CharacterMovement>();
@@ -30,6 +34,11 @@ public class FireToPlayer : BlockAbility<FireProjectileSO>
         {
             _move?.SetPaused(true);
         }
+        
+        _actor.GetComponent<Animator>().SetTrigger("FireAttack");
+        
+        if (_so.PreDelay > 0f)
+            await UniTask.Delay(TimeSpan.FromSeconds(_so.PreDelay), delayType: DelayType.DeltaTime); 
         
         go.GetComponent<Projectile>().FireProjectile(Actor, direction);
 

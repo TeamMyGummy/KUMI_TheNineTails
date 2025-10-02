@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea0c827ce48ab934dac2347f4033c387, type: 3}
-  m_Name: Monster3Attack
+  m_Name: Monster1_1Attack
   m_EditorClassIdentifier: 
   skillKey: 100
   skillName: 100
@@ -19,9 +19,12 @@ MonoBehaviour:
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
-  BlockTimer: 2
-  AttackRangeX: 1
-  AttackRangeY: 1
-  HitboxOffset: {x: 0, y: -0.5}
+  BlockTimer: 1.5
+  AttackRangeX: 2
+  AttackRangeY: 2
+  HitboxOffset: {x: 1, y: 1}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
-  isStoppingWhileAttack: 0
+  preAttackDelay: 0.7
+  activeTime: 0.2
+  postAttackDelay: 0.5
+  betweenAttackDelay: 0.3

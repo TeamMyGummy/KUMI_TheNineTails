@@ -11,12 +11,10 @@ public class Monster1_1 : Monster
         if (UnityEngine.Random.value < 0.5f)
         {
             asc.TryActivateAbility(abilityKey);
-            _movement._animator.SetTrigger("Attack");
         }
         else
         {
             asc.TryActivateAbility(abilityKey2);
-            _movement._animator.SetTrigger("Attack2");
         }
         
     }

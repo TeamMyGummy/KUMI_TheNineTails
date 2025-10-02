@@ -5,6 +5,8 @@ using UnityEngine;
 public class FireProjectileSO : BlockAbilitySO
 {
     public Projectile projectile;
-
+    [SerializeField] private float preAttackDelay;   // 공격 전 딜레이
     public bool isStoppWhileAttack;
+    
+    public float PreDelay => preAttackDelay;
 }
