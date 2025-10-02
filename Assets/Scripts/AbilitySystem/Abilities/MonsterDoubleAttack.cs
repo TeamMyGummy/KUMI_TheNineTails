@@ -24,6 +24,8 @@ public class MonsterDoubleAttack : MonsterAttack
         _movement?.SetPaused(true); // 이동 멈추기 
         try
         {
+            _actor.GetComponent<Animator>().SetTrigger("DoubleAttack");
+            
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime);
 

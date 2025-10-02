@@ -24,7 +24,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     
     public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
 
-    private MonsterMovement _movement;
+    protected MonsterMovement _movement;
     private Transform player;
     public Transform Player => player;
 

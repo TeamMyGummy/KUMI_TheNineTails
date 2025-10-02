@@ -12,6 +12,7 @@ public class Monster3_1 : Monster
     protected override void EnterShortAttackRange()
     {
         asc.TryActivateAbility(abilityKey);
+        _movement._animator.SetTrigger("Attack");
     }
 
     protected override void EnterLongAttackRange()
@@ -26,6 +27,7 @@ public class Monster3_1 : Monster
     {
         isAttaking = true;
         asc.TryActivateAbility(abilityKey2);
+        _movement._animator.SetTrigger("Attack2");
         yield return new WaitForSeconds(time);
         isAttaking = false;
     }

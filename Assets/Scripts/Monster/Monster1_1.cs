@@ -6,7 +6,7 @@ public class Monster1_1 : Monster
 {
     public AbilityKey abilityKey = AbilityKey.MonsterAttack;
     public AbilityKey abilityKey2 = AbilityKey.MonsterDoubleAttack;
-    
+
     protected override void EnterShortAttackRange(){
         if (UnityEngine.Random.value < 0.5f)
         {

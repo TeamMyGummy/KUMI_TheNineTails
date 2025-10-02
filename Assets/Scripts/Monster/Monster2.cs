@@ -6,6 +6,7 @@ public class Monster2 : Monster
 {
     public AbilityKey abilityKey;
     private bool isAttaking = false;
+    
     protected override void EnterShortAttackRange()
     {
     }

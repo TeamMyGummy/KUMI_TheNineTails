@@ -1,0 +1,32 @@
+monster_3_0.png
+size:565,648
+filter:Linear,Linear
+pma:true
+L arm_3_0
+bounds:428,412,234,134
+rotate:90
+L hand_3_0
+bounds:514,148,47,37
+offsets:22,0,69,37
+L knife_3_0
+bounds:2,2,70,179
+offsets:1,1,72,181
+rotate:90
+R arm_3_0
+bounds:440,187,223,123
+rotate:90
+R hand_3_0
+bounds:264,2,46,40
+offsets:0,0,72,40
+R knife_3_0
+bounds:440,6,72,179
+offsets:1,1,74,181
+body_3_0
+bounds:183,4,79,68
+offsets:1,1,81,70
+bottoms_3_0
+bounds:280,44,158,256
+head_3_0
+bounds:2,302,424,344
+skirt_3_0
+bounds:2,74,276,226
