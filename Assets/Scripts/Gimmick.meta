@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Gimmick.meta
 guid: aee0d46a00b08ba4fb7636a5ca81c185
+========
+guid: b2cc7cc8a6073ec4cb49e632a7034247
+>>>>>>>> origin/main:Assets/Art/Animations/Monster/몬3_1강.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

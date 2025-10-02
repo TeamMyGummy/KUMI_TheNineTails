@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
@@ -8,42 +6,72 @@ public class PathFollower : MonoBehaviour
     private BezierPath path; // 따라갈 경로
 
     [SerializeField]
-    private float speed = 5f; // 이동 속도
-
-    [SerializeField]
     private bool lookForward = true; // 이동 방향을 바라보게 할지 여부
     
-    private float t = 0f; // 경로 상의 위치 (0.0 ~ 1.0)
+    private float t = 0f; // 전체 경로 상의 위치 (0.0 ~ 1.0)
+    private bool canMove = false; // 이무기가 움직일 수 있는지 여부, 기본값은 false
+    
+    // 이 함수가 핵심입니다! 외부(ImoogiTrigger)에서 이 함수를 호출할 겁니다.
+    public void StartMoving()
+    {
+        canMove = true;
+    }
 
     void Update()
     {
-        if (path == null) return;
+        // canMove가 false이면 아무것도 하지 않고 함수를 빠져나갑니다.
+        if (!canMove || path == null || path.SegmentCount == 0)
+        {
+            return;
+        }
 
-        // 't' 값을 속도에 따라 증가시킵니다.
-        // 경로의 길이를 대략적으로 계산하여 속도를 일정하게 만듭니다. (정확하진 않지만 간단한 방법)
-        float pathLength = Vector3.Distance(path.GetPoint(0), path.GetPoint(1));
-        t += (speed / pathLength) * Time.deltaTime;
+        // --- (여기는 이전과 동일한 이동 로직입니다) ---
+        float totalT = t * path.SegmentCount;
+        int segmentIndex = Mathf.FloorToInt(totalT);
+        segmentIndex = Mathf.Clamp(segmentIndex, 0, path.SegmentCount - 1);
 
-        // t가 1을 넘으면 처음으로 돌아가도록 (루프)
-        if (t > 1f)
+        float currentSpeed = path.GetSpeed(segmentIndex);
+
+        Vector3[] segmentPoints = path.GetPointsInSegment(segmentIndex);
+        float segmentLength = ApproximateSegmentLength(segmentPoints[0], segmentPoints[1], segmentPoints[2], segmentPoints[3]);
+        if (segmentLength < 0.01f) segmentLength = 0.01f;
+
+        float deltaT = (currentSpeed / segmentLength) * Time.deltaTime;
+        t += deltaT / path.SegmentCount;
+
+        if (t >= 1f)
         {
             t -= 1f;
         }
 
-        // 경로 상의 현재 위치를 계산하여 오브젝트 위치를 업데이트합니다.
         transform.position = path.GetPoint(t);
 
-        // 이동 방향을 바라보도록 오브젝트를 회전시킵니다.
         if (lookForward)
         {
-            Vector3 direction = (path.GetPoint(t + 0.01f) - transform.position).normalized;
+            Vector3 direction = (path.GetPoint(t + 0.001f) - transform.position).normalized;
             if (direction != Vector3.zero)
             {
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                // 2D 스프라이트가 기본적으로 오른쪽을 보고 있다면 Z축 회전만 필요합니다.
-                // 만약 스프라이트가 위쪽을 보고 있다면 'angle - 90f' 로 수정해야 할 수 있습니다.
                 transform.rotation = Quaternion.Euler(0, 0, angle);
             }
         }
+    }
+    
+    
+
+    // 베지어 곡선 세그먼트의 길이를 근사치로 계산하는 도우미 함수 (이전과 동일)
+    private float ApproximateSegmentLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        float length = 0;
+        Vector3 lastPoint = p0;
+        int steps = 10;
+        for (int i = 1; i <= steps; i++)
+        {
+            float time = i / (float)steps;
+            Vector3 currentPoint = Bezier.EvaluateCubic(p0, p1, p2, p3, time);
+            length += Vector3.Distance(lastPoint, currentPoint);
+            lastPoint = currentPoint;
+        }
+        return length;
     }
 }

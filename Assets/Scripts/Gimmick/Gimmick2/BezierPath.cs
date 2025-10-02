@@ -6,6 +6,8 @@ public class BezierPath : MonoBehaviour
 {
     [SerializeField]
         private List<Vector3> points;
+
+    [SerializeField] private List<float> segmentsSpeed; // 각 세그먼트의 속도를 저장할 리스트
     
         public int PointCount => points.Count;
         public int SegmentCount => (points.Count - 1) / 3;
@@ -25,6 +27,8 @@ public class BezierPath : MonoBehaviour
                 new Vector3(3, 0, 0),
                 new Vector3(4, 0, 0)
             };
+
+            segmentsSpeed = new List<float> { 5f };
         }
     
         public void AddSegment(Vector3 anchorPos)
@@ -33,6 +37,13 @@ public class BezierPath : MonoBehaviour
             points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
             points.Add((points[points.Count - 1] + anchorPos) * 0.5f);
             points.Add(anchorPos);
+            
+            segmentsSpeed.Add(segmentsSpeed[segmentsSpeed.Count - 1]);
+        }
+
+        public float GetSpeed(int segmentIndex)
+        {
+            return segmentsSpeed[Mathf.Clamp(segmentIndex, 0, segmentsSpeed.Count - 1)];
         }
     
         public Vector3[] GetPointsInSegment(int i)

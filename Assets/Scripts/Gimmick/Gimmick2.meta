@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Gimmick/Gimmick2.meta
 guid: 504a00cbfa40a76468db73fc44b7871e
+========
+guid: aee0d46a00b08ba4fb7636a5ca81c185
+>>>>>>>> origin/main:Assets/Scripts/Gimmick.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
