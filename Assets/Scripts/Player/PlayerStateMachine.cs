@@ -185,6 +185,11 @@ public class IdleState : PlayerState
             if(Player.ASC.CanActivateAbility(AbilityKey.FoxFire))
                 Player.StateMachine.ChangeState(PlayerStateType.FoxFire);
         }
+        else if (Player.Controller.IsLiverExtractionPressed())
+        {
+            if(Player.ASC.CanActivateAbility(AbilityKey.LiverExtraction))
+                Player.StateMachine.ChangeState(PlayerStateType.LiverExtraction);
+        }
     }
     
 }
@@ -764,12 +769,12 @@ public class ParryingState : PlayerState
 
     public override void Update()
     {
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Parrying") &&
+        /*if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Parrying") &&
             Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             ParryingCanceled();
-        }
-        else if (Player.Controller.IsLiverExtractionPressed())
+        }*/
+        if (Player.Controller.IsLiverExtractionPressed())
         {
             if(Player.ASC.CanActivateAbility(AbilityKey.LiverExtraction))
                 Player.StateMachine.ChangeState(PlayerStateType.LiverExtraction);
@@ -804,13 +809,15 @@ public class FoxFireState : PlayerState
     {
         base.Enter();
         
+        Player.SetAnimatorTrigger(Player.FoxFireID);
         Player.ASC.TryActivateAbility(AbilityKey.FoxFire);
     }
     
     public override void Update()
     {
         // 여우불 애니메이션 나오면 조건문 변경
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxFire") &&
+            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Player.Movement.CheckIsGround())
             {
@@ -837,13 +844,13 @@ public class LiverExtractionState : PlayerState
     {
         base.Enter();
         
-        //Player.SetAnimatorBool(Player.LiverExtractionID, true);
+        Player.SetAnimatorTrigger(Player.LiverExtractionID);
         Player.ASC.TryActivateAbility(AbilityKey.LiverExtraction);
     }
 
     public override void Update()
     {
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("LiverExtraction") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("LiverExtraction") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Player.Movement.CheckIsGround())
             {
