@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Gimmick/Gimmick2/PathFollower.cs.meta
 guid: d33095e6daef9b8499b37a47b9a0d9b9
+========
+guid: 125a21a891083324195499d033f3cce4
+>>>>>>>> origin/main:Assets/Scripts/Gimmick/Gimmick2/BezierPath.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
