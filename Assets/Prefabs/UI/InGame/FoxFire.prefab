@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2590884665957229195}
-  - component: {fileID: 6373439355841944930}
-  - component: {fileID: 349325186255753229}
   m_Layer: 5
   m_Name: FoxFire
   m_TagString: Untagged
@@ -39,47 +37,6 @@ RectTransform:
   m_AnchoredPosition: {x: -794.67816, y: -440.68542}
   m_SizeDelta: {x: 330.6437, y: 197.8892}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6373439355841944930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473142886721286757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b123902ad6204efca3d7de1053e954d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &349325186255753229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473142886721286757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4820a2a163be40ed93da21ca37f50c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpSprites: []
-  hpImage: {fileID: 0}
-  skillSprites: []
-  skillImage: {fileID: 0}
-  foxFireGaugeImage: {fileID: 7785393172784139322}
-  foxFireGaugeSprites:
-  - {fileID: 21300000, guid: 6c135a369325c495fa4eb41bf186c9ed, type: 3}
-  - {fileID: 21300000, guid: 303d8ed5a2c354aaaada993d4192efa1, type: 3}
-  - {fileID: 21300000, guid: 4638002a5d68e4841bd1ca44964df051, type: 3}
-  - {fileID: 21300000, guid: e6f68eecbf1714a82bce25d892f91726, type: 3}
-  - {fileID: 21300000, guid: c998f45e8f95f42e38af93a5592cbe58, type: 3}
-  foxFireCountImage: {fileID: 793042945722418776}
-  foxFireCountSprites:
-  - {fileID: 21300000, guid: 5731855fcddcf4bd3b8c07e08b27ca47, type: 3}
-  - {fileID: 21300000, guid: c643397f144cd4fa189ae522a5980eec, type: 3}
-  - {fileID: 21300000, guid: c5f71afb378d040929370b47a2fa7e3c, type: 3}
-  - {fileID: 21300000, guid: 9304bddf53efd46d89c618741487bb6c, type: 3}
 --- !u!1 &3884053947536337583
 GameObject:
   m_ObjectHideFlags: 0

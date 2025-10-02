@@ -11,8 +11,10 @@ public class UI_PlayerState : MonoBehaviour
     [Header("HP")]
     [SerializeField] private Sprite filledHpSprite;
     [SerializeField] private Sprite emptyHpSprite;
+    [SerializeField] private GameObject additionalHpPrefab;
     [SerializeField] private Transform hpContainer;
-    private readonly List<Image> _hpImages = new();
+    private List<Image> hpImages = new List<Image>();
+    //private readonly List<Image> _hpImages = new();
 
     [Header("Skill")]
     [SerializeField] private List<Sprite> skillSprites;
@@ -36,6 +38,15 @@ public class UI_PlayerState : MonoBehaviour
     void Awake()
     {
         _playerVM = GetComponent<VM_PlayerState>();
+        for (int i = 0; i < hpContainer.childCount; i++)
+        {
+            var child = hpContainer.GetChild(i);
+            var image = child.GetComponent<Image>();
+            if (image != null)
+            {
+                hpImages.Add(image);
+            }
+        }
     }
 
     private async void OnEnable()
@@ -106,22 +117,38 @@ public class UI_PlayerState : MonoBehaviour
         int curHp = Mathf.FloorToInt(current);
 
         // 부족하면 슬롯 생성
-        while (_hpImages.Count < maxHp)
+        while (hpImages.Count < maxHp)
         {
+            var go = Instantiate(additionalHpPrefab, hpContainer);
+            var img = go.GetComponent<Image>();
+            hpImages.Add(img);
+
+            /*
             var go = new GameObject("Hp");
             var img = go.AddComponent<Image>();
             img.transform.SetParent(hpContainer, false);
             img.sprite = emptyHpSprite;
             _hpImages.Add(img);
+            */
         }
 
-        // 표시/스프라이트 갱신
-        for (int i = 0; i < _hpImages.Count; i++)
+        // 슬롯 표시/색상 갱신
+        for (int i = 0; i < hpImages.Count; i++)
         {
-            bool active = i < maxHp;
-            _hpImages[i].gameObject.SetActive(active);
+            bool shouldShow = i < maxHp;
+            hpImages[i].gameObject.SetActive(shouldShow);
+            
+            if (shouldShow)
+            {
+                bool isFilled = i < curHp;
+                Color currentColor = hpImages[i].color;
+                hpImages[i].color = new Color(currentColor.r, currentColor.g, currentColor.b, isFilled ? 1f : 0f);
+            }
+            /*
+            hpImages[i].gameObject.SetActive(active);
             if (active)
-                _hpImages[i].sprite = (i < curHp) ? filledHpSprite : emptyHpSprite;
+                hpImages[i].sprite = (i < curHp) ? filledHpSprite : emptyHpSprite;
+            */
         }
     }
 
