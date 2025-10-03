@@ -36305,6 +36305,17 @@ MonoBehaviour:
           _Z: 0
           _W: 0
           _Object: {fileID: 0}
+      - _Target: {fileID: 841501371}
+        _MemberName: SetActive
+        _PersistentArguments:
+        - _Type: 1
+          _Int: 1
+          _String: 
+          _X: 0
+          _Y: 0
+          _Z: 0
+          _W: 0
+          _Object: {fileID: 0}
   - description: "\uBAB8\uD1B5\uC5F0\uCD9C"
     delay: 0.5
     action:
@@ -41684,6 +41695,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 347162652325166711, guid: 969cc8340ed4b4b41a977f6344c306e2, type: 3}
   m_PrefabInstance: {fileID: 834707842}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &841501371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3133681439245677475, guid: cbf9f39cdc48c494495286c62909a9cd, type: 3}
+  m_PrefabInstance: {fileID: 515472426}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &851911265
 PrefabInstance:
