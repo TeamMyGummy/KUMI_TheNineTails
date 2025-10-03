@@ -18,11 +18,11 @@ public class RopeSegment : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
+            /*if (other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
             {
                 Vector2 forceDir = cm.GetCharacterSpriteDirection();
                 _rigid.AddForce(forceDir * 0.01f, ForceMode2D.Impulse);
-            }
+            }*/
         }
     }
 
@@ -30,11 +30,11 @@ public class RopeSegment : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
+            /*if (other.gameObject.TryGetComponent<CharacterMovement>(out var cm))
             {
                 Vector2 forceDir = cm.GetCharacterSpriteDirection();
                 _rigid.AddForce(forceDir * 0.01f, ForceMode2D.Impulse);
-            }
+            }*/
         }
     }
 }

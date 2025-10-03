@@ -1245,7 +1245,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94117cf15d014ca43b58e938ad9ca9fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ff8e63d25e3a134980f2a112477c7f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1269,18 +1269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RootBone: {fileID: 7872012787948282120}
-  m_BoneTransforms:
-  - {fileID: 7872012787948282120}
-  - {fileID: 7248187807136956016}
-  - {fileID: 538978224022760450}
-  - {fileID: 9073415042347907937}
-  - {fileID: 3021568809335444303}
-  - {fileID: 2057761975751123706}
-  - {fileID: 8838985915605895653}
-  - {fileID: 4471538767527818808}
-  - {fileID: 5183010041756377463}
-  - {fileID: 2276624384850192618}
-  - {fileID: 2922276991391938403}
+  m_BoneTransforms: []
   m_Bounds:
     m_Center: {x: 1.608, y: 2.2859998, z: -0.05816661}
     m_Extent: {x: 0.17200011, y: 1.7320002, z: 0.0000000037252903}

@@ -11,12 +11,40 @@ public class Rope : MonoBehaviour
     private Player _player;
     private CharacterMovement _cm;
     private PlayerController _pc;
+
+    public GameObject ropeChild;
+    public int childCount; 
     
+    private void Awake()
+    {
+        for (int i = 0; i < childCount; i++)
+        {
+            // 자식 생성 (부모를 this.transform으로 설정)
+            GameObject child = Instantiate(ropeChild, transform);
+
+            // 위치 조정 (원하면 랜덤 배치 가능)
+            child.transform.localPosition = new Vector3(0f, 2.2f - 0.2f * i, 0f);
+            
+            _segments.Add((child.transform, child.transform.position));
+            if (i == 0)
+            {
+                // 첫 번째 경우 Anchor 받아오기
+                child.GetComponent<HingeJoint2D>().connectedBody = transform.GetChild(0).GetComponent<Rigidbody2D>();
+            }
+            else
+            {
+                child.GetComponent<HingeJoint2D>().connectedBody = _segments[i - 1].child.GetComponent<Rigidbody2D>();
+                child.GetComponent<HingeJoint2D>().anchor = new Vector2(0, 0.074f);
+                child.GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0, -0.138f);
+            }
+        }
+    }
+
     private void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            _segments.Add((transform.GetChild(i), transform.GetChild(i).position));
+            //_segments.Add((transform.GetChild(i), transform.GetChild(i).position));
         }
     }
     
@@ -39,10 +67,10 @@ public class Rope : MonoBehaviour
                 _player.OnRopeClimbAvailable?.Invoke(true);
                 other.transform.position = new Vector2(transform.position.x, other.transform.position.y);
 
-                for (int i = 0; i < transform.childCount; i++)
+                /*for (int i = 0; i < transform.childCount; i++)
                 {
                     _segments[i].child.position = _segments[i].originPos;
-                }
+                }*/
             }
         }
     }
