@@ -1,3 +1,4 @@
+using BehaviorTree.Leaf;
 using UnityEngine;
 
 namespace BehaviorTree
@@ -8,11 +9,21 @@ namespace BehaviorTree
         [SerializeField] private GameObject spawnObject;
         private float delay;
         private Vector3 spawnPosition;
-
-        public void SetPosition(Vector2 pos, float delay)
+        private EPositionType _xtype;
+        private EPositionType _ytype;
+        private PositionHelper _positionHelper;
+    
+        private void Awake()
         {
-            spawnPosition = pos;
-            this.delay = delay;
+            _positionHelper = GetComponent<PositionHelper>();
+        }
+
+        public void SetPosition(Vector2 inputPos, Vector2 desiredPos, EPositionType xtype, EPositionType ytype, float delay)
+        {
+            spawnPosition = inputPos;
+            if (xtype != EPositionType.Input) spawnPosition.x = _positionHelper.GetDestination(_xtype, transform.position, desiredPos).x;
+            if (ytype != EPositionType.Input) spawnPosition.y = _positionHelper.GetDestination(_ytype, transform.position, desiredPos).y;
+            this.delay = delay; 
         }
 
         protected override NodeState OnStartAction()

@@ -3,19 +3,20 @@ using UnityEngine;
 
 namespace BehaviorTree.Leaf
 {
-    public enum EMoveType
+    public enum EPositionType
     {
         Offset,
         TargetOffset,
         WorldLocation,
-        CameraOffset
+        CameraOffset,
+        Input //Spawn 때문에 추가
     }
     public class MoveNode : MonoNode
     {
         [SerializeField] public float x;
-        [SerializeField] public EMoveType xType;
+        [SerializeField] public EPositionType xType;
         [SerializeField] public float y;
-        [SerializeField] public EMoveType yType;
+        [SerializeField] public EPositionType yType;
         [SerializeField] public float speed;
 
         protected override void OnEnter()

@@ -4,22 +4,23 @@ using BehaviorTree.Leaf;
 
 namespace BehaviorTree
 {
+    [RequireComponent(typeof(PositionHelper))]
     public class MoveHandler : ActionHandler
     {
         private const float StopThreshold = 0.1f;
         [SerializeField] private float speed = 2f;
         private Vector3 _currentDest;
         private Vector3 _vector;
-        private EMoveType _xtype;
-        private EMoveType _ytype;
-        private Transform _player;
+        private EPositionType _xtype;
+        private EPositionType _ytype;
+        private PositionHelper _positionHelper;
     
         private void Awake()
         {
-            _player = GameObject.FindWithTag("Player").transform;
+            _positionHelper = GetComponent<PositionHelper>();
         }
     
-        public void SetMovementPoint(Vector3 vector, EMoveType xtype, EMoveType ytype, float speed)
+        public void SetMovementPoint(Vector3 vector, EPositionType xtype, EPositionType ytype, float speed)
         {
             _vector = vector;
             _xtype = xtype;
@@ -29,7 +30,9 @@ namespace BehaviorTree
     
         protected override NodeState OnStartAction()
         {
-            _currentDest = new Vector3(GetTargetDestination(_xtype).x, GetTargetDestination(_ytype).y);
+            _currentDest = new Vector3(
+                _positionHelper.GetDestination(_xtype, transform.position, _vector).x, 
+                _positionHelper.GetDestination(_ytype, transform.position, _vector).y);
             return NodeState.Running;
         }
     
@@ -45,23 +48,6 @@ namespace BehaviorTree
             transform.position += direction * (speed * Time.deltaTime);
     
             return NodeState.Running; // 아직 도달 안함 → 계속 실행 중
-        }
-    
-        private Vector3 GetTargetDestination(EMoveType type)
-        {
-            switch (type)
-            {
-                case EMoveType.Offset:
-                    return transform.position + _vector;
-                case EMoveType.TargetOffset:
-                    return _player.position + _vector;
-                case EMoveType.WorldLocation:
-                    return _vector;
-                case EMoveType.CameraOffset:
-                    return Camera.main.transform.position + _vector;
-            }
-    
-            return Vector3.zero;
         }
     }
 }
