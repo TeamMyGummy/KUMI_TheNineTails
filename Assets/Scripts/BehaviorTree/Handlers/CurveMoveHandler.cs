@@ -17,8 +17,8 @@ namespace BehaviorTree
 
         // 목표 지점 계산용 변수
         private Vector3 _vector;
-        private EMoveType _xtype;
-        private EMoveType _ytype;
+        private EPositionType _xtype;
+        private EPositionType _ytype;
         private Transform _player;
 
         private void Awake()
@@ -26,7 +26,7 @@ namespace BehaviorTree
             _player = GameObject.FindWithTag("Player").transform;
         }
 
-        public void SetMovementPoint(Vector3 vector, EMoveType xtype, EMoveType ytype, float duration, AnimationCurve curve)
+        public void SetMovementPoint(Vector3 vector, EPositionType xtype, EPositionType ytype, float duration, AnimationCurve curve)
         {
             _vector = vector;
             _xtype = xtype;
@@ -58,17 +58,17 @@ namespace BehaviorTree
             return (timeRatio >= 1f) ? NodeState.Success : NodeState.Running;
         }
 
-        private Vector3 GetTargetDestination(EMoveType type)
+        private Vector3 GetTargetDestination(EPositionType type)
         {
             switch (type)
             {
-                case EMoveType.Offset:
+                case EPositionType.Offset:
                     return transform.position + _vector;
-                case EMoveType.TargetOffset:
+                case EPositionType.TargetOffset:
                     return _player.position + _vector;
-                case EMoveType.WorldLocation:
+                case EPositionType.WorldLocation:
                     return _vector;
-                case EMoveType.CameraOffset:
+                case EPositionType.CameraOffset:
                     return Camera.main.transform.position + _vector;
             }
             return Vector3.zero;

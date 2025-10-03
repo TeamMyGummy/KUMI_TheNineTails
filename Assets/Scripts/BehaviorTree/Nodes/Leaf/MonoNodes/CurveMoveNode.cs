@@ -7,9 +7,9 @@ namespace BehaviorTree.Leaf
     {
         [Header("목표 지점")]
         [SerializeField] private float x;
-        [SerializeField] private EMoveType xType;
+        [SerializeField] private EPositionType xType;
         [SerializeField] private float y;
-        [SerializeField] private EMoveType yType;
+        [SerializeField] private EPositionType yType;
 
         [Header("이동 설정")]
         [Tooltip("목표 지점까지 이동하는 데 걸리는 시간입니다.")]
