@@ -1,10 +1,26 @@
 using UnityEngine;
 using UltEvents;
 using System.Collections;
+using System.Collections.Generic; // List를 사용하기 위해 추가
+
+/// <summary>
+/// UltEvent와 지연 시간을 한 묶음으로 관리하는 데이터 클래스입니다.
+/// </summary>
+[System.Serializable]
+public class DelayedUltEvent
+{
+    [Tooltip("인스펙터에서 알아보기 쉽도록 설명을 적어두세요.")]
+    public string description;
+    [Tooltip("이 액션이 시작되기까지의 지연 시간(초)입니다.")]
+    public float delay;
+    [Tooltip("지연 후 실행될 이벤트입니다.")]
+    public UltEvent action;
+}
+
 
 /// <summary>
 /// 특정 영역에 진입하고 나갈 때 연출 시퀀스를 재생하는 트리거입니다.
-/// FSM(상태 머신) 기반으로 동작하며, 최초 한 번만 메인 시퀀스를 실행하는 기능을 포함합니다.
+/// 하나의 트리거 시점에 여러 이벤트를 각기 다른 딜레이로 실행할 수 있습니다.
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class SectionTrigger : MonoBehaviour
@@ -34,18 +50,18 @@ public class SectionTrigger : MonoBehaviour
     private float postExitSequenceDuration = 2.0f;
 
     [Header("Events")]
-    [Space(10)]
-    [Tooltip("플레이어가 영역에 진입하는 순간 호출됩니다. (Pre-Enter 연출 시작 전)")]
-    public UltEvent onPreEnterStart;
+    [Space(10)] 
+    [Tooltip("플레이어가 영역에 진입했을 때 개별 딜레이로 실행될 액션 목록입니다.")]
+    public List<DelayedUltEvent> onPreEnterActions;
 
-    [Tooltip("Pre-Enter 연출이 끝난 후 호출됩니다. (본게임 로직 시작 시점)")]
-    public UltEvent onMainGameplayStart;
+    [Tooltip("Pre-Enter 연출이 끝난 후 개별 딜레이로 실행될 액션 목록입니다.")]
+    public List<DelayedUltEvent> onMainGameplayActions;
 
-    [Tooltip("플레이어가 영역을 나간 후, Post-Exit 연출이 시작될 때 호출됩니다.")]
-    public UltEvent onPostExitStart;
+    [Tooltip("플레이어가 영역을 나갔을 때 개별 딜레이로 실행될 액션 목록입니다.")]
+    public List<DelayedUltEvent> onPostExitActions;
 
-    [Tooltip("Post-Exit 연출이 모두 끝난 후 호출됩니다.")]
-    public UltEvent onPostExitEnd;
+    [Tooltip("Post-Exit 연출이 모두 끝난 후 개별 딜레이로 실행될 액션 목록입니다.")]
+    public List<DelayedUltEvent> onPostExitEndActions;
 
 
     private ZoneState currentState = ZoneState.Idle;
@@ -98,21 +114,27 @@ public class SectionTrigger : MonoBehaviour
     /// </summary>
     private IEnumerator EnterSequence()
     {
-        // 1. 상태 변경 및 Pre-Enter 이벤트 호출
         currentState = ZoneState.PreEnter;
         Debug.Log("State: PreEnter - Pre-Enter sequence started.");
-        onPreEnterStart?.Invoke();
         hasBeenTriggered = true;
 
-        // --- 여기에 Pre-Enter 연출 로직을 넣으세요. (예: 카메라 무빙, 플레이어 조작 제한, UI 등장) ---
-        // 예시: 지정된 시간만큼 대기
-        yield return new WaitForSeconds(preEnterSequenceDuration);
-        // --- 연출 종료 ---
+        // onPreEnterActions 리스트의 모든 액션을 각자의 딜레이로 실행
+        foreach (var delayedEvent in onPreEnterActions)
+        {
+            StartCoroutine(InvokeEventWithDelay(delayedEvent.action, delayedEvent.delay));
+        }
 
-        // 2. 상태 변경 및 본게임 진입 이벤트 호출
+        // Pre-Enter 연출 시간만큼 대기
+        yield return new WaitForSeconds(preEnterSequenceDuration);
+        
         currentState = ZoneState.Active;
         Debug.Log("State: Active - Main gameplay started.");
-        onMainGameplayStart?.Invoke();
+
+        // onMainGameplayActions 리스트의 모든 액션을 각자의 딜레이로 실행
+        foreach (var delayedEvent in onMainGameplayActions)
+        {
+            StartCoroutine(InvokeEventWithDelay(delayedEvent.action, delayedEvent.delay));
+        }
     }
 
     /// <summary>
@@ -120,20 +142,41 @@ public class SectionTrigger : MonoBehaviour
     /// </summary>
     private IEnumerator ExitSequence()
     {
-        // 1. 상태 변경 및 Post-Exit 이벤트 호출
         currentState = ZoneState.PostExit;
         Debug.Log("State: PostExit - Post-Exit sequence started.");
-        onPostExitStart?.Invoke();
 
-        // --- 여기에 Post-Exit 연출 로직을 넣으세요. (예: 문 닫히는 애니메이션, 다음 구역 암시) ---
-        // 예시: 지정된 시간만큼 대기
+        // onPostExitActions 리스트의 모든 액션을 각자의 딜레이로 실행
+        foreach (var delayedEvent in onPostExitActions)
+        {
+            StartCoroutine(InvokeEventWithDelay(delayedEvent.action, delayedEvent.delay));
+        }
+
+        // Post-Exit 연출 시간만큼 대기
         yield return new WaitForSeconds(postExitSequenceDuration);
-        // --- 연출 종료 ---
-
-        // 2. 상태 변경 및 최종 이벤트 호출
+        
         currentState = ZoneState.Idle;
         Debug.Log("State: Idle - Zone sequence complete.");
-        onPostExitEnd?.Invoke();
+
+        // onPostExitEndActions 리스트의 모든 액션을 각자의 딜레이로 실행
+        foreach (var delayedEvent in onPostExitEndActions)
+        {
+            StartCoroutine(InvokeEventWithDelay(delayedEvent.action, delayedEvent.delay));
+        }
+    }
+    
+    /// <summary>
+    /// UltEvent를 지정된 시간만큼 지연시킨 후 호출하는 헬퍼 코루틴입니다.
+    /// </summary>
+    private IEnumerator InvokeEventWithDelay(UltEvent targetEvent, float delay)
+    {
+        // 지연 시간이 0보다 클 때만 대기합니다.
+        if (delay > 0)
+        {
+            yield return new WaitForSeconds(delay);
+        }
+        
+        // 이벤트 호출
+        targetEvent?.Invoke();
     }
     
     // 기즈모를 그려 씬 뷰에서 영역을 쉽게 식별하도록 합니다.
