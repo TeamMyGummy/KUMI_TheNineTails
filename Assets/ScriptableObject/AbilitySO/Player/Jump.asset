@@ -20,4 +20,4 @@ MonoBehaviour:
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
   MaxJumpCount: 1
-  JumpPower: 7
+  JumpPower: 7.5
