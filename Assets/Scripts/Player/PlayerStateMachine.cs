@@ -752,7 +752,7 @@ public class DashState : PlayerState
         
         Player.ResetAnimatorTrigger(Player.DashID);
         Player.Movement.ResetGravityScale();
-        Dash.OnResetDash.Invoke();
+        //Dash.OnResetDash.Invoke();
     }
 }
 

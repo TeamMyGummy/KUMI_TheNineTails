@@ -50,6 +50,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     protected override void Activate()
     {
         base.Activate();
+        _rigid = Actor.GetComponent<Rigidbody2D>();
         
         if (!_characterMovement.CheckIsGround())
         {

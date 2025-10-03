@@ -95,6 +95,7 @@ public class SectionTrigger : MonoBehaviour
 
         // 진입 시퀀스 시작
         StartCoroutine(EnterSequence());
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -114,6 +115,7 @@ public class SectionTrigger : MonoBehaviour
     /// </summary>
     private IEnumerator EnterSequence()
     {
+        SoundManager.Instance.PlayBGM(BGMName.이무기);
         currentState = ZoneState.PreEnter;
         Debug.Log("State: PreEnter - Pre-Enter sequence started.");
         hasBeenTriggered = true;
