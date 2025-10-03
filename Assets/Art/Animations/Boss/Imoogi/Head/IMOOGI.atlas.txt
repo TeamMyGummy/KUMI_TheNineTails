@@ -1,0 +1,17 @@
+IMOOGI.png
+size:4685,3231
+filter:Linear,Linear
+pma:true
+beard
+bounds:2,911,3061,596
+body
+bounds:2,2254,4681,975
+body_second
+bounds:2,1509,4235,743
+offsets:0,0,5492,743
+lower head
+bounds:1967,53,1142,856
+lower head B
+bounds:3065,965,646,542
+upper head
+bounds:2,2,1963,907

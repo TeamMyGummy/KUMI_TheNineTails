@@ -1,0 +1,7 @@
+imoogi_body2.png
+size:3313,737
+filter:Linear,Linear
+pma:true
+body2
+bounds:2,2,3309,733
+offsets:562,0,5492,743
