@@ -42,12 +42,11 @@ namespace BehaviorTree
 
         public void CheckPrevNode(LeafNode currNode)
         {
+            if (currNode is not IStateNode) return;
             if (_prevNode is not null && _prevNode != currNode && _prevNode.State == NodeState.Running)
             {
                 _prevNode.Abort();
             }
-
-            _prevNode = currNode;
         }
     }
 }

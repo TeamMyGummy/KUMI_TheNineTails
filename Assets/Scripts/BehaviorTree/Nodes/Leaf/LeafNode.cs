@@ -27,10 +27,11 @@ namespace BehaviorTree.Leaf
         
         public override NodeState Evaluate()
         {
+            DebugUtil.Log("현재 들어온 노드는 : " + name);
             btGraph.CheckPrevNode(this);
             if (!isRunning)
             {
-                Debug.Log("현재 시작된 노드는 : " + name);
+                DebugUtil.Log("현재 시작된 노드는 : " + name);
                 isRunning = true;
                 State = Start();
                 if (State != NodeState.Running)
@@ -54,12 +55,19 @@ namespace BehaviorTree.Leaf
 
         public NodeState ParallelEvaluate()
         {
-            if (State != NodeState.Running)
+            if (!isRunning)
             {
+                isRunning = true;
                 Debug.Log("현재 시작된 노드는 : " + name);
                 return State = Start();
             }
-            return State = Update();
+            State = Update();
+            if (State != NodeState.Running)
+            {
+                isRunning = false;
+                return State;
+            }
+            return NodeState.Running;
         }
 
     }
