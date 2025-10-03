@@ -1,9 +1,11 @@
+using Spine.Unity;
 using UnityEngine;
 
 public enum EAnimationControl
 {
     Set,
-    Add
+    Add,
+    Stop,
 }
 
 namespace BehaviorTree.Leaf
