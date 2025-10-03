@@ -8,6 +8,7 @@ public enum EAnimationControl
 
 namespace BehaviorTree.Leaf
 {
+    [NodeTint(NodeColorPalette.ANIM_NODE)]
     public class ChangeAnimationNode : MonoNode
     {
         [SerializeField] public string animationName;

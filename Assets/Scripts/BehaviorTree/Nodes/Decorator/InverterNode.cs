@@ -1,5 +1,6 @@
 namespace BehaviorTree.Decorator
 {
+    [NodeTint(NodeColorPalette.DECORATOR_NODE)]
     public class InverterNode : DecoratorNode
     {
         public override NodeState Evaluate()
