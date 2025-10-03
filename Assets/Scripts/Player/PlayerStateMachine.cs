@@ -723,6 +723,11 @@ public class DashState : PlayerState
         {
             Player.StateMachine.ChangeState(PlayerStateType.WallClimb);
         }
+        
+        if (Player.CanRopeClimb())
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
+        }
 
         if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
