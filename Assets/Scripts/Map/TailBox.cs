@@ -15,22 +15,35 @@ public class TailBox : MonoBehaviour
     private AbilitySystem _playerModel;
     private bool _playerInRange = false;
     private bool _isUsed = false;
+    
+    // 자동 할당 대상 (자식 인덱스 고정: before(0), after(1), interaction(2))
+    private GameObject _beforeUseImage;
+    private GameObject _afterUseImage;
+    private GameObject _interactionUI;
 
     public void Awake()
     {
         DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
+        
+        // 자식 인덱스 고정
+        if (transform.childCount >= 3)
+        {
+            _beforeUseImage = transform.GetChild(0).gameObject; // beforeUseImage
+            _afterUseImage  = transform.GetChild(1).gameObject; // afterUseImage
+            _interactionUI  = transform.GetChild(2).gameObject; // InteractionUI
+        }
+        else
+        {
+            Debug.LogError($"[TailBox:{name}] 자식이 3개 미만입니다. (childCount={transform.childCount})");
+        }
     }
 
     private void Start()
     {
-        if (interactionUI != null)
-        {
-            interactionUI.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("[TailBox] interactionUI == null");
-        }
+        // 초기 상태 확정
+        if (_beforeUseImage != null) _beforeUseImage.SetActive(true);
+        if (_afterUseImage  != null) _afterUseImage.SetActive(false);
+        if (_interactionUI  != null) _interactionUI.SetActive(false);
     }
 
     public void TailBoxInteraction()
@@ -51,6 +64,10 @@ public class TailBox : MonoBehaviour
 
             _isUsed = true;
             interactionUI.SetActive(false);
+            
+            // 이미지 전환
+            _beforeUseImage.SetActive(false);
+            _afterUseImage.SetActive(true);
         }
     }
 
