@@ -406,7 +406,7 @@ public class HurtState : PlayerState
     public override void Update()
     {
         if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt") &&
-            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
@@ -850,7 +850,7 @@ public class LiverExtractionState : PlayerState
 
     public override void Update()
     {
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("LiverExtraction") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("LiverExtraction") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
         {
             if (Player.Movement.CheckIsGround())
             {

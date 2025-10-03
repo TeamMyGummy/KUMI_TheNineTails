@@ -32,7 +32,7 @@ public class AttackRange : MonoBehaviour
     public void SpawnAttackRange()
     {
         gameObject.transform.localPosition = _actor.GetComponent<SpriteRenderer>().flipX 
-            ? new Vector2(_spawnPoint.x * (-1), _spawnPoint.y) 
+            ? new Vector2(_spawnPoint.x * (-2), _spawnPoint.y) 
             : new Vector2(_spawnPoint.x, _spawnPoint.y);
     }
     public void EnableAttackCollider(bool enabled)

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1068639703114465631}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 1.0083351}
+  m_LocalPosition: {x: 0, y: 1.5, z: 1.0083351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -576,7 +576,7 @@ MonoBehaviour:
   - {x: -0.097126484, y: 0.21669531, z: 0}
   m_ShapePathHash: -523907837
   m_Mesh: {fileID: 0}
-  m_InstanceId: 53912
+  m_InstanceId: 997680
   m_LocalBounds:
     m_Center: {x: 0.02128613, y: 1.1571972, z: 0}
     m_Extent: {x: 0.6182183, y: 0.943835, z: 0}
@@ -646,7 +646,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7041266, y: 0.017035306}
+  m_Offset: {x: 0.39852762, y: 0.017035306}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -657,7 +657,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4082532, y: 1.0340706}
+  m_Size: {x: 1.7970548, y: 1.0340706}
   m_EdgeRadius: 0
 --- !u!114 &5302310441355276073
 MonoBehaviour:
@@ -816,6 +816,7 @@ GameObject:
   - component: {fileID: 8368606157360877661}
   - component: {fileID: 4675256570011598279}
   - component: {fileID: 2234055792613288173}
+  - component: {fileID: 2409036346173523394}
   m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -897,3 +898,47 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6933103645969563193}
   m_Enabled: 1
+--- !u!114 &2409036346173523394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933103645969563193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0

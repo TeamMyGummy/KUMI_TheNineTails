@@ -117,7 +117,6 @@ public class MonsterMovement : MonoBehaviour, IMovement
         Vector2 dir = GetDirection();
         if (_animator != null && _skeletonMecanim != null)
         {
-            _animator.SetBool("Run", dir != Vector2.zero);
             _skeletonMecanim.Skeleton.ScaleX = (dir.x > 0 ? -1f : 1f) * Mathf.Abs(_skeletonMecanim.Skeleton.ScaleX);
         }
     }
