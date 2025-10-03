@@ -1074,7 +1074,6 @@ MonoBehaviour:
     - children
     - children 0
     - children 1
-    - children 2
     values:
     - _fieldName: input
       _node: {fileID: -3327372308762366488}
@@ -1102,15 +1101,6 @@ MonoBehaviour:
       _node: {fileID: -3327372308762366488}
       _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: children 1
-      _node: {fileID: -3327372308762366488}
-      _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
         node: {fileID: 5882187725315599573}
@@ -1119,7 +1109,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: children 2
+    - _fieldName: children 1
       _node: {fileID: -3327372308762366488}
       _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -1133,7 +1123,6 @@ MonoBehaviour:
       _dynamic: 1
   input: {fileID: 0}
   children:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &-3281052160073523350
@@ -1337,9 +1326,6 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: children 2
-        node: {fileID: -3327372308762366488}
-        reroutePoints: []
-      - fieldName: children 2
         node: {fileID: 4302128641809753902}
         reroutePoints: []
       - fieldName: children 2
@@ -1347,6 +1333,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: children 1
         node: {fileID: 2001969851626217951}
+        reroutePoints: []
+      - fieldName: children 1
+        node: {fileID: -3327372308762366488}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2185,10 +2174,7 @@ MonoBehaviour:
       _node: {fileID: 2001969851626217951}
       _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: children 3
-        node: {fileID: 3251615762744018417}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -2434,7 +2420,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 2001969851626217951}
+        node: {fileID: 9151730244205455071}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -2865,7 +2851,7 @@ MonoBehaviour:
       _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: children 1
+      - fieldName: children 0
         node: {fileID: -3327372308762366488}
         reroutePoints: []
       _direction: 0
@@ -3472,7 +3458,10 @@ MonoBehaviour:
       _node: {fileID: 9151730244205455071}
       _typeQualifiedName: BehaviorTree.BTNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: children 3
+        node: {fileID: 3251615762744018417}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
