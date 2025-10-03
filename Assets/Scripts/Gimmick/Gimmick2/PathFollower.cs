@@ -2,30 +2,40 @@ using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
-    [SerializeField]
-    private BezierPath path; // 따라갈 경로
+    [SerializeField] private BezierPath path;
+    [SerializeField] private bool lookForward = true;
 
-    [SerializeField]
-    private bool lookForward = true; // 이동 방향을 바라보게 할지 여부
+    private float t = 0f;
+    private bool canMove = false;
     
-    private float t = 0f; // 전체 경로 상의 위치 (0.0 ~ 1.0)
-    private bool canMove = false; // 이무기가 움직일 수 있는지 여부, 기본값은 false
     
-    // 이 함수가 핵심입니다! 외부(ImoogiTrigger)에서 이 함수를 호출할 겁니다.
+    private Animator animator; 
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+    
+    // 이 함수는 외부(ImoogiTrigger의 UnityEvent)에서 호출될 겁니다.
     public void StartMoving()
     {
+        // "WakeUp"이라는 이름의 애니메이터 트리거를 발동시킵니다.
+        if (animator != null)
+        {
+            animator.SetTrigger("WakeUp");
+        }
+
         canMove = true;
     }
 
     void Update()
     {
-        // canMove가 false이면 아무것도 하지 않고 함수를 빠져나갑니다.
         if (!canMove || path == null || path.SegmentCount == 0)
         {
             return;
         }
 
-        // --- (여기는 이전과 동일한 이동 로직입니다) ---
+        // --- (이하 이동 로직은 기존과 동일합니다) ---
         float totalT = t * path.SegmentCount;
         int segmentIndex = Mathf.FloorToInt(totalT);
         segmentIndex = Mathf.Clamp(segmentIndex, 0, path.SegmentCount - 1);
@@ -57,9 +67,6 @@ public class PathFollower : MonoBehaviour
         }
     }
     
-    
-
-    // 베지어 곡선 세그먼트의 길이를 근사치로 계산하는 도우미 함수 (이전과 동일)
     private float ApproximateSegmentLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
         float length = 0;
