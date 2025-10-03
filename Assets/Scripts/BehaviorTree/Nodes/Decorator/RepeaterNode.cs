@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BehaviorTree.Decorator
 {
+    [NodeTint(NodeColorPalette.DECORATOR_NODE)]
     public class RepeaterNode : DecoratorNode
     {
         [Header("반복 횟수")]

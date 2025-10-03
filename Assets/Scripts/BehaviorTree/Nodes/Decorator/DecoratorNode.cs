@@ -2,6 +2,7 @@ using XNode;
 
 namespace BehaviorTree.Decorator
 {
+    [NodeTint("#00008B")]
     public abstract class DecoratorNode : BTNode
     {
         [Input] public BTNode input;

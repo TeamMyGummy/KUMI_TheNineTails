@@ -3,7 +3,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace BehaviorTree.Composite
-{
+{ 
+    [NodeTint(NodeColorPalette.COMPOSITE_NODE)]
     public class RandomNode : CompositeNode
     {
         [NonSerialized] private int currentIndex = -1;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BehaviorTree.Composite
 {
+    [NodeTint(NodeColorPalette.COMPOSITE_NODE)]
     public class SelectorNode : CompositeNode
     {
         [NonSerialized] private int currentChildIndex = 0;

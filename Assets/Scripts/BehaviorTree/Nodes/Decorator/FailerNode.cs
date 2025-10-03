@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace BehaviorTree.Decorator
 {
+    [NodeTint(NodeColorPalette.DECORATOR_NODE)]
     public class FailerNode : DecoratorNode
     {
         public override NodeState Evaluate()

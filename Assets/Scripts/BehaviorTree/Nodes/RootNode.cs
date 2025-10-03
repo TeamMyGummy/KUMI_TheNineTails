@@ -1,5 +1,6 @@
 namespace BehaviorTree
 {
+    [NodeTint(NodeColorPalette.ROOT_NODE)]
     public class RootNode : BTNode
     {
         [Output] public BTNode child;

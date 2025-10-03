@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace BehaviorTree.Leaf
 {
+    [NodeTint(NodeColorPalette.ROOT_NODE)]
     public class EndNode : LeafNode
     {
         protected override NodeState Start()
