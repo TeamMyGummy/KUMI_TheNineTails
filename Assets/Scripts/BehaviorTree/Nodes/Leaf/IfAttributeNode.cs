@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace BehaviorTree.Leaf
 {
-    public class IfAttributeNode : LeafNode
     [NodeTint(NodeColorPalette.STATE_NODE)]
+    public class IfAttributeNode : LeafNode, IStateNode
     {
         [SerializeField] private int biggerThan;
         [SerializeField] private string attribute;

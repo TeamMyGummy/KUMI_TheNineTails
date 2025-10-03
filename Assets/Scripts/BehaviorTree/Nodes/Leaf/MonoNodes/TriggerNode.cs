@@ -1,7 +1,7 @@
 namespace BehaviorTree.Leaf
 {
-    public class TriggerNode : MonoNode
     [NodeTint(NodeColorPalette.STATE_NODE)]
+    public class TriggerNode : MonoNode, IStateNode
     {
         protected override void OnEnter()
         {

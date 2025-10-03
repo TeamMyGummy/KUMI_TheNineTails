@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace BehaviorTree.Leaf
 {
-    public class TurnIdleCheckerInto : LeafNode
     [NodeTint(NodeColorPalette.STATE_NODE)]
+    public class TurnIdleCheckerInto : LeafNode, IStateNode
     {
         public bool bTurnIdleState;
         protected override NodeState Start()
