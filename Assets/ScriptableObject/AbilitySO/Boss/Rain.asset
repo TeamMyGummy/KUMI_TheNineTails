@@ -21,7 +21,7 @@ MonoBehaviour:
   skillKeyboard: {fileID: 0}
   BlockTimer: 0
   projectile: {fileID: 1762829811770736879, guid: 671a98d9208d7024e9dc17590804b821, type: 3}
-  projectileCount: 15
+  projectileCount: 20
   totalDuration: 5
   direction: {x: -1, y: -1}
-  delta: {x: 10, y: 1}
+  delta: {x: 16, y: 5}
