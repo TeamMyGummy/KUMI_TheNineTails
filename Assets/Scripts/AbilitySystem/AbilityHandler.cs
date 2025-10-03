@@ -14,6 +14,6 @@ public class AbilityHandler : MonoBehaviour, IAbilitySystem
 
     void Awake()
     {
-        gameObjectWithASC.GetComponent<IAbilitySystem>();
+        _abilitySystem = gameObjectWithASC.GetComponent<IAbilitySystem>();
     }
 }
