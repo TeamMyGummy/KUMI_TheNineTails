@@ -6,7 +6,8 @@ using UnityEngine;
 public enum BGMName
 {
     이무기,
-    B2
+    B2,
+    B2_Gimmick2,
 }
 
 public enum SFXName
@@ -24,7 +25,10 @@ public enum SFXName
     패링실패,
     피격,
     죽음,
-    
+    이무기등장,
+    이무기공격1,
+    이무기공격2,
+    이무기공격3,
 }
 
 [System.Serializable]
@@ -154,6 +158,11 @@ public class SoundManager : MonoBehaviour
         {
             Debug.LogWarning("BGM not found: " + name);
         }
+    }
+    
+    public void StopBGM()
+    {
+        bgmSource.Stop();
     }
     
     /// <summary>

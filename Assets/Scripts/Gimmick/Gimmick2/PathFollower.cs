@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
@@ -15,7 +16,12 @@ public class PathFollower : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-    
+
+    private void Start()
+    {
+        SoundManager.Instance.StopBGM();
+    }
+
     // 이 함수는 외부(ImoogiTrigger의 UnityEvent)에서 호출될 겁니다.
     public void StartMoving()
     {
@@ -23,6 +29,7 @@ public class PathFollower : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("WakeUp");
+            //SoundManager.Instance.PlaySFX(SFXName.이무기등장);
         }
 
         canMove = true;
@@ -80,5 +87,20 @@ public class PathFollower : MonoBehaviour
             lastPoint = currentPoint;
         }
         return length;
+    }
+
+    public void Attack1()
+    {
+        SoundManager.Instance.PlaySFX(SFXName.이무기공격1);
+    }
+
+    public void Attack2()
+    {
+        SoundManager.Instance.PlaySFX(SFXName.이무기공격2);
+    }
+
+    public void Attack3()
+    {
+        SoundManager.Instance.PlaySFX(SFXName.이무기공격3);
     }
 }

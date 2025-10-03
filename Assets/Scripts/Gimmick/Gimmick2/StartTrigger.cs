@@ -44,5 +44,7 @@ public class ImoogiTrigger : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         _playerController.OnEnableAllInput();
         gameObject.SetActive(false);
+        
+        SoundManager.Instance.PlayBGM(BGMName.B2_Gimmick2);
     }
 }

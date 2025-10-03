@@ -55,6 +55,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0369b1c44172fe643806019a51bfdcd9, type: 3}
     loop: 1
     source: {fileID: 0}
+  - name: 2
+    clip: {fileID: 8300000, guid: e3db82950ecf46946b370cd91cbd905e, type: 3}
+    loop: 1
+    source: {fileID: 0}
   sfxSounds:
   - name: 0
     clip: {fileID: 8300000, guid: 87221b3cc933a874981913709ee482e3, type: 3}
@@ -102,5 +106,21 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: 11
     clip: {fileID: 8300000, guid: 7e4c1d74afbc63e4ea27370d04c1be57, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: 13
+    clip: {fileID: 8300000, guid: 6ba278ece207c254c91ed1128fe6c901, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: 14
+    clip: {fileID: 8300000, guid: c1a4ded8504a79644b81924e315fa991, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: 15
+    clip: {fileID: 8300000, guid: 34b2c52e1433e5c498e09a47646592d9, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: 16
+    clip: {fileID: 8300000, guid: c6c9691e929a0e748b6ab405b045cdbe, type: 3}
     loop: 0
     source: {fileID: 0}
