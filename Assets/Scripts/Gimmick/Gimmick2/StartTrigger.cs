@@ -1,40 +1,41 @@
+// ImoogiTrigger.cs
+
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events; // UnityEvent를 사용하기 위해 꼭 추가해야 합니다!
 
 public class ImoogiTrigger : MonoBehaviour
 {
-    // 인스펙터에서 움직이게 할 이무기(PathFollower 스크립트)를 연결해줍니다.
+    // --- 수정된 부분: UnityEvent를 사용합니다 ---
+    // 인스펙터에서 플레이어가 닿았을 때 실행할 함수들을 연결할 수 있습니다.
     [SerializeField]
-    private PathFollower imoogiToActivate;
+    public UnityEvent onPlayerEnter;
+    // --- 여기까지 ---
     
     PlayerController _playerController;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 충돌한 오브젝트의 태그가 "Player"인지 확인합니다.
         if (other.CompareTag("Player"))
         {
-            // 1. 부딪힌 'other' 오브젝트에서 PlayerController 컴포넌트를 찾습니다.
             _playerController = other.GetComponent<PlayerController>();
-
-            // 2. PlayerController가 실제로 있는지 확인합니다. (안전장치)
             if (_playerController == null)
             {
-                // PlayerController가 없으면 그냥 함수를 종료합니다.
                 return; 
             }
             
-            Debug.Log("플레이어가 트리거에 닿았습니다! 이무기를 깨웁니다.");
+            Debug.Log("플레이어가 트리거에 닿았습니다! 이벤트를 발생시킵니다.");
 
-            if (imoogiToActivate != null)
+            // --- 수정된 부분: 직접 함수를 호출하는 대신 이벤트를 발생시킵니다 ---
+            // 인스펙터에 연결된 모든 함수들이 여기서 실행됩니다.
+            if (onPlayerEnter != null)
             {
-                imoogiToActivate.StartMoving();
+                onPlayerEnter.Invoke();
             }
+            // --- 여기까지 ---
             
             _playerController.OnDisableAllInput();
-
             StartCoroutine(WaitSeconds(3f));
-            
-            
         }
     }
     
