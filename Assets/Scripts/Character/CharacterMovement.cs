@@ -11,6 +11,7 @@ public class CharacterMovement : MonoBehaviour
     private SpriteRenderer _sprite;
 
     [SerializeField] [Range(0.0f, 10.0f)] private float speed;
+    public float Speed => speed;
     [SerializeField] [Range(0.0f, 10.0f)] private float acceleration; // 가속도
     [SerializeField] [Range(0.0f, 10.0f)] private float deceleration;  // 감속도
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
@@ -104,6 +105,11 @@ public class CharacterMovement : MonoBehaviour
     public void ResetGravityScale()
     {
         _rigidBody.gravityScale = gravity;
+    }
+    
+    public void SetSpeed(float value)
+    {
+        speed = value;
     }
 
     public void Move(Vector2 direction)
