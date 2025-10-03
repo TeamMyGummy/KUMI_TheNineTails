@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using BehaviorTree;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-//State 변환에 따라 SpineAnimation 실행
 public class BossAnimationHandler : ActionHandler
 {
     private SpineAnimationHandler animHandler;
@@ -33,6 +34,9 @@ public class BossAnimationHandler : ActionHandler
                 break;
             case EAnimationControl.Set:
                 animHandler.SetAnimation(_currentAnimation, _loop);
+                break;
+            case EAnimationControl.Stop:
+                animHandler.StopAnimation();
                 break;
             default:
                 DebugUtil.AssertLog();
