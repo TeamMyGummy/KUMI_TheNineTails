@@ -590,16 +590,18 @@ public class WallClimbState : PlayerState
         Player.SetAnimatorBool(Player.EndClimbID, true);
         
         Player.Movement.Move(Vector2.zero);
-        Player.StateMachine.ChangeState(PlayerStateType.Fall);
-        
+
         Vector2 startPos = _playerCollider.bounds.min;
         Vector2 targetPos = new Vector3(
             _currentWall.bounds.center.x,
             _currentWall.bounds.max.y  // 벽 위쪽 약간 위
         );
-        
+
         // 벽 위로 위치 이동
-        _actions.MoveToWallTop(startPos, targetPos).Forget();
+        _actions.MoveToWallTop(startPos, targetPos).ContinueWith(() =>
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Fall);
+        }).Forget();
     }
 }
 
