@@ -749,21 +749,29 @@ public class DashState : PlayerState
             Player.StateMachine.ChangeState(PlayerStateType.RopeClimb);
         }
 
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
+        if (curAnimStateInfo.IsName("Dash"))
         {
-            if (Player.Controller.IsAttackPressed())
+            if(curAnimStateInfo.normalizedTime >= 0.9f)
             {
-                if(Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
-                    Player.StateMachine.ChangeState(PlayerStateType.Attack);
+                if (Player.Controller.IsAttackPressed())
+                {
+                    if (Player.ASC.CanActivateAbility(AbilityKey.PlayerAttack))
+                        Player.StateMachine.ChangeState(PlayerStateType.Attack);
+                }
+                else if (Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Idle);
+                }
+                else if (!Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                }
             }
-            else if (Player.Movement.CheckIsGround())
-            {
-                Player.StateMachine.ChangeState(PlayerStateType.Idle);
-            }
-            else if (!Player.Movement.CheckIsGround())
-            {
-                Player.StateMachine.ChangeState(PlayerStateType.Fall);
-            }
+        }
+        else
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
     }
     public override void Exit()
