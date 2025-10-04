@@ -12,6 +12,8 @@ using FixedUpdate = UnityEngine.PlayerLoop.FixedUpdate;
  */
 public class Player : MonoBehaviour
 {
+    private const float wallClimbCheckDist = 0.08f;
+
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
     private Animator _animator;
@@ -146,7 +148,7 @@ public class Player : MonoBehaviour
         RaycastHit2D rayHit = DrawClimbRay(LayerMask.GetMask("GraspableWall"));
         if (rayHit.collider != null)
         {
-            if (rayHit.distance < 0.03f)
+            if (rayHit.distance < wallClimbCheckDist)
             {
                 return true;
             }
