@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RockfallSpawner : MonoBehaviour
@@ -8,23 +9,23 @@ public class RockfallSpawner : MonoBehaviour
     [SerializeField] private GameObject rockPrefab;
 
     [Header("Timing")]
-    [SerializeField, Min(0f)] private float spawnInterval = 3f; // 낙석 간격
-    /*[SerializeField, Min(0f)] private float interLayerDelay = 3f; // 층-사이 간격*/
+    [SerializeField, Min(0f)] private float spawnInterval = 3f; // 낙석 간격(전체 주기)
 
-    [Header("Layers")]
-    [SerializeField, Min(1)] private int totalLayers = 5;
+    [Header("Count")]
+    [SerializeField, Min(1)] private int totalLayers = 5; // 총 드롭 수 = totalLayers * 3
 
     [Header("Warning Marker")]
-    [SerializeField, Min(0f)] private float preWarnTime = 1f;            // 경고가 먼저 뜨는 시간
-    [SerializeField] private GameObject warnMarkerPrefab;                // 빨간 타원 프리팹(스프라이트/이미지)
-    [SerializeField] private LayerMask groundMask;                       // 바닥 레이어
-    [SerializeField, Min(0.1f)] private float raycastDistance = 50f;     // 아래로 쏠 거리
-    [SerializeField] private Vector3 warnMarkerOffset = new Vector3(0, 0.05f, 0); // 살짝 위로 띄우기
+    [SerializeField, Min(0f)] private float preWarnTime = 1f; // 떨어지기 전에 경고가 보이는 시간
+    [SerializeField] private GameObject warnMarkerPrefab;     // 빨간 타원 프리팹
+    [SerializeField] private LayerMask groundMask;            // 바닥 레이어
+    [SerializeField, Min(0.1f)] private float raycastDistance = 50f;
+    [SerializeField] private Vector3 warnMarkerOffset = new Vector3(0, 0.05f, 0);
 
     [Header("Start")]
     [SerializeField] private bool autoStartOnPlay = true;
 
     private Coroutine _spawnRoutine;
+    private readonly int[] _heights = new int[3]; // 각 열(1,2,3)의 현재 높이(논리 카운트)
 
     private void Start()
     {
@@ -34,12 +35,12 @@ public class RockfallSpawner : MonoBehaviour
     public void StartSpawning()
     {
         if (_spawnRoutine != null) StopCoroutine(_spawnRoutine);
-        _spawnRoutine = StartCoroutine(SpawnLayers());
+        System.Array.Clear(_heights, 0, _heights.Length);
+        _spawnRoutine = StartCoroutine(SpawnRocks());
     }
 
-    private IEnumerator SpawnLayers()
+    private IEnumerator SpawnRocks()
     {
-        // 기본 검증
         if (rockPrefab == null || spawnPoints.Length != 3 ||
             spawnPoints[0] == null || spawnPoints[1] == null || spawnPoints[2] == null)
         {
@@ -47,81 +48,117 @@ public class RockfallSpawner : MonoBehaviour
             yield break;
         }
 
-        // preWarnTime이 spawnInterval보다 길면, 다음 간격 계산에서 0 이하가 될 수 있으니 안전하게 보정
         float postSpawnWait = Mathf.Max(0f, spawnInterval - preWarnTime);
+        int totalDrops = totalLayers * 3;
 
-        for (int layer = 0; layer < totalLayers; layer++)
+        for (int k = 0; k < totalDrops; k++)
         {
-            int[] order = { 0, 1, 2 };
-            Shuffle(order);
+            // 1) 브리지(bridge) 규칙에 맞는 유효 열 찾기
+            List<int> valid = GetBridgeableColumns(_heights);
 
-            for (int i = 0; i < order.Length; i++)
+            int chosen;
+            if (valid.Count > 0)
             {
-                Transform dropPoint = spawnPoints[order[i]];
-
-                // 1) 바닥 위치 계산(아래로 Raycast)
-                Vector3 groundPos = GetGroundPoint(dropPoint.position);
-
-                // 2) 경고 마커 생성 (떨어지기 preWarnTime초 전)
-                GameObject marker = null;
-                if (warnMarkerPrefab != null)
-                {
-                    marker = Instantiate(warnMarkerPrefab, groundPos + warnMarkerOffset, Quaternion.identity);
-                }
-
-                // 3) 경고 노출 시간 대기
-                if (preWarnTime > 0f)
-                    yield return new WaitForSeconds(preWarnTime);
-
-                // 4) 낙석 생성
-                Instantiate(rockPrefab, dropPoint.position, Quaternion.identity);
-
-                // 5) 마커 제거(즉시 or 페이드 아웃이 있다면 프리팹에서 처리)
-                if (marker != null) Destroy(marker);
-
-                // 6) 같은 층 내 다음 낙석까지 대기(“경고 포함 전체 간격”이 spawnInterval)
-                bool isLastOfLayer = (i == order.Length - 1);
-                if (!isLastOfLayer && postSpawnWait > 0f)
-                    yield return new WaitForSeconds(postSpawnWait);
+                chosen = valid[Random.Range(0, valid.Count)];
+            }
+            else
+            {
+                chosen = ChooseLeastImbalanceColumn(_heights);
             }
 
-            // 7) 층 간 대기
-            bool isLastLayer = (layer == totalLayers - 1);
-            // 기존: 층 끝나면 전부 기다림
-            
-            // if (!isLastLayer && interLayerDelay > 0f)
-            //     yield return new WaitForSeconds(interLayerDelay);
+            Transform dropPoint = spawnPoints[chosen];
 
-            // 변경: 다음 경고가 뜨기 전에만 일부를 대기
-            float gapToNextWarning = Mathf.Max(0f, spawnInterval - preWarnTime);
-            if (!isLastLayer && gapToNextWarning > 0f)
-                yield return new WaitForSeconds(gapToNextWarning);
+            // 2) 경고 마커 생성
+            Vector3 groundPos = GetGroundPoint(dropPoint.position);
+            GameObject marker = null;
+            if (warnMarkerPrefab != null)
+            {
+                marker = Instantiate(warnMarkerPrefab, groundPos + warnMarkerOffset, Quaternion.identity);
+            }
 
-            // 다음 for-루프가 시작되면 "경고 마커 생성"이 즉시 실행됨
-            // (그 다음 preWarnTime 동안 표시 → 낙석 생성)
+            // 3) 경고 유지
+            if (preWarnTime > 0f)
+                yield return new WaitForSeconds(preWarnTime);
+
+            // 4) 낙석 생성
+            Instantiate(rockPrefab, dropPoint.position, Quaternion.identity);
+
+            // 5) 높이 갱신
+            _heights[chosen]++;
+
+            // 6) 마커 제거
+            if (marker != null) Destroy(marker);
+
+            // 7) 다음 낙석까지 대기
+            if (k < totalDrops - 1 && postSpawnWait > 0f)
+                yield return new WaitForSeconds(postSpawnWait);
         }
 
         _spawnRoutine = null;
     }
 
+    /// <summary>
+    /// 브리지 규칙 검사:
+    /// 정렬된 높이 세 값의 인접 차가 모두 1 이하이면 true
+    /// </summary>
+    private List<int> GetBridgeableColumns(int[] h)
+    {
+        var list = new List<int>(3);
+        for (int i = 0; i < 3; i++)
+        {
+            int h0 = h[0], h1 = h[1], h2 = h[2];
+            if (i == 0) h0++;
+            else if (i == 1) h1++;
+            else h2++;
+
+            int a = h0, b = h1, c = h2;
+            if (a > b) (a, b) = (b, a);
+            if (b > c) (b, c) = (c, b);
+            if (a > b) (a, b) = (b, a);
+
+            bool bridgeable = (b - a <= 1) && (c - b <= 1);
+            if (bridgeable) list.Add(i);
+        }
+        return list;
+    }
+
+    /// <summary>
+    /// 브리지 조건을 만족하는 열이 없을 때,
+    /// 인접 차이의 최대값이 최소가 되는 열 선택 (안전장치)
+    /// </summary>
+    private int ChooseLeastImbalanceColumn(int[] h)
+    {
+        int bestIdx = 0;
+        int bestScore = int.MaxValue;
+
+        for (int i = 0; i < 3; i++)
+        {
+            int h0 = h[0], h1 = h[1], h2 = h[2];
+            if (i == 0) h0++;
+            else if (i == 1) h1++;
+            else h2++;
+
+            int a = h0, b = h1, c = h2;
+            if (a > b) (a, b) = (b, a);
+            if (b > c) (b, c) = (c, b);
+            if (a > b) (a, b) = (b, a);
+
+            int score = Mathf.Max(b - a, c - b);
+            if (score < bestScore)
+            {
+                bestScore = score;
+                bestIdx = i;
+            }
+        }
+        return bestIdx;
+    }
+
     private Vector3 GetGroundPoint(Vector3 from)
     {
-        // 2D 물리 기준: Physics2D.Raycast 사용
         RaycastHit2D hit = Physics2D.Raycast(from, Vector2.down, raycastDistance, groundMask);
         if (hit.collider != null)
             return hit.point;
-        // 못 맞추면 그냥 y만 약간 내려서 반환(프로젝트에 맞게 고정 Y를 쓰고 싶다면 여기 수정)
         return from + Vector3.down * 1.0f;
-    }
-
-    // Fisher–Yates
-    private void Shuffle(int[] array)
-    {
-        for (int i = array.Length - 1; i > 0; i--)
-        {
-            int j = Random.Range(0, i + 1);
-            (array[i], array[j]) = (array[j], array[i]);
-        }
     }
 
 #if UNITY_EDITOR
