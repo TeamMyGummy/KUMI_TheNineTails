@@ -18,6 +18,10 @@ namespace GameAbilitySystem
         private GameObject _actor;
         public ReadOnlyReactiveProperty<int> GrantedAbilityCount { get; private set; }
 
+        public GameplayAbility GetAbility(AbilityKey key){
+            return _abilityCache[_grantedAbilities[key]];
+        }
+
         /// <summary>
         ///     Ability System에서 현재 씬 상태에 맞게 내부 상태를 변경
         /// </summary>
