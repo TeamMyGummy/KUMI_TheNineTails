@@ -493,7 +493,7 @@ public class WallClimbState : PlayerState
                 Idle();
                 break;
             case WallClimbStates.Climbing:
-                Climbing();
+                UpdateClimbing();
                 break;
             case WallClimbStates.Ledge:
                 if(!_ledge)
@@ -551,23 +551,37 @@ public class WallClimbState : PlayerState
         Player.SetAnimatorBool(Player.IsClimbingID, false);
     }
     
-    private void Climbing()
+    private void UpdateClimbing()
     {
-        if (_type == WallType.PlatformAbove)
+        if (!Player.CanWallClimb())
         {
-            if (!Player.CanWallClimb())
+            if (_actions.IsCharacterReachedTop() && Player.Controller.ClimbInput.y < 0)
             {
-                Player.Movement.Move(Vector2.zero);  
-                Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                Climbing();
+            }
+            else
+            {
+                Player.Movement.Move(Vector2.zero);
+                Player.SetAnimatorBool(Player.IsClimbingID, false);
+                if (Player.Controller.ClimbInput.y < 0 && !_actions.IsCharacterReachedTop())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                }
                 return;
             }
         }
+
+        Climbing();
+    }
+
+    private void Climbing()
+    {
         _ledge = false;
         Player.SetAnimatorBool(Player.EndClimbID, false);
         Player.SetAnimatorBool(Player.IsClimbingID, true);
-      
+
         // 이동
-        Player.Movement.Move(Player.Controller.ClimbInput);  
+        Player.Movement.Move(Player.Controller.ClimbInput);
     }
     
     private void OnLedge()
