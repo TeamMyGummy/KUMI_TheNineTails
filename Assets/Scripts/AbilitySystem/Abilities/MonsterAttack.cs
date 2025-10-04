@@ -81,7 +81,17 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
 
     protected virtual void Attack()
     {
+        if (!CanAttack())
+            return;
+
         SpawnHitbox(_attackData.ActiveTime);
+    }
+
+    protected virtual bool CanAttack()
+    {
+        if(_monster == null) return false;
+
+        return true;
     }
 
     // 히트박스 생성
