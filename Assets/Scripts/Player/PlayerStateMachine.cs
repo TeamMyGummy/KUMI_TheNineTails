@@ -476,9 +476,11 @@ public class WallClimbState : PlayerState
         _playerCollider = Player.GetComponent<Collider2D>();
         _actions = new WallClimbActions(Player, _currentWall);
         _ledge = false;
-        
-        //Dash.ResetDash.Invoke();
-        
+
+        Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
+        Debug.Assert(DashAbility != null);
+        DashAbility.ResetDash();
+
         // 벽 타입 체크
         _type = _actions.CheckPlatformAboveWall() ? WallType.PlatformAbove : WallType.Normal;
     }
@@ -609,9 +611,11 @@ public class RopeClimbState : PlayerState
         
         _state = RopeClimbStates.Idle;
         _actions = new WallClimbActions(Player);
-        
-        Dash.OnResetDash.Invoke();
-        
+
+        Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
+        Debug.Assert(DashAbility != null);
+        DashAbility.ResetDash();
+
         Player.Movement.Move(Vector2.up);
     }
     
@@ -715,7 +719,7 @@ public class DashState : PlayerState
         Player.SetAnimatorTrigger(Player.DashID);
         SoundManager.Instance.PlaySFX(SFXName.대쉬);
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
-        Player.Movement.SetGravityScale(0);
+        //Player.Movement.SetGravityScale(0);
     }
     public override void Update()
     {
@@ -751,8 +755,10 @@ public class DashState : PlayerState
         base.Exit();
         
         Player.ResetAnimatorTrigger(Player.DashID);
-        Player.Movement.ResetGravityScale();
-        //Dash.OnResetDash.Invoke();
+        //Player.Movement.ResetGravityScale();
+        Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
+        Debug.Assert(DashAbility != null);
+        DashAbility.EndDash();
     }
 }
 

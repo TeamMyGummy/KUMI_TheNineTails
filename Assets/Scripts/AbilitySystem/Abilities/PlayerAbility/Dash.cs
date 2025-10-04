@@ -19,9 +19,7 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private bool _canDash = true;
     private bool _endDash;
     private Vector2 _originVelocity;
-    
-    public static System.Action OnResetDash;
-    
+
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
@@ -33,8 +31,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();
         _asc = asc;
-        
-        OnResetDash += ResetDash;
     }
 
     public override bool CanActivate()
@@ -70,14 +66,15 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     {
 
     }
+
     public void FixedUpdate()
     {
         _dashTime -= Time.deltaTime;
-        if(_dashTime < 0 && !_endDash)
+        if (_dashTime < 0 && !_endDash)
         {
             _rigid.velocity = Vector2.zero;
             _endDelayTime -= Time.deltaTime;
-            if( _endDelayTime < 0 )
+            if ( _endDelayTime < 0 )
             {
                 if (_characterMovement.CheckIsGround())
                     this.DelayOneFrame().Forget();
@@ -107,21 +104,21 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _asc.TagContainer.Add(GameplayTags.Invincibility);
     }
 
-    private void EndDash()
+    public void EndDash()
     {
-        _rigid.velocity = _originVelocity;
+        _rigid.velocity = new Vector2(_originVelocity.x, Mathf.Min(_originVelocity.y, 0f));
+        //_rigid.velocity = _originVelocity;
         _characterMovement.ResetGravityScale();
         _endDash = true;
         
         _asc.TagContainer.Remove(GameplayTags.Invincibility);
     }
 
-    private void ResetDash()
+    public void ResetDash()
     {
         _canDash = true;
 
         if(!_endDash)
             EndDash();
     }
-
 }
