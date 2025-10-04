@@ -38,15 +38,31 @@ namespace BehaviorTree
     
         protected override NodeState OnUpdateAction()
         {
-            if (Vector3.Distance(transform.position, _currentDest) <= StopThreshold) 
+            // 목표 지점까지의 벡터와 거리 계산
+            Vector3 vectorToDest = _currentDest - transform.position;
+            float distanceToDest = vectorToDest.magnitude;
+
+            // 1. 목적지에 도착했는지 먼저 확인
+            if (distanceToDest <= StopThreshold)
+            {
                 return NodeState.Success; // 목적지 도달 → 행동 완료
+            }
+
+            // 이번 프레임에 이동할 거리 계산
+            float frameMoveDistance = speed * Time.deltaTime;
+
+            // 2. 이번 프레임 이동량이 남은 거리보다 길 경우 (오버슈팅 방지)
+            if (frameMoveDistance >= distanceToDest)
+            {
+                // 목적지를 지나치게 되므로, 그냥 목적지로 위치를 고정하고 성공 처리
+                transform.position = _currentDest;
+                return NodeState.Success;
+            }
     
-            // 방향 계산
-            var direction = (_currentDest - transform.position).normalized;
-    
-            // 프레임 이동
-            transform.position += direction * (speed * Time.deltaTime);
-    
+            // 3. 아직 이동 중인 일반적인 경우
+            // 방향은 위에서 계산한 벡터를 정규화하여 사용
+            transform.position += vectorToDest.normalized * frameMoveDistance;
+
             return NodeState.Running; // 아직 도달 안함 → 계속 실행 중
         }
     }
