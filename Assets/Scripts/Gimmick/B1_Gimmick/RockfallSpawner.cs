@@ -12,7 +12,7 @@ public class RockfallSpawner : MonoBehaviour
     [SerializeField, Min(0f)] private float spawnInterval = 3f; // 낙석 간격(전체 주기)
 
     [Header("Count")]
-    [SerializeField, Min(1)] private int totalLayers = 5; // 총 드롭 수 = totalLayers * 3
+    [SerializeField, Min(1)] private int totalLayers = 5; // 각 열의 최종 높이(= 층 수)
 
     [Header("Warning Marker")]
     [SerializeField, Min(0f)] private float preWarnTime = 1f; // 떨어지기 전에 경고가 보이는 시간
@@ -25,7 +25,7 @@ public class RockfallSpawner : MonoBehaviour
     [SerializeField] private bool autoStartOnPlay = true;
 
     private Coroutine _spawnRoutine;
-    private readonly int[] _heights = new int[3]; // 각 열(1,2,3)의 현재 높이(논리 카운트)
+    private readonly int[] _heights = new int[3]; // 각 열(0,1,2)의 현재 높이
 
     private void Start()
     {
@@ -49,47 +49,46 @@ public class RockfallSpawner : MonoBehaviour
         }
 
         float postSpawnWait = Mathf.Max(0f, spawnInterval - preWarnTime);
-        int totalDrops = totalLayers * 3;
+        int totalDrops = totalLayers * 3; // 최종적으로 각 열이 totalLayers가 되도록
 
         for (int k = 0; k < totalDrops; k++)
         {
-            // 1) 브리지(bridge) 규칙에 맞는 유효 열 찾기
-            List<int> valid = GetBridgeableColumns(_heights);
+            // SOFT: cap + 인접쌍(|h0-h1|, |h1-h2|) 제약만 적용 (빈자리 우선 없음)
+            List<int> candidates = GetAdjacencyValidColumns_Soft(_heights, totalLayers);
 
             int chosen;
-            if (valid.Count > 0)
+            if (candidates.Count > 0)
             {
-                chosen = valid[Random.Range(0, valid.Count)];
+                chosen = candidates[Random.Range(0, candidates.Count)];
             }
             else
             {
-                chosen = ChooseLeastImbalanceColumn(_heights);
+                // 폴백: 인접 불균형 최소화 + cap 준수
+                chosen = ChooseLeastImbalanceColumnAdj(_heights, totalLayers);
             }
 
             Transform dropPoint = spawnPoints[chosen];
 
-            // 2) 경고 마커 생성
+            // 경고 마커
             Vector3 groundPos = GetGroundPoint(dropPoint.position);
             GameObject marker = null;
             if (warnMarkerPrefab != null)
-            {
                 marker = Instantiate(warnMarkerPrefab, groundPos + warnMarkerOffset, Quaternion.identity);
-            }
 
-            // 3) 경고 유지
+            // 경고 유지
             if (preWarnTime > 0f)
                 yield return new WaitForSeconds(preWarnTime);
 
-            // 4) 낙석 생성
+            // 낙석 생성
             Instantiate(rockPrefab, dropPoint.position, Quaternion.identity);
 
-            // 5) 높이 갱신
+            // 높이 갱신
             _heights[chosen]++;
 
-            // 6) 마커 제거
+            // 마커 제거
             if (marker != null) Destroy(marker);
 
-            // 7) 다음 낙석까지 대기
+            // 다음 낙석까지 대기
             if (k < totalDrops - 1 && postSpawnWait > 0f)
                 yield return new WaitForSeconds(postSpawnWait);
         }
@@ -98,59 +97,71 @@ public class RockfallSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// 브리지 규칙 검사:
-    /// 정렬된 높이 세 값의 인접 차가 모두 1 이하이면 true
+    /// SOFT 모드: 마지막 층 '빈자리 우선' 규칙 없음.
+    /// - cap: 각 열은 totalLayers 초과 금지
+    /// - 인접 제약: 투하 결과가 |h0-h1|<=1 && |h1-h2|<=1 여야 함
     /// </summary>
-    private List<int> GetBridgeableColumns(int[] h)
+    private List<int> GetAdjacencyValidColumns_Soft(int[] h, int maxLayers)
     {
-        var list = new List<int>(3);
+        var eligible = new List<int>(3);
+
+        int h0 = h[0], h1 = h[1], h2 = h[2];
+
         for (int i = 0; i < 3; i++)
         {
-            int h0 = h[0], h1 = h[1], h2 = h[2];
-            if (i == 0) h0++;
-            else if (i == 1) h1++;
-            else h2++;
+            if (h[i] >= maxLayers) continue; // cap
 
-            int a = h0, b = h1, c = h2;
-            if (a > b) (a, b) = (b, a);
-            if (b > c) (b, c) = (c, b);
-            if (a > b) (a, b) = (b, a);
+            int a0 = h0, a1 = h1, a2 = h2;
+            if (i == 0) a0++;
+            else if (i == 1) a1++;
+            else a2++;
 
-            bool bridgeable = (b - a <= 1) && (c - b <= 1);
-            if (bridgeable) list.Add(i);
+            bool ok = (Mathf.Abs(a0 - a1) <= 1) && (Mathf.Abs(a1 - a2) <= 1);
+            if (ok) eligible.Add(i);
         }
-        return list;
+
+        return eligible;
     }
 
     /// <summary>
-    /// 브리지 조건을 만족하는 열이 없을 때,
-    /// 인접 차이의 최대값이 최소가 되는 열 선택 (안전장치)
+    /// 폴백: 후보가 전혀 없을 때(희박하지만 안전장치)
+    /// - cap 준수
+    /// - 인접 불균형 max(|h0-h1|, |h1-h2|) 최소화
+    /// - 동률이면 더 낮은 열 우선
     /// </summary>
-    private int ChooseLeastImbalanceColumn(int[] h)
+    private int ChooseLeastImbalanceColumnAdj(int[] h, int maxLayers)
     {
-        int bestIdx = 0;
+        int bestIdx = -1;
         int bestScore = int.MaxValue;
+
+        int h0 = h[0], h1 = h[1], h2 = h[2];
 
         for (int i = 0; i < 3; i++)
         {
-            int h0 = h[0], h1 = h[1], h2 = h[2];
-            if (i == 0) h0++;
-            else if (i == 1) h1++;
-            else h2++;
+            if (h[i] >= maxLayers) continue; // cap
 
-            int a = h0, b = h1, c = h2;
-            if (a > b) (a, b) = (b, a);
-            if (b > c) (b, c) = (c, b);
-            if (a > b) (a, b) = (b, a);
+            int a0 = h0, a1 = h1, a2 = h2;
+            if (i == 0) a0++; else if (i == 1) a1++; else a2++;
 
-            int score = Mathf.Max(b - a, c - b);
-            if (score < bestScore)
+            int score = Mathf.Max(Mathf.Abs(a0 - a1), Mathf.Abs(a1 - a2));
+            if (score < bestScore || (score == bestScore && h[i] < (bestIdx >= 0 ? h[bestIdx] : int.MaxValue)))
             {
                 bestScore = score;
                 bestIdx = i;
             }
         }
-        return bestIdx;
+
+        if (bestIdx == -1)
+        {
+            int minH = int.MaxValue;
+            for (int i = 0; i < 3; i++)
+            {
+                if (h[i] >= maxLayers) continue;
+                if (h[i] < minH) { minH = h[i]; bestIdx = i; }
+            }
+        }
+
+        return (bestIdx == -1) ? 0 : bestIdx;
     }
 
     private Vector3 GetGroundPoint(Vector3 from)
