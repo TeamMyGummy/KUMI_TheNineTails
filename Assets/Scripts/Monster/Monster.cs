@@ -124,42 +124,35 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     protected abstract void EnterLongAttackRange();
     
     // 플레이어가 시야 안에 들어오는지 체크 (부채꼴 범위)
-    public bool IsPlayerInSight()
+    public bool IsPlayerInSight(int rayCount = 5)
     {
         if (player == null) return false;
 
         Vector2 origin = (Vector2)transform.position + Data.ViewOffset;
-
         Vector2 toPlayer = (Vector2)player.position - origin;
         float distanceToPlayer = toPlayer.magnitude;
-
-        if (distanceToPlayer > Data.AggroRange)
-            return false;
-
-        Vector2 toPlayerNormalized = toPlayer.normalized;
-
-        float angleToPlayer = Mathf.Atan2(toPlayerNormalized.y, toPlayerNormalized.x) * Mathf.Rad2Deg;
-        angleToPlayer = NormalizeAngle(angleToPlayer);
+        if (distanceToPlayer > Data.AggroRange) return false;
 
         float startAngle = Data.ViewStartAngle;
         float viewAngle = Data.ViewSight;
-
         int dir = _movement != null ? _movement.HorizontalDir : 1;
-        if (dir == -1)
+        if (dir == -1) startAngle = 180f - (startAngle + viewAngle);
+    
+        for (int i = 0; i < rayCount; i++)
         {
-            startAngle = 180f - (startAngle + viewAngle);
+            float t = i / (float)(rayCount - 1);
+            float angle = startAngle + t * viewAngle;
+            Vector2 dirVec = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            RaycastHit2D hit = Physics2D.Raycast(origin, dirVec, Data.AggroRange, LayerMask.GetMask("Player", "Platform"));
+            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            {
+                return true;
+            }
         }
-        startAngle = NormalizeAngle(startAngle);
-        float endAngle = NormalizeAngle(startAngle + viewAngle);
 
-        if (!IsAngleInRange(angleToPlayer, startAngle, endAngle))
-            return false;
-        
-        if (IsPlayerBlockedByWall())
-            return false;
-
-        return true;
+        return false;
     }
+
     
 
     private float NormalizeAngle(float angle)
