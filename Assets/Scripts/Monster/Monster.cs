@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using GameAbilitySystem;
+using Spine.Unity;
 
 public abstract class Monster : MonoBehaviour, IAbilitySystem
 {
@@ -9,7 +10,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     public MonsterSO Data => monsterData;
 
     [SerializeField] private string abilitySystemPath = "";
-    private SpriteRenderer spriteRenderer;
+    private SkeletonMecanim _skeletonMecanim;
     private float prevHp;
     
     protected bool isDead = false;
@@ -37,7 +38,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         asc.GrantAllAbilities();
 
         prevHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _skeletonMecanim = GetComponent<SkeletonMecanim>();
         _movement = GetComponent<MonsterMovement>(); 
         player = GameObject.FindWithTag("Player")?.transform;
         
@@ -232,10 +233,12 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
 
     public System.Collections.IEnumerator Flash()
     {
-        var prev = spriteRenderer.color;
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = prev;
+        if (_skeletonMecanim == null) yield break;
+
+        Color prevColor = _skeletonMecanim.Skeleton.GetColor();
+        _skeletonMecanim.Skeleton.SetColor(Color.red);
+        yield return new WaitForSeconds(0.15f);
+        _skeletonMecanim.Skeleton.SetColor(prevColor);
     }
 
     protected virtual void Die()
