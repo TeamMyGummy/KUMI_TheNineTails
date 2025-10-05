@@ -58,6 +58,7 @@ public class SoundManager : MonoBehaviour
     
     [Header("Audio Sources")]
     [SerializeField] private AudioSource bgmSource;
+    public AudioSource BGMSource => bgmSource;
     [SerializeField] private AudioSource[] sfxSources;
     
     [Header("Sound Lists")]
