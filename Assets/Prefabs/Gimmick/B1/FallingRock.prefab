@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4888334873444620967}
   - component: {fileID: 4516834426057295504}
   - component: {fileID: 4698539058602204814}
+  - component: {fileID: -7516026516370894066}
   m_Layer: 3
   m_Name: FallingRock
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.78, y: -2.49, z: 0}
-  m_LocalScale: {x: 3.6, y: 2, z: 1}
+  m_LocalScale: {x: 3.55, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -157,4 +158,23 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
+--- !u!114 &-7516026516370894066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75510159645172994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc6bcb25cee44b48b663a5f819c9221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landingMask:
+    serializedVersion: 2
+    m_Bits: 8
+  settleSpeed: 0.2
+  settleTime: 0.15
+  snapToGrid: 0
+  gridSize: 0.5
