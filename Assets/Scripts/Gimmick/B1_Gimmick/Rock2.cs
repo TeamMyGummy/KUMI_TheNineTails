@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class Rock : MonoBehaviour
+public class Rock2 : MonoBehaviour
 {
     [Header("Landing Detection")]
     [SerializeField] private LayerMask landingMask;   // Ground | LockedRock
