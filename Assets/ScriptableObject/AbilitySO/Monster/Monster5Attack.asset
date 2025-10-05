@@ -19,9 +19,12 @@ MonoBehaviour:
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
-  BlockTimer: 0
+  BlockTimer: 0.2
   AttackRangeX: 5
   AttackRangeY: 3
   HitboxOffset: {x: 0, y: 1.5}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
-  isStoppingWhileAttack: 0
+  preAttackDelay: 0
+  activeTime: 0.2
+  postAttackDelay: 0
+  betweenAttackDelay: 0
