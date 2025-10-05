@@ -262,9 +262,16 @@ public class MonsterMovement : MonoBehaviour, IMovement
 
     public bool CheckWallAhead()
     {
-        Vector2 checkPos = (Vector2)transform.position + new Vector2(HorizontalDir * 0.5f, 0);
-        return Physics2D.Raycast(checkPos, Vector2.right * HorizontalDir, 0.5f, platformLayer).collider != null;
+        float width = 0.1f; // 감지 폭
+        float height = _monsterCollider.bounds.size.y * 0.9f; // 세로 범위
+        Vector2 origin = (Vector2)transform.position + new Vector2(HorizontalDir * (width/2 + _monsterCollider.bounds.extents.x), 1f);
+
+        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(width, height), 0f, Vector2.right * HorizontalDir, 0.1f, platformLayer);
+        Debug.DrawRay(origin, Vector2.right * HorizontalDir * 0.1f, Color.red);
+
+        return hit.collider != null;
     }
+
 
     public bool IsPlayerMoving()
     {
