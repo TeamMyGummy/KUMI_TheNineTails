@@ -6,91 +6,141 @@ using System.Collections;
 public class UI_MonsterHpBar : MonoBehaviour
 {
     public GameObject prfHpBar;
-    private GameObject canvas;
-
+    
+    private Monster monster;
     private RectTransform hpBar;
     private Image hpImage;
-    private GameAbilitySystem.Attribute hp;
     private CanvasGroup canvasGroup;
-    private CompositeDisposable _disposables = new();
-    private Monster monster;
+    private GameAbilitySystem.Attribute hp;
 
-    private float damagedTime;
+    private Transform canvasTransform;
+    private Camera mainCamera;
+    private Collider2D monsterCollider;
+
+    private float lastDamagedTime;
+    private readonly CompositeDisposable _disposables = new();
 
     private IEnumerator Start()
     {
         monster = GetComponent<Monster>();
-        if (canvas == null)
+        mainCamera = Camera.main;
+        monsterCollider = GetComponent<Collider2D>(); 
+    
+        GameObject canvasObj = GameObject.Find("BaseCanvas");
+        if (canvasObj != null)
         {
-            GameObject found = GameObject.Find("BaseCanvas");
-            if (found != null)
-                canvas = found;
+            canvasTransform = canvasObj.transform;
+        }
+        else
+        {
+            Debug.LogError("BaseCanvas를 찾을 수 없습니다!");
+            yield break;
         }
 
-        while (!monster.asc.Attribute.Attributes.ContainsKey("HP"))
+        while (monster.asc == null || !monster.asc.Attribute.Attributes.ContainsKey("HP"))
+        {
             yield return null;
+        }
         hp = monster.asc.Attribute.Attributes["HP"];
 
-        hpBar = Instantiate(prfHpBar, canvas.transform).GetComponent<RectTransform>();
-        hpBar.gameObject.SetActive(false);
+        InitializeHpBar();
+    }
 
+    void LateUpdate()
+    {
+        if (hpBar == null) return;
+        UpdateVisibility();
+
+        if (!hpBar.gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
+        if (hp.CurrentValue.Value <= 0)
+        {
+            hpBar.gameObject.SetActive(false);
+            return;
+        }
+    
+        UpdateHpBarPosition();
+    }
+  
+    private void InitializeHpBar()
+    {
+        hpBar = Instantiate(prfHpBar, canvasTransform).GetComponent<RectTransform>();
         canvasGroup = hpBar.GetComponent<CanvasGroup>();
         hpImage = hpBar.transform.Find("hp_bar").GetComponent<Image>();
 
         hpImage.fillAmount = hp.CurrentValue.Value / hp.MaxValue;
-        _disposables.Add(hp.CurrentValue.Subscribe(OnHpChanged));
+        
+        hp.CurrentValue.Subscribe(OnHpChanged).AddTo(_disposables);
+        hpBar.gameObject.SetActive(false);
     }
 
-    void Update()
+    private void UpdateHpBarPosition()
     {
-        if (monster == null || hpBar == null || Camera.main == null || hp == null) return;
-
-        float offsetY = 1.2f;
-        if (TryGetComponent<Collider2D>(out var col))
-            offsetY = col.bounds.size.y + 0.3f;
-
-        Vector3 worldPos = transform.position + new Vector3(0, offsetY + 0.2f, 0);
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-        screenPos.y -= 20f;
-        hpBar.position = screenPos;
-
-        float t = Time.time - damagedTime;
-
-        if (monster.isAggro)
+        if (monsterCollider == null)
         {
-            hpBar.gameObject.SetActive(true);
-            canvasGroup.alpha = 1f;
+            Vector3 worldPosition = transform.position + new Vector3(0, 1.2f, 0);
+            hpBar.position = mainCamera.WorldToScreenPoint(worldPosition);
         }
         else
         {
-            if (t <= 0.7f)
+            float topY = monsterCollider.bounds.max.y + 0.2f;
+
+            Vector3 worldPosition = new Vector3(transform.position.x, topY + 0.3f, transform.position.z);
+
+            hpBar.position = mainCamera.WorldToScreenPoint(worldPosition);
+        }
+    }
+
+    private void UpdateVisibility()
+    {
+        if (monster.isAggro)
+        {
+            if (!hpBar.gameObject.activeInHierarchy)
             {
-                canvasGroup.alpha = 1f;
+                hpBar.gameObject.SetActive(true);
             }
-            else if (t <= 1.0f)
+            canvasGroup.alpha = 1f;
+            return;
+        }
+
+        float timeSinceDamage = Time.time - lastDamagedTime;
+
+        if (timeSinceDamage <= 2.0f)
+        {
+            canvasGroup.alpha = 1f;
+        }
+        else if (timeSinceDamage <= 3.0f)
+        {
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, (timeSinceDamage - 2.0f) / 1.0f);
+        }
+        else
+        {
+            canvasGroup.alpha = 0f;
+            if (hpBar.gameObject.activeInHierarchy)
             {
-                canvasGroup.alpha = Mathf.Lerp(1f, 0f, (t - 0.7f) / 0.3f);
-            }
-            else
-            {
-                canvasGroup.alpha = 0f;
                 hpBar.gameObject.SetActive(false);
             }
         }
     }
 
-
     void OnHpChanged(float newHp)
     {
+        if (hpBar == null) return;
+        
         hpImage.fillAmount = newHp / hp.MaxValue;
 
-        if (newHp < hp.MaxValue)
+        if (newHp < hp.MaxValue && newHp > 0)
         {
-            damagedTime = Time.time;
-            hpBar.gameObject.SetActive(true);
+            lastDamagedTime = Time.time;
+            if (!hpBar.gameObject.activeInHierarchy)
+            {
+                hpBar.gameObject.SetActive(true);
+            }
         }
     }
-
     void OnDestroy()
     {
         _disposables.Dispose();
