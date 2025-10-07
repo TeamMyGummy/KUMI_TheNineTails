@@ -507,18 +507,14 @@ public class WallClimbState : PlayerState
         if (_type == WallType.Normal && _actions.IsCharacterReachedTop())
         {
             _state = WallClimbStates.Ledge;
-            SoundManager.Instance.StopSFX(SFXName.벽타기);
         }
         else if (Player.Controller.ClimbInput == Vector2.zero)
         {
             _state = WallClimbStates.Idle;
-            SoundManager.Instance.StopSFX(SFXName.벽타기);
         }
         else if (Player.Controller.ClimbInput != Vector2.zero)
         {
             _state = WallClimbStates.Climbing;
-            if(!SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
-                SoundManager.Instance.PlaySFX(SFXName.벽타기);
         }
         
         if (Player.Controller.IsJumpPressed())
@@ -541,11 +537,17 @@ public class WallClimbState : PlayerState
         
         Player.SetAnimatorBool(Player.WallClimbID, false);
         Player.Movement.EndClimbState();
-        SoundManager.Instance.StopSFX(SFXName.벽타기);
+        
+        if(SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
+            SoundManager.Instance.StopSFX(SFXName.벽타기);
     }
 
     private void Idle()
     {
+        // sound
+        if(SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
+            SoundManager.Instance.StopSFX(SFXName.벽타기);
+        
         _ledge = false;
         Player.SetAnimatorBool(Player.EndClimbID, false);
         Player.SetAnimatorBool(Player.IsClimbingID, false);
@@ -576,6 +578,10 @@ public class WallClimbState : PlayerState
 
     private void Climbing()
     {
+        // sound
+        if(!SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
+            SoundManager.Instance.PlaySFX(SFXName.벽타기);
+        
         _ledge = false;
         Player.SetAnimatorBool(Player.EndClimbID, false);
         Player.SetAnimatorBool(Player.IsClimbingID, true);
@@ -586,6 +592,10 @@ public class WallClimbState : PlayerState
     
     private void OnLedge()
     {
+        // sound
+        if(SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
+            SoundManager.Instance.StopSFX(SFXName.벽타기);
+        
         _ledge = true;
         Player.SetAnimatorBool(Player.EndClimbID, true);
         
