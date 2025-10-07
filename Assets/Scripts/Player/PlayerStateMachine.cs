@@ -439,9 +439,8 @@ public class DieState : PlayerState
     {
         base.Enter();
         
-        // 현재 씬 재로드
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        // 저장 데이터 로드 및 상태 복원
+        DomainFactory.Instance.ClearStateAndReload();
     }
 
     public override void Exit()
