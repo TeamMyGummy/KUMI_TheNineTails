@@ -5,6 +5,7 @@ using GameAbilitySystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 // Enum: Player State
 public enum PlayerStateType
@@ -405,8 +406,18 @@ public class HurtState : PlayerState
 
     public override void Update()
     {
+        if (Player.ASC.Attribute.Attributes["HP"].CurrentValue.Value <= 0)
+        {
+            // 사망 처리
+            Player.StateMachine.ChangeState(PlayerStateType.Die);
+        }
+        
         if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt") &&
             Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Idle);
+        }
+        else
         {
             Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
@@ -428,6 +439,9 @@ public class DieState : PlayerState
     {
         base.Enter();
         
+        // 현재 씬 재로드
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     public override void Exit()
