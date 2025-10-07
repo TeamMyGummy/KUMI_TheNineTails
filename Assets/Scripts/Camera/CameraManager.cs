@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Util;
 
 public enum ECameraState
 {
@@ -10,7 +11,7 @@ public enum ECameraState
 }
 
 //기능이 많아진다 싶으면 아예 FSM으로 관리 아직은 현상유지(0923)
-public class CameraManager : MonoBehaviour
+public class CameraManager : SceneSingleton<CameraManager>
 {
     [SerializeField] private Vector3 targetOffset;
     [SerializeField] private float followSpeed = 5f;
