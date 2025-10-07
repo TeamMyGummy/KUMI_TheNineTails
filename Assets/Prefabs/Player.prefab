@@ -176,7 +176,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &5074530203967126954
 CapsuleCollider2D:
@@ -576,7 +576,7 @@ MonoBehaviour:
   - {x: -0.097126484, y: 0.21669531, z: 0}
   m_ShapePathHash: -523907837
   m_Mesh: {fileID: 0}
-  m_InstanceId: 997680
+  m_InstanceId: 212970
   m_LocalBounds:
     m_Center: {x: 0.02128613, y: 1.1571972, z: 0}
     m_Extent: {x: 0.6182183, y: 0.943835, z: 0}
