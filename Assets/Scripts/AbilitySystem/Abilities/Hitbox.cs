@@ -39,6 +39,7 @@ public class Hitbox : MonoBehaviour
             if (size > 0)
             {
                 // 플레이어 패링 성공
+                _attacker?.GetComponent<Monster>()?.OnParried();
                 Monster monster = _attacker?.GetComponent<Monster>();
                 if (monster != null && 
                     monster.asc.Attribute.Attributes["HP"].CurrentValue.Value <=

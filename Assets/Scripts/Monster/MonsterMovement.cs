@@ -12,16 +12,19 @@ public class MonsterMovement : MonoBehaviour, IMovement
     public Animator _animator{ private set; get; }
     private SkeletonMecanim _skeletonMecanim;
     
+    
     public int HorizontalDir { set; get; } //좌우판정용 (set 추가)
 
     //몬스터 이동 상태 클래스
     private IMonsterMovementState _currentState;
+    public IMonsterMovementState CurrentState => _currentState;
     private StoppedState _stoppedState;
     private PatrolState _patrolState;
-    private AggroState _aggroState;
+    public AggroState _aggroState;
     private ReturnState _returnState;
     private RetreatState _retreatState;
     private FleeState _fleeState;
+    private ParriedState _parriedState;
     
     //Patrol / Return 관련 변수
     public Vector2 _spawnPos { private set; get; }
@@ -98,6 +101,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _returnState = new ReturnState();
         _retreatState = new RetreatState();
         _fleeState = new FleeState();
+        _parriedState = new ParriedState();
 
         _currentState = _patrolState;
         _currentState.Enter(this);
@@ -169,6 +173,11 @@ public class MonsterMovement : MonoBehaviour, IMovement
             }
             if (_monster.isAggro) ChangeState(_aggroState);
         }
+    }
+    
+    public void EnterParriedState()
+    {
+        ChangeState(_parriedState);
     }
     
     public Vector2 GetDirection()
@@ -575,4 +584,39 @@ public class FleeState : IMonsterMovementState
     }
 
     public void Exit() { }
+}
+
+/// <summary>
+/// 몬스터가 패링 당해 기절한 상태
+/// </summary>
+public class ParriedState : IMonsterMovementState
+{
+    private MonsterMovement _mm;
+    private float _duration;
+    private float _timer;
+
+    public void Enter(MonsterMovement monsterMovement)
+    {
+        _mm = monsterMovement;
+
+        _duration = 0.1f; //패링당한 모션 내보낼 시간
+        _timer = 0f;
+
+        _mm._characterMovement.Move(Vector2.zero);
+        _mm._animator.SetTrigger("Parry");
+    }
+
+    public void UpdateState()
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= _duration)
+        {
+            _mm.ChangeState(_mm._aggroState);
+        }
+    }
+
+    public void Exit()
+    {
+        
+    }
 }

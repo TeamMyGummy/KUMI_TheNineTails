@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using GameAbilitySystem;
 using Spine.Unity;
+using Cysharp.Threading.Tasks;
+using System;
 
 public abstract class Monster : MonoBehaviour, IAbilitySystem
 {
@@ -24,7 +26,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     }
     
     public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
-
+    
     protected MonsterMovement _movement;
     private Transform player;
     public Transform Player => player;
@@ -100,25 +102,17 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         }
         
     }
-
-    public bool IsPlayerBlockedByWall()
+    
+    //패링당했을때 호출
+    public void OnParried()
     {
-        if (player == null) return false;
-        Vector2 monsterPos = (Vector2)transform.position + Vector2.up * 0.5f;
-        Vector2 playerPos = (Vector2)player.position + Vector2.up * 0.5f;
+        if (_movement.CurrentState is ParriedState) return;
 
-        Vector2 direction = (playerPos - monsterPos).normalized;
-        float distance = Vector2.Distance(monsterPos, playerPos);
-
-        int platformLayerMask = LayerMask.GetMask("Platform", "GraspableWall");
-
-        RaycastHit2D hit = Physics2D.Raycast(monsterPos, direction, distance, platformLayerMask);
-
-        // 사이에 Platform(벽)이 있으면 true 반환
-        return hit.collider != null;
+        Debug.Log($"{name} has been parried!");
+        
+        StartCoroutine(ParriedFlash());
+        _movement.EnterParriedState();
     }
-
-
 
 
     protected abstract void EnterShortAttackRange();
@@ -240,6 +234,17 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         yield return new WaitForSeconds(0.15f);
         _skeletonMecanim.Skeleton.SetColor(prevColor);
     }
+    
+    public System.Collections.IEnumerator ParriedFlash()
+    {
+        if (_skeletonMecanim == null) yield break;
+
+        Color prevColor = _skeletonMecanim.Skeleton.GetColor();
+        _skeletonMecanim.Skeleton.SetColor(Color.blue);
+        yield return new WaitForSeconds(0.2f);
+        _skeletonMecanim.Skeleton.SetColor(prevColor);
+    }
+
 
     protected virtual void Die()
     {
