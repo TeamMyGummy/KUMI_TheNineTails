@@ -14,6 +14,8 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     [SerializeField] private string abilitySystemPath = "";
     private SkeletonMecanim _skeletonMecanim;
     private float prevHp;
+    private Coroutine _flashCoroutine;
+    private Color _originalColor;
     
     protected bool isDead = false;
     protected int FacingDir
@@ -44,6 +46,11 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         _movement = GetComponent<MonsterMovement>(); 
         player = GameObject.FindWithTag("Player")?.transform;
         
+        if (_skeletonMecanim != null)
+        {
+            _originalColor = _skeletonMecanim.Skeleton.GetColor();
+        }
+        
         var playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
         {
@@ -57,7 +64,13 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     {
         float currHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
         if (currHp < prevHp)
-            StartCoroutine(Flash()); // 공격받았을 때 반짝 이펙트
+        {
+            if (_flashCoroutine != null)
+            {
+                StopCoroutine(_flashCoroutine);
+            }
+            _flashCoroutine = StartCoroutine(Flash());
+        }
         prevHp = currHp;
 
         // 사망 처리
@@ -228,11 +241,10 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     public System.Collections.IEnumerator Flash()
     {
         if (_skeletonMecanim == null) yield break;
-
-        Color prevColor = _skeletonMecanim.Skeleton.GetColor();
         _skeletonMecanim.Skeleton.SetColor(Color.red);
         yield return new WaitForSeconds(0.15f);
-        _skeletonMecanim.Skeleton.SetColor(prevColor);
+        _skeletonMecanim.Skeleton.SetColor(_originalColor);
+        _flashCoroutine = null;
     }
     
     public System.Collections.IEnumerator ParriedFlash()
