@@ -94,12 +94,11 @@ public class DomainFactory : Singleton<DomainFactory>
 
     public void ClearStateAndReload()
     {
-#if !UNITY_EDITOR
+        if (!RunOnly.ShouldRun()) return;
         _domains.Clear();
         DataManager.Load(Savekey, out _gameState);
         SceneLoader.LoadScene(Data.LanternState.RecentScene);
-#endif
-        Debug.Log("[DomainFactory] 개발 중에는 사망해도 저장된 데이터로 복구되지 않습니다. ");
+        //Debug.Log("[DomainFactory] 개발 중에는 사망해도 저장된 데이터로 복구되지 않습니다. ");
     }
 
     public T GetDomain<T>(DomainKey key, Func<T> factory) where T : IDomain
