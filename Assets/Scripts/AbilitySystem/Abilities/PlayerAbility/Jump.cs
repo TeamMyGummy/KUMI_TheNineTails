@@ -10,12 +10,11 @@ public class Jump : GameplayAbility, ITickable
     private Rigidbody2D _rigidBody;
     private CharacterMovement _characterMovement;
     private PlayerController _playerController;
-    private Animator _animator;
-    private AnimatorStateInfo _animatorStateInfo;
     private JumpSO _jumpSO;
 
     private int _maxJumpCount;
-    private int _jumpCount;
+    private int _remainJumpCount;
+    private float _maxJumpPower;
     private float _jumpPower;
     private bool isJumpKeyDown;
 
@@ -26,25 +25,18 @@ public class Jump : GameplayAbility, ITickable
         _rigidBody = Actor.GetComponent<Rigidbody2D>();
         _characterMovement = Actor.GetComponent<CharacterMovement>();
         _playerController = Actor.GetComponent<PlayerController>();
-        _animator = Actor.GetComponent<Animator>();
         _player = Actor.GetComponent<Player>();
         
         IsTickable = true;
         _jumpSO = (JumpSO) abilitySo;
         _maxJumpCount = _jumpSO.MaxJumpCount;
         _jumpPower = _jumpSO.JumpPower;
-        _jumpCount = 0;
+        _remainJumpCount = _maxJumpCount;
     }
 
     public override bool CanActivate()
     {
-        if (_player.StateMachine.IsBeforeState(PlayerStateType.RopeClimb) ||
-            _player.StateMachine.IsBeforeState(PlayerStateType.WallClimb))
-        {
-            // 벽타기 or 밧줄타기 시 무조건 점프 한 번
-            _jumpCount = _maxJumpCount - 1;
-        }
-        if (_jumpCount < _maxJumpCount)
+        if (_remainJumpCount > 0)
         {
             return true;
         }
@@ -57,7 +49,8 @@ public class Jump : GameplayAbility, ITickable
         _playerController.OnJumpCanceled += JumpCanceled;
         isJumpKeyDown = true;
         
-        _jumpCount++;
+        // Jump
+        _remainJumpCount--;
         _characterMovement.Jump(_jumpPower);
     }
 
@@ -68,7 +61,7 @@ public class Jump : GameplayAbility, ITickable
 
     public void FixedUpdate()
     {
-        //Jump
+        // Extra Jump
         if (_rigidBody.velocity.y > 0.0f)
         {
             if (isJumpKeyDown)
@@ -76,12 +69,13 @@ public class Jump : GameplayAbility, ITickable
                 ExtraJump();
             }
         }
-
+        
+        // 땅에 닿았을 때 점프 횟수 초기화
         if (_rigidBody.velocity.y <= 0.0f)
         {
             if (_characterMovement.CheckIsGround())
             {
-                _jumpCount = 0;
+                ResetJumpCount();
                 if (_playerController != null)
                 {
                     this.DelayOneFrame().Forget();
@@ -98,6 +92,30 @@ public class Jump : GameplayAbility, ITickable
     public void JumpCanceled()
     {
         isJumpKeyDown = false;
+    }
+
+    public int GetJumpCount()
+    {
+        return _remainJumpCount;
+    }
+    public void SetJumpCount(int count)
+    {
+        _remainJumpCount = count;
+    }
+    
+    public void ResetJumpCount()
+    {
+        _remainJumpCount = _maxJumpCount;
+    }
+
+    public void SetJumpPower(float power)
+    {
+        _jumpPower = power;
+    }
+    
+    public void ResetJumpPower()
+    {
+        _jumpPower = _maxJumpPower;
     }
 
 }
