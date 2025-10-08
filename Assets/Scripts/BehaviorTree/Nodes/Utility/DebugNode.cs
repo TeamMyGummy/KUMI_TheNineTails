@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BehaviorTree.Utility
 {
+    [CreateNodeMenu("Utility/Debug")]
     [NodeTint(NodeColorPalette.DEBUG_NODE)]
     public class DebugNode : LeafNode
     {
