@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e349e5a7b5a1408b8aa86cb12ddb87ed, type: 3}
-  m_Name: BT Graph
+  m_Name: ImoogiGraph
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -2265110958554903881}
