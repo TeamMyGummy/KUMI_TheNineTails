@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameAbilitySystem;
 using UnityEngine;
 
 public class UnderWaterCount : MonoBehaviour
@@ -11,10 +13,13 @@ public class UnderWaterCount : MonoBehaviour
     public float timePerPop = 1f;
     
     public CharacterMovement characterMovement;
+    private Jump _jumpAbility;
 
     private Coroutine drowningCoroutine; 
     private float originalPlayerSpeed;
     public float underwaterSpeedMultiplier = 0.1f; //수중 플레이어 속도 배율
+    public float underwaterJumpPowerMultiplier = 0.5f; // 수중 플레이어 점프 파워 배율
+    public float underwaterGravityMultiplier = 0.5f; // 수중 플레이어 중력 배율
     
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -42,10 +47,21 @@ public class UnderWaterCount : MonoBehaviour
         Debug.Log("물에 잠김");
         if (characterMovement != null)
         {
+            // 속도 설정
             originalPlayerSpeed = characterMovement.Speed;
             characterMovement.SetSpeed(originalPlayerSpeed * underwaterSpeedMultiplier);
-            //TODO:점프 높이 조절
             
+            // 점프 높이 설정
+            if (_jumpAbility == null)
+            {
+                AbilitySystem asc = characterMovement.gameObject.GetComponent<Player>().ASC;
+                _jumpAbility = (asc.IsGranted(AbilityKey.DoubleJump) ? asc.GetAbility(AbilityKey.DoubleJump) : asc.GetAbility(AbilityKey.Jump)) as Jump;
+                Debug.Assert(_jumpAbility != null);
+            }
+            _jumpAbility.SetJumpPower(_jumpAbility.GetMaxJumpPower() * underwaterJumpPowerMultiplier);
+            
+            // 중력 설정
+            characterMovement.SetGravityScale(characterMovement.GetGravityScale() * underwaterGravityMultiplier);
         }
         
         if (waterTimerUIGroup != null)
@@ -75,8 +91,14 @@ public class UnderWaterCount : MonoBehaviour
         }
         if (characterMovement != null)
         {
-            characterMovement.SetSpeed(originalPlayerSpeed); //속도 원복
-            //TODO:점프 높이 복구
+            //속도 복구
+            characterMovement.SetSpeed(originalPlayerSpeed); 
+            
+            // 점프 높이 복구
+            _jumpAbility.ResetJumpPower();
+            
+            // 중력 복구
+            characterMovement.ResetGravityScale();
         }
         if (waterTimerUIGroup != null)
         {

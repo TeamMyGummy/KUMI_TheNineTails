@@ -97,6 +97,10 @@ public class CharacterMovement : MonoBehaviour
         return _rigidBody.velocity;
     }
 
+    public float GetGravityScale()
+    {
+        return gravity;
+    }
     public void SetGravityScale(float gravityScale)
     {
         _rigidBody.gravityScale = gravityScale;
