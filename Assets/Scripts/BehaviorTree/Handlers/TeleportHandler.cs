@@ -26,8 +26,8 @@ namespace BehaviorTree
         protected override NodeState OnStartAction()
         {
             Vector3 destination = new Vector3(
-                _positionHelper.GetDestination(_xtype, transform.position, _vector).x, 
-                _positionHelper.GetDestination(_ytype, transform.position, _vector).y);
+                _positionHelper.GetDestination(_xtype, transform, _vector).x, 
+                _positionHelper.GetDestination(_ytype, transform, _vector).y);
             gameObject.transform.position = destination;
             return NodeState.Success;
         }

@@ -33,6 +33,11 @@ namespace BehaviorTree
             Vector3 currentEuler = transform.eulerAngles;
             _targetRotation = Quaternion.Euler(currentEuler.x, currentEuler.y, finalTargetAngle);
         
+            if (speed < 0f)
+            {
+                transform.rotation = _targetRotation;
+                return NodeState.Success;
+            }
             return NodeState.Running;
         }
 

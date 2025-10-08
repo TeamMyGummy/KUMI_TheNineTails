@@ -21,8 +21,8 @@ namespace BehaviorTree
         public void SetPosition(Vector2 inputPos, Vector2 desiredPos, EPositionType xtype, EPositionType ytype, float delay)
         {
             spawnPosition = inputPos;
-            if (xtype != EPositionType.Input) spawnPosition.x = _positionHelper.GetDestination(_xtype, transform.position, desiredPos).x;
-            if (ytype != EPositionType.Input) spawnPosition.y = _positionHelper.GetDestination(_ytype, transform.position, desiredPos).y;
+            if (xtype != EPositionType.Input) spawnPosition.x = _positionHelper.GetDestination(_xtype, transform, desiredPos).x;
+            if (ytype != EPositionType.Input) spawnPosition.y = _positionHelper.GetDestination(_ytype, transform, desiredPos).y;
             this.delay = delay; 
         }
 

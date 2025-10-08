@@ -31,8 +31,15 @@ namespace BehaviorTree
         protected override NodeState OnStartAction()
         {
             _currentDest = new Vector3(
-                _positionHelper.GetDestination(_xtype, transform.position, _vector).x, 
-                _positionHelper.GetDestination(_ytype, transform.position, _vector).y);
+                _positionHelper.GetDestination(_xtype, transform, _vector).x, 
+                _positionHelper.GetDestination(_ytype, transform, _vector).y);
+
+            if (speed < 0f)
+            {
+                transform.position = _currentDest;
+                return NodeState.Success;
+            }
+            
             return NodeState.Running;
         }
     

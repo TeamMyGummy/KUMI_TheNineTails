@@ -9,6 +9,7 @@ namespace BehaviorTree.Leaf
         TargetOffset,
         WorldLocation,
         CameraOffset,
+        OffsetWithRootDirection,
         Input //Spawn 때문에 추가
     }
     public class MoveNode : MonoNode
