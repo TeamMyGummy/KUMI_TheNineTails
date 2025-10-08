@@ -29,9 +29,11 @@ public class Jump : GameplayAbility, ITickable
         
         IsTickable = true;
         _jumpSO = (JumpSO) abilitySo;
+        
         _maxJumpCount = _jumpSO.MaxJumpCount;
-        _jumpPower = _jumpSO.JumpPower;
+        _maxJumpPower = _jumpSO.JumpPower;
         _remainJumpCount = _maxJumpCount;
+        _jumpPower = _maxJumpPower;
     }
 
     public override bool CanActivate()
@@ -108,6 +110,10 @@ public class Jump : GameplayAbility, ITickable
         _remainJumpCount = _maxJumpCount;
     }
 
+    public float GetMaxJumpPower()
+    {
+        return _maxJumpPower;
+    }
     public void SetJumpPower(float power)
     {
         _jumpPower = power;
