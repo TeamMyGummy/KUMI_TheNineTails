@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8720013455806417552}
   - component: {fileID: 7526453613370847716}
   - component: {fileID: 6862354979918907715}
-  m_Layer: 3
+  - component: {fileID: 1829214745945693036}
+  m_Layer: 0
   m_Name: PLAT_JumpPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +115,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0049209595, y: -0.044294357}
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0058289, y: 0.78927803}
   m_EdgeRadius: 0
+--- !u!114 &1829214745945693036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801320732543399280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058c9f781ba1ca74195a0b1a615fa8f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

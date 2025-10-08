@@ -159,7 +159,9 @@ public class IdleState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+            AbilityKey jumpType = Player.ASC.IsGranted(AbilityKey.DoubleJump) ?  AbilityKey.DoubleJump : AbilityKey.Jump;
+            
+            if(Player.ASC.CanActivateAbility(jumpType))
                 Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (!Player.Movement.CheckIsGround())
@@ -217,7 +219,9 @@ public class RunState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+            AbilityKey jumpType = Player.ASC.IsGranted(AbilityKey.DoubleJump) ?  AbilityKey.DoubleJump : AbilityKey.Jump;
+            
+            if(Player.ASC.CanActivateAbility(jumpType))
                 Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (!Player.Movement.CheckIsGround())
@@ -266,7 +270,7 @@ public class JumpState : PlayerState
         
         Player.SetAnimatorBool(Player.JumpID, true);
         //Player.SetAnimatorBool(Player.IsGroundID, true);
-        _ability = Player.ASC.TryActivateAbility(AbilityKey.DoubleJump); 
+        _ability = Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.TryActivateAbility(AbilityKey.DoubleJump) : Player.ASC.TryActivateAbility(AbilityKey.Jump); 
         SoundManager.Instance.PlaySFX(SFXName.점프);
     }
 
@@ -346,7 +350,9 @@ public class FallState : PlayerState
         }
         else if (Player.Controller.IsJumpPressed())
         {
-            if(Player.ASC.CanActivateAbility(AbilityKey.DoubleJump))
+            AbilityKey jumpType = Player.ASC.IsGranted(AbilityKey.DoubleJump) ?  AbilityKey.DoubleJump : AbilityKey.Jump;
+            
+            if(Player.ASC.CanActivateAbility(jumpType))
                 Player.StateMachine.ChangeState(PlayerStateType.Jump);
         }
         else if (Player.CanWallClimb())
@@ -493,6 +499,10 @@ public class WallClimbState : PlayerState
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
         DashAbility.ResetDash();
+        
+        Jump JumpAbility = (Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.GetAbility(AbilityKey.DoubleJump) : Player.ASC.GetAbility(AbilityKey.Jump)) as Jump;
+        Debug.Assert(JumpAbility != null);
+        JumpAbility.SetJumpCount(1);
 
         // 벽 타입 체크
         _type = _actions.CheckPlatformAboveWall() ? WallType.PlatformAbove : WallType.Normal;
@@ -654,6 +664,10 @@ public class RopeClimbState : PlayerState
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
         DashAbility.ResetDash();
+        
+        Jump JumpAbility = (Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.GetAbility(AbilityKey.DoubleJump) : Player.ASC.GetAbility(AbilityKey.Jump)) as Jump;
+        Debug.Assert(JumpAbility != null);
+        JumpAbility.SetJumpCount(1);
 
         Player.Movement.Move(Vector2.up);
     }
