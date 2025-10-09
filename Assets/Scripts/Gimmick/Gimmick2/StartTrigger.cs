@@ -1,5 +1,3 @@
-// ImoogiTrigger.cs
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events; // UnityEvent를 사용하기 위해 꼭 추가해야 합니다!
