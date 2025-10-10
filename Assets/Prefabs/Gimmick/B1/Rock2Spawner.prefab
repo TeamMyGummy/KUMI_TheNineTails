@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8153361445924096873}
   - component: {fileID: 7443407065369685076}
   m_Layer: 0
-  m_Name: RockfallSpawner
+  m_Name: Rock2Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   - {fileID: 1100392894530128037}
   - {fileID: 3534771423961542386}
   rockPrefab: {fileID: 75510159645172994, guid: 4f3b0dd471d7c604891060326a1020ef, type: 3}
-  spawnInterval: 0.8
+  spawnInterval: 0.9
   totalLayers: 10
   preWarnTime: 0.3
   warnMarkerPrefab: {fileID: 2340636739088253854, guid: 43c62ffcfbedcfd468c9d655817c7c5e, type: 3}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5882582075895491649}
   - component: {fileID: 6908519537024585854}
   - component: {fileID: 5210686462719166549}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: FallingRock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4569219520287190983}
   m_Layer: 0
-  m_Name: Section1Rock
+  m_Name: Rock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

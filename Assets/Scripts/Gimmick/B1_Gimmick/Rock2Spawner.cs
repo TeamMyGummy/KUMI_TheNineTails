@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockfallSpawner : MonoBehaviour
+public class Rock2Spawner : MonoBehaviour
 {
     [Header("Spawn Setup")]
     [SerializeField] private Transform[] spawnPoints = new Transform[3];

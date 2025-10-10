@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 249072499209918694}
   - component: {fileID: 3664632310495153949}
   m_Layer: 0
-  m_Name: RockfallWarning
+  m_Name: Rock1Warning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
