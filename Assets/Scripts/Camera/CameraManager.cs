@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Util;
+using Cysharp.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 public enum ECameraState
 {
@@ -16,6 +19,9 @@ public class CameraManager : SceneSingleton<CameraManager>
     [SerializeField] private Vector3 targetOffset;
     [SerializeField] private float followSpeed = 5f;
     private const float cameraZ = -10f;
+    
+    [Header("Shake Settings")]
+    [SerializeField] private AnimationCurve shakeCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
     
     //상태관리
     private Transform target;
@@ -54,5 +60,40 @@ public class CameraManager : SceneSingleton<CameraManager>
     public void FollowTarget()
     {
         _state = ECameraState.Targeting;
+    }
+    
+    public void Shake(float intensity, float duration)
+    {
+        ShakeAsync(transform.localPosition, intensity, duration).Forget();
+    }
+    
+    private async UniTask ShakeAsync(Vector3 originPos, float intensity, float duration)
+    {
+        float elapsed = 0f;
+        
+        try
+        {
+            while (elapsed < duration)
+            {
+                float progress = elapsed / duration;
+                float curveValue = shakeCurve.Evaluate(progress);
+                
+                float x = Random.Range(-1f, 1f) * intensity * curveValue;
+                float y = Random.Range(-1f, 1f) * intensity * curveValue;
+
+                transform.localPosition = originPos + new Vector3(x, y, 0);
+
+                elapsed += Time.deltaTime;
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // 예외 무시
+        }
+        finally
+        {
+            transform.localPosition = originPos;
+        }
     }
 }
