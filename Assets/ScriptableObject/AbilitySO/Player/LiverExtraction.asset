@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e9e052dde6249bf8fd464e93a5f8328, type: 3}
+  m_Script: {fileID: 11500000, guid: edd1cbc3b8475d840b02c8f13cf322d0, type: 3}
   m_Name: LiverExtraction
   m_EditorClassIdentifier: 
   skillKey: 9
   skillName: 9
-  skillSequence: {fileID: 11400000, guid: 109f5424c93cfb141a74b824f1fedbdd, type: 2}
-  skillIcon: {fileID: 21300000, guid: 32e827b1a07fb478eb79678e868bba36, type: 3}
+  skillSequence: {fileID: 0}
+  skillIcon: {fileID: 0}
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
   BlockTimer: 0
+  Hitbox: {fileID: 4292741692396490321, guid: 6f28b3e85f7805741aa0d3627161060b, type: 3}

@@ -418,10 +418,13 @@ public class HurtState : PlayerState
             Player.StateMachine.ChangeState(PlayerStateType.Die);
         }
         
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt") &&
-            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+        var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
+        if (curAnimStateInfo.IsName("Hurt"))
         {
-            Player.StateMachine.ChangeState(PlayerStateType.Idle);
+            if (curAnimStateInfo.normalizedTime >= 0.9f)
+            {
+                Player.StateMachine.ChangeState(PlayerStateType.Idle);
+            }
         }
         else
         {
@@ -736,20 +739,59 @@ public class RopeClimbState : PlayerState
 public class AttackState : PlayerState
 {
     public AttackState(Player player) : base(player, PlayerStateType.Attack){}
+    private int _attackNum; // 공격 횟수
     
     public override void Enter()
     {
         base.Enter();
-        
+
+        _attackNum = 1;
         Player.SetAnimatorTrigger(Player.StartAttackID);
+        Player.Animator.SetInteger(Player.AttackCountID, _attackNum);
+        SoundManager.Instance.PlaySFX(SFXName.공격1);
+        
         Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);  
     }
 
     public override void Update()
     {
-        if (Player.Controller.IsAttackPressed())
+        var curAnimClipInfo = Player.Animator.GetCurrentAnimatorClipInfo(0);
+        string stateName = curAnimClipInfo[0].clip.name;
+        
+        if (stateName.StartsWith("Attack"))
         {
-            Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);
+            var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
+            if (curAnimStateInfo.normalizedTime >= 0.95f)
+            {
+                Player.StateMachine.ChangeState(PlayerStateType.Idle);
+            }
+            else if (Player.Controller.IsAttackPressed() && curAnimStateInfo.normalizedTime >= 0.4f) // 짧은 연타 방지
+            {
+                // 공격 횟수 초기화
+                if (_attackNum >= 3)
+                {
+                    _attackNum = 0;
+                }
+                
+                _attackNum++;
+                Player.Animator.SetInteger(Player.AttackCountID, _attackNum);
+                switch (_attackNum)
+                {
+                    case 1:
+                        SoundManager.Instance.PlaySFX(SFXName.공격1);
+                        break;
+                    case 2:
+                        SoundManager.Instance.PlaySFX(SFXName.공격2);
+                        break;
+                    case 3:
+                        SoundManager.Instance.PlaySFX(SFXName.공격2);
+                        break;
+                    default:
+                        break;
+                }
+                
+                Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);
+            }
         }
     }
 
@@ -758,6 +800,10 @@ public class AttackState : PlayerState
         base.Exit();
         
         Player.Animator.SetInteger(Player.AttackCountID, 0);
+        
+        PlayerAttack attackAbility = Player.ASC.GetAbility(AbilityKey.PlayerAttack) as PlayerAttack;
+        Debug.Assert(attackAbility != null);
+        attackAbility.EndAttack();
     }
 }
 
@@ -887,18 +933,24 @@ public class FoxFireState : PlayerState
     
     public override void Update()
     {
-        // 여우불 애니메이션 나오면 조건문 변경
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("FoxFire") &&
-            Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
+        if (curAnimStateInfo.IsName("FoxFire"))
         {
-            if (Player.Movement.CheckIsGround())
+            if (curAnimStateInfo.normalizedTime >= 0.9f)
             {
-                Player.StateMachine.ChangeState(PlayerStateType.Idle);
+                if (Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Idle);
+                }
+                else if (!Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                }
             }
-            else if (!Player.Movement.CheckIsGround())
-            {
-                Player.StateMachine.ChangeState(PlayerStateType.Fall);
-            }
+        }
+        else
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
     }
 
@@ -922,16 +974,24 @@ public class LiverExtractionState : PlayerState
 
     public override void Update()
     {
-        if (Player.Animator.GetCurrentAnimatorStateInfo(0).IsName("LiverExtraction") && Player.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+        var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
+        if (curAnimStateInfo.IsName("LiverExtraction"))
         {
-            if (Player.Movement.CheckIsGround())
+            if (curAnimStateInfo.normalizedTime >= 0.9f)
             {
-                Player.StateMachine.ChangeState(PlayerStateType.Idle);
+                if (Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Idle);
+                }
+                else if (!Player.Movement.CheckIsGround())
+                {
+                    Player.StateMachine.ChangeState(PlayerStateType.Fall);
+                }
             }
-            else if (!Player.Movement.CheckIsGround())
-            {
-                Player.StateMachine.ChangeState(PlayerStateType.Fall);
-            }
+        }
+        else
+        {
+            Player.StateMachine.ChangeState(PlayerStateType.Idle);
         }
     }
     
