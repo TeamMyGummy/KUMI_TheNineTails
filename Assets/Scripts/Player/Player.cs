@@ -165,4 +165,10 @@ public class Player : MonoBehaviour
     {
         return _canRopeClimb;
     }
+
+    public void SpawnLiverExtractionHitbox()
+    {
+        LiverExtraction ability =  _asc.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
+        ability.SpawnHitbox();
+    }
 }

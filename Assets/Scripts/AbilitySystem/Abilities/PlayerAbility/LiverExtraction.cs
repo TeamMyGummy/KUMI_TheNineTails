@@ -21,8 +21,6 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
     {
         base.InitAbility(actor, asc, abilitySo);
         
-        _sequenceSO = abilitySo.skillSequence;
-        //_task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
         _so = abilitySo as LiverExtractionSO;
         _hitbox = _so.Hitbox;
         
@@ -35,15 +33,12 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         base.Activate();
         
         IsUsingLiverExtraction = true;
-        //_task.Execute();
-        
         // Hitbox 설정
         if (_hitbox != null)
         {
-            SpawnHitbox();
+            // 애니메이션 이벤트로 대체함 -> Player에서 실행
+            //SpawnHitbox();
         }
-        
-        SkillTimer(1.0f).Forget();
     }
     
     public void SpawnHitbox()
@@ -54,21 +49,12 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
             ? new Vector2(_spawnPoint.x * (-2), _spawnPoint.y) 
             : new Vector2(_spawnPoint.x, _spawnPoint.y);
     }
-    
-    
-    private async UniTask SkillTimer(float duration)
+
+    public void EndAbility()
     {
-        _skillTime = duration;
-        while (_skillTime > 0.0f)
-        {
-            _skillTime -= Time.deltaTime;
-            await UniTask.Yield();
-        }
-        
         IsUsingLiverExtraction = false;
-        
         Actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
         _hitbox.SetActive(false);
-        //_task.Canceled();;
     }
+
 }

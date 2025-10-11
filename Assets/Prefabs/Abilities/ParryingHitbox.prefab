@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d804d0a23531ef4aac95160aacc6f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnableLiverExtraction: 0
+  effectSO: {fileID: 11400000, guid: 8cc724aad3bffca4280193ae67c0354d, type: 2}

@@ -100,8 +100,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         _originVelocity = _rigid.velocity;
         _characterMovement.SetGravityScale(0);
         _endDash = false;
-
-        _asc.TagContainer.Add(GameplayTags.Invincibility);
     }
 
     public void EndDash()
@@ -110,8 +108,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         //_rigid.velocity = _originVelocity;
         _characterMovement.ResetGravityScale();
         _endDash = true;
-        
-        _asc.TagContainer.Remove(GameplayTags.Invincibility);
     }
 
     public void ResetDash()

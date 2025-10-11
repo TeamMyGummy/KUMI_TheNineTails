@@ -43,7 +43,7 @@ public class Hitbox : MonoBehaviour
                 Monster monster = _attacker?.GetComponent<Monster>();
                 if (monster != null && 
                     monster.asc.Attribute.Attributes["HP"].CurrentValue.Value <=
-                    monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.4f)
+                    monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.5f)
                 {
                     // 간 빼기 스킬 활성화
                     other.GetComponent<ParryingHitbox>()?.StartLiverExtraction();
