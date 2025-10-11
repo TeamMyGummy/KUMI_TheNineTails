@@ -25,6 +25,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
     private RetreatState _retreatState;
     private FleeState _fleeState;
     private ParriedState _parriedState;
+    private OuchState _ouchState;
     
     //Patrol / Return 관련 변수
     public Vector2 _spawnPos { private set; get; }
@@ -61,8 +62,8 @@ public class MonsterMovement : MonoBehaviour, IMovement
     // 애니메이션 파라미터
     public static readonly int WalkID = Animator.StringToHash("Walk");
     public static readonly int ChaseID = Animator.StringToHash("Chase");
-    public static readonly int HitID = Animator.StringToHash("Hit");
-    public static readonly int ParryID = Animator.StringToHash("Parry");
+    public static readonly int HurtID = Animator.StringToHash("Hurt");
+    public static readonly int ParriedID = Animator.StringToHash("Parried");
 
 
     private void Awake()
@@ -102,6 +103,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _retreatState = new RetreatState();
         _fleeState = new FleeState();
         _parriedState = new ParriedState();
+        _ouchState = new OuchState();
 
         _currentState = _patrolState;
         _currentState.Enter(this);
@@ -178,6 +180,10 @@ public class MonsterMovement : MonoBehaviour, IMovement
     public void EnterParriedState()
     {
         ChangeState(_parriedState);
+    }
+    public void EnterOuchState()
+    {
+        ChangeState(_ouchState);
     }
     
     public Vector2 GetDirection()
@@ -603,7 +609,7 @@ public class ParriedState : IMonsterMovementState
         _timer = 0f;
 
         _mm._characterMovement.Move(Vector2.zero);
-        _mm._animator.SetTrigger("Parry");
+        _mm._animator.SetTrigger(MonsterMovement.ParriedID);
     }
 
     public void UpdateState()
@@ -613,6 +619,44 @@ public class ParriedState : IMonsterMovementState
         {
             _mm.ChangeState(_mm._aggroState);
         }
+    }
+
+    public void Exit()
+    {
+        
+    }
+}
+
+/// <summary>
+/// 몬스터가 공격 당한 상태
+/// </summary>
+public class OuchState : IMonsterMovementState
+{
+    private MonsterMovement _mm;
+    private float _duration;
+    private float _timer;
+
+    public void Enter(MonsterMovement monsterMovement)
+    {
+        _mm = monsterMovement;
+        _mm._animator.SetTrigger(MonsterMovement.HurtID);
+    }
+
+    public void UpdateState()
+    {
+        var curAnimStateInfo = _mm._animator.GetCurrentAnimatorStateInfo(0);
+        if (curAnimStateInfo.IsName("Hurt"))
+        {
+            if (curAnimStateInfo.normalizedTime >= 0.3f)
+            {
+                _mm.ChangeState(_mm._aggroState);
+            }
+        }
+        else
+        {
+            _mm.ChangeState(_mm._aggroState);
+        }
+
     }
 
     public void Exit()

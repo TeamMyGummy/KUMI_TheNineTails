@@ -2,6 +2,7 @@
     using GameAbilitySystem;
     using UnityEngine;
     using Cysharp.Threading.Tasks;
+    using Unity.VisualScripting;
 
     public class AttackHitbox : MonoBehaviour
     {
@@ -28,8 +29,13 @@
             
             // 데미지 처리
             AbilitySystem asc = collision.GetComponent<IAbilitySystem>().asc;
-            collision.gameObject.GetComponent<Damageable>().GetDamage(asc, 10.0f);
-            collision.GetComponent<Animator>().SetTrigger("Hit");
+            Vector2 attackDirection = _actor.transform.position.x > collision.transform.position.x ? Vector2.left : Vector2.right; // 힘의 방향
+            collision.GetComponent<Damageable>().GetDamage(asc, 10.0f, attackDirection);
+            
+            if (collision.CompareTag("Enemies"))
+            {
+                collision.GetComponent<MonsterMovement>().EnterOuchState();
+            }
         
             // 공격 성공 시 Effect
             AttackEffect(collision);
