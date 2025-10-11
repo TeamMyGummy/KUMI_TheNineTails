@@ -29,7 +29,7 @@ public class MonsterDoubleAttack : MonsterAttack
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime);
 
-            if (_movement.CurrentState is ParriedState) return;
+            if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             Attack(); // 1타
 
             if (_attackData.ActiveTime > 0f)
@@ -37,7 +37,7 @@ public class MonsterDoubleAttack : MonsterAttack
 
             await UniTask.Delay(TimeSpan.FromSeconds(_attackData.BetweenAttackDelay), delayType: DelayType.DeltaTime);
 
-            if (_movement.CurrentState is ParriedState) return;
+            if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             Attack(); // 2타
 
             if (_attackData.ActiveTime > 0f)

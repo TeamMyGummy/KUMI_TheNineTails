@@ -66,12 +66,16 @@ public class Damageable : MonoBehaviour
     /// </summary>
     /// <param name="asc">데미지를 입는 대상이 가지고 있는 Ability System</param>
     /// <param name="damage">입은 데미지 양</param>
-    public void GetDamage(AbilitySystem asc, float damage)
+    /// <param name="direction">데미지를 입힌 방향</param>
+    public void GetDamage(AbilitySystem asc, float damage, Vector2 direction)
     {
         // GE
         if (!asc.TagContainer.Has(GameplayTags.Invincibility))
         {
             ApplyDamage(asc, damage);
+            
+            CharacterMovement cm = GetComponent<CharacterMovement>();
+            cm.ApplyKnockback(direction, 3f, 0.1f);
         }
     }
 
