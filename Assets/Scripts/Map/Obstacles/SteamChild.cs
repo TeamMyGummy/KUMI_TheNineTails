@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using GameAbilitySystem;
 using UnityEngine;
 
 public class SteamChild : MonoBehaviour
@@ -7,8 +6,6 @@ public class SteamChild : MonoBehaviour
     [SerializeField] private float respawnDelay = 1.0f;
     
     private SteamObject _parentSteam;
-    private bool _isProcessing = false;
-    
 
     private void Awake()
     {
@@ -18,27 +15,22 @@ public class SteamChild : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
+        if (_parentSteam == null || !_parentSteam.IsActive()) return;
 
-        if (_parentSteam != null && _parentSteam.IsActive())
-        {
-            collision.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, _parentSteam.GetDamage());
-            
-            var controller = collision.GetComponent<PlayerRespawnController>();
-            var pc = collision.GetComponent<PlayerController>();
-            if (controller != null)
-            {
-                _isProcessing = true;
-                StartCoroutine(RespawnAfterDelay(controller, pc));
-            }
-        }
-    }
-    
-    // 장애물에 닿으면 딜레이 후 리스폰
-    private IEnumerator RespawnAfterDelay(PlayerRespawnController controller, PlayerController pc)
-    {
-        pc.OnDisableAllInput(); //플레이어 이동 막기
-        yield return new WaitForSeconds(respawnDelay);
-        controller.Respawn();
-        pc.OnEnableAllInput();
+        DomainFactory.Instance.GetDomain(DomainKey.Player, out AbilitySystem asc);
+        if (asc == null) return;
+
+        // 이미 무적이면 무시
+        if (asc.TagContainer.Has(GameplayTags.Invincibility)) return;
+
+        var dmg  = collision.GetComponent<Damageable>();
+        var resp = collision.GetComponent<PlayerRespawnController>();
+        if (dmg == null || resp == null) return;
+
+        // 1회 데미지
+        dmg.GetDamage(DomainKey.Player, _parentSteam.GetDamage());
+
+        // 리스폰 요청
+        resp.StartRespawn(respawnDelay);
     }
 }
