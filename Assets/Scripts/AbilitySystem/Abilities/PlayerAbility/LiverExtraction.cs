@@ -11,9 +11,11 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
     
     private AbilitySequenceSO _sequenceSO;
     private AbilityTask _task;
-    private AttackRange _attackRange;
+    private LiverExtractionSO _so;
+    private GameObject _hitbox;
 
     private float _skillTime;
+    private readonly Vector2 _spawnPoint = new (0.55f, 0.98f);
     
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -21,7 +23,11 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         
         _sequenceSO = abilitySo.skillSequence;
         //_task = new AbilityTask(actor, actor.GetComponentInChildren<Camera>(), _sequenceSO);
-        _attackRange = Actor.GetComponentInChildren<AttackRange>();
+        _so = abilitySo as LiverExtractionSO;
+        _hitbox = _so.Hitbox;
+        
+        _hitbox = ResourcesManager.Instance.Instantiate(_so.Hitbox, actor.transform);
+        _hitbox.SetActive(false);
     }
 
     protected override void Activate()
@@ -31,15 +37,22 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         IsUsingLiverExtraction = true;
         //_task.Execute();
         
-        // collider 설정
-        if (_attackRange != null)
+        // Hitbox 설정
+        if (_hitbox != null)
         {
-            _attackRange.SpawnAttackRange();
-            _attackRange.EnableAttackCollider(false);
-            _attackRange.EnableAttackCollider(true);
+            SpawnHitbox();
         }
         
         SkillTimer(1.0f).Forget();
+    }
+    
+    public void SpawnHitbox()
+    {
+        _hitbox.SetActive(false);
+        _hitbox.SetActive(true);
+        _hitbox.transform.localPosition = Actor.GetComponent<SpriteRenderer>().flipX 
+            ? new Vector2(_spawnPoint.x * (-2), _spawnPoint.y) 
+            : new Vector2(_spawnPoint.x, _spawnPoint.y);
     }
     
     
@@ -55,7 +68,7 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
         IsUsingLiverExtraction = false;
         
         Actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
-        _attackRange.EnableAttackCollider(false);
+        _hitbox.SetActive(false);
         //_task.Canceled();;
     }
 }
