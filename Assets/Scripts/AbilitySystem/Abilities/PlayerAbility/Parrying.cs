@@ -25,9 +25,6 @@ public class Parrying : GameplayAbility<ParryingSO>
     private CancellationTokenSource _chargeGaugeCts;
 
     private PlayerController _playerController;
-    
-    private AbilitySequenceSO _sequenceSO;
-    private AbilityTask _task;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -43,10 +40,6 @@ public class Parrying : GameplayAbility<ParryingSO>
         _playerController = actor.GetComponent<PlayerController>();
         _playerController.OnParryingCanceled -= Canceled;
         _playerController.OnParryingCanceled += Canceled;
-        
-        // Task
-        _sequenceSO = abilitySo.skillSequence;
-        _task = new AbilityTask(actor, _sequenceSO);
     }
 
     protected override void Activate()
@@ -142,8 +135,6 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void SetHitbox()
     {
         _hitbox.SetActive(true);
-        _hitbox.GetComponent<ParryingHitbox>().LiverExtraction -= OnEnableLiverExtraction;
-        _hitbox.GetComponent<ParryingHitbox>().LiverExtraction += OnEnableLiverExtraction;
         _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.Direction.x * 0.7f, 0.7f, 0f);
     }
 
@@ -182,20 +173,5 @@ public class Parrying : GameplayAbility<ParryingSO>
         _chargeGaugeCts?.Cancel();
         _chargeGaugeCts?.Dispose();
         _chargeGaugeCts = null;
-    }
-
-    private void OnEnableLiverExtraction()
-    {
-        _playerController.OnEnableLiverExtraction();
-        Debug.Log("간 빼기 스킬 슉퐉쾅");
-        // 슬로우 1초
-
-        AbilitySequenceSO.SlowSq slow = new AbilitySequenceSO.SlowSq
-        {
-            targetTimeScale = 0.2f,
-            duration = 1.0f,
-            delay = 0.0f
-        };
-        _task.PlaySlow(slow).Play();
     }
 }

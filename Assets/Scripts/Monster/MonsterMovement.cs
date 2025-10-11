@@ -633,18 +633,19 @@ public class ParriedState : IMonsterMovementState
 public class OuchState : IMonsterMovementState
 {
     private MonsterMovement _mm;
-    private float _duration;
-    private float _timer;
 
     public void Enter(MonsterMovement monsterMovement)
     {
         _mm = monsterMovement;
+        
+        _mm._characterMovement.Move(Vector2.zero);
         _mm._animator.SetTrigger(MonsterMovement.HurtID);
     }
 
     public void UpdateState()
     {
         var curAnimStateInfo = _mm._animator.GetCurrentAnimatorStateInfo(0);
+        
         if (curAnimStateInfo.IsName("Hurt"))
         {
             if (curAnimStateInfo.normalizedTime >= 0.3f)

@@ -16,6 +16,8 @@ public enum ECameraState
 //기능이 많아진다 싶으면 아예 FSM으로 관리 아직은 현상유지(0923)
 public class CameraManager : SceneSingleton<CameraManager>
 {
+    private Camera _camera;
+    
     [SerializeField] private Vector3 targetOffset;
     [SerializeField] private float followSpeed = 5f;
     private const float cameraZ = -10f;
@@ -27,7 +29,12 @@ public class CameraManager : SceneSingleton<CameraManager>
     private Transform target;
     private ECameraState _state = ECameraState.Targeting;
     private Vector2 _point;
-    
+
+    private void Start()
+    {
+        _camera =  GetComponent<Camera>();
+    }
+
     void Awake()
     {
         target = GameObject.FindWithTag("Player").transform;
@@ -67,6 +74,11 @@ public class CameraManager : SceneSingleton<CameraManager>
         ShakeAsync(transform.localPosition, intensity, duration).Forget();
     }
     
+    public void ZoonInOut(float zoomAmount, float duration)
+    {
+        ZoomPunchAsync(_camera.orthographicSize, zoomAmount, duration).Forget();
+    }
+    
     private async UniTask ShakeAsync(Vector3 originPos, float intensity, float duration)
     {
         float elapsed = 0f;
@@ -95,5 +107,34 @@ public class CameraManager : SceneSingleton<CameraManager>
         {
             transform.localPosition = originPos;
         }
+    }
+    
+    private async UniTask ZoomPunchAsync(float originSize, float zoomAmount, float duration)
+    {
+        float startSize = _camera.orthographicSize;
+        float targetSize = startSize - zoomAmount; // 음수면 줌인
+        float halfDuration = duration * 0.5f;
+        float elapsed = 0f;
+        
+        // 줌인
+        while (elapsed < halfDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / halfDuration;
+            _camera.orthographicSize = Mathf.Lerp(startSize, targetSize, t);
+            await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+        
+        // 줌아웃
+        elapsed = 0f;
+        while (elapsed < halfDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / halfDuration;
+            _camera.orthographicSize = Mathf.Lerp(targetSize, originSize, t);
+            await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+        
+        _camera.orthographicSize = originSize;
     }
 }

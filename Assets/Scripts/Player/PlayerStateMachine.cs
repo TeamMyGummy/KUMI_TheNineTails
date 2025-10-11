@@ -415,7 +415,7 @@ public class HurtState : PlayerState
         if (Player.ASC.Attribute.Attributes["HP"].CurrentValue.Value <= 0)
         {
             // 사망 처리
-            Player.StateMachine.ChangeState(PlayerStateType.Die);
+            //Player.StateMachine.ChangeState(PlayerStateType.Die);
         }
         
         var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
@@ -765,7 +765,7 @@ public class AttackState : PlayerState
             {
                 Player.StateMachine.ChangeState(PlayerStateType.Idle);
             }
-            else if (Player.Controller.IsAttackPressed() && curAnimStateInfo.normalizedTime >= 0.4f) // 짧은 연타 방지
+            else if (Player.Controller.IsAttackPressed() && curAnimStateInfo.normalizedTime >= 0.5f) // 짧은 연타 방지
             {
                 // 공격 횟수 초기화
                 if (_attackNum >= 3)
@@ -800,10 +800,6 @@ public class AttackState : PlayerState
         base.Exit();
         
         Player.Animator.SetInteger(Player.AttackCountID, 0);
-        
-        PlayerAttack attackAbility = Player.ASC.GetAbility(AbilityKey.PlayerAttack) as PlayerAttack;
-        Debug.Assert(attackAbility != null);
-        attackAbility.EndAttack();
     }
 }
 
@@ -818,6 +814,7 @@ public class DashState : PlayerState
         Player.SetAnimatorTrigger(Player.DashID);
         SoundManager.Instance.PlaySFX(SFXName.대쉬);
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
+        Player.ASC.TagContainer.Add(GameplayTags.Invincibility);
         //Player.Movement.SetGravityScale(0);
     }
     public override void Update()
@@ -862,7 +859,9 @@ public class DashState : PlayerState
         base.Exit();
         
         Player.ResetAnimatorTrigger(Player.DashID);
+        Player.ASC.TagContainer.Remove(GameplayTags.Invincibility);
         //Player.Movement.ResetGravityScale();
+        
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
         DashAbility.EndDash();
@@ -998,6 +997,9 @@ public class LiverExtractionState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        //Player.SetAnimatorBool(Player.LiverExtractionID, false);
+        
+        LiverExtraction ability = Player.ASC.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
+        Debug.Assert(ability != null);
+        ability.EndAbility();
     }
 }

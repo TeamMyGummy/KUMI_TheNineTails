@@ -10,6 +10,11 @@ public class EffectSO : ScriptableObject
     public float shakeIntensity;
     public float shakeDuration;
     
+    [Header("Time Slow")]
+    public bool useTimeSlow;
+    public float timeScale;
+    public float slowDuration;
+    
     [Header("VFX")]
     public GameObject hitEffectPrefab;
     public float effectDuration;

@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using GameAbilitySystem;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class PlayerAttack : BlockAbility<BlockAbilitySO>
 {
@@ -35,17 +36,16 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>
         }
     }
     
-    public void SpawnHitbox()
+    private async UniTask SpawnHitbox()
     {
-        _hitbox.SetActive(false);
         _hitbox.SetActive(true);
+ 
         _hitbox.transform.localPosition = Actor.GetComponent<SpriteRenderer>().flipX 
             ? new Vector2(_spawnPoint.x * (-2), _spawnPoint.y) 
             : new Vector2(_spawnPoint.x, _spawnPoint.y);
-    }
-    
-    public void EndAttack()
-    {
+        
+        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+        
         _hitbox.SetActive(false);
     }
 }
