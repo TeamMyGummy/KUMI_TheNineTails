@@ -65,7 +65,7 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime); 
 
-            if (_movement.CurrentState is ParriedState) return;
+            if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             Attack();
 
             if (_attackData.ActiveTime > 0f)
