@@ -23,6 +23,12 @@ namespace BehaviorTree.Decorator
             }
 
             var result = child.Evaluate();
+
+            if (result == NodeState.Abort)
+            {
+                currentCount = repeatCount;
+                return NodeState.Abort;
+            }
             
             if (result != NodeState.Running)
             {

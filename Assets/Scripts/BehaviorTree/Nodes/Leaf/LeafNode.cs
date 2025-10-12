@@ -6,7 +6,7 @@ namespace BehaviorTree.Leaf
     public abstract class LeafNode : BTNode
     {
         [Input] public BTNode input;
-        protected BTGraph btGraph;
+        [NonSerialized] protected IBTGraph btGraph;
         protected BTContext Context => btGraph.Context;
         [NonSerialized] protected bool isRunning = false;
 
@@ -14,7 +14,7 @@ namespace BehaviorTree.Leaf
         protected abstract NodeState Update();
         protected virtual void OnAbort(){}
 
-        public void SetBTGraph(BTGraph graph)
+        public void SetBTGraph(IBTGraph graph)
         {
             btGraph = graph;
         }

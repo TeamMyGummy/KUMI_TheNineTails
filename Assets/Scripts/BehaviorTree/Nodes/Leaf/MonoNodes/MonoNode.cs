@@ -6,7 +6,7 @@ namespace BehaviorTree.Leaf
     //동일한 ActionHandler를 쓰는 노드를 병렬 실행 시 문제될 수 있음
     public abstract class MonoNode : LeafNode
     {
-        public ActionHandler runtimeHandler;
+        [NonSerialized] public ActionHandler runtimeHandler;
         
         [Header("Action Settings")]
         public string handlerKey;

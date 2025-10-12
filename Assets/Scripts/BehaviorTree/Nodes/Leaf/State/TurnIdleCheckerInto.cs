@@ -9,6 +9,10 @@ namespace BehaviorTree.Leaf
         protected override NodeState Start()
         {
             Context.bIdleState = bTurnIdleState;
+            if (bTurnIdleState)
+            {
+                return NodeState.Abort;
+            }
             return State = NodeState.Success;
         }
         protected override NodeState Update()

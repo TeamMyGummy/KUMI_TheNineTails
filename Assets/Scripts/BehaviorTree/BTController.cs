@@ -32,9 +32,15 @@ namespace BehaviorTree
         [Header("Developer Mode")] [Space(10)] [Tooltip("체크 시 조건 없이 바로 AI가 실행됩니다.")]
         public bool executeAI;
 
+        public bool isRunning => btGraph.IsRunning;
+
         void Start()
         {
             btGraph.Context = GetComponent<BTContext>();
+            
+            MapHandler();
+            InjectHandlerToNode();
+            
             if (executeAI)
             {
                 StartAI();
@@ -48,10 +54,12 @@ namespace BehaviorTree
         
         public void StartAI()
         {
-            MapHandler();
-            InjectHandlerToNode();
-
             btGraph?.StartGraph();
+        }
+
+        public void StopAI()
+        {
+            btGraph.StopGraph();
         }
         
         void MapHandler()

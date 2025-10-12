@@ -1,10 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using BehaviorTree.Leaf;
-using Unity.VisualScripting;
-using UnityEngine;
-using Yarn;
 
 namespace BehaviorTree.Leaf
 {

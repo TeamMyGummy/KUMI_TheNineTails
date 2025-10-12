@@ -7,7 +7,7 @@ namespace BehaviorTree.Pure
     {
         [SerializeField] public float startRange;
         [SerializeField] public float endRange;
-        [Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override)] 
+        [Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Multiple)] 
         public float value;
         
         public override object GetValue(XNode.NodePort port)

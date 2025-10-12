@@ -1,15 +1,18 @@
 using System;
+using System.Collections.Generic;
 using BehaviorTree.Leaf;
 using UnityEngine;
+using UnityEngine.Serialization;
 using XNode;
 
 namespace BehaviorTree
 {
     [CreateAssetMenu(fileName = "BT Graph", menuName = "AI/BT Graph")]
-    public class BTGraph : NodeGraph
+    public class BTGraph : NodeGraph, IBTGraph
     {
         public BTContext Context { get; set; }
-        [NonSerialized] private BTNode _rootNode;
+        public bool IsRunning { get; private set; } = false;
+        [NonSerialized] private RootNode _rootNode;
         [NonSerialized] private LeafNode _prevNode;
         
         public void StartGraph()
@@ -26,6 +29,8 @@ namespace BehaviorTree
                     leaf.SetBTGraph(this);
                 }
             }
+
+            IsRunning = true;
         }
 
         public void StopGraph()
@@ -33,9 +38,23 @@ namespace BehaviorTree
             _rootNode = null;
         }
 
+        public void StartFunction(string functionName)
+        {
+            
+        }
+
+        public void StopFunction(string functionName)
+        {
+            
+        }
+
         public void Update()
         {
-            if (_rootNode is null) return;
+            if (_rootNode is null)
+            {
+                IsRunning = false;
+                return;
+            }
 
             _rootNode.Evaluate();
         }
