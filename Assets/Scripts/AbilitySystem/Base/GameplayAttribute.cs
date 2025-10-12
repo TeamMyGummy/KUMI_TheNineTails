@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameAbilitySystem
 {
-    public enum ModOperation
+    public enum EModOperation
     {
         Additive,
         Override,
@@ -37,17 +37,17 @@ namespace GameAbilitySystem
         /// <summary>
         ///     값 수정. Additive, Override, Multiplicative 중 선택
         /// </summary>
-        public void Modify(float delta, ModOperation op)
+        public void Modify(float delta, EModOperation op)
         {
             switch (op)
             {
-                case ModOperation.Additive:
+                case EModOperation.Additive:
                     CurrentValue.Value += delta;
                     break;
-                case ModOperation.Override:
+                case EModOperation.Override:
                     CurrentValue.Value = delta;
                     break;
-                case ModOperation.Multiplicative:
+                case EModOperation.Multiplicative:
                     CurrentValue.Value *= delta;
                     break;
             }

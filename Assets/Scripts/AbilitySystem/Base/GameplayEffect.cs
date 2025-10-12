@@ -21,7 +21,7 @@ namespace GameAbilitySystem
     {
         public string AttributeName { get; private set; }
         public float Delta { get; private set; }
-        public ModOperation Mod = ModOperation.Additive;
+        public EModOperation EMod = EModOperation.Additive;
 
         protected GameplayEffect(string attributeName, float delta)
         {
@@ -29,11 +29,11 @@ namespace GameAbilitySystem
             Delta = delta;
         }
 
-        protected GameplayEffect(string attributeName, float delta, ModOperation mod)
+        protected GameplayEffect(string attributeName, float delta, EModOperation eMod)
         {
             AttributeName = attributeName;
             Delta = delta;
-            Mod = mod;
+            EMod = eMod;
         }
 
         public abstract void Apply(GameplayAttribute attribute);
@@ -46,13 +46,13 @@ namespace GameAbilitySystem
     {
         public InstantGameplayEffect(string attributeName, float delta)
             : base(attributeName, delta) { }
-        public InstantGameplayEffect(string attributeName, float delta, ModOperation mod)
-            : base(attributeName, delta, mod) { }
+        public InstantGameplayEffect(string attributeName, float delta, EModOperation eMod)
+            : base(attributeName, delta, eMod) { }
 
         public override void Apply(GameplayAttribute attribute)
         {
             if (!attribute.Attributes.TryGetValue(AttributeName, out var att)) return;
-            att.Modify(Delta, Mod);
+            att.Modify(Delta, EMod);
         }
     }
 
@@ -74,8 +74,8 @@ namespace GameAbilitySystem
             Interval = interval;
         }
 
-        public DurationGameplayEffect(string attributeName, float delta, ModOperation mod, float duration, float interval)
-            : base(attributeName, delta, mod)
+        public DurationGameplayEffect(string attributeName, float delta, EModOperation eMod, float duration, float interval)
+            : base(attributeName, delta, eMod)
         {
             Duration = duration;
             Interval = interval;
@@ -93,7 +93,7 @@ namespace GameAbilitySystem
 
             for (int i = 0; i < repeat; i++)
             {
-                attribute.Modify(Delta, Mod);
+                attribute.Modify(Delta, EMod);
                 await UniTask.Delay(TimeSpan.FromSeconds(Interval), DelayType.DeltaTime);
             }
         }

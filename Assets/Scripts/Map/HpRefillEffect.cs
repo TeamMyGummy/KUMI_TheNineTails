@@ -12,7 +12,7 @@ public class HpRefillEffect : GameplayEffect
     {
         if (!attribute.Attributes.TryGetValue(AttributeName, out var att)) return;
         
-        att.Modify(att.MaxValue, ModOperation.Override);
+        att.Modify(att.MaxValue, EModOperation.Override);
         /*Debug.Log($"[{AttributeName}] 최대치 회복: {att.CurrentValue}");*/
     }
 }

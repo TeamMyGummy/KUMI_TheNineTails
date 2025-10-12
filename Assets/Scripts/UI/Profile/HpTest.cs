@@ -9,7 +9,7 @@ public class HpTestButton : MonoBehaviour
         DomainFactory.Instance.GetDomain(DomainKey.Player, out AbilitySystem asc);
         if (asc != null)
         {
-            asc.Attribute.Attributes["HP"].Modify(-1, ModOperation.Additive);
+            asc.Attribute.Attributes["HP"].Modify(-1, EModOperation.Additive);
             Debug.Log($"[HP] -1 → {asc.Attribute.Attributes["HP"].CurrentValue.Value}");
         }
     }
@@ -19,7 +19,7 @@ public class HpTestButton : MonoBehaviour
         DomainFactory.Instance.GetDomain(DomainKey.Player, out AbilitySystem asc);
         if (asc != null)
         {
-            asc.Attribute.Attributes["HP"].Modify(+1, ModOperation.Additive);
+            asc.Attribute.Attributes["HP"].Modify(+1, EModOperation.Additive);
             Debug.Log($"[HP] +1 → {asc.Attribute.Attributes["HP"].CurrentValue.Value}");
         }
     }
