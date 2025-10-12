@@ -43,8 +43,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PlayerInvincible
+  - Hazard
   m_SortingLayers:
   - name: Default
     uniqueID: 0
