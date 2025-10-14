@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using Util;
 
 public class UI_StartMenu : MonoBehaviour
@@ -54,7 +51,7 @@ public class UI_StartMenu : MonoBehaviour
                 out pos
             );
 
-            loadGamePopupInstance.GetComponent<RectTransform>().anchoredPosition = pos + new Vector2(100, -50);
+            loadGamePopupInstance.GetComponent<RectTransform>().anchoredPosition = pos + new Vector2(200, -100);
         }
     }
 
@@ -71,7 +68,7 @@ public class UI_StartMenu : MonoBehaviour
         }
         else
         {
-            SceneLoader.LoadScene("B2");
+            SceneLoader.LoadScene("B2_Monster1");
         }
     }
 
@@ -102,12 +99,8 @@ public class UI_StartMenu : MonoBehaviour
 
     public void NewGame_yesBtn()
     {
-        if (JsonLoader.Exists("gamedata_0"))
-        {
-            string path = Util.JsonLoader.GetDynamicDataPath("gamedata_0");
-            System.IO.File.Delete(path);
-        }
-        DomainFactory.Instance.ClearStateAndReload();
+        DomainFactory.Instance.DeleteGameData();
+        SceneLoader.LoadScene("B2_Monster1");
     }
 
     public void NewGame_noBtn()
@@ -122,6 +115,7 @@ public class UI_StartMenu : MonoBehaviour
         if (loadGamePopupInstance == null)
         {
             loadGamePopupInstance = Instantiate(loadGamePopup, transform);
+           //TODO : 저장 위치별로 텍스트 다르게 뜨게 해야함
         }
 
         isHoveringLoadGame = true;
