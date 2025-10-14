@@ -14,6 +14,10 @@ public class EffectSO : ScriptableObject
     public bool useTimeSlow;
     public float timeScale;
     public float slowDuration;
+
+    [Header("SFX")] 
+    public bool useSound;
+    public SFXName sfxName;
     
     [Header("VFX")]
     public GameObject hitEffectPrefab;

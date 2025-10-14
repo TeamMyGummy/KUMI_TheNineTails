@@ -27,7 +27,7 @@ public class ParryingHitbox : MonoBehaviour
         Debug.Log("패링 성공");
         
         // 사운드
-        SoundManager.Instance.PlaySFX(SFXName.패링성공);
+        SoundManager.Instance.PlaySFX(SFXName.패링);
         
         // 패링 이펙트 생성
         EffectManager.Instance.AttackEffect(effectSO, _actor.transform.position, _effectPrefab);
@@ -46,7 +46,7 @@ public class ParryingHitbox : MonoBehaviour
     public async UniTask StartLiverExtraction()
     {
         // 사운드
-        SoundManager.Instance.PlaySFX(SFXName.패링성공);
+        SoundManager.Instance.PlaySFX(SFXName.패링);
         
         // 패링 이펙트 생성
         //EffectManager.Instance.AttackEffect(effectSO, _actor.transform.position, _effectPrefab);

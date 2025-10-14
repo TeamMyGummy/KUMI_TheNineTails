@@ -448,6 +448,8 @@ public class DieState : PlayerState
     {
         base.Enter();
         
+        SoundManager.Instance.PlaySFX(SFXName.죽음);
+        
         // 저장 데이터 로드 및 상태 복원
         DomainFactory.Instance.ClearStateAndReload();
     }
@@ -716,18 +718,32 @@ public class RopeClimbState : PlayerState
     {
         base.Exit();
         
+        // sound
+        if(SoundManager.Instance.IsPlayingSFX(SFXName.줄타기))
+            SoundManager.Instance.StopSFX(SFXName.줄타기);
+        
         Player.SetAnimatorBool(Player.RopeClimbID, false);
         Player.Movement.EndClimbState();
     }
 
     private void Idle()
     {
+        // sound
+        if(SoundManager.Instance.IsPlayingSFX(SFXName.줄타기))
+            SoundManager.Instance.StopSFX(SFXName.줄타기);
+        
+        // Animation
         Player.SetAnimatorBool(Player.EndClimbID, false);
         Player.SetAnimatorBool(Player.IsClimbingID, false);
     }
 
     private void Climbing()
     {
+        // sound
+        if(!SoundManager.Instance.IsPlayingSFX(SFXName.줄타기))
+            SoundManager.Instance.PlaySFX(SFXName.줄타기);
+        
+        // Animation
         Player.SetAnimatorBool(Player.EndClimbID, false);
         Player.SetAnimatorBool(Player.IsClimbingID, true);
         
@@ -784,7 +800,7 @@ public class AttackState : PlayerState
                         SoundManager.Instance.PlaySFX(SFXName.공격2);
                         break;
                     case 3:
-                        SoundManager.Instance.PlaySFX(SFXName.공격2);
+                        SoundManager.Instance.PlaySFX(SFXName.공격3);
                         break;
                     default:
                         break;
@@ -926,6 +942,7 @@ public class FoxFireState : PlayerState
     {
         base.Enter();
         
+        SoundManager.Instance.PlaySFX(SFXName.여우불);
         Player.SetAnimatorTrigger(Player.FoxFireID);
         Player.ASC.TryActivateAbility(AbilityKey.FoxFire);
     }

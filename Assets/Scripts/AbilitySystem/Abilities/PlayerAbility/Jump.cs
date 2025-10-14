@@ -77,6 +77,7 @@ public class Jump : GameplayAbility, ITickable
         {
             if (_characterMovement.CheckIsGround())
             {
+                SoundManager.Instance.PlaySFX(SFXName.착지);
                 ResetJumpCount();
                 if (_playerController != null)
                 {

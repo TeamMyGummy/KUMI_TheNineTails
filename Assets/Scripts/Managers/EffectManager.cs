@@ -49,7 +49,13 @@ public class EffectManager : MonoBehaviour
         {
             SlowMotionTask(effectSO.timeScale, effectSO.slowDuration).Forget();
         }
-
+        
+        // Sound
+        if (effectSO.useSound)
+        {
+            SoundManager.Instance.PlaySFX(effectSO.sfxName);
+        }
+        
         // Effect
         if (effectPrefab != null)
         {
