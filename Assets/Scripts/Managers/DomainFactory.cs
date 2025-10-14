@@ -100,6 +100,13 @@ public class DomainFactory : Singleton<DomainFactory>
         SceneLoader.LoadScene(Data.LanternState.RecentScene);
         //Debug.Log("[DomainFactory] 개발 중에는 사망해도 저장된 데이터로 복구되지 않습니다. ");
     }
+    
+    public void DeleteGameData()
+    {
+        DataManager.Save(Savekey, new GameState());
+        _gameState = new();
+        Data = _gameState.SingletonData;
+    }
 
     public T GetDomain<T>(DomainKey key, Func<T> factory) where T : IDomain
     {
