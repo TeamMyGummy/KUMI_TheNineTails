@@ -60,11 +60,12 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
         _movement?.SetPaused(true);               
         try
         {
+            if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             _actor.GetComponent<Animator>().SetTrigger("Attack");
             
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime); 
-
+            
             if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             Attack();
 

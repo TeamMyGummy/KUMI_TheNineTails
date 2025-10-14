@@ -24,11 +24,12 @@ public class MonsterDoubleAttack : MonsterAttack
         _movement?.SetPaused(true); // 이동 멈추기 
         try
         {
+            if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             _actor.GetComponent<Animator>().SetTrigger("DoubleAttack");
             
             if (_attackData.PreDelay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(_attackData.PreDelay), delayType: DelayType.DeltaTime);
-
+            
             if (_movement.CurrentState is ParriedState || _movement.CurrentState is OuchState) return;
             Attack(); // 1타
 
