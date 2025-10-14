@@ -12,6 +12,7 @@ TagManager:
   - FoxFlame
   - MovingPlatform
   - Rope
+  - BreakableBox
   layers:
   - Default
   - TransparentFX

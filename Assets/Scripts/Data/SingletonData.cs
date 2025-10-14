@@ -4,4 +4,5 @@ public class SingletonData
 {
     [JsonProperty] public LanternState LanternState = new();
     [JsonProperty] public BreakableWallState BreakableWallState = new();
+    [JsonProperty] public HonbulBoxState HonbulBoxState = new();
 }

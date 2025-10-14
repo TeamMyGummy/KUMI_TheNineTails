@@ -35,6 +35,13 @@
                 return;
             }
             
+            if (collision.gameObject.CompareTag("BreakableBox"))
+            {
+                collision.gameObject.GetComponent<HonbulBox>().AttackCount();
+                ResetHitTargets();
+                return;
+            }
+            
             // 데미지 처리
             AbilitySystem asc = collision.GetComponent<IAbilitySystem>().asc;
             Vector2 attackDirection = _actor.transform.position.x > collision.transform.position.x ? Vector2.left : Vector2.right; // 힘의 방향
