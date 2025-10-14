@@ -645,8 +645,9 @@ public class OuchState : IMonsterMovementState
     public void UpdateState()
     {
         var curAnimStateInfo = _mm._animator.GetCurrentAnimatorStateInfo(0);
+        var nextAnimStateInfo = _mm._animator.GetNextAnimatorStateInfo(0);
         
-        if (curAnimStateInfo.IsName("Hurt"))
+        if (curAnimStateInfo.IsName("Hurt") || nextAnimStateInfo.IsName("Hurt")) // 전이 중일 때 고려
         {
             if (curAnimStateInfo.normalizedTime >= 0.3f)
             {

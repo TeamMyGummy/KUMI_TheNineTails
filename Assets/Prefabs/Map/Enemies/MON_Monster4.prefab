@@ -131,7 +131,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5993201281870871044
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -232,6 +232,11 @@ MonoBehaviour:
   platformLayer:
     serializedVersion: 2
     m_Bits: 57352
+  _canChangeDirection: 1
+  _directionCheckTimer: 0
+  _retreatStartPos: {x: 0, y: 0}
+  _retreatTargetPos: {x: 0, y: 0}
+  _hasReachedRetreatTarget: 0
 --- !u!114 &8903141997679286496
 MonoBehaviour:
   m_ObjectHideFlags: 0
