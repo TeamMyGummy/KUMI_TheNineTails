@@ -1,3 +1,4 @@
+using GameAbilitySystem;
 using UnityEngine;
 
 public class SpikeLaserObject : MonoBehaviour
@@ -8,6 +9,7 @@ public class SpikeLaserObject : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
+        if (collision.GetComponent<Player>().ASC.TagContainer.Has(GameplayTags.Invincibility)) return;
 
         // 1) 리스폰/무적 플래그만 본다 (단일 소스)
         var resp = collision.GetComponent<PlayerRespawnController>();
