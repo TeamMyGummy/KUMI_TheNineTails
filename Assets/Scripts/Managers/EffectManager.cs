@@ -69,13 +69,14 @@ public class EffectManager : MonoBehaviour
         //await UniTask.Delay(TimeSpan.FromSeconds(0.05f)); 
         
         Time.timeScale = timeScale;
-        Time.fixedDeltaTime = 0.02f * timeScale; // 물리 업데이트도 조정
+        Physics.simulationMode = SimulationMode.FixedUpdate;
+        //Time.fixedDeltaTime = 0.02f * timeScale; // 물리 업데이트도 조정
         Debug.Log("슬로우 시작");
         
         await UniTask.Delay(TimeSpan.FromSeconds(duration), ignoreTimeScale: true); // 실제 시간 기준
         
         Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
+        //Time.fixedDeltaTime = 0.02f;
         Debug.Log("슬로우 끝");
     }
 
