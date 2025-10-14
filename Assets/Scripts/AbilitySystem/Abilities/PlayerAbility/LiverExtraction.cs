@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 
 public class LiverExtraction : BlockAbility<BlockAbilitySO>
 {
+    public bool IsUsingLiverExtraction { get; private set; }
+    
     private AbilitySequenceSO _sequenceSO;
     private AbilityTask _task;
     private AttackRange _attackRange;
@@ -26,6 +28,7 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
     {
         base.Activate();
         
+        IsUsingLiverExtraction = true;
         //_task.Execute();
         
         // collider 설정
@@ -48,6 +51,9 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
             _skillTime -= Time.deltaTime;
             await UniTask.Yield();
         }
+        
+        IsUsingLiverExtraction = false;
+        
         Actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
         _attackRange.EnableAttackCollider(false);
         //_task.Canceled();;

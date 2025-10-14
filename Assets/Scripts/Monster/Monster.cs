@@ -18,6 +18,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     private Color _originalColor;
     
     protected bool isDead = false;
+    
     protected int FacingDir
     {
         get
@@ -30,8 +31,11 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     public bool isAggro { get; private set; } = false; // hp바 띄우는 것 때문에 넣어둠
     
     protected MonsterMovement _movement;
-    private Transform player;
-    public Transform Player => player;
+    private Transform playerTransform;
+    public Transform PlayerTransform => playerTransform;
+    
+    private Player _player;
+    private LiverExtraction _liverExtraction; 
 
     private void Awake()
     {
@@ -44,7 +48,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         prevHp = asc.Attribute.Attributes["HP"].CurrentValue.Value;
         _skeletonMecanim = GetComponent<SkeletonMecanim>();
         _movement = GetComponent<MonsterMovement>(); 
-        player = GameObject.FindWithTag("Player")?.transform;
+        playerTransform = GameObject.FindWithTag("Player")?.transform;
         
         if (_skeletonMecanim != null)
         {
@@ -54,6 +58,12 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         var playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
         {
+            _player = playerObj.GetComponent<Player>();
+            var asc = _player.ASC;
+            if (asc != null)
+            {
+                _liverExtraction = asc.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
+            }
             var monsterCollider = GetComponent<Collider2D>();
             var playerCollider = playerObj.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(monsterCollider, playerCollider, true);
@@ -79,8 +89,8 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             Die();
         }
         
-        if (player == null) return;
-        float dist = Vector2.Distance(transform.position, player.position);
+        if (playerTransform == null) return;
+        float dist = Vector2.Distance(transform.position, playerTransform.position);
         bool inSight = IsPlayerInSight();
 
         if (dist <= Data.AggroRange && inSight && monsterData.IsTriggerAttack)
@@ -134,10 +144,10 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     // 플레이어가 시야 안에 들어오는지 체크 (부채꼴 범위)
     public bool IsPlayerInSight(int rayCount = 5)
     {
-        if (player == null) return false;
+        if (playerTransform == null) return false;
 
         Vector2 origin = (Vector2)transform.position + Data.ViewOffset;
-        Vector2 toPlayer = (Vector2)player.position - origin;
+        Vector2 toPlayer = (Vector2)playerTransform.position - origin;
         float distanceToPlayer = toPlayer.magnitude;
         if (distanceToPlayer > Data.AggroRange) return false;
 
@@ -182,7 +192,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     // 플레이어가 근거리 공격 범위 안에 들어오는지 체크 (사각 범위)
     public virtual bool IsPlayerInShortRange()
     {
-        if (player == null) return false;
+        if (playerTransform == null) return false;
 
         float detectX = Data.DetectShortRangeX;
         float detectY = Data.DetectShortRangeY;
@@ -205,11 +215,11 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     // 원거리 공격 범위 감지 (부채꼴)
     public bool IsPlayerInLongRange()
     {
-        if (player == null) return false;
+        if (playerTransform == null) return false;
 
         Vector2 origin = (Vector2)transform.position + Data.DetectLongOffset;
 
-        Vector2 toPlayer = (Vector2)player.position - origin;
+        Vector2 toPlayer = (Vector2)playerTransform.position - origin;
         float distanceToPlayer = toPlayer.magnitude;
 
         if (distanceToPlayer > Data.DetectLongRange)
@@ -263,9 +273,23 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         Debug.Log("[Monster] 처치");
         isDead = true;
 
-        float spacing = 0.5f; 
-        float startX = -(monsterData.DropCount - 1) * spacing * 0.5f;
-        for (int i = 0; i < monsterData.DropCount; i++)
+        int dropCount = monsterData.DropCount;
+
+        if (_liverExtraction == null)
+        {
+            var player = GameObject.FindWithTag("Player")?.GetComponent<Player>();
+            _liverExtraction = player?.ASC?.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
+        }
+
+        if (_liverExtraction != null && _liverExtraction.IsUsingLiverExtraction)
+        {
+            dropCount *= 2;
+            Debug.Log($"간 빼기로 처치, 혼불 드랍 수 {dropCount}개");
+        }
+
+        float spacing = 0.5f;
+        float startX = -(dropCount - 1) * spacing * 0.5f;
+        for (int i = 0; i < dropCount; i++)
         {
             Vector3 spawnPos = transform.position + new Vector3(startX + i * spacing, 0f, 0f);
             Instantiate(monsterData.HonbulPrefab, spawnPos, Quaternion.identity);

@@ -54,8 +54,8 @@ public class MonsterRush : BlockAbility<MonsterRushSO>
         Vector2 startPos = _monster.transform.position;
 
         Transform playerTr =
-            (_monster != null && _monster.Player != null)
-            ? _monster.Player
+            (_monster != null && _monster.PlayerTransform != null)
+            ? _monster.PlayerTransform
             : GameObject.FindWithTag("Player")?.transform;
 
         Vector2 playerPos = playerTr != null ? (Vector2)playerTr.position : startPos;

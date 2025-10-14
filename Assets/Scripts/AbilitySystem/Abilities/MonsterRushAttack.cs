@@ -140,8 +140,8 @@ public class MonsterRushAttack: BlockAbility<MonsterAttackSO>
         Vector2 startPos = _monster.transform.position;
 
         // 플레이어 위치 찾기
-        Transform playerTr = (_monster != null && _monster.Player != null)
-            ? _monster.Player
+        Transform playerTr = (_monster != null && _monster.PlayerTransform != null)
+            ? _monster.PlayerTransform
             : GameObject.FindWithTag("Player")?.transform;
 
         Vector2 playerPos = playerTr != null ? (Vector2)playerTr.position : startPos;
