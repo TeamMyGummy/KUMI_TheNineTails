@@ -8,6 +8,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>
 {
     private PlayerAttackSO _so;
     private GameObject _hitbox;
+    private AttackHitbox _attackhitbox;
     private Collider2D _hitboxCollider;
     
     private readonly Vector2 _spawnPoint = new (0.55f, 0.98f);
@@ -19,6 +20,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>
         
         // Hitbox 초기화
         _hitbox = ResourcesManager.Instance.Instantiate(_so.Hitbox, actor.transform);
+        _attackhitbox = _hitbox.GetComponent<AttackHitbox>();
         _hitboxCollider = _hitbox.GetComponent<Collider2D>();
         _hitboxCollider.enabled = false;
     }
@@ -35,6 +37,7 @@ public class PlayerAttack : BlockAbility<BlockAbilitySO>
         {
             // Hitbox 생성
             SpawnHitbox();
+            _attackhitbox.ResetHitTargets();
         }
     }
     
