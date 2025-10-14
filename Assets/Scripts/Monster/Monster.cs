@@ -59,11 +59,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         if (playerObj != null)
         {
             _player = playerObj.GetComponent<Player>();
-            var asc = _player.ASC;
-            if (asc != null)
-            {
-                _liverExtraction = asc.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
-            }
+            
             var monsterCollider = GetComponent<Collider2D>();
             var playerCollider = playerObj.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(monsterCollider, playerCollider, true);
