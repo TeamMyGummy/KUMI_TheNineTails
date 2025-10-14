@@ -83,7 +83,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
         _leftPatrolLimit = _spawnPos + Vector2.left * (_monster.Data.PatrolRange / 2f);
         _rightPatrolLimit = _spawnPos + Vector2.right * (_monster.Data.PatrolRange / 2f);
 
-        _player = _monster.Player;
+        _player = _monster.PlayerTransform;
         if (_player == null)
             _player = GameObject.FindWithTag("Player")?.transform;
 
