@@ -58,7 +58,7 @@ namespace BehaviorTree
         }
 
         // Abstract methods to be implemented by concrete actions
-        protected abstract NodeState OnStartAction();
+        public abstract NodeState OnStartAction();
         protected abstract NodeState OnUpdateAction();
         protected virtual void OnEndAction() { }
         protected virtual void OnStopAction() { }

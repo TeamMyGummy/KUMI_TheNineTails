@@ -26,7 +26,7 @@ namespace BehaviorTree
             this.delay = delay; 
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             var spawned = ResourcesManager.Instance.Instantiate(spawnObject);
             spawned.transform.position = spawnPosition;

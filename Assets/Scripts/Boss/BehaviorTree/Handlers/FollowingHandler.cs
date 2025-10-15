@@ -19,7 +19,7 @@ namespace BehaviorTree
             target = GameObject.FindWithTag("Player").transform;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             Vector3 position = target.position;
 

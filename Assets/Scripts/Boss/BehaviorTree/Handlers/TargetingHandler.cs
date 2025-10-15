@@ -17,7 +17,7 @@ namespace BehaviorTree
             return target.position;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             return NodeState.Success; // 타겟팅은 즉시 완료
         }

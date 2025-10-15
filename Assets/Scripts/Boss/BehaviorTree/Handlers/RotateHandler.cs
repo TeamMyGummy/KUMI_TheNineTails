@@ -17,7 +17,7 @@ namespace BehaviorTree
             if (speed != 0f) this.speed = speed;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             float finalTargetAngle;
 

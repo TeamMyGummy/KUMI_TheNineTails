@@ -28,7 +28,7 @@ namespace BehaviorTree
             if (speed != 0f) this.speed = speed;
         }
     
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             _currentDest = new Vector3(
                 _positionHelper.GetDestination(_xtype, transform, _vector).x, 

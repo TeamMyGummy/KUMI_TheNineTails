@@ -9,7 +9,7 @@ namespace BehaviorTree
         [SerializeField] private string layerName;
         private bool bTriggered = false;
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             var state = bTriggered ? NodeState.Success : NodeState.Failure;
             bTriggered = false;

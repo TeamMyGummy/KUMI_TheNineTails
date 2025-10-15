@@ -24,7 +24,7 @@ namespace BehaviorTree
             _timer = timer;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             _elapsed = 0f;
             ApplyHitbox();

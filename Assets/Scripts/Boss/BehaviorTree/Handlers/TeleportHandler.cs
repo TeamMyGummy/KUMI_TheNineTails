@@ -23,7 +23,7 @@ namespace BehaviorTree
             _ytype = ytype;
         }
         
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             Vector3 destination = new Vector3(
                 _positionHelper.GetDestination(_xtype, transform, _vector).x, 

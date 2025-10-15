@@ -12,7 +12,7 @@ namespace BehaviorTree
             _isRight = isRight;
         }
         
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             Vector3 currentRotation = transform.eulerAngles;
 

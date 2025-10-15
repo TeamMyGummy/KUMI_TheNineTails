@@ -35,7 +35,7 @@ namespace BehaviorTree
             _curve = curve;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             _currentDest = new Vector3(GetTargetDestination(_xtype).x, GetTargetDestination(_ytype).y);
             _startPos = transform.position;

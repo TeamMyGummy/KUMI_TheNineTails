@@ -16,7 +16,7 @@ namespace BehaviorTree
             _waitForCompletion = waitForCompletion;
         }
 
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             if (subBTController == null)
             {

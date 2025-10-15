@@ -25,7 +25,7 @@ public class BossAnimationHandler : ActionHandler
         _delay = delay;
     }
     //SpineAnimationHandler에 요청하여 실행
-    protected override NodeState OnStartAction()
+    public override NodeState OnStartAction()
     {
         switch (_howToPlay)
         {

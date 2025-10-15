@@ -9,7 +9,7 @@ namespace BehaviorTree
             _isActive = isActive;
         }
         
-        protected override NodeState OnStartAction()
+        public override NodeState OnStartAction()
         {
             gameObject.SetActive(_isActive);
             return NodeState.Success;
