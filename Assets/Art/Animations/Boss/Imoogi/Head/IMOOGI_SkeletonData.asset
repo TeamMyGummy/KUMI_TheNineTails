@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: IMOOGI_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 931fb77e9e8594546a22074d8273cadb, type: 2}
+  - {fileID: 11400000, guid: 312034a93a94ece4ea9be4205f66b7a6, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: fdb5078e5a3ce6e4a8c60d3602c341ea, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 8641e484f6bab93468b9429ab733ca7c, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
@@ -28,4 +28,4 @@ MonoBehaviour:
   toAnimation: []
   duration: []
   defaultMix: 0.2
-  controller: {fileID: 0}
+  controller: {fileID: 9100000, guid: e25a5da35e37e6e4d9f91dafbe28d2ce, type: 2}
