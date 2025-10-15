@@ -58,7 +58,19 @@ public class PathFollower : MonoBehaviour
 
         if (t >= 1f)
         {
-            t -= 1f;
+            // 이동 멈춤
+            canMove = false;
+            
+            // 위치를 경로의 끝으로 고정
+            t = 1f;
+            transform.position = path.GetPoint(t);
+
+            if (animator != null)
+            {
+                animator.SetTrigger("EndReached");
+            }
+
+            return;
         }
 
         transform.position = path.GetPoint(t);
