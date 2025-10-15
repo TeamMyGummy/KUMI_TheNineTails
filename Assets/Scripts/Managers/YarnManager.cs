@@ -27,6 +27,8 @@ public class YarnManager : SceneSingleton<YarnManager>
     private string _prevCharacterName = "";
     
     private MotionHandle _motionHandle;
+    
+    private PlayerController _player;
 
     private event Action dialogEnd;
 
@@ -42,6 +44,8 @@ public class YarnManager : SceneSingleton<YarnManager>
         runner.AddCommandHandler<string>("show", ShowCharacter);
         runner.AddCommandHandler<string>("hide", HideCharacter);
         runner.AddCommandHandler<string>("change", ChangeCharacter);
+        
+        _player = FindAnyObjectByType<PlayerController>();
         
     }
 
@@ -59,6 +63,8 @@ public class YarnManager : SceneSingleton<YarnManager>
         runner.Stop();
         
         dialogue.ApplyDialogueOverlay();
+        
+        _player.OnDisableMove();
 
         dialogueScreen.FadeScreen(0.5f, 0f, 0.5f);
         StartCoroutine(WaitSeconds(0.8f));
@@ -78,6 +84,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     void EndDialogue()
     {
         dialogue.RemoveDialogueOverlay();
+        _player.OnEnableMove();
         dialogueScreen.FadeScreen(0.5f, 0.5f, 0f);
         dialogEnd?.Invoke();
         dialogEnd = null;
