@@ -1,103 +1,111 @@
-using System.Collections;
-using System.Collections.Generic;
-using GameAbilitySystem;
 using UnityEngine;
+using GameAbilitySystem;
 
 public class TailBox : MonoBehaviour
 {
-    [SerializeField] private GameObject interactionUI;
-    [SerializeField] private AbilityKey key = AbilityKey.PlayerAttack;
-    [SerializeField] private AbilityName name = AbilityName.PlayerAttack;
-    private SkillInfo skillInfoInstance;
+    [Header("UI & Prefab")]
+    [SerializeField] private GameObject interactionUI; // 자식(InteractionUI) 연결 권장
     [SerializeField] private SkillInfo skillInfoPrefab;
     [SerializeField] private Transform baseCanvas;
 
+    [Header("Ability")]
+    [SerializeField] private AbilityKey key = AbilityKey.PlayerAttack;
+    [SerializeField] private AbilityName abilityName = AbilityName.PlayerAttack;
+
     private AbilitySystem _playerModel;
-    private bool _playerInRange = false;
-    private bool _isUsed = false;
-    
-    // 자동 할당 대상 (자식 인덱스 고정: before(0), after(1), interaction(2))
+    private bool _playerInRange;
+    private bool _isUsed;
+
+    // 고정 인덱스 자식
     private GameObject _beforeUseImage;
     private GameObject _afterUseImage;
-    private GameObject _interactionUI;
 
-    public void Awake()
+    private void Awake()
     {
         DomainFactory.Instance.GetDomain(DomainKey.Player, out _playerModel);
-        
-        // 자식 인덱스 고정
+        if (_playerModel == null)
+        {
+            Debug.LogError("[TailBox] PlayerModel을 찾지 못했습니다. Domain 설정을 확인하세요.");
+        }
+
         if (transform.childCount >= 3)
         {
-            _beforeUseImage = transform.GetChild(0).gameObject; // beforeUseImage
-            _afterUseImage  = transform.GetChild(1).gameObject; // afterUseImage
-            _interactionUI  = transform.GetChild(2).gameObject; // InteractionUI
+            _beforeUseImage = transform.GetChild(0)?.gameObject;
+            _afterUseImage  = transform.GetChild(1)?.gameObject;
+
+            // 권장: 인스펙터에서 interactionUI를 비워두면 자식(2)을 자동 할당
+            if (interactionUI == null)
+                interactionUI = transform.GetChild(2)?.gameObject;
         }
         else
         {
-            Debug.LogError($"[TailBox:{name}] 자식이 3개 미만입니다. (childCount={transform.childCount})");
+            Debug.LogError($"[TailBox] 자식이 3개 미만입니다. (childCount={transform.childCount})");
         }
     }
 
     private void Start()
     {
-        // 초기 상태 확정
-        if (_beforeUseImage != null) _beforeUseImage.SetActive(true);
-        if (_afterUseImage  != null) _afterUseImage.SetActive(false);
-        if (_interactionUI  != null) _interactionUI.SetActive(false);
+        if (_beforeUseImage) _beforeUseImage.SetActive(true);
+        if (_afterUseImage)  _afterUseImage.SetActive(false);
+        if (interactionUI)   interactionUI.SetActive(false);
     }
 
     public void TailBoxInteraction()
     {
-        if (_playerInRange == true && _isUsed == false)
+        Debug.Log($"[TailBox] Try interact: inRange={_playerInRange}, used={_isUsed}");
+
+        if (!_playerInRange || _isUsed) return;
+
+        bool granted = false;
+        if (_playerModel != null)
         {
-            bool success = _playerModel.GrantAbility(key, name);
+            granted = _playerModel.GrantAbility(key, abilityName);
+            Debug.Log(granted ? "[TailBox] 스킬 부여 성공" : "[TailBox] 스킬 부여 실패(키/이름 미존재?)");
+        }
+        else
+        {
+            Debug.LogError("[TailBox] PlayerModel이 null이라 GrantAbility 불가");
+        }
 
-            if (success)
-            {
-                Debug.Log("스킬 부여 성공!");
-                ShowSkillInfoPopup(key, name);
-            }
-            else
-            {
-                Debug.LogWarning("스킬 부여 실패: 해당 키/이름에 맞는 스킬이 존재하지 않음.");
-            }
-
+        // 부여 성공일 때만 사용 완료 처리
+        if (granted)
+        {
             _isUsed = true;
-            interactionUI.SetActive(false);
-            
-            // 이미지 전환
-            _beforeUseImage.SetActive(false);
-            _afterUseImage.SetActive(true);
+
+            if (interactionUI) interactionUI.SetActive(false);
+
+            if (_beforeUseImage) _beforeUseImage.SetActive(false);
+            if (_afterUseImage)  _afterUseImage.SetActive(true);
+
+            ShowSkillInfoPopup(key, abilityName);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isUsed == false)
-        {
-            if (other.CompareTag("Player"))
-            {
-                _playerInRange = true;
-                interactionUI.SetActive(true);
-            }
+        if (_isUsed) return;
 
-            var controller = other.GetComponent<PlayerController>();
-            if (controller != null)
-            {
-                controller.SetTailBox(this);
-            }
+        if (other.CompareTag("Player"))
+        {
+            _playerInRange = true;
+            if (interactionUI) interactionUI.SetActive(true);
+        }
+
+        var controller = other.GetComponent<PlayerController>();
+        if (controller != null)
+        {
+            controller.SetTailBox(this);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (_isUsed == false)
+        if (_isUsed) return;
+
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
-            {
-                _playerInRange = false;
-                interactionUI.SetActive(false);
-            }
+            _playerInRange = false;
+            if (interactionUI) interactionUI.SetActive(false);
         }
     }
     
