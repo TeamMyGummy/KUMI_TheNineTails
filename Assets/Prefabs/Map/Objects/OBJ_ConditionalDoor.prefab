@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca39e3effe58a6499640a0d41c14949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startOpen: 1
+  startOpen: 0
   conditionKey: {fileID: 0}
   unlockTargets: []
-  moveDistance: 3
+  moveDistance: 10
   moveSpeed: 5
