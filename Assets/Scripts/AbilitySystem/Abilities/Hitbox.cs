@@ -6,6 +6,7 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour
 {
     [SerializeField] private string parryLayerName = "Parrying";
+    [SerializeField] private float damage;
 
     private BoxCollider2D _boxCollider;
     private readonly Collider2D[] _results = new Collider2D[1];
@@ -62,13 +63,13 @@ public class Hitbox : MonoBehaviour
             {
                 // 몬스터가 있을 때 : 몬스터 위치 기준
                 Vector2 attackDirection = playerTransform.position.x > _attacker.transform.position.x ? Vector2.right : Vector2.left;
-                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);              
+                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);              
             }
             else
             {
                 // 몬스터가 없을 때 (+ 투사체일 때) : HitBox 위치 기준
                 Vector2 attackDirection = playerTransform.position.x > transform.position.x ? Vector2.right : Vector2.left;
-                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, 1, attackDirection);
+                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);
             }
     }
 }
