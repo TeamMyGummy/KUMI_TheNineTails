@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2275648542072403135}
   - component: {fileID: -6956411535062409754}
   m_Layer: 11
-  m_Name: MonsterAttackHitbox 1
+  m_Name: ImugiHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
+  damage: 100
 --- !u!212 &2275648542072403135
 SpriteRenderer:
   m_ObjectHideFlags: 0
