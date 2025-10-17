@@ -125,6 +125,8 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     //패링당했을때 호출
     public void OnParried()
     {
+        if (!Data.IsParryable) return;
+        
         if (_movement.CurrentState is ParriedState) return;
 
         Debug.Log($"{name} has been parried!");
