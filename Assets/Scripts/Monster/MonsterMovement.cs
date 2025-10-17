@@ -79,7 +79,7 @@ public class MonsterMovement : MonoBehaviour, IMovement
 
     private void Start()
     {
-        HorizontalDir = 1;
+        HorizontalDir = UnityEngine.Random.value < 0.5f ? -1 : 1;
         _spawnPos = transform.position;
         _leftPatrolLimit = _spawnPos + Vector2.left * (_monster.Data.PatrolRange / 2f);
         _rightPatrolLimit = _spawnPos + Vector2.right * (_monster.Data.PatrolRange / 2f);
