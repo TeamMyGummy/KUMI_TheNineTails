@@ -10,6 +10,8 @@ public class MonsterSO : ScriptableObject
     [SerializeField] private bool isBomb = false;
     [SerializeField] private bool isTriggerAttack =  false;       // 공격 범위가 따로 존재하지 않고 시야에 들어오면 공격하는 경우
     [SerializeField] private bool isRanged = false;               // 원거리 공격 몹일 때
+    [SerializeField] private bool isParryable = true;
+        public bool IsParryable => isParryable;
     
     [Header("드랍템")]
     [SerializeField] private int dropCount = 2;
@@ -64,6 +66,7 @@ public class MonsterSO : ScriptableObject
     public float DetectLongSight => detectLongSight;
     public float DetectLongRange => detectLongRange;
     public Vector2 DetectLongOffset => detectLongOffset;
-
+    
+    
     //
 }
