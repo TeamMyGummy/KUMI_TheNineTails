@@ -51,6 +51,17 @@ public class Lantern : SceneSingleton<Lantern>
         _lanternState.RecentCheckPoint = interactLantern;
         _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
         
+        if (_lanternsObjects.TryGetValue(interactLantern, out var currentLantern))
+        {
+            _lanternState.RecentFloor = currentLantern.NumberOfFloor; 
+            _lanternState.RecentSection = currentLantern.SectionName;
+        }
+        
         DomainFactory.Instance.SaveGameData();
+    }
+    
+    public bool TryGetLanternObject(int key, out LanternObject obj)
+    {
+        return _lanternsObjects.TryGetValue(key, out obj);
     }
 }

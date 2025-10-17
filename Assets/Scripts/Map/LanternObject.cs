@@ -20,6 +20,14 @@ public class LanternObject : MonoBehaviour
     [SerializeField] private GameObject bigLanternImage;    
 
     [SerializeField] private GameObject interactionUI;
+    
+    /// <summary>
+    /// 시작화면 UI에 저장된 층수/구간 표기하기 위해 추가 (바꿀 수도 있음... 노가다가 이게 맞나...)
+    /// </summary>
+    [SerializeField] private string numberOfFloor; //층수
+    [SerializeField] private string sectionName; // 구간명
+    public string NumberOfFloor => numberOfFloor;
+    public string SectionName => sectionName;
 
     public bool isInteracting = false;
     private bool _playerInRange = false;

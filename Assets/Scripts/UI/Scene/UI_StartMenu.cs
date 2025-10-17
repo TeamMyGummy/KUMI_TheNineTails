@@ -110,16 +110,46 @@ public class UI_StartMenu : MonoBehaviour
 
     public void LoadGame_hovering()
     {
+        // 1. 저장 데이터가 없으면 즉시 종료
         if (!JsonLoader.Exists("gamedata_0")) return;
 
+        // 2. 팝업이 아직 생성되지 않았으면 생성
         if (loadGamePopupInstance == null)
         {
             loadGamePopupInstance = Instantiate(loadGamePopup, transform);
-           //TODO : 저장 위치별로 텍스트 다르게 뜨게 해야함
+
+            // DomainFactory 인스턴스 체크 (안전성 확보)
+            if (DomainFactory.Instance == null)
+            {
+                Debug.LogError("DomainFactory.Instance가 씬에 없습니다. 저장 정보를 가져올 수 없습니다.");
+                return;
+            }
+
+            // 3. 저장된 LanternState 데이터에서 층수/구역명 문자열을 직접 가져옴
+            var lanternState = DomainFactory.Instance.Data.LanternState;
+        
+            string floor = lanternState.RecentFloor;
+            string area = lanternState.RecentSection; 
+            
+            Debug.Log($"[UI Update] 저장된 정보 로드: 층={floor}, 구역={area}");
+        
+            // 4. 팝업 컴포넌트를 가져와서 텍스트 갱신
+            LoadGamePopup popupUI = loadGamePopupInstance.GetComponent<LoadGamePopup>();
+        
+            if (popupUI != null)
+            {
+                popupUI.SetInfo(floor, area);
+            }
+            else
+            {
+                // 이 에러가 뜬다면 LoadGamePopup 프리팹에 스크립트가 붙어있는지 확인 필요
+                Debug.LogError("LoadGamePopup 스크립트를 찾을 수 없습니다. (프리팹 설정 확인)");
+            }
         }
 
         isHoveringLoadGame = true;
     }
+   
 
     public void LoadGame_hovering_exit()
     {
