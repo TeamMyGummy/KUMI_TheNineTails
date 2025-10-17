@@ -40,6 +40,9 @@ public class StartB2Gimmick1Trigger : MonoBehaviour
         if (SoundManager.Instance != null && SoundManager.Instance.BGMSource != null)
             SoundManager.Instance.BGMSource.pitch = 1.5f;
 
+        _water.StopRise(1f);
+        yield return new WaitForSeconds(1f);
+        
         _water.StartRise(float.MaxValue); // 이후 계속 상승
         gameObject.SetActive(false);
     }
