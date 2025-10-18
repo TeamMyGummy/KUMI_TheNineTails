@@ -140,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blendDefinitions: []
 --- !u!1 &914456964746886784
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blendDefinitions: []
 --- !u!1 &2502796460505021483
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +346,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 61caefd26a02a3c41be32ca1742cce36, type: 2}
+  - {fileID: 2100000, guid: 1a2215e773573e4448fdd9d1a04e82ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -382,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: e7fbc205bf112234dbb6daee671a00f6, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 3c32961057e4191458258b4d54e1750b, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -425,10 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blendDefinitions:
-  - from: idle
-    to: idle
-    blendingTime: 3
 --- !u!114 &1973809748443810508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,6 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
+  damage: 0
 --- !u!114 &2219043589333187298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,6 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107bb2a77865489894121c9bf9136498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!1 &6689108206757217516
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
+  damage: 0
 --- !u!114 &8486441879708021829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,6 +1127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107bb2a77865489894121c9bf9136498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!1 &9058516809913493636
 GameObject:
   m_ObjectHideFlags: 0
