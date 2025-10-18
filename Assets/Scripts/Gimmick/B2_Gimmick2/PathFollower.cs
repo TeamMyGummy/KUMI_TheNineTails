@@ -29,7 +29,7 @@ public class PathFollower : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("WakeUp");
-            //SoundManager.Instance.PlaySFX(SFXName.이무기등장);
+            SoundManager.Instance.PlaySFX(SFXName.이무기등장);
         }
 
         canMove = true;
