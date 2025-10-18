@@ -40,6 +40,8 @@ public class Hitbox : MonoBehaviour
             if (size > 0)
             {
                 // 플레이어 패링 성공
+                if (FindAnyObjectByType<DoParrying>() != null)
+                    FindAnyObjectByType<DoParrying>().RecordParrySuccess();
                 _attacker?.GetComponent<Monster>()?.OnParried();
                 Monster monster = _attacker?.GetComponent<Monster>();
                 if (monster != null && 

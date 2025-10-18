@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Attack : MonoBehaviour
+public class DoLiverExtraction : MonoBehaviour
 {
     [SerializeField] private ConditionKey condition;
     
@@ -11,6 +11,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private Color filledColor = Color.cyan; // 채워졌을 때의 색상
 
     private int currentIndex = 0; // 현재 채워야 할 칸의 인덱스
+    private int _liverCnt = 0;
+    private int _requiredCnt = 4;
 
     
     private void Awake()
@@ -22,16 +24,8 @@ public class Attack : MonoBehaviour
         {
             box.color = Color.white; // 기본 색상으로 설정
         }
-    }
 
-    // 매 프레임마다 입력을 감지
-    private void Update()
-    {
-        // 이 UI가 활성화되어 있을 때만 입력을 받음
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            FillNextBox();
-        }
+        FindAnyObjectByType<SpawnMonster>().StartSpawning();
     }
 
     private void FillNextBox()
@@ -48,6 +42,21 @@ public class Attack : MonoBehaviour
             {
                 ConditionEventBus.Raise(condition);
             }
+        }
+    }
+
+    public void RecordLiverSuccess()
+    {
+        OnLiverSuccess();
+        FillNextBox();
+    }
+
+    private void OnLiverSuccess()
+    {
+        _liverCnt++;
+        if (_liverCnt >= _requiredCnt)
+        {
+            FindAnyObjectByType<SpawnMonster>().StopSpawning();
         }
     }
 }
