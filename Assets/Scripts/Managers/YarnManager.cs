@@ -23,6 +23,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     [SerializeField] private Image characterImage;
     [SerializeField] private Screen characterScreen;
     [SerializeField] private UI_Dialogue dialogue;
+    [SerializeField] private GameObject dialogueCanvas;
 
     private string _prevCharacterName = "";
     
@@ -47,6 +48,15 @@ public class YarnManager : SceneSingleton<YarnManager>
         
         _player = FindAnyObjectByType<PlayerController>();
         
+        runner.onDialogueStart.AddListener(() =>
+        {
+            dialogueCanvas.SetActive(true);
+        });
+        
+        runner.onDialogueComplete.AddListener(() =>
+        {
+            dialogueCanvas.SetActive(false);
+        });
     }
 
     /// <summary>
