@@ -170,5 +170,7 @@ public class Player : MonoBehaviour
     {
         LiverExtraction ability =  _asc.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
         ability.SpawnHitbox();
+        if (FindAnyObjectByType<DoLiverExtraction>() != null)
+            FindAnyObjectByType<DoLiverExtraction>().RecordLiverSuccess();
     }
 }

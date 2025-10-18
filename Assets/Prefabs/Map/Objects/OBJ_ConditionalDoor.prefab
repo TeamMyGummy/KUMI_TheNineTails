@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3134828667469840762}
   - component: {fileID: 6299984240360802895}
   - component: {fileID: 5363637678283490112}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CloseZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 5678166607598804214}
   - component: {fileID: 8716555912158272768}
   - component: {fileID: 6821228265442860702}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OBJ_ConditionalDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
