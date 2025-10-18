@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BehaviorTree.Leaf;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using XNode;
 
@@ -14,8 +15,10 @@ namespace BehaviorTree
         public bool IsRunning { get; private set; } = false;
         [NonSerialized] private RootNode _rootNode;
         [NonSerialized] private LeafNode _prevNode;
+
+        [NonSerialized] private UnityEvent _onAfterEvent;
         
-        public void StartGraph()
+        public void StartGraph(UnityEvent onAfterEvent)
         {
             foreach (var node in nodes)
             {
@@ -31,11 +34,13 @@ namespace BehaviorTree
             }
 
             IsRunning = true;
+            _onAfterEvent = onAfterEvent;
         }
 
         public void StopGraph()
         {
             _rootNode = null;
+            _onAfterEvent?.Invoke();
         }
 
         public void StartFunction(string functionName)

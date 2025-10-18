@@ -54,7 +54,7 @@ namespace BehaviorTree
         
         public void StartAI()
         {
-            btGraph?.StartGraph();
+            btGraph?.StartGraph(onAfterEnd);
         }
 
         public void StopAI()

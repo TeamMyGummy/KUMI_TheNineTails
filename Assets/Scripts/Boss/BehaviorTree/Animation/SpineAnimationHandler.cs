@@ -47,4 +47,9 @@ public class SpineAnimationHandler : MonoBehaviour
         DebugUtil.Log(animationName + " 가 실행중입니다. ");
         return skeletonAnimation.AnimationState.SetAnimation(0, animationName, loop);
     }
+    
+    public void SetAnimation(string animationName)
+    {
+        skeletonAnimation.AnimationState.SetAnimation(0, animationName, false);
+    }
 }
