@@ -921,7 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
-  damage: 0
+  damage: 1
 --- !u!114 &8486441879708021829
 MonoBehaviour:
   m_ObjectHideFlags: 0

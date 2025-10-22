@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
+  damage: 1
 --- !u!1001 &853555748174511390
 PrefabInstance:
   m_ObjectHideFlags: 0
