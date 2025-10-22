@@ -135,7 +135,8 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void SetHitbox()
     {
         _hitbox.SetActive(true);
-        _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.Direction.x * 0.7f, 0.7f, 0f);
+        float interpolation = Mathf.Approximately(_playerController.Direction.x, 1) ? 0f : 0.5f; 
+        _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.Direction.x * _so.HitboxOffset.x + interpolation, _so.HitboxOffset.y, 0f);
     }
 
     private void SetGaugeBar()
@@ -145,7 +146,7 @@ public class Parrying : GameplayAbility<ParryingSO>
         RectTransform barRT = _gaugeBar.transform as RectTransform;
 
         // Actor 머리 위 월드 위치
-        Vector3 worldPos = Actor.transform.position + Vector3.up * 2.5f;
+        Vector3 worldPos = Actor.transform.position + Vector3.up * 2f;
 
         Camera camera = Camera.main;
 
