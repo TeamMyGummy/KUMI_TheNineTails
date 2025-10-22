@@ -489,7 +489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb511d1902e9294189b132ae610b8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnGround: {fileID: 0}
+  defaultRespawnDelay: 1
+  normalLayer: Player
+  invincibleLayer: PlayerInvincible
 --- !u!114 &6003279077661526251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,7 +577,7 @@ MonoBehaviour:
   - {x: -0.097126484, y: 0.21669531, z: 0}
   m_ShapePathHash: -523907837
   m_Mesh: {fileID: 0}
-  m_InstanceId: 69454
+  m_InstanceId: 185854
   m_LocalBounds:
     m_Center: {x: 0.02128613, y: 1.1571972, z: 0}
     m_Extent: {x: 0.6182183, y: 0.943835, z: 0}
@@ -628,7 +630,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.7
+  m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
