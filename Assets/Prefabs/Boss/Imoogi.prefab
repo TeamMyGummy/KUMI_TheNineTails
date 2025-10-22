@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 348368207409111585}
   - component: {fileID: 7336971114823943325}
   m_Layer: 8
-  m_Name: Head
+  m_Name: "\uC774\uBB34\uAE30"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
