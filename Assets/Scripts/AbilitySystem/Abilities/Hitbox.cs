@@ -6,7 +6,7 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour
 {
     [SerializeField] private string parryLayerName = "Parrying";
-    [SerializeField] private float damage;
+    [SerializeField] private float damage = 1f;
 
     private BoxCollider2D _boxCollider;
     private readonly Collider2D[] _results = new Collider2D[1];
