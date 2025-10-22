@@ -50,6 +50,7 @@ public class LanternObject : MonoBehaviour
 
         LanternKey = SceneLoader.GetCurrentSceneName().StringToInt() + transform.GetSiblingIndex();
         
+        Debug.Log($"{LanternKey} : {transform.GetSiblingIndex()}");
         Lantern.Instance.Register(this);
     }
 

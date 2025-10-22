@@ -415,7 +415,7 @@ public class HurtState : PlayerState
         if (Player.ASC.Attribute.Attributes["HP"].CurrentValue.Value <= 0)
         {
             // 사망 처리
-            //Player.StateMachine.ChangeState(PlayerStateType.Die);
+            Player.StateMachine.ChangeState(PlayerStateType.Die);
         }
         
         var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
