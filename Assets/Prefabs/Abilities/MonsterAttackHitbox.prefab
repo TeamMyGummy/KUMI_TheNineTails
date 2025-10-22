@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: Parrying
+  damage: 1
 --- !u!212 &2275648542072403135
 SpriteRenderer:
   m_ObjectHideFlags: 0
