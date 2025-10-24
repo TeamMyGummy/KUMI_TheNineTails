@@ -289,7 +289,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         float startX = -(dropCount - 1) * spacing * 0.5f;
         for (int i = 0; i < dropCount; i++)
         {
-            Vector3 spawnPos = transform.position + new Vector3(startX + i * spacing, 0f, 0f);
+            Vector3 spawnPos = transform.position + new Vector3(startX + i * spacing, 0.3f, 0f);
             Instantiate(monsterData.HonbulPrefab, spawnPos, Quaternion.identity);
         }
 

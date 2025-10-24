@@ -33,7 +33,8 @@ public class Honbul : MonoBehaviour
     {
         if (_player == null) return;
 
-        float dist = Vector2.Distance(transform.position, _player.position);
+        Vector2 targetPosition = (Vector2)_player.position + new Vector2(0f, 0.8f);
+        float dist = Vector2.Distance(transform.position, targetPosition);
 
         if (!_magnet && dist <= magnetRadius)
         {
@@ -44,13 +45,13 @@ public class Honbul : MonoBehaviour
         if (_magnet)
         {
             _t += Time.deltaTime;
-            Vector2 dir = ((Vector2)_player.position - (Vector2)transform.position).normalized;
+            Vector2 dir = (targetPosition - (Vector2)transform.position).normalized;
             float speed = Mathf.Min(maxSpeed, baseSpeed + accel * _t);
 
             if (_rb != null)
                 _rb.velocity = Vector2.Lerp(_rb.velocity, dir * speed, 0.5f);
             else
-                transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
             if (dist <= pickupRadius)
                 Absorb();
