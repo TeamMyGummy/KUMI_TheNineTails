@@ -6,17 +6,22 @@ public class SpikeLaserObject : MonoBehaviour
     [SerializeField] private float damage = 1.0f;
     [SerializeField] private float respawnDelay = 1.0f;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) => TryHit(collision);
+    private void OnTriggerStay2D(Collider2D collision)  => TryHit(collision);
+
+    private void TryHit(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
-        if (collision.GetComponent<Player>().ASC.TagContainer.Has(GameplayTags.Invincibility)) return;
 
-        // 1) 리스폰/무적 플래그만 본다 (단일 소스)
         var resp = collision.GetComponent<PlayerRespawnController>();
         if (resp == null) return;
-        if (resp.IsRespawningOrInvincible) return;
 
-        // 2) 데미지 & 리스폰
+        // 어느 쪽이든 무적이면 통과
+        var player = collision.GetComponent<Player>();
+        bool tagInv = player != null && player.ASC.TagContainer.Has(GameplayTags.Invincibility);
+        if (resp.IsRespawningOrInvincible || tagInv) return;
+
+        // 데미지 & 리스폰
         var dmg = collision.GetComponent<Damageable>();
         if (dmg == null) return;
 
