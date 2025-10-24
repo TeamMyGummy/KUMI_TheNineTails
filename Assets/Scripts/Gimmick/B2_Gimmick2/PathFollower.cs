@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
     [SerializeField] private BezierPath path;
     [SerializeField] private bool lookForward = true;
+    [SerializeField] private GameObject Imugi;
 
     private float t = 0f;
     private bool canMove = false;
@@ -15,25 +17,21 @@ public class PathFollower : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
-        SoundManager.Instance.StopBGM();
-    }
-
-    // 이 함수는 외부(ImoogiTrigger의 UnityEvent)에서 호출될 겁니다.
-    public void StartMoving()
-    {
-        // "WakeUp"이라는 이름의 애니메이터 트리거를 발동시킵니다.
+        
         if (animator != null)
         {
             animator.SetTrigger("WakeUp");
             SoundManager.Instance.PlaySFX(SFXName.이무기등장);
         }
 
-        canMove = true;
+        StartCoroutine(WaitTillAnimFinish());
     }
+
+    private void Start()
+    {
+        SoundManager.Instance.StopBGM();
+    }
+    
 
     void Update()
     {
@@ -114,5 +112,11 @@ public class PathFollower : MonoBehaviour
     public void Attack3()
     {
         SoundManager.Instance.PlaySFX(SFXName.이무기공격3);
+    }
+
+    private IEnumerator WaitTillAnimFinish()
+    {
+        yield return new WaitForSeconds(4f);
+        canMove = true;
     }
 }

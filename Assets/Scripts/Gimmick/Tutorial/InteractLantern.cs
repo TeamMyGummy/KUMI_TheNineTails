@@ -8,15 +8,15 @@ public class InteractLantern : MonoBehaviour
     [SerializeField] private ConditionKey condition;
     [SerializeField] private LanternObject lantern;
 
-    private void Awake()
+    private bool _isActive = false;
+    private void Update()
     {
-        if (lantern == null) return;
-        lantern.Interacted += OnLanternActivated;
-    }
-
-    private void OnLanternActivated(int lanternKey)
-    {
-        ConditionEventBus.Raise(condition);
-        lantern.Interacted -= OnLanternActivated;
+        
+        if (lantern.isInteracting && !_isActive)
+        {
+            Debug.Log("호롱불");
+            ConditionEventBus.Raise(condition);
+            _isActive = true;
+        }
     }
 }

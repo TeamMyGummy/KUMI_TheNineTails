@@ -15,14 +15,16 @@ public class ConditionDialogue : MonoBehaviour
             if (prevPopup != null)
                 prevPopup.SetActive(false);
             
+            Debug.Log("대화 시작!");
             YarnManager.Instance.RunDialogue(dialogueName, EnablePopup);
             
-            gameObject.SetActive(false);
+            
         }
     }
 
     private void EnablePopup()
     {
         popup.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
