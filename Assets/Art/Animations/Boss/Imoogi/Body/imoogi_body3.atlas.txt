@@ -1,4 +1,4 @@
-imoogi_body.png
+imoogi_body3.png
 size:3649,747
 filter:Linear,Linear
 pma:true

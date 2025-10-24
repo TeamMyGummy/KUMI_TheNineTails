@@ -1,0 +1,7 @@
+tail.png
+size:1387,485
+filter:Linear,Linear
+pma:true
+tail
+bounds:2,2,1383,481
+offsets:4109,0,5492,573
