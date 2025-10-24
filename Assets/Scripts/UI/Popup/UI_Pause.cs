@@ -48,6 +48,7 @@ public class UI_Pause : MonoBehaviour
             ShowPausePopup();
             isPaused = true;
             player?.OnDisableAllInput();
+            Time.timeScale = 0f;
         }
     }
 
@@ -73,6 +74,7 @@ public class UI_Pause : MonoBehaviour
             Destroy(pausePopupInstance);
             pausePopupInstance = null;
         }
+        Time.timeScale = 1f;
         isPaused = false;
         player?.OnEnableAllInput();
     }
@@ -87,6 +89,7 @@ public class UI_Pause : MonoBehaviour
 
     public void OnClickSaveAndMain()
     {
+        Time.timeScale = 1f;
         DomainFactory.Instance.Data.LanternState.RecentScene = SceneManager.GetActiveScene().name;
         DomainFactory.Instance.SaveGameData();
         SceneLoader.LoadScene("Start");
