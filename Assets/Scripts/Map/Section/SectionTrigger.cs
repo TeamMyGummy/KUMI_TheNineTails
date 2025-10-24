@@ -40,6 +40,10 @@ public class SectionTrigger : MonoBehaviour
     [Tooltip("체크하면 메인 연출 시퀀스가 최초 한 번만 실행됩니다.")]
     [SerializeField]
     private bool triggerOnce = true;
+    
+    [Header("GimmickImoogi")]
+    [SerializeField]
+    private GameObject gimmickImoogi;
 
     [Header("Cinematic Sequences")]
     [Tooltip("Pre-Enter 연출의 지속 시간입니다. 실제 연출(타임라인, 애니메이션 등) 길이에 맞춰 조절하세요.")]
@@ -115,7 +119,12 @@ public class SectionTrigger : MonoBehaviour
     /// </summary>
     private IEnumerator EnterSequence()
     {
+        // BGM 변경
         SoundManager.Instance.PlayBGM(BGMName.이무기);
+        
+        // 기믹2 이무기 비활성화
+        gimmickImoogi.SetActive(false);
+        
         currentState = ZoneState.PreEnter;
         Debug.Log("State: PreEnter - Pre-Enter sequence started.");
         hasBeenTriggered = true;
