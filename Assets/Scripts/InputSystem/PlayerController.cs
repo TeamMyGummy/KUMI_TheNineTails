@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IMovement
     private NpcObject _npcObject;
     private MaxHpItem _maxHpItem;
     private FoxFireItem _foxFireItem;
+    private SpawnWisp _spawnWisp;
 
     private Vector2 _direction;
     
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour, IMovement
         _playerInput = GetComponent<PlayerInput>();
         _player = GetComponent<Player>();
         _characterMovement = GetComponent<CharacterMovement>();
+        _spawnWisp = GetComponent<SpawnWisp>();
     }
     private void Start()
     {
@@ -282,6 +284,7 @@ public class PlayerController : MonoBehaviour, IMovement
                 return;
             }
             _lanternObject.InteractWithLantern();
+            _spawnWisp.wisp.ChangeTarget(_lanternObject.transform, new Vector3(_player.Controller.Direction.x * 1.5f, 0.9f, 0f));
         }
     }
     public void SetLanternObject(LanternObject lantern)
