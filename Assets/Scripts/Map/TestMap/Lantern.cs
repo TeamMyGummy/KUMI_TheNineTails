@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameAbilitySystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Util;
@@ -9,12 +10,18 @@ public class Lantern : SceneSingleton<Lantern>
     private Action<int> Interacted;
     private readonly Dictionary<int, LanternObject> _lanternsObjects = new();
     private LanternState _lanternState;
+    private AbilitySystem _player;
 
     public void Awake()
     {
         _lanternState = DomainFactory.Instance.Data.LanternState;
         Interacted -= Interact;
         Interacted += Interact;
+    }
+
+    public void Start()
+    {
+        _player = FindObjectOfType<Player>().ASC;
     }
 
     public Vector3 GetLanternPos(int key)
@@ -56,6 +63,8 @@ public class Lantern : SceneSingleton<Lantern>
             _lanternState.RecentFloor = currentLantern.NumberOfFloor; 
             _lanternState.RecentSection = currentLantern.SectionName;
         }
+        
+        _player.Attributes["HP"].SetCurrentValue(100);
         
         DomainFactory.Instance.SaveGameData();
     }
