@@ -316,8 +316,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fe1aa01126298534f97f076fedecbac3, type: 3}
   - {fileID: 21300000, guid: c57e428dd0bd9ff4b9a609f2ec2b8a89, type: 3}
   foxFireContainer: {fileID: 712531101586228869}
-  foxFireFilled: {fileID: 21300000, guid: faf8ee35d07b1404bbe78a9bab688058, type: 3}
-  foxFireEmpty: {fileID: 21300000, guid: ecc3de912bbb89f4eae2736767d2ae0e, type: 3}
+  foxFireFilled: {fileID: 21300000, guid: ebbf52b81a8198740acd03ef0c91a004, type: 3}
+  foxFireEmpty: {fileID: 21300000, guid: c58b87b4d24c4144d890045097fa79cc, type: 3}
   HonbulCountText: {fileID: 8463340149794608583}
 --- !u!114 &6889416622489505170
 MonoBehaviour:
