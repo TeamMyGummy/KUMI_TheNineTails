@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: imoogi_body_Atlas
+  m_Name: imoogi_body3_Atlas
   m_EditorClassIdentifier: 
   textureLoadingMode: 0
   onDemandTextureLoader: {fileID: 0}
-  atlasFile: {fileID: 4900000, guid: f086eb1d08b8f1144b5efee0e7ba0a3a, type: 3}
+  atlasFile: {fileID: 4900000, guid: 4195c3e8f8826be45b567708f62645ad, type: 3}
   materials:
-  - {fileID: 2100000, guid: 20774d922cce4884baf0c0cc3a0af6bf, type: 2}
+  - {fileID: 2100000, guid: ef3e772ee8288624ab105ff34fcbca7d, type: 2}
