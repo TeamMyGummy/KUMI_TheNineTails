@@ -5,8 +5,9 @@ using UnityEngine;
 public class SpawnWisp : MonoBehaviour
 {
     public GameObject objectToSpawn;
+    public Wisp wisp;
     void Start()
     {
-        Instantiate(objectToSpawn, transform.position, Quaternion.identity);
+        wisp = Instantiate(objectToSpawn, transform.position, Quaternion.identity).GetComponent<Wisp>();
     }
 }
