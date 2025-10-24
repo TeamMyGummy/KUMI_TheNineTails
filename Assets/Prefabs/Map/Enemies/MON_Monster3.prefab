@@ -84,7 +84,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b175682880bbf734388b35ffadb1506a, type: 2}
+  - {fileID: 2100000, guid: 56afb1c121fcc994783fd292d5b19125, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,7 +116,7 @@ Animator:
   m_GameObject: {fileID: 3904041333196977209}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: af66377f72541cf449ffe8d1517bc3c8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a6c21f3656783c43b5a3691970e3119, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c7b8908707b04544285de9637551ce2a, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 0666183a8498f2141865cea5e6aced97, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
