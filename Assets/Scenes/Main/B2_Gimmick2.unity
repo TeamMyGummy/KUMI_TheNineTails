@@ -33073,11 +33073,11 @@ PrefabInstance:
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 188d483e3f17b43b1961d1ec0a94f6ca, type: 2}
+      objectReference: {fileID: 11400000, guid: 7a25ba03d8719fa4285f7d5b1c172d24, type: 2}
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 6775930500436664802, guid: 188d483e3f17b43b1961d1ec0a94f6ca, type: 2}
+      objectReference: {fileID: -7861699747241607198, guid: 7a25ba03d8719fa4285f7d5b1c172d24, type: 2}
     - target: {fileID: 4974094122078547745, guid: 6fbc21a8fadeb41249a1520eaff4fe09, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
