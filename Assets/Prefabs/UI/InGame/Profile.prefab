@@ -758,6 +758,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Honbul
       objectReference: {fileID: 0}
+    - target: {fileID: 3339260389472332034, guid: 8095a7334cd864755a57c26cab07f10c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a25ba03d8719fa4285f7d5b1c172d24, type: 2}
+    - target: {fileID: 3339260389472332034, guid: 8095a7334cd864755a57c26cab07f10c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7861699747241607198, guid: 7a25ba03d8719fa4285f7d5b1c172d24, type: 2}
+    - target: {fileID: 3339260389472332034, guid: 8095a7334cd864755a57c26cab07f10c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7948133273543032333, guid: 8095a7334cd864755a57c26cab07f10c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
