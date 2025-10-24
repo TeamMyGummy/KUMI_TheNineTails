@@ -47,6 +47,15 @@ public class UI_PlayerState : MonoBehaviour
                 hpImages.Add(image);
             }
         }
+        for (int i = 0; i < foxFireContainer.childCount; i++)
+        {
+            var child = foxFireContainer.GetChild(i);
+            var image = child.GetComponent<Image>();
+            if (image != null)
+            {
+                _foxFireImages.Add(image);
+            }
+        }
     }
 
     private async void OnEnable()
@@ -178,23 +187,10 @@ public class UI_PlayerState : MonoBehaviour
         int cur = Mathf.Max(0, current);
         int mx = Mathf.Max(0, max);
 
-        // 슬롯 생성
-        while (_foxFireImages.Count < mx)
-        {
-            var go = new GameObject("FoxFire");
-            var img = go.AddComponent<Image>();
-            img.transform.SetParent(foxFireContainer, false);
-            img.sprite = foxFireEmpty;
-            _foxFireImages.Add(img);
-        }
-
-        // 표시/스프라이트 갱신
         for (int i = 0; i < _foxFireImages.Count; i++)
         {
-            bool active = i < mx;
-            _foxFireImages[i].gameObject.SetActive(active);
-            if (active)
-                _foxFireImages[i].sprite = (i < cur) ? foxFireFilled : foxFireEmpty;
+            _foxFireImages[i].gameObject.SetActive(true);
+            _foxFireImages[i].sprite = (i < cur) ? foxFireFilled : foxFireEmpty;
         }
     }
 }
