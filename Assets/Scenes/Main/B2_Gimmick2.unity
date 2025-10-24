@@ -32116,9 +32116,9 @@ MonoBehaviour:
   onPlayerEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1530405134}
-        m_TargetAssemblyTypeName: PathFollower, Assembly-CSharp
-        m_MethodName: StartMoving
+      - m_Target: {fileID: 1721650569}
+        m_TargetAssemblyTypeName: StartImugi, Assembly-CSharp
+        m_MethodName: ActivateImugi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34462,9 +34462,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -13.2689085, y: -1.0577457, z: 0}
-  - {x: 1.0851116, y: -0.44550496, z: 0}
-  - {x: 13.36207, y: -0.51241475, z: 0}
+  - {x: 3.5818663, y: -0.665872, z: 0}
+  - {x: 10.947325, y: -0.7067572, z: 0}
+  - {x: 13.427388, y: -0.8389758, z: 0}
   - {x: 23.479284, y: -0.5818578, z: 0}
   - {x: 36.679794, y: -0.7924479, z: 0}
   - {x: 62.52865, y: -1.830886, z: 0}
@@ -74325,12 +74325,12 @@ GameObject:
   - component: {fileID: 1530405134}
   - component: {fileID: 1530405140}
   m_Layer: 0
-  m_Name: Imugi
+  m_Name: ImugiHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1530405134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74345,6 +74345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 721035570}
   lookForward: 1
+  Imugi: {fileID: 1530405133}
 --- !u!114 &1530405135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74468,13 +74469,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530405133}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.11, y: -1.36, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2, y: -0.84, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 975999902}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1721650568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1530405140
 MonoBehaviour:
@@ -76451,6 +76452,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 608450800688471060, guid: 2c58dacaaef74bd4f94f0c3b86172551, type: 3}
   m_PrefabInstance: {fileID: 1719596948}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1721650567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1721650568}
+  - component: {fileID: 1721650569}
+  m_Layer: 0
+  m_Name: Imugi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1721650568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721650567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1530405139}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1721650569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721650567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b750de108ba94ee49a2816cc73401508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imugi: {fileID: 1530405133}
 --- !u!1 &1722432034
 GameObject:
   m_ObjectHideFlags: 0
@@ -81943,7 +81990,7 @@ SceneRoots:
   - {fileID: 674795296}
   - {fileID: 1994854123}
   - {fileID: 721035571}
-  - {fileID: 1530405139}
+  - {fileID: 1721650568}
   - {fileID: 497288101}
   - {fileID: 247264658}
   - {fileID: 15170938}
