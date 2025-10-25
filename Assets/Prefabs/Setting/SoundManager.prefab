@@ -57,7 +57,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: 2
-    clip: {fileID: 8300000, guid: e3db82950ecf46946b370cd91cbd905e, type: 3}
+    clip: {fileID: 8300000, guid: 5bb06cfaadaee00409be87392b498657, type: 3}
     loop: 1
     source: {fileID: 0}
   sfxSounds:
