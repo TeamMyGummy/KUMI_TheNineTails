@@ -57,7 +57,6 @@ public class LanternObject : MonoBehaviour
     public void Bind(Action<int> interacted)
     {
         Interacted = interacted;
-        isInteracting = true;
     }
 
     public void ChangeLanternState(LanternAppearance appearance)
@@ -127,6 +126,7 @@ public class LanternObject : MonoBehaviour
         if (_playerInRange)
         {
             Interacted?.Invoke(LanternKey);
+            isInteracting = true;
             ChangeLanternState(LanternAppearance.Big);
         }
     }
