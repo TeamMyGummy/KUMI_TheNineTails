@@ -33,6 +33,7 @@ public class BossAnimationHandler : ActionHandler
                 animHandler.AddAnimation(_currentAnimation, _loop, _delay);
                 break;
             case EAnimationControl.Set:
+                Debug.Log(_currentAnimation);
                 animHandler.SetAnimation(_currentAnimation, _loop);
                 break;
             case EAnimationControl.Stop:

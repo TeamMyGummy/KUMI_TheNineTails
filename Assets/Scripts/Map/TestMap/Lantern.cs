@@ -26,7 +26,11 @@ public class Lantern : SceneSingleton<Lantern>
 
     public Vector3 GetLanternPos(int key)
     {
-        if(!_lanternsObjects.TryGetValue(key, out var lantern)) Debug.Log("현재 씬에서 호롱불을 찾을 수 없습니다. ");
+        if (!_lanternsObjects.TryGetValue(key, out var lantern))
+        {
+            Debug.Log("현재 씬에서 호롱불을 찾을 수 없습니다. ");
+            return FindObjectOfType<Player>().transform.position;
+        }
         return lantern.transform.position;
     }
 
