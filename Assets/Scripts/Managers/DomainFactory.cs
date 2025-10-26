@@ -69,6 +69,9 @@ public abstract class BaseDomain<TDto> : IDomain
 [DefaultExecutionOrder(-99)]
 public class DomainFactory : Singleton<DomainFactory>
 {
+#if UNITY_WEBGL
+    private GameState _savedState;
+#endif
     private GameState _gameState;
     private readonly Dictionary<DomainKey, IDomain> _domains = new();
     public SingletonData Data;
@@ -79,7 +82,11 @@ public class DomainFactory : Singleton<DomainFactory>
         base.Awake();
         DataManager.Load(Savekey, out _gameState);
         if (_gameState is null) _gameState = new();
+#if UNITY_WEBGL
+        _savedState = _gameState;
+#else
         Data = _gameState.SingletonData;
+#endif
     }
 
     public void SaveGameData()
@@ -88,6 +95,9 @@ public class DomainFactory : Singleton<DomainFactory>
         {
             _gameState.Set(domain.Key, domain.Value.Save());
         }
+#if UNITY_WEBGL
+        _savedState = _gameState;
+#endif
         DataManager.Save(Savekey, _gameState);
         Data.LanternState.RecentScene = SceneManager.GetActiveScene().name;
     }
@@ -96,7 +106,11 @@ public class DomainFactory : Singleton<DomainFactory>
     {
         if (!RunOnly.ShouldRun()) return;
         _domains.Clear();
+#if UNITY_WEBGL
+        _gameState = _savedState;
+#else
         DataManager.Load(Savekey, out _gameState);
+#endif        
         SceneLoader.LoadScene(Data.LanternState.RecentScene);
         //Debug.Log("[DomainFactory] 개발 중에는 사망해도 저장된 데이터로 복구되지 않습니다. ");
     }
