@@ -51,7 +51,12 @@ namespace BehaviorTree
         {
             btGraph?.Update();
         }
-        
+
+        private void OnDestroy()
+        {
+            StopAI();
+        }
+
         public void StartAI()
         {
             btGraph?.StartGraph(onAfterEnd);
