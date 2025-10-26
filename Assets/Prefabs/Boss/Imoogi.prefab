@@ -154,13 +154,14 @@ GameObject:
   - component: {fileID: 5316841868326818199}
   - component: {fileID: 7882738393704214591}
   - component: {fileID: 6869070379822303099}
+  - component: {fileID: 5264647367672186280}
   m_Layer: 0
   m_Name: Spine GameObject (tail)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1046867704456723142
 Transform:
   m_ObjectHideFlags: 0
@@ -304,6 +305,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47ccad3c3c1f475e911f814499daa277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5264647367672186280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517080584346434038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71301fd1aa3206f43b479fdfd45d17c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &914456964746886784

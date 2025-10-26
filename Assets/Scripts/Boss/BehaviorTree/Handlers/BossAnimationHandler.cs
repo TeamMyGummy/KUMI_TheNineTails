@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class BossAnimationHandler : ActionHandler
 {
     private SpineAnimationHandler animHandler;
-    private string _currentAnimation;
+    private string _currentAnimation = "idle"; 
     private EAnimationControl _howToPlay;
     private bool _loop;
     private float _delay = 0f;
