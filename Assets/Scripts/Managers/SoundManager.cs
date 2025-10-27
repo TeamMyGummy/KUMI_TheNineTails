@@ -42,6 +42,9 @@ public class BGMSound
     public AudioClip clip;
     public bool loop = false;
     
+    [Range(0f, 1f)] 
+    public float volume = 1f;
+    
     [HideInInspector]
     public AudioSource source;
 }
@@ -51,6 +54,9 @@ public class SFXSound
     public SFXName name;
     public AudioClip clip;
     public bool loop = false;
+    
+    [Range(0f, 1f)]
+    public float volume = 1f;
     
     [HideInInspector]
     public AudioSource source;
@@ -157,6 +163,7 @@ public class SoundManager : MonoBehaviour
         {
             bgmSource.clip = sound.clip;
             bgmSource.loop = true;
+            bgmSource.volume = sound.volume;
             bgmSource.Play();
         }
         else
@@ -183,6 +190,7 @@ public class SoundManager : MonoBehaviour
             {
                 source.clip = sound.clip;
                 source.loop = sound.loop;
+                source.volume = sound.volume;
                 source.Play();
 
                 if (sound.loop)
