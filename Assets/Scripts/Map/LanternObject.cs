@@ -131,7 +131,9 @@ public class LanternObject : MonoBehaviour
     {
         if (_playerInRange)
         {
+            Debug.Log("1");
             Interacted?.Invoke(LanternKey);
+            Debug.Log("6");
             isInteracting = true;
             ChangeLanternState(LanternAppearance.Big);
         }

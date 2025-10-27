@@ -44,7 +44,8 @@ public class Lantern : SceneSingleton<Lantern>
         { 
             lantern.ChangeLanternState(LanternAppearance.Small);
         }
-
+        
+        Debug.Log("이벤트 함수 연결");
         lantern.Interacted -= Interact;
         lantern.Interacted += Interact;
         //lantern.Bind(Interacted);
@@ -53,23 +54,27 @@ public class Lantern : SceneSingleton<Lantern>
 
     public void Interact(int interactLantern)
     {
+        Debug.Log("2");
         //기존 체크포인트가 해당 씬 안에 있다면 그 체크포인트의 상태 변경
         if (_lanternsObjects.TryGetValue(_lanternState.RecentCheckPoint, out var lanternObject))
         {
             lanternObject.ChangeLanternState(LanternAppearance.Small);
         }
         
+        Debug.Log("3");
         //상태 업데이트
         _lanternState.PassedCheckPoint.Add(interactLantern);
         _lanternState.RecentCheckPoint = interactLantern;
         _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
         
+        Debug.Log("4");
         if (_lanternsObjects.TryGetValue(interactLantern, out var currentLantern))
         {
             _lanternState.RecentFloor = currentLantern.NumberOfFloor; 
             _lanternState.RecentSection = currentLantern.SectionName;
         }
         
+        Debug.Log("5");
         _player.Attributes["HP"].SetCurrentValue(100);
         
         DomainFactory.Instance.SaveGameData();
