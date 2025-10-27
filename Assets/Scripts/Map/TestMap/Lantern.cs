@@ -9,7 +9,7 @@ public class Lantern : SceneSingleton<Lantern>
 {
     //public Action<int> Interacted;
     private readonly Dictionary<int, LanternObject> _lanternsObjects = new();
-    private LanternState _lanternState;
+    public LanternState _lanternState;
     private AbilitySystem _player;
 
     public void Awake()
