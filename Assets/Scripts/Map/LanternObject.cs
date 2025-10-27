@@ -76,12 +76,18 @@ public class LanternObject : MonoBehaviour
 
             case LanternAppearance.Small:
                 if (smallLanternImage != null)
+                {
+                    Debug.Log("랜턴 Small로 change");
                     smallLanternImage.SetActive(true);
+                }
                 break;
 
             case LanternAppearance.Big:
                 if (bigLanternImage != null)
+                {
+                    Debug.Log("랜턴 Big으로 change");
                     bigLanternImage.SetActive(true);
+                }
                 break;
         }
     }

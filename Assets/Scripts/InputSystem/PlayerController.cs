@@ -278,9 +278,10 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         if (ctx.performed)
         {
+            Debug.Log("랜턴 Input 들어옴");
             if (_lanternObject == null)
             {
-                /*Debug.Log("[LanternInteraction] _lanternObject가 null입니다.");*/
+                Debug.Log("[LanternInteraction] _lanternObject가 null입니다.");
                 return;
             }
             _lanternObject.InteractWithLantern();
