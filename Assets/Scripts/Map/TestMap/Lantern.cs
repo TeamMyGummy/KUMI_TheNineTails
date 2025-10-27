@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GameAbilitySystem;
 using UnityEngine;
@@ -7,7 +7,7 @@ using Util;
 
 public class Lantern : SceneSingleton<Lantern>
 {
-    private Action<int> Interacted;
+    //public Action<int> Interacted;
     private readonly Dictionary<int, LanternObject> _lanternsObjects = new();
     private LanternState _lanternState;
     private AbilitySystem _player;
@@ -15,8 +15,8 @@ public class Lantern : SceneSingleton<Lantern>
     public void Awake()
     {
         _lanternState = DomainFactory.Instance.Data.LanternState;
-        Interacted -= Interact;
-        Interacted += Interact;
+        /*Interacted -= Interact;
+        Interacted += Interact;*/
     }
 
     public void Start()
@@ -44,12 +44,14 @@ public class Lantern : SceneSingleton<Lantern>
         { 
             lantern.ChangeLanternState(LanternAppearance.Small);
         }
-            
-        lantern.Bind(Interacted);
+
+        lantern.Interacted -= Interact;
+        lantern.Interacted += Interact;
+        //lantern.Bind(Interacted);
         _lanternsObjects[lantern.LanternKey] = lantern;
     }
 
-    private void Interact(int interactLantern)
+    public void Interact(int interactLantern)
     {
         //기존 체크포인트가 해당 씬 안에 있다면 그 체크포인트의 상태 변경
         if (_lanternsObjects.TryGetValue(_lanternState.RecentCheckPoint, out var lanternObject))

@@ -33,7 +33,7 @@ public class LanternObject : MonoBehaviour
     private bool _playerInRange = false;
     private LanternAppearance _currentAppearance = LanternAppearance.Off;
 
-    public Action<int> Interacted;
+    public Action<int> Interacted = delegate { };
 
     void Awake()
     {
@@ -54,10 +54,10 @@ public class LanternObject : MonoBehaviour
         Lantern.Instance.Register(this);
     }
 
-    public void Bind(Action<int> interacted)
+    /*public void Bind(Action<int> interacted)
     {
         Interacted = interacted;
-    }
+    }*/
 
     public void ChangeLanternState(LanternAppearance appearance)
     {
