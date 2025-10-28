@@ -96,26 +96,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void SetAnimatorBool(int parameterHash, bool value)
-    {
-        _animator.SetBool(parameterHash, value);
-    }
-
-    public void SetAnimatorFloat(int parameterHash, float value)
-    {
-        _animator.SetFloat(parameterHash, value);
-    }
-    
-    public void SetAnimatorTrigger(int parameterHash)
-    {
-        _animator.SetTrigger(parameterHash);
-    }
-
-    public void ResetAnimatorTrigger(int parameterHash)
-    {
-        _animator.ResetTrigger(parameterHash);
-    }
-
     public void ChangeState(PlayerStateType newState)
     {
         _playerStateMachine.ChangeState(newState);

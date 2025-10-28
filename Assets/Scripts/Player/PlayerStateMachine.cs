@@ -114,6 +114,10 @@ public class PlayerStateMachine
         Debug.Log(_currentState.GetStateType());
     }
 
+    public PlayerState GetState(PlayerStateType stateType)
+    {
+        return _states[stateType];  
+    }
     public PlayerStateType GetCurrentState()
     {
         return _currentState.GetStateType();
@@ -147,8 +151,8 @@ public class IdleState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.RunID, false);
-        Player.SetAnimatorBool(Player.IsGroundID, true);
+        Player.Animator.SetBool(Player.RunID, false);
+        Player.Animator.SetBool(Player.IsGroundID, true);
     }
 
     public override void Update()
@@ -205,7 +209,7 @@ public class RunState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.RunID, true);
+        Player.Animator.SetBool(Player.RunID, true);
         SoundManager.Instance.PlaySFX(SFXName.달리기);
     }
     
@@ -268,8 +272,9 @@ public class JumpState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.JumpID, true);
-        //Player.SetAnimatorBool(Player.IsGroundID, true);
+        
+        Player.Animator.SetBool(Player.JumpID, true);
+        //Player.Animator.SetBool(Player.IsGroundID, true);
         _ability = Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.TryActivateAbility(AbilityKey.DoubleJump) : Player.ASC.TryActivateAbility(AbilityKey.Jump); 
         SoundManager.Instance.PlaySFX(SFXName.점프);
     }
@@ -326,7 +331,7 @@ public class JumpState : PlayerState
     {
         base.Exit();
         
-        Player.SetAnimatorBool(Player.JumpID, false);
+        Player.Animator.SetBool(Player.JumpID, false);
     }
 }
 
@@ -338,8 +343,8 @@ public class FallState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.IsGroundID, false);
-        Player.SetAnimatorBool(Player.IsFallingID, true);
+        Player.Animator.SetBool(Player.IsGroundID, false);
+        Player.Animator.SetBool(Player.IsFallingID, true);
     }
 
     public override void Update()
@@ -389,11 +394,11 @@ public class FallState : PlayerState
     {
         base.Exit();
         
-        Player.SetAnimatorBool(Player.IsFallingID, false);
+        Player.Animator.SetBool(Player.IsFallingID, false);
         
         if (Player.Movement.CheckIsGround())
         {
-            Player.SetAnimatorBool(Player.IsGroundID, true);
+            Player.Animator.SetBool(Player.IsGroundID, true);
         }
     }
 }
@@ -406,7 +411,7 @@ public class HurtState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorTrigger(Player.HurtID);
+        Player.Animator.SetTrigger(Player.HurtID);
         SoundManager.Instance.PlaySFX(SFXName.피격);
     }
 
@@ -436,7 +441,7 @@ public class HurtState : PlayerState
     {
         base.Exit();
         
-        Player.ResetAnimatorTrigger(Player.HurtID);
+        //Player.Animator.ResetTrigger(Player.HurtID);
     }
 }
 
@@ -491,7 +496,7 @@ public class WallClimbState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.WallClimbID, true);
+        Player.Animator.SetBool(Player.WallClimbID, true);
         SoundManager.Instance.PlaySFX(SFXName.벽에붙음);
         Player.Movement.ClimbState();
         
@@ -563,7 +568,7 @@ public class WallClimbState : PlayerState
     {
         base.Exit();
         
-        Player.SetAnimatorBool(Player.WallClimbID, false);
+        Player.Animator.SetBool(Player.WallClimbID, false);
         Player.Movement.EndClimbState();
         
         if(SoundManager.Instance.IsPlayingSFX(SFXName.벽타기))
@@ -577,8 +582,8 @@ public class WallClimbState : PlayerState
             SoundManager.Instance.StopSFX(SFXName.벽타기);
         
         _ledge = false;
-        Player.SetAnimatorBool(Player.EndClimbID, false);
-        Player.SetAnimatorBool(Player.IsClimbingID, false);
+        Player.Animator.SetBool(Player.EndClimbID, false);
+        Player.Animator.SetBool(Player.IsClimbingID, false);
     }
     
     private void UpdateClimbing()
@@ -592,7 +597,7 @@ public class WallClimbState : PlayerState
             else
             {
                 Player.Movement.Move(Vector2.zero);
-                Player.SetAnimatorBool(Player.IsClimbingID, false);
+                Player.Animator.SetBool(Player.IsClimbingID, false);
                 if (Player.Controller.ClimbInput.y < 0 && !_actions.IsCharacterReachedTop())
                 {
                     Player.StateMachine.ChangeState(PlayerStateType.Fall);
@@ -611,8 +616,8 @@ public class WallClimbState : PlayerState
             SoundManager.Instance.PlaySFX(SFXName.벽타기);
         
         _ledge = false;
-        Player.SetAnimatorBool(Player.EndClimbID, false);
-        Player.SetAnimatorBool(Player.IsClimbingID, true);
+        Player.Animator.SetBool(Player.EndClimbID, false);
+        Player.Animator.SetBool(Player.IsClimbingID, true);
 
         // 이동
         Player.Movement.Move(Player.Controller.ClimbInput);
@@ -625,7 +630,7 @@ public class WallClimbState : PlayerState
             SoundManager.Instance.StopSFX(SFXName.벽타기);
         
         _ledge = true;
-        Player.SetAnimatorBool(Player.EndClimbID, true);
+        Player.Animator.SetBool(Player.EndClimbID, true);
         
         Player.Movement.Move(Vector2.zero);
 
@@ -660,7 +665,7 @@ public class RopeClimbState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorBool(Player.RopeClimbID, true);
+        Player.Animator.SetBool(Player.RopeClimbID, true);
         Player.Movement.ClimbState();
         
         _state = RopeClimbStates.Idle;
@@ -722,7 +727,7 @@ public class RopeClimbState : PlayerState
         if(SoundManager.Instance.IsPlayingSFX(SFXName.줄타기))
             SoundManager.Instance.StopSFX(SFXName.줄타기);
         
-        Player.SetAnimatorBool(Player.RopeClimbID, false);
+        Player.Animator.SetBool(Player.RopeClimbID, false);
         Player.Movement.EndClimbState();
     }
 
@@ -733,8 +738,8 @@ public class RopeClimbState : PlayerState
             SoundManager.Instance.StopSFX(SFXName.줄타기);
         
         // Animation
-        Player.SetAnimatorBool(Player.EndClimbID, false);
-        Player.SetAnimatorBool(Player.IsClimbingID, false);
+        Player.Animator.SetBool(Player.EndClimbID, false);
+        Player.Animator.SetBool(Player.IsClimbingID, false);
     }
 
     private void Climbing()
@@ -744,8 +749,8 @@ public class RopeClimbState : PlayerState
             SoundManager.Instance.PlaySFX(SFXName.줄타기);
         
         // Animation
-        Player.SetAnimatorBool(Player.EndClimbID, false);
-        Player.SetAnimatorBool(Player.IsClimbingID, true);
+        Player.Animator.SetBool(Player.EndClimbID, false);
+        Player.Animator.SetBool(Player.IsClimbingID, true);
         
         // 이동
         Player.Movement.Move(Player.Controller.ClimbInput);  
@@ -762,7 +767,7 @@ public class AttackState : PlayerState
         base.Enter();
 
         _attackNum = 1;
-        Player.SetAnimatorTrigger(Player.StartAttackID);
+        Player.Animator.SetTrigger(Player.StartAttackID);
         Player.Animator.SetInteger(Player.AttackCountID, _attackNum);
         SoundManager.Instance.PlaySFX(SFXName.공격1);
         
@@ -827,7 +832,7 @@ public class DashState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorTrigger(Player.DashID);
+        Player.Animator.SetTrigger(Player.DashID);
         SoundManager.Instance.PlaySFX(SFXName.대쉬);
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
         Player.ASC.TagContainer.Add(GameplayTags.Invincibility);
@@ -874,7 +879,7 @@ public class DashState : PlayerState
     {
         base.Exit();
         
-        Player.ResetAnimatorTrigger(Player.DashID);
+        //Player.Animator.ResetTrigger(Player.DashID);
         Player.ASC.TagContainer.Remove(GameplayTags.Invincibility);
         //Player.Movement.ResetGravityScale();
         
@@ -892,8 +897,8 @@ public class ParryingState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorTrigger(Player.StartParryingID);
-        Player.SetAnimatorBool(Player.ParryingID, true);
+        Player.Animator.SetTrigger(Player.StartParryingID);
+        Player.Animator.SetBool(Player.ParryingID, true);
         Player.ASC.TryActivateAbility(AbilityKey.Parrying);
         
         Player.Controller.OnParryingCanceled -= ParryingCanceled;
@@ -917,7 +922,7 @@ public class ParryingState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        Player.SetAnimatorBool(Player.ParryingID, false);
+        Player.Animator.SetBool(Player.ParryingID, false);
     }
 
     private void ParryingCanceled()
@@ -943,7 +948,7 @@ public class FoxFireState : PlayerState
         base.Enter();
         
         SoundManager.Instance.PlaySFX(SFXName.여우불);
-        Player.SetAnimatorTrigger(Player.FoxFireID);
+        Player.Animator.SetTrigger(Player.FoxFireID);
         Player.ASC.TryActivateAbility(AbilityKey.FoxFire);
     }
     
@@ -984,7 +989,7 @@ public class LiverExtractionState : PlayerState
     {
         base.Enter();
         
-        Player.SetAnimatorTrigger(Player.LiverExtractionID);
+        Player.Animator.SetTrigger(Player.LiverExtractionID);
         Player.ASC.TryActivateAbility(AbilityKey.LiverExtraction);
     }
 
