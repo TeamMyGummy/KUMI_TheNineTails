@@ -64,7 +64,9 @@ public class Lantern : SceneSingleton<Lantern>
         Debug.Log("3");
         //상태 업데이트
         _lanternState.PassedCheckPoint.Add(interactLantern);
+        Debug.Log("What's the");
         _lanternState.RecentCheckPoint = interactLantern;
+        Debug.Log("Matter");
         _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
         
         Debug.Log("4");
