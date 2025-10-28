@@ -496,20 +496,24 @@ public class WallClimbState : PlayerState
     {
         base.Enter();
         
+        // Sound, Animation
         Player.Animator.SetBool(Player.WallClimbID, true);
         SoundManager.Instance.PlaySFX(SFXName.벽에붙음);
         Player.Movement.ClimbState();
         
+        // WallClimb State
         _state = WallClimbStates.Idle;
         _currentWall = Player.DrawClimbRay(LayerMask.GetMask("GraspableWall")).collider;
         _playerCollider = Player.GetComponent<Collider2D>();
         _actions = new WallClimbActions(Player, _currentWall);
         _ledge = false;
 
+        // Dash 초기화
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
         DashAbility.ResetDash();
         
+        // Jump 초기화
         Jump JumpAbility = (Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.GetAbility(AbilityKey.DoubleJump) : Player.ASC.GetAbility(AbilityKey.Jump)) as Jump;
         Debug.Assert(JumpAbility != null);
         JumpAbility.SetJumpCount(1);
@@ -665,16 +669,20 @@ public class RopeClimbState : PlayerState
     {
         base.Enter();
         
+        // Animation
         Player.Animator.SetBool(Player.RopeClimbID, true);
         Player.Movement.ClimbState();
         
+        // RopeClimb State
         _state = RopeClimbStates.Idle;
         _actions = new WallClimbActions(Player);
 
+        // Dash 초기화
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
         DashAbility.ResetDash();
         
+        // Jump 초기화
         Jump JumpAbility = (Player.ASC.IsGranted(AbilityKey.DoubleJump) ? Player.ASC.GetAbility(AbilityKey.DoubleJump) : Player.ASC.GetAbility(AbilityKey.Jump)) as Jump;
         Debug.Assert(JumpAbility != null);
         JumpAbility.SetJumpCount(1);
@@ -816,9 +824,9 @@ public class DashState : PlayerState
         
         Player.Animator.SetTrigger(Player.DashID);
         SoundManager.Instance.PlaySFX(SFXName.대쉬);
+        
         Player.ASC.TryActivateAbility(AbilityKey.Dash);
         Player.ASC.TagContainer.Add(GameplayTags.Invincibility);
-        //Player.Movement.SetGravityScale(0);
     }
     public override void Update()
     {
@@ -863,7 +871,6 @@ public class DashState : PlayerState
         
         //Player.Animator.ResetTrigger(Player.DashID);
         Player.ASC.TagContainer.Remove(GameplayTags.Invincibility);
-        //Player.Movement.ResetGravityScale();
         
         Dash DashAbility = Player.ASC.GetAbility(AbilityKey.Dash) as Dash;
         Debug.Assert(DashAbility != null);
