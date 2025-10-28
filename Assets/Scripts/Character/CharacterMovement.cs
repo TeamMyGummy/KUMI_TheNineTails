@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] [Range(0.0f, 10.0f)] private float deceleration;  // 감속도
     [SerializeField] [Range(0.0f, 3.0f)] private float gravity;
     [SerializeField] private LayerMask groundMask;  // 땅으로 인식되는 Layer
+    public LayerMask GroundMask => groundMask;
     
     private Vector2 _nextDirection;
     private Vector2 _currentVelocity; 
