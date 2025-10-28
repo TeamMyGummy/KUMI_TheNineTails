@@ -1,0 +1,30 @@
+<linker>
+  <assembly fullname="Assembly-CSharp" preserve="user">
+    <type fullname="PlayerController">
+      <method name="OnLanternInteraction"/>
+    </type>
+    <type fullname="LanternObject">
+      <method name="InteractWithLantern"/>
+    </type>
+    <type fullname="Lantern">
+      <method name="Interact"/>
+    </type>
+    <type fullname="Util.SceneLoader">
+      <method name="GetCurrentSceneName"/>
+    </type>
+  </assembly>
+
+  <assembly fullname="mscorlib" preserve="user">
+    <type fullname="System.Collections.Generic.List`1[System.Int32]">
+      <method name="Add"/>
+      <method name="Contains"/>
+    </type>
+  </assembly>
+  
+  <assembly fullname="System.Core" preserve="user">
+     <type fullname="System.Collections.Generic.HashSet`1[System.Int32]">
+      <method name="Add"/>
+      <method name="Contains"/>
+    </type>
+  </assembly>
+</linker>
