@@ -31,16 +31,8 @@ public class ParryingHitbox : MonoBehaviour
         
         // 패링 이펙트 생성
         EffectManager.Instance.AttackEffect(effectSO, _actor.transform.position, _effectPrefab);
-        
-        // 여우불 게이지 증가
-        AbilitySystem asc;
-        DomainFactory.Instance.GetDomain(DomainKey.Player, out asc);
-        asc.ApplyGameplayEffect(asc, new InstantGameplayEffect("FoxFireGauge", 1));
-        if (Mathf.Approximately(asc.Attribute.Attributes["FoxFireGauge"].CurrentValue.Value, asc.Attribute.Attributes["FoxFireGauge"].MaxValue))
-        {
-            asc.Attribute.Attributes["FoxFireCount"].CurrentValue.Value += 1;
-            asc.Attribute.Attributes["FoxFireGauge"].Reset();
-        }
+
+        FoxFlameAdd();
     }
     
     public async UniTask StartLiverExtraction()
@@ -54,9 +46,25 @@ public class ParryingHitbox : MonoBehaviour
         _actor.GetComponent<PlayerController>().OnEnableLiverExtraction();
         EffectManager.Instance.SlowMotionTask(0.2f, 1.0f).Forget();
         
+        FoxFlameAdd();
+
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
         
         _actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
         Debug.Log("인풋 막힘");
+    }
+
+    //여우불 증가 로직
+    private void FoxFlameAdd()
+    {
+        // 여우불 게이지 증가
+        AbilitySystem asc;
+        DomainFactory.Instance.GetDomain(DomainKey.Player, out asc);
+        asc.ApplyGameplayEffect(asc, new InstantGameplayEffect("FoxFireGauge", 1));
+        if (Mathf.Approximately(asc.Attribute.Attributes["FoxFireGauge"].CurrentValue.Value, asc.Attribute.Attributes["FoxFireGauge"].MaxValue))
+        {
+            asc.Attribute.Attributes["FoxFireCount"].CurrentValue.Value += 1;
+            asc.Attribute.Attributes["FoxFireGauge"].Reset();
+        }
     }
 }
