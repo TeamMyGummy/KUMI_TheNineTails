@@ -769,19 +769,16 @@ public class AttackState : PlayerState
         _attackNum = 1;
         Player.Animator.SetTrigger(Player.StartAttackID);
         Player.Animator.SetInteger(Player.AttackCountID, _attackNum);
-        SoundManager.Instance.PlaySFX(SFXName.공격1);
         
         Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);  
     }
 
     public override void Update()
     {
-        var curAnimClipInfo = Player.Animator.GetCurrentAnimatorClipInfo(0);
-        string stateName = curAnimClipInfo[0].clip.name;
+        var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
         
-        if (stateName.StartsWith("Attack"))
+        if (curAnimStateInfo.IsTag("Attack"))
         {
-            var curAnimStateInfo = Player.Animator.GetCurrentAnimatorStateInfo(0);
             if (curAnimStateInfo.normalizedTime >= 0.95f)
             {
                 Player.StateMachine.ChangeState(PlayerStateType.Idle);
@@ -796,21 +793,6 @@ public class AttackState : PlayerState
                 
                 _attackNum++;
                 Player.Animator.SetInteger(Player.AttackCountID, _attackNum);
-                switch (_attackNum)
-                {
-                    case 1:
-                        SoundManager.Instance.PlaySFX(SFXName.공격1);
-                        break;
-                    case 2:
-                        SoundManager.Instance.PlaySFX(SFXName.공격2);
-                        break;
-                    case 3:
-                        SoundManager.Instance.PlaySFX(SFXName.공격3);
-                        break;
-                    default:
-                        break;
-                }
-                
                 Player.ASC.TryActivateAbility(AbilityKey.PlayerAttack);
             }
         }

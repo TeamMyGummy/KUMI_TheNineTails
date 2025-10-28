@@ -145,12 +145,31 @@ public class Player : MonoBehaviour
     {
         return _canRopeClimb;
     }
-
+    
+    // ---------------- 애니메이션 이벤트에 연결되는 함수입니다 ----------------
     public void SpawnLiverExtractionHitbox()
     {
         LiverExtraction ability =  _asc.GetAbility(AbilityKey.LiverExtraction) as LiverExtraction;
         ability.SpawnHitbox();
         if (FindAnyObjectByType<DoLiverExtraction>() != null)
             FindAnyObjectByType<DoLiverExtraction>().RecordLiverSuccess();
+    }
+
+    public void Attack(int attackNum)
+    {
+        switch (attackNum)
+        {
+            case 1:
+                SoundManager.Instance.PlaySFX(SFXName.공격1);
+                break;
+            case 2:
+                SoundManager.Instance.PlaySFX(SFXName.공격2);
+                break;
+            case 3:
+                SoundManager.Instance.PlaySFX(SFXName.공격3);
+                break;
+            default:
+                break;
+        }
     }
 }
