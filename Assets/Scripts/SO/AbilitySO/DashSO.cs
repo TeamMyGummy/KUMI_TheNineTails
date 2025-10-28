@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Ability/Dash")]
 public class DashSO : BlockAbilitySO
 {
-    public float dashPower;
-    public float endDelay;
+    public float dashDistance;
+    public float dashDuration;
 }
