@@ -7,6 +7,7 @@ public class ConditionDialogue : MonoBehaviour
     [SerializeField] private string dialogueName;
     [SerializeField] private GameObject popup;
     [SerializeField] private GameObject prevPopup;
+    [SerializeField] private bool isDialogue;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,11 +15,16 @@ public class ConditionDialogue : MonoBehaviour
         {
             if (prevPopup != null)
                 prevPopup.SetActive(false);
-            
-            Debug.Log("대화 시작!");
-            YarnManager.Instance.RunDialogue(dialogueName, EnablePopup);
-            
-            
+
+            if (isDialogue)
+            {
+                Debug.Log("대화 시작!");
+                YarnManager.Instance.RunDialogue(dialogueName, EnablePopup);
+            }
+            else
+            {
+                EnablePopup();
+            }
         }
     }
 
