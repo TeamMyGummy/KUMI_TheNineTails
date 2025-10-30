@@ -76,6 +76,7 @@ public class SectionTrigger : MonoBehaviour
             zoneCollider.isTrigger = true;
             Debug.LogWarning($"CinematicZoneTrigger on '{gameObject.name}': Collider2D was not set as a trigger. It has been set automatically.");
         }
+        hasBeenTriggered = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

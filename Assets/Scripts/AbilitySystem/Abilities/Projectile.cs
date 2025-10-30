@@ -41,6 +41,7 @@ public class Projectile : MonoBehaviour //, IProjectile
             float timeRatio = Mathf.Clamp01(timer / duration);
             float progress = curve.Evaluate(timeRatio);
 
+            if (transform is null) break;
             transform.position = Vector3.Lerp(startPos, endPos, progress);
 
             await UniTask.Yield(PlayerLoopTiming.Update);
@@ -63,6 +64,7 @@ public class Projectile : MonoBehaviour //, IProjectile
 
     private void OnDisable()
     {
+        DestroyProjectile();
         isEnded = false;
     }
 }
