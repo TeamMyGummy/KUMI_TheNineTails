@@ -9,7 +9,7 @@ public class CheckClimbing : MonoBehaviour
     [SerializeField] private ConditionKey condition;
     [SerializeField] private Image progressBar;
     [Header("설정")]
-    [SerializeField] private float requiredHoldTime = 5f; // 키를 누르고 있어야 하는 시간
+    [SerializeField] private float requiredHoldTime = 3f; // 키를 누르고 있어야 하는 시간
 
     // 내부 변수
     private PlayerController playerController; // 플레이어 컨트롤러 참조
