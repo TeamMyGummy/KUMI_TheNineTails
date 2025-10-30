@@ -7,18 +7,17 @@ using Cysharp.Threading.Tasks;
 
 public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 {
-    private AbilitySystem _asc;
-    private Rigidbody2D _rigid;
     private CharacterMovement _characterMovement;
-    private PlayerController _playerController;
+    private Collider2D _playerCol;
+    private Vector2 _rayPos;
 
     private DashSO _dashSO;
-    private float _dashPower;
-    private float _dashTime;
-    private float _endDelayTime;
+    private float _dashDistance;
+    private float _dashDuration;
     private bool _canDash = true;
-    private bool _endDash;
-    private Vector2 _originVelocity;
+    private bool _endDash = true;
+
+    private bool isDashing = false;
 
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
@@ -26,11 +25,11 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         IsTickable = true;
         _dashSO = (DashSO) abilitySo;
+        _dashDistance = _dashSO.dashDistance;
+        _dashDuration = _dashSO.dashDuration;
         
-        _rigid = Actor.GetComponent<Rigidbody2D>();
         _characterMovement = Actor.GetComponent<CharacterMovement>();
-        _playerController = Actor.GetComponent<PlayerController>();
-        _asc = asc;
+        _playerCol = Actor.GetComponent<Collider2D>();
     }
 
     public override bool CanActivate()
@@ -46,7 +45,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     protected override void Activate()
     {
         base.Activate();
-        _rigid = Actor.GetComponent<Rigidbody2D>();
         
         if (!_characterMovement.CheckIsGround())
         {
@@ -55,11 +53,6 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
         }
         
         StartDash();
-        Vector2 currentPosition = _rigid.position;
-        float dashDistance = (_dashPower / _rigid.mass) * _dashTime;
-
-        _rigid.velocity = Vector2.zero;
-        _rigid.AddForce(_characterMovement.GetCharacterSpriteDirection() * _dashPower, ForceMode2D.Impulse);         
     }
 
     public void Update()
@@ -69,43 +62,26 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
     public void FixedUpdate()
     {
-        _dashTime -= Time.deltaTime;
-        if (_dashTime < 0 && !_endDash)
-        {
-            _rigid.velocity = Vector2.zero;
-            _endDelayTime -= Time.deltaTime;
-            if ( _endDelayTime < 0 )
-            {
-                if (_characterMovement.CheckIsGround())
-                    this.DelayOneFrame().Forget();
-                EndDash();
-            }
-        }
+        // 공중에서 점프 후 착지하면 대쉬 초기화
         if (_characterMovement.CheckIsGround())
         {
             if (!_canDash)
             {
-                this.DelayOneFrame().Forget(); 
-                _canDash = true;
+                ResetDash();
             }
         }
     }
 
     private void StartDash()
     {
-        _dashPower = _dashSO.dashPower;
-        _dashTime = _so.BlockTimer;
-        _endDelayTime = _dashSO.endDelay;
-        
-        _originVelocity = _rigid.velocity;
         _characterMovement.SetGravityScale(0);
         _endDash = false;
+        
+        DashAsync(_characterMovement.GetCharacterSpriteDirection()).Forget();
     }
 
     public void EndDash()
     {
-        _rigid.velocity = new Vector2(_originVelocity.x, Mathf.Min(_originVelocity.y, 0f));
-        //_rigid.velocity = _originVelocity;
         _characterMovement.ResetGravityScale();
         _endDash = true;
     }
@@ -116,5 +92,46 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
 
         if(!_endDash)
             EndDash();
+    }
+    
+    /// <summary>
+    /// 실제 Player Transform 변경하는 부분(대쉬)
+    /// </summary>
+    /// <param name="dir">대쉬 하는 방향</param>
+    public async UniTaskVoid DashAsync(Vector2 dir)
+    {
+        if (isDashing) return;
+        isDashing = true;
+
+        float elapsed = 0f;
+        Vector3 start = Actor.transform.position;
+        Vector3 target = start + (Vector3)(dir.normalized * _dashDistance);
+
+        while (elapsed < _dashDuration)
+        {
+            float t = elapsed / _dashDuration;
+            Vector3 nextPos = Vector3.Lerp(start, target, t);
+
+            // Raycast로 벽 체크
+            _rayPos = new Vector2(_playerCol.bounds.center.x, _playerCol.bounds.center.y);
+            RaycastHit2D hit = Physics2D.Raycast(_rayPos, dir, (nextPos - Actor.transform.position).magnitude, _characterMovement.GroundMask);
+            if (hit.collider != null)
+            {
+                // 벽에 닿으면 그 직전 위치로 이동 후 종료
+                Actor.transform.position = hit.point - dir.normalized * 0.01f;
+                isDashing = false;
+                //EndDash();
+                return;
+            }
+
+            Actor.transform.position = nextPos;
+
+            elapsed += Time.deltaTime;
+            await UniTask.Yield(PlayerLoopTiming.Update); // 한 프레임 대기
+        }
+
+        Actor.transform.position = target;
+        isDashing = false;
+        //EndDash();
     }
 }
