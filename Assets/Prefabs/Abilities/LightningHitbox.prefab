@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0cd73c55874975b360e8073ea60453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parryLayerName: Parrying
+  parryLayerName: 
   damage: 1
 --- !u!1001 &853555748174511390
 PrefabInstance:

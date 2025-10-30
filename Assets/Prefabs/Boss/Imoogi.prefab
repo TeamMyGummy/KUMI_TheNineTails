@@ -171,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 517080584346434038}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.77, y: 3, z: 0}
+  m_LocalPosition: {x: -6.4, y: 2.66, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -471,6 +471,8 @@ GameObject:
   - component: {fileID: 4897748875769308702}
   - component: {fileID: 1620255378993362409}
   - component: {fileID: 5822850486877326092}
+  - component: {fileID: 2037584866600874069}
+  - component: {fileID: 7085357097533872895}
   m_Layer: 11
   m_Name: AttackHitbox
   m_TagString: Untagged
@@ -575,6 +577,30 @@ MonoBehaviour:
   followParentWorldScale: 0
   maintainedAxisOrientation: 1
   initializeOnAwake: 1
+--- !u!114 &2037584866600874069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075109342536132128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71301fd1aa3206f43b479fdfd45d17c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7085357097533872895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075109342536132128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c827564a37714f6a8e68b024d34d65f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2502796460505021483
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +989,7 @@ Transform:
   m_GameObject: {fileID: 6537362089358688895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.7, y: -7.6, z: 0}
+  m_LocalPosition: {x: -13.14, y: -7.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1179,6 +1205,8 @@ MonoBehaviour:
     handler: {fileID: 6709487289358122325}
   - key: TailActive
     handler: {fileID: 5316841868326818199}
+  - key: TailHitboxActive
+    handler: {fileID: 7085357097533872895}
   onAfterEnd:
     m_PersistentCalls:
       m_Calls:
@@ -1271,7 +1299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89119aea6c5d4b1a9a915d78993fa78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObject: {fileID: 3144560449005721106, guid: b7a194f9eaa0a664ba504b1fc35ccc0f, type: 3}
 --- !u!114 &7245606385550033387
 MonoBehaviour:
   m_ObjectHideFlags: 0
