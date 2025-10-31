@@ -37,6 +37,7 @@ public enum SFXName
     이무기벽쿵1,
     이무기벽쿵2,
     이무기벽쿵3,
+    도깨비불저장,
 }
 
 [System.Serializable]

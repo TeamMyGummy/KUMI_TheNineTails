@@ -174,6 +174,11 @@ MonoBehaviour:
     loop: 0
     volume: 0.4
     source: {fileID: 0}
+  - name: 21
+    clip: {fileID: 8300000, guid: b0e7a35916d3026479dc78a17b68b9b5, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
 --- !u!114 &1581191385722863009
 MonoBehaviour:
   m_ObjectHideFlags: 0

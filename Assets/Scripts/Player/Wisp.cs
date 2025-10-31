@@ -34,6 +34,7 @@ public class Wisp : MonoBehaviour
     public void SaveWisp()
     {
         animator.SetTrigger("save");
+        SoundManager.Instance.PlaySFX(SFXName.도깨비불저장);
     }
 
     private void CheckPlayerState()
