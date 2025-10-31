@@ -31,8 +31,17 @@ public class Wisp : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPos, followSpeed * Time.deltaTime);
     }
 
-    public void SaveWisp()
+    public void SaveWisp(LanternObject lanternObject)
     {
+        Vector3 scale = transform.localScale;
+
+        float distance = transform.position.x - lanternObject.transform.position.x;
+        if (distance >= 0)
+            scale.x = -1;
+        else 
+            scale.x = 1;
+        transform.localScale = scale;
+        animator.SetFloat("saveMoveX", Mathf.Abs(distance) + 0.2f / 1.2f);
         animator.SetTrigger("save");
         SoundManager.Instance.PlaySFX(SFXName.도깨비불저장);
     }
