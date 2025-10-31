@@ -7,6 +7,7 @@ public class InteractLantern : MonoBehaviour
 {
     [SerializeField] private ConditionKey condition;
     [SerializeField] private LanternObject lantern;
+   
 
     private bool _isActive = false;
     private void Update()
