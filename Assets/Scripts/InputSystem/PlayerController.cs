@@ -285,7 +285,7 @@ public class PlayerController : MonoBehaviour, IMovement
                 return;
             }
             _lanternObject.InteractWithLantern();
-            _spawnWisp.wisp.ChangeTarget(_lanternObject.transform, new Vector3(_player.Controller.Direction.x * 1.5f, 0.9f, 0f));
+            _spawnWisp.wisp.SaveWisp();
         }
     }
     public void SetLanternObject(LanternObject lantern)
