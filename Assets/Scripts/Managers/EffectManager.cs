@@ -10,7 +10,6 @@ using Cysharp.Threading.Tasks;
 public class EffectManager : MonoBehaviour
 {
     public static EffectManager Instance { get; private set; }
-    private GameObject _player;
     
     private void Awake()
     {
@@ -25,18 +24,14 @@ public class EffectManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        _player = GameObject.FindWithTag("Player");
-    }
-
     /// <summary>
     /// EffectSO 정보를 가지고 이펙트를 실행하는 함수
     /// </summary>
+    /// <param name="actor">Effect를 실행하는 주체</param>
     /// <param name="effectSO">EffectSO</param>
     /// <param name="position">Effect Prefab을 생성하는 위치</param>
     /// <param name="effectPrefab">Effect Prefab</param>
-    public void AttackEffect(EffectSO effectSO, Vector2 position, GameObject effectPrefab = null)
+    public void AttackEffect(GameObject actor, EffectSO effectSO, Vector2 position, GameObject effectPrefab = null)
     {
         // Camera Shake
         if (effectSO.useCameraShake)
@@ -65,7 +60,7 @@ public class EffectManager : MonoBehaviour
         // Input
         if (effectSO.useBlockInput)
         {
-            DisableInputTask(effectSO.blockInputDuration).Forget();
+            DisableInputTask(actor, effectSO.blockInputDuration).Forget();
         }
         
     }
@@ -100,12 +95,14 @@ public class EffectManager : MonoBehaviour
     /// Player의 움직임을 막는 함수. HitStop 효과
     /// </summary>
     /// <param name="duration">지속 시간</param>
-    private async UniTask DisableInputTask(float duration)
+    private async UniTask DisableInputTask(GameObject actor, float duration)
     {
-        _player.GetComponent<PlayerController>().OnDisableMove();
+        if (!actor.CompareTag("Player")) return;
+        
+        actor.GetComponent<PlayerController>().OnDisableMove();
         
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
         
-        _player.GetComponent<PlayerController>().OnEnableMove();
+        actor.GetComponent<PlayerController>().OnEnableMove();
     }
 }
