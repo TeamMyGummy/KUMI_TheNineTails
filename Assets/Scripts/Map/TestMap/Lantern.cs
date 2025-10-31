@@ -54,20 +54,18 @@ public class Lantern : SceneSingleton<Lantern>
 
     public void Interact(int interactLantern)
     {
-        Debug.Log("2");
         //기존 체크포인트가 해당 씬 안에 있다면 그 체크포인트의 상태 변경
         if (_lanternsObjects.TryGetValue(_lanternState.RecentCheckPoint, out var lanternObject))
         {
             lanternObject.ChangeLanternState(LanternAppearance.Small);
         }
         
-        Debug.Log("3");
         //상태 업데이트
         _lanternState.PassedCheckPoint.Add(interactLantern);
         _lanternState.RecentCheckPoint = interactLantern;
         _lanternState.RecentScene = SceneLoader.GetCurrentSceneName();
+        Debug.Log(SceneLoader.GetCurrentSceneName() + "씬을 다음에 로드할 것입니다.");
         
-        Debug.Log("4");
         if (_lanternsObjects.TryGetValue(interactLantern, out var currentLantern))
         {
             _lanternState.RecentFloor = currentLantern.NumberOfFloor; 
