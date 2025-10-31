@@ -30,7 +30,7 @@ public class ParryingHitbox : MonoBehaviour
         SoundManager.Instance.PlaySFX(SFXName.패링);
         
         // 패링 이펙트 생성
-        EffectManager.Instance.AttackEffect(effectSO, _actor.transform.position, _effectPrefab);
+        EffectManager.Instance.AttackEffect(_actor, effectSO, _actor.transform.position, _effectPrefab);
 
         FoxFlameAdd();
     }

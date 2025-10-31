@@ -53,7 +53,7 @@
             }
         
             // 공격 성공 시 Effect
-            EffectManager.Instance.AttackEffect(effectSO, collision.transform.position, _effectPrefab);
+            EffectManager.Instance.AttackEffect(_actor, effectSO, collision.transform.position, _effectPrefab);
         }
 
         /// <summary>
