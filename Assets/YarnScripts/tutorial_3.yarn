@@ -1,0 +1,51 @@
+﻿title: tutorial_3
+---
+
+<<show Dokkaebi>>
+도깨비: 이정도는 쉽지?
+도깨비: 그럼 난 이만 간다~
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: 그래, 가.
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 뭐야, 나 안 잡아?
+도깨비: 보통 이럴 땐 "가지 마!"라고 해야 하는거 아니야?
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: 여우는 원래 혼자 살아.
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 오~ 그래? 몰랐네?
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: ......
+쿠미: 사실 나도 잘 몰라.
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 허~ 그럼 아는 척은 왜 하는데?
+도깨비: 참, 재밌는 여우네.
+도깨비: 아무튼, 난 간다. 잘 따라와보라고.
+도깨비: 길 잃고나서 내 탓하면 안된다!
+<<hide Dokkaebi>>
+
+<<end>>
+===

@@ -1,0 +1,58 @@
+title: tutorial_1
+---
+<<show Dokkaebi>>
+도깨비: 저기… 정신이 좀 들어?
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: ........
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 왜 말이 없지?
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: 여긴....어디지? 넌 누구야?
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 뭐야. 너 기억이 없구나?
+도깨비: 너 이름은 기억나?
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show 쿠미>>
+쿠미: ......
+쿠미: 뭐였더라...
+<<hide 쿠미>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 이거... 상태가 심각하구만
+도깨비: 여긴 설화 연구소야. 인간들이 전설 속 존재를 연구하던 곳이지. 지금은... 뭐,
+<<hide Dokkaebi>>
+
+<<wait 1>>
+
+<<show Dokkaebi>>
+도깨비: 앗 이제 난 가봐야겠다. 난 들키면 좀 곤란해서 말이지.
+도깨비: 근데 기억도 없는 널 이렇게 두고 가도 되려나?
+도깨비: 뭐, 넌 잘 버틸거라 믿어
+도꺠비: 여차하면 내가 살려줄게
+<<hide Dokkaebi>>
+
+<<end>>
+
+===
+
