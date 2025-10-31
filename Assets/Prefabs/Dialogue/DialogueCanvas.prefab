@@ -212,6 +212,8 @@ MonoBehaviour:
   characterScreen: {fileID: 9122492195949630765}
   dialogue: {fileID: 1824535815446000880}
   dialogueCanvas: {fileID: 5067439420841083555}
+  kumiPosY: -50
+  kkebiPosY: 0
 --- !u!225 &1324883367777368058
 CanvasGroup:
   m_ObjectHideFlags: 0
