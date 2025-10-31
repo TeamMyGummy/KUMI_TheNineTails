@@ -9,6 +9,8 @@ public class PressShift : MonoBehaviour
     
     [SerializeField] private Image[] boxesToFill; // Inspector에서 채울 네모 칸 이미지들을 연결
     [SerializeField] private Color filledColor = Color.cyan; // 채워졌을 때의 색상
+    
+    [SerializeField] private ActiveDokkebi dokkebi;
 
     private int currentIndex = 0; // 현재 채워야 할 칸의 인덱스
 
@@ -47,6 +49,7 @@ public class PressShift : MonoBehaviour
             if (currentIndex >= boxesToFill.Length)
             {
                 ConditionEventBus.Raise(condition);
+                dokkebi.ActivateDokkebi();
             }
         }
     }
