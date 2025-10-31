@@ -24,8 +24,11 @@ MonoBehaviour:
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
-  fromAnimation: []
-  toAnimation: []
-  duration: []
+  fromAnimation:
+  - attack
+  toAnimation:
+  - parry
+  duration:
+  - 0
   defaultMix: 0.2
   controller: {fileID: 9100000, guid: 3a6c21f3656783c43b5a3691970e3119, type: 2}
