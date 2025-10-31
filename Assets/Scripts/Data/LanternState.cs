@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class LanternState
 {
-    public HashSet<int> PassedCheckPoint = new();
+    public List<int> PassedCheckPoint = new();
     public int RecentCheckPoint = 1919508844;
     public string RecentScene = "B1_Tutorial";
     
