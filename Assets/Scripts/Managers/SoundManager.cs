@@ -34,6 +34,9 @@ public enum SFXName
     이무기공격1,
     이무기공격2,
     이무기공격3,
+    이무기벽쿵1,
+    이무기벽쿵2,
+    이무기벽쿵3,
 }
 
 [System.Serializable]
