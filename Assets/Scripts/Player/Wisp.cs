@@ -41,7 +41,7 @@ public class Wisp : MonoBehaviour
         else 
             scale.x = 1;
         transform.localScale = scale;
-        animator.SetFloat("saveMoveX", Mathf.Abs(distance) + 0.2f / 1.2f);
+        animator.SetFloat("saveMoveX", Mathf.Abs(distance) + 0.1f);
         animator.SetTrigger("save");
         SoundManager.Instance.PlaySFX(SFXName.도깨비불저장);
     }
