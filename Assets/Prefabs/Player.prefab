@@ -417,6 +417,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6c725016-e784-499d-a082-c18c77b3f1df
     m_ActionName: PlayerActions/LiverExtraction[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLoadScene
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ac3354ac-5e74-4abb-a612-4dae14adef2c
+    m_ActionName: PlayerActions/LoadScene[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLoadScene2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 93c2a581-ec4c-45cf-b78e-779ea112d838
+    m_ActionName: PlayerActions/LoadScene2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLoadScene3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0b228c9c-1f08-4179-a424-4d1a6dad87e8
+    m_ActionName: PlayerActions/LoadScene3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677374988490091879}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLoadScene4
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f9d6a3ca-6a74-4eaf-8b6d-65f14795133f
+    m_ActionName: PlayerActions/LoadScene4[/Keyboard/4]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerActions
@@ -505,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 3528586597524348064, guid: 1274d23ba9bab6140a32dc296e82840c, type: 3}
+  wisp: {fileID: 0}
 --- !u!114 &1641576921176570237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,7 +642,7 @@ MonoBehaviour:
   - {x: -0.097126484, y: 0.21669531, z: 0}
   m_ShapePathHash: -523907837
   m_Mesh: {fileID: 0}
-  m_InstanceId: 185854
+  m_InstanceId: 115324
   m_LocalBounds:
     m_Center: {x: 0.02128613, y: 1.1571972, z: 0}
     m_Extent: {x: 0.6182183, y: 0.943835, z: 0}

@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.SceneManagement;
+
 /*
  * 플레이어의 Input을 관리하는 파일입니다.
  */
@@ -405,6 +407,35 @@ public class PlayerController : MonoBehaviour, IMovement
         }
     }
     
+    // -------------------- Load Scene (돌발상황용) -----------------------
+    public void OnLoadScene(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            SceneManager.LoadScene("B1_Tutorial");
+        }
+    }
+    public void OnLoadScene2(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            SceneManager.LoadScene("B2_Monster1");
+        }
+    }
+    public void OnLoadScene3(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            SceneManager.LoadScene("B2_Gimmick2");
+        }
+    }
+    public void OnLoadScene4(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            SceneManager.LoadScene("B2_Boss");
+        }
+    }
 
     // ----------------------------------------------------------------
     /// <summary>
