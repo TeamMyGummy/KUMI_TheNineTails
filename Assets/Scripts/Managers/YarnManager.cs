@@ -25,6 +25,9 @@ public class YarnManager : SceneSingleton<YarnManager>
     [SerializeField] private UI_Dialogue dialogue;
     [SerializeField] private GameObject dialogueCanvas;
 
+    [SerializeField] private float kumiPosY;
+    [SerializeField] private float kkebiPosY;
+
     private string _prevCharacterName = "";
     
     private MotionHandle _motionHandle;
@@ -76,7 +79,7 @@ public class YarnManager : SceneSingleton<YarnManager>
         
         _player.OnDisableMove();
 
-        dialogueScreen.FadeScreen(0.5f, 0f, 0.5f);
+        dialogueScreen.FadeScreen(0.5f, 0f, 0.7f);
         StartCoroutine(WaitSeconds(0.8f));
         runner.StartDialogue(nodeName);
         dialogEnd = callback;
@@ -95,7 +98,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     {
         dialogue.RemoveDialogueOverlay();
         _player.OnEnableMove();
-        dialogueScreen.FadeScreen(0.5f, 0.5f, 0f);
+        dialogueScreen.FadeScreen(0.5f, 0.7f, 0f);
         dialogEnd?.Invoke();
         dialogEnd = null;
     }
@@ -108,11 +111,11 @@ public class YarnManager : SceneSingleton<YarnManager>
         
         if (spriteName == "쿠미")
         {
-            ShowSide(-710f, -510f);
+            ShowSide(-710f, -510f, kumiPosY);
         }
         else
         {
-            ShowSide(710f, 510f);
+            ShowSide(710f, 510f, kkebiPosY);
         }
     }
 
@@ -120,11 +123,11 @@ public class YarnManager : SceneSingleton<YarnManager>
     {
         if (spriteName == "쿠미")
         {
-            HideSide(-510f, -710f);
+            HideSide(-510f, -710f, kumiPosY);
         }
         else
         {
-            HideSide(510f, 710f);
+            HideSide(510f, 710f, kkebiPosY);
         }
     }
 
@@ -135,11 +138,11 @@ public class YarnManager : SceneSingleton<YarnManager>
         characterImage.SetNativeSize();
     }
 
-    private void ShowSide(float start, float end)
+    private void ShowSide(float start, float end, float posY)
     {
         RectTransform rect = characterImage.GetComponent<RectTransform>();
-        Vector3 startPos = new Vector3(start, rect.anchoredPosition.y, 0f);
-        Vector3 endPos = new Vector3(end, rect.anchoredPosition.y, 0f);
+        Vector3 startPos = new Vector3(start, posY, 0f);
+        Vector3 endPos = new Vector3(end, posY, 0f);
         
         rect.anchoredPosition = startPos;
         characterScreen.FadeScreen(0.5f, 0f, 1f);
@@ -147,11 +150,11 @@ public class YarnManager : SceneSingleton<YarnManager>
         rect.DOAnchorPos(endPos, 0.5f).SetEase(Ease.OutCubic);
     }
     
-    private void HideSide(float start, float end)
+    private void HideSide(float start, float end, float posY)
     {
         RectTransform rect = characterImage.GetComponent<RectTransform>();
-        Vector3 startPos = new Vector3(start, rect.anchoredPosition.y, 0f);
-        Vector3 endPos = new Vector3(end, rect.anchoredPosition.y, 0f);
+        Vector3 startPos = new Vector3(start, posY, 0f);
+        Vector3 endPos = new Vector3(end, posY, 0f);
         
         rect.anchoredPosition = startPos;
         characterScreen.FadeScreen(0.5f, 1f, 0f);
