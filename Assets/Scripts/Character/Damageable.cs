@@ -75,7 +75,7 @@ public class Damageable : MonoBehaviour
             ApplyDamage(asc, damage);
             
             CharacterMovement cm = GetComponent<CharacterMovement>();
-            cm.ApplyKnockback(direction, 2f, 0.1f);
+            cm?.ApplyKnockback(direction, 2f, 0.1f);
         }
     }
 
