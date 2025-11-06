@@ -989,7 +989,7 @@ Transform:
   m_GameObject: {fileID: 6537362089358688895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.14, y: -7.9, z: 0}
+  m_LocalPosition: {x: -3.3, y: -7.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1009,6 +1009,7 @@ GameObject:
   - component: {fileID: 8075618813540898521}
   - component: {fileID: 5451662398478745040}
   - component: {fileID: 8486441879708021829}
+  - component: {fileID: 5932695164662349728}
   m_Layer: 11
   m_Name: AttackHitbox
   m_TagString: Untagged
@@ -1125,6 +1126,18 @@ MonoBehaviour:
   followParentWorldScale: 0
   maintainedAxisOrientation: 1
   initializeOnAwake: 1
+--- !u!114 &5932695164662349728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6689108206757217516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207d677ba118a074eb3334bb5b646158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7275130027680890818
 GameObject:
   m_ObjectHideFlags: 0
