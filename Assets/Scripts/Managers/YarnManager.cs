@@ -68,6 +68,12 @@ public class YarnManager : SceneSingleton<YarnManager>
     /// </summary>
     public void RunDialogue(string nodeName, Action callback = null)
     {
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+            Debug.Log("good");
+        }
+        
         if (runner == null)
         {
             Init();
@@ -79,7 +85,7 @@ public class YarnManager : SceneSingleton<YarnManager>
         
         _player.OnDisableMove();
 
-        dialogueScreen.FadeScreen(0.5f, 0f, 0.7f);
+        dialogueScreen.FadeScreen(0.5f, 1f);
         StartCoroutine(WaitSeconds(0.8f));
         runner.StartDialogue(nodeName);
         dialogEnd = callback;
@@ -98,7 +104,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     {
         dialogue.RemoveDialogueOverlay();
         _player.OnEnableMove();
-        dialogueScreen.FadeScreen(0.5f, 0.7f, 0f);
+        dialogueScreen.FadeScreen(0.5f, 0f);
         dialogEnd?.Invoke();
         dialogEnd = null;
     }
@@ -145,7 +151,7 @@ public class YarnManager : SceneSingleton<YarnManager>
         Vector3 endPos = new Vector3(end, posY, 0f);
         
         rect.anchoredPosition = startPos;
-        characterScreen.FadeScreen(0.5f, 0f, 1f);
+        characterScreen.FadeScreen(0.5f, 1f);
 
         rect.DOAnchorPos(endPos, 0.5f).SetEase(Ease.OutCubic);
     }
@@ -157,7 +163,7 @@ public class YarnManager : SceneSingleton<YarnManager>
         Vector3 endPos = new Vector3(end, posY, 0f);
         
         rect.anchoredPosition = startPos;
-        characterScreen.FadeScreen(0.5f, 1f, 0f);
+        characterScreen.FadeScreen(0.5f, 0f);
 
         rect.DOAnchorPos(endPos, 0.5f).SetEase(Ease.OutCubic);
     }

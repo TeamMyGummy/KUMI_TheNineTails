@@ -38,10 +38,12 @@ public class Screen : MonoBehaviour
     /// 알파값 조절
     /// </summary>
 
-    public void FadeScreen(float duration, float startAlpha, float targetAlpha)
+    public void FadeScreen(float duration, float targetAlpha)
     {
         if (_targetImage != null)
         {
+            ShowScreen();
+            float startAlpha = _targetImage.color.a;
             StartCoroutine(FadeToAlpha(startAlpha, targetAlpha, duration));
         }
     }
