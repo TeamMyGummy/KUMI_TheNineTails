@@ -139,28 +139,38 @@ public class Parrying : GameplayAbility<ParryingSO>
         _hitbox.transform.position = Actor.transform.position + new Vector3(_playerController.Direction.x * _so.HitboxOffset.x + interpolation, _so.HitboxOffset.y, 0f);
     }
 
-    private void SetGaugeBar()
+    private void SetGaugeBar() //몬스터 hp바와 동일하게 수정했음
     {
         _gaugeImage.fillAmount = _currentGauge / MaxGauge;
 
         RectTransform barRT = _gaugeBar.transform as RectTransform;
+        Canvas canvas = _gaugeBar.GetComponentInParent<Canvas>();
+        RectTransform canvasRectTransform = canvas.transform as RectTransform;
+        Camera canvasCamera = canvas.worldCamera;
 
-        // Actor 머리 위 월드 위치
-        Vector3 worldPos = Actor.transform.position + Vector3.up * 2f;
+        Vector3 worldPos = Actor.transform.position + Vector3.up * 2f; 
 
-        Camera camera = Camera.main;
+        Camera targetCamera = Camera.main;
 
         foreach (var c in GameObject.FindGameObjectsWithTag("MainCamera"))
         {
-            if (c.name == "BossCamera")
-                camera = c.GetComponent<Camera>();
+            Camera potentialCam = c.GetComponent<Camera>();
+            if (potentialCam != null && c.name == "BossCamera")
+            {
+                targetCamera = potentialCam;
+                break;
+            }
         }
-        // 스크린 좌표로 변환
-        //이거 개선하기; 카메라 시스템을 만들어야 할 필요성을 느낌;;;;
-        Vector3 screenPos = camera.WorldToScreenPoint(worldPos);
+        Vector2 screenPoint = targetCamera.WorldToScreenPoint(worldPos);
 
-        // UI Canvas에 직접 위치 지정 (Overlay 모드 기준)
-        barRT.position = screenPos;
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRectTransform,
+            screenPoint,
+            canvasCamera,
+            out localPoint
+        );
+        barRT.anchoredPosition = localPoint;
     }
     
     private void CancelReduce()

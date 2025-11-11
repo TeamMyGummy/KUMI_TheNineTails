@@ -1,5 +1,4 @@
-﻿// UI_MonsterHpBar.cs (Screen Space - Camera 포지셔닝 수정된 전체 코드)
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using R3;
 using System.Collections;
@@ -14,10 +13,10 @@ public class UI_MonsterHpBar : MonoBehaviour
     private CanvasGroup canvasGroup;
     private GameAbilitySystem.Attribute hp;
 
-    private Transform canvasTransform; 
-    private RectTransform canvasRectTransform; // (신규) 위치 계산에 필요한 캔버스의 RectTransform
+    private Transform canvasTransform;
+    private RectTransform canvasRectTransform;
     private Camera mainCamera;
-    private Camera canvasCamera; // (신규) UI를 렌더링하는 카메라 (UI_Camera)
+    private Camera canvasCamera;
     private Collider2D monsterCollider;
 
     private float lastDamagedTime;
@@ -29,15 +28,12 @@ public class UI_MonsterHpBar : MonoBehaviour
         mainCamera = Camera.main;
         monsterCollider = GetComponent<Collider2D>(); 
     
-        // ▼▼▼▼▼▼ Tag로 캔버스를 찾고, RectTransform과 Camera도 캐시 ▼▼▼▼▼▼
         GameObject canvasObj = GameObject.FindWithTag("BaseCanvas");
         
         if (canvasObj != null)
         {
             canvasTransform = canvasObj.transform;
-            // (신규) 위치 계산을 위해 RectTransform을 저장
             canvasRectTransform = canvasObj.GetComponent<RectTransform>(); 
-            // (신규) 캔버스를 렌더링하는 카메라(UI_Camera)를 저장
             canvasCamera = canvasObj.GetComponent<Canvas>().worldCamera; 
         }
         else
@@ -53,7 +49,6 @@ public class UI_MonsterHpBar : MonoBehaviour
                            $"'BaseCanvas'의 Render Mode를 Screen Space - Camera로 설정하고 UI_Camera를 할당하세요.", this.gameObject);
              yield break;
         }
-        // ▲▲▲▲▲▲ 수정 끝 ▲▲▲▲▲▲
 
         while (monster.asc == null || !monster.asc.Attribute.Attributes.ContainsKey("HP"))
         {
@@ -80,7 +75,6 @@ public class UI_MonsterHpBar : MonoBehaviour
             return;
         }
     
-        // (수정) 새 로직이 적용된 함수 호출
         UpdateHpBarPosition(); 
     }
   
@@ -95,13 +89,10 @@ public class UI_MonsterHpBar : MonoBehaviour
         hp.CurrentValue.Subscribe(OnHpChanged).AddTo(_disposables);
         hpBar.gameObject.SetActive(false); 
     }
-
-    // ▼▼▼▼▼▼ (핵심 수정) 포지셔닝 로직 전체 변경 ▼▼▼▼▼▼
+    
     private void UpdateHpBarPosition()
     {
         if (mainCamera == null) return;
-
-        // 1. 몬스터의 월드 좌표 가져오기
         Vector3 worldPosition;
         if (monsterCollider == null)
         {
@@ -109,27 +100,21 @@ public class UI_MonsterHpBar : MonoBehaviour
         }
         else
         {
-            float topY = monsterCollider.bounds.max.y + 0.2f;
+            float topY = monsterCollider.bounds.max.y + 0.3f;
             worldPosition = new Vector3(transform.position.x, topY + 0.3f, transform.position.z);
         }
-
-        // 2. 월드 좌표 -> 스크린 좌표로 변환 (by MainCamera)
         Vector2 screenPoint = mainCamera.WorldToScreenPoint(worldPosition);
 
-        // 3. 스크린 좌표 -> 캔버스의 로컬 좌표로 변환 (by UI_Camera)
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform, // 캔버스의 RectTransform
-            screenPoint,         // 변환할 스크린 좌표
-            canvasCamera,        // 캔버스를 렌더링하는 카메라 (UI_Camera)
-            out localPoint       // 변환된 캔버스 로컬 좌표
+            canvasRectTransform,
+            screenPoint,
+            canvasCamera,
+            out localPoint
         );
-
-        // 4. HP바의 위치(anchoredPosition)를 캔버스 로컬 좌표로 설정
         hpBar.anchoredPosition = localPoint;
     }
-    // ▲▲▲▲▲▲ 수정 끝 ▲▲▲▲▲▲
-
+    
     private void UpdateVisibility()
     {
         if (monster.isAggro)
