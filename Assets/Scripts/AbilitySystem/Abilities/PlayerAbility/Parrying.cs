@@ -33,7 +33,8 @@ public class Parrying : GameplayAbility<ParryingSO>
         
         _hitbox = ResourcesManager.Instance.Instantiate(_so.Hitbox, actor.transform);
         _hitbox.SetActive(false);
-        _gaugeBar = ResourcesManager.Instance.Instantiate(_so.GaugeBar.gameObject, Object.FindFirstObjectByType<Canvas>().gameObject.transform);
+        Transform canvasTransform = GameObject.FindWithTag("BaseCanvas").transform;
+        _gaugeBar = ResourcesManager.Instance.Instantiate(_so.GaugeBar.gameObject, canvasTransform);
         _gaugeImage = _gaugeBar.transform.Find("hp_bar").GetComponent<Image>();
         _gaugeBar.SetActive(false);
 
@@ -142,14 +143,13 @@ public class Parrying : GameplayAbility<ParryingSO>
     private void SetGaugeBar() //몬스터 hp바와 동일하게 수정했음
     {
         _gaugeImage.fillAmount = _currentGauge / MaxGauge;
-
         RectTransform barRT = _gaugeBar.transform as RectTransform;
         Canvas canvas = _gaugeBar.GetComponentInParent<Canvas>();
+        
+        if (canvas == null) return; 
+
         RectTransform canvasRectTransform = canvas.transform as RectTransform;
-        Camera canvasCamera = canvas.worldCamera;
-
-        Vector3 worldPos = Actor.transform.position + Vector3.up * 2f; 
-
+        Camera canvasCamera = canvas.worldCamera; 
         Camera targetCamera = Camera.main;
 
         foreach (var c in GameObject.FindGameObjectsWithTag("MainCamera"))
@@ -161,13 +161,17 @@ public class Parrying : GameplayAbility<ParryingSO>
                 break;
             }
         }
+    
+        if (targetCamera == null) return;
+
+        Vector3 worldPos = Actor.transform.position + Vector3.up * 2f; 
         Vector2 screenPoint = targetCamera.WorldToScreenPoint(worldPos);
 
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRectTransform,
             screenPoint,
-            canvasCamera,
+            canvasCamera, 
             out localPoint
         );
         barRT.anchoredPosition = localPoint;

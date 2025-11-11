@@ -68,7 +68,7 @@ public class UI_StartMenu : MonoBehaviour
         }
         else
         {
-            SceneLoader.LoadScene("B2_Monster1");
+            SceneLoader.LoadScene("B1_Tutorial");
         }
     }
 
