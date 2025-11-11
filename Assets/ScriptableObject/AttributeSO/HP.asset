@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HP
   m_EditorClassIdentifier: 
   AttributeName: HP
-  BaseValue: 3
-  MaxValue: 3
+  BaseValue: 5
+  MaxValue: 5
