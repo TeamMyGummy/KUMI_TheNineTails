@@ -44,22 +44,14 @@ public class YarnManager : SceneSingleton<YarnManager>
         // 새로운 대사가 시작될 때마다 HandleLineStarted 실행
         lineView.onLineStarted.AddListener(HandleLineStarted);
         
-        runner.AddCommandHandler("end", EndDialogue);
+        runner.AddCommandHandler("end", StopDialogue);
         runner.AddCommandHandler<string>("show", ShowCharacter);
         runner.AddCommandHandler<string>("hide", HideCharacter);
         runner.AddCommandHandler<string>("change", ChangeCharacter);
         
         _player = FindAnyObjectByType<PlayerController>();
         
-        runner.onDialogueStart.AddListener(() =>
-        {
-            dialogueCanvas.SetActive(true);
-        });
-        
-        runner.onDialogueComplete.AddListener(() =>
-        {
-            dialogueCanvas.SetActive(false);
-        });
+        runner.onDialogueComplete.AddListener(HandleDialogueCompletion);
     }
 
     /// <summary>
@@ -84,11 +76,59 @@ public class YarnManager : SceneSingleton<YarnManager>
         dialogue.ApplyDialogueOverlay();
         
         _player.OnDisableMove();
+        
+        dialogueCanvas.SetActive(true);
+        dialogueScreen.gameObject.SetActive(true);
 
-        dialogueScreen.FadeScreen(0.5f, 1f);
+        dialogueScreen.FadeScreen(0.5f, 0.5f);
         StartCoroutine(WaitSeconds(0.8f));
         runner.StartDialogue(nodeName);
         dialogEnd = callback;
+    }
+    
+    /// <summary>
+    /// Yarn 스크립트의 <<end>> 커맨드에 의해 호출됩니다.
+    /// 단순히 DialogueRunner를 중지시킵니다.
+    /// </summary>
+    void StopDialogue()
+    {
+        if (runner.IsDialogueRunning)
+        {
+            runner.Stop();
+        }
+    }
+    
+    /// <summary>
+    /// 스킵 버튼(UI)에서 호출할 공용 메소드입니다.
+    /// </summary>
+    public void SkipDialogue()
+    {
+        // 타이핑 중이 아니라면 대화 즉시 중지
+        if (runner.IsDialogueRunning)
+        {
+            runner.Stop();
+        }
+    }
+    
+    /// <summary>
+    /// 대화가 완료되거나 Stop()으로 중지될 때 공통으로 호출되는 클린업 함수입니다.
+    /// (기존 EndDialogue와 onDialogueComplete 리스너의 로직을 합쳤습니다)
+    /// </summary>
+    private void HandleDialogueCompletion()
+    {
+        dialogue.RemoveDialogueOverlay();
+
+        if (_player != null) // 안전을 위해 null 체크
+        {
+            _player.OnEnableMove();
+        }
+
+        dialogueScreen.FadeScreen(0.5f, 0f);
+        
+        dialogEnd?.Invoke();
+        dialogEnd = null;
+        
+        dialogueCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -102,11 +142,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     /// </summary>
     void EndDialogue()
     {
-        dialogue.RemoveDialogueOverlay();
-        _player.OnEnableMove();
-        dialogueScreen.FadeScreen(0.5f, 0f);
-        dialogEnd?.Invoke();
-        dialogEnd = null;
+        StopDialogue();
     }
 
     void ShowCharacter(string spriteName)
