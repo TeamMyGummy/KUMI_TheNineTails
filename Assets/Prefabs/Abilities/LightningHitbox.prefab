@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3144560449005721106}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2599989, y: -0.77386916, z: 0}
+  m_LocalPosition: {x: 1.2599989, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6065554172128510471, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.87
       objectReference: {fileID: 0}
     - target: {fileID: 6065554172128510471, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -157,6 +157,18 @@ PrefabInstance:
     - target: {fileID: 6065554172128510471, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029506416378074701, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029506416378074701, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029506416378074701, guid: 1a2e0d55f63bda645ab7857413b7331c, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
