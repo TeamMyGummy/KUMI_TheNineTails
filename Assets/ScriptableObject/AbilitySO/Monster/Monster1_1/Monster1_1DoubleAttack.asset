@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 102
   skillName: 102
-  skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: "\uBAB91-1\uAC15 \uC5F0\uC18D\uACF5\uACA9"
   unlockFloor: 0
@@ -24,6 +23,7 @@ MonoBehaviour:
   AttackRangeY: 2
   HitboxOffset: {x: 1, y: 1}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
+  AttackSound: 20
   preAttackDelay: 0.7
   activeTime: 0.2
   postAttackDelay: 0.3

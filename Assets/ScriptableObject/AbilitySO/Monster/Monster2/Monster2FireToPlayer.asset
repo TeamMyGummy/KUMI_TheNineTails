@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 104
   skillName: 104
-  skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: 
   unlockFloor: 0
   skillKeyboard: {fileID: 0}
   BlockTimer: 0.5
   projectile: {fileID: 1762829811770736879, guid: 459ccd1dbe56d2a4e9db2705ed4fff50, type: 3}
+  AttackSound: 22
   preAttackDelay: 1.2
   isStoppWhileAttack: 1

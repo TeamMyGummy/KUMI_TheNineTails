@@ -881,6 +881,7 @@ public class ParryingState : PlayerState
         
         Player.Animator.SetTrigger(Player.StartParryingID);
         Player.Animator.SetBool(Player.ParryingID, true);
+        SoundManager.Instance.PlaySFX(SFXName.패링);
         Player.ASC.TryActivateAbility(AbilityKey.Parrying);
         
         Player.Controller.OnParryingCanceled -= ParryingCanceled;

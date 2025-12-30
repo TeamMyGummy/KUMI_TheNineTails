@@ -86,6 +86,7 @@ public class MonsterAttack : BlockAbility<MonsterAttackSO>
         if (!CanAttack())
             return;
 
+        SoundManager.Instance.PlaySFX(_attackData.AttackSound);
         SpawnHitbox(_attackData.ActiveTime);
     }
 
