@@ -19,7 +19,7 @@ MonoBehaviour:
   timeScale: 0.01
   slowDuration: 0.001
   useSound: 1
-  sfxName: 14
+  sfxName: 15
   hitEffectPrefab: {fileID: 6069330293569023417, guid: 3cc915543c1366b4982412e9f3bf8689, type: 3}
   effectDuration: 0.3
   useBlockInput: 1

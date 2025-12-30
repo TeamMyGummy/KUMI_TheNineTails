@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillKey: 100
   skillName: 100
-  skillSequence: {fileID: 0}
   skillIcon: {fileID: 0}
   description: 
   unlockFloor: 0
@@ -24,6 +23,7 @@ MonoBehaviour:
   AttackRangeY: 1
   HitboxOffset: {x: 0, y: -0.5}
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
+  AttackSound: 19
   preAttackDelay: 1
   activeTime: 0.2
   postAttackDelay: 0.5

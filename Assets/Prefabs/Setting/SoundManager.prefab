@@ -65,14 +65,14 @@ MonoBehaviour:
     source: {fileID: 0}
   sfxSounds:
   - name: 0
-    clip: {fileID: 8300000, guid: 02829bde0d5a040458fd1f82932297e2, type: 3}
+    clip: {fileID: 8300000, guid: 5e031426f12708b47ba3fe0d2f72d066, type: 3}
     loop: 1
-    volume: 0.7
+    volume: 1
     source: {fileID: 0}
   - name: 1
-    clip: {fileID: 8300000, guid: a2dc808506deb814789ed0f10555ca41, type: 3}
+    clip: {fileID: 8300000, guid: ed99c4ef99168dd429412f3abe846ae1, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.3
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 35c59edd18360f14cb060b67397f0574, type: 3}
@@ -90,91 +90,116 @@ MonoBehaviour:
     volume: 1
     source: {fileID: 0}
   - name: 5
-    clip: {fileID: 8300000, guid: bd5e19fe73b30f941b128af1c0b0705b, type: 3}
+    clip: {fileID: 8300000, guid: 4ef4406206e98c84384f8160e9a58487, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
   - name: 6
-    clip: {fileID: 8300000, guid: f7742f4f1e1c1864f874dfb836518915, type: 3}
+    clip: {fileID: 8300000, guid: 8b16d7c96c78b4541b03b81c2f051ab1, type: 3}
     loop: 1
     volume: 1
     source: {fileID: 0}
   - name: 7
-    clip: {fileID: 8300000, guid: d696258085868174db4d94bec587fcde, type: 3}
+    clip: {fileID: 8300000, guid: 065ea26ac306b6f47a1bc5fa0b07d3c9, type: 3}
     loop: 1
     volume: 1
     source: {fileID: 0}
   - name: 8
-    clip: {fileID: 8300000, guid: 9b6504f8c7b9e1d45924257c7048f03d, type: 3}
+    clip: {fileID: 8300000, guid: 1807b1a3237014f4eaa655eab29b9708, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
   - name: 9
-    clip: {fileID: 8300000, guid: 77c8a36b91df49e40b1b9050ecc2ee12, type: 3}
+    clip: {fileID: 8300000, guid: 71dd96f427401ab40a0ed76128188a9b, type: 3}
     loop: 0
-    volume: 0.5
+    volume: 0.7
     source: {fileID: 0}
   - name: 10
-    clip: {fileID: 8300000, guid: fb6550d56ffc4504ba8c6307e3fbba72, type: 3}
+    clip: {fileID: 8300000, guid: b84a942b9c2afb94fbbc9dfbd43497dd, type: 3}
     loop: 0
-    volume: 0.5
+    volume: 0.7
     source: {fileID: 0}
   - name: 11
-    clip: {fileID: 8300000, guid: 969785107b6c32b44856cb2cac42a84c, type: 3}
-    loop: 0
-    volume: 0.6
-    source: {fileID: 0}
-  - name: 12
-    clip: {fileID: 8300000, guid: 0d918016ccd87e146b6206b230a1ead9, type: 3}
+    clip: {fileID: 8300000, guid: 5a8435a327f7b04409024aee2d876eab, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
+  - name: 12
+    clip: {fileID: 8300000, guid: 003943a16d124774fa94d3d6b9cfee38, type: 3}
+    loop: 0
+    volume: 0.5
+    source: {fileID: 0}
   - name: 13
-    clip: {fileID: 8300000, guid: ba629babf41565c4d9d52c29e804d3c3, type: 3}
+    clip: {fileID: 8300000, guid: 2776b91527f213d41a5ce4051bcc8121, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
   - name: 14
-    clip: {fileID: 8300000, guid: d252c2839a8812740bb6e6b20eaf2729, type: 3}
+    clip: {fileID: 8300000, guid: e1dadd2dc7f613f4eb02d2df5a4c299f, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
   - name: 15
-    clip: {fileID: 8300000, guid: b84cfa8094898da4e8f043f53eea245d, type: 3}
+    clip: {fileID: 8300000, guid: 23ff311769edb8c40b97cb58f565c366, type: 3}
+    loop: 0
+    volume: 1
+    source: {fileID: 0}
+  - name: 16
+    clip: {fileID: 8300000, guid: f9e19480e08f8c943b5e0b0929073d8b, type: 3}
     loop: 0
     volume: 0.5
     source: {fileID: 0}
-  - name: 16
+  - name: 17
     clip: {fileID: 8300000, guid: 5b7abaa6ee1c4b44c9dd27806f82ac9f, type: 3}
     loop: 0
     volume: 1
     source: {fileID: 0}
-  - name: 17
-    clip: {fileID: 8300000, guid: e12ff0dd4e53a274bb049a0d5d6f894a, type: 3}
+  - name: 18
+    clip: {fileID: 8300000, guid: ed10eef568ad96541ad325d878be0eea, type: 3}
     loop: 0
     volume: 0.6
     source: {fileID: 0}
-  - name: 18
+  - name: 19
+    clip: {fileID: 8300000, guid: e13e1dd5d230a5b469e78fd941d72a4e, type: 3}
+    loop: 0
+    volume: 0.5
+    source: {fileID: 0}
+  - name: 20
+    clip: {fileID: 8300000, guid: a3deebfb326769340a4a767fe979dffb, type: 3}
+    loop: 0
+    volume: 0.5
+    source: {fileID: 0}
+  - name: 21
+    clip: {fileID: 8300000, guid: 818156538701e7d42bfab88a98b24943, type: 3}
+    loop: 0
+    volume: 0.5
+    source: {fileID: 0}
+  - name: 22
+    clip: {fileID: 8300000, guid: 830d108ca231cfb4896602ba0eee1c4b, type: 3}
+    loop: 0
+    volume: 0.5
+    source: {fileID: 0}
+  - name: 24
     clip: {fileID: 8300000, guid: 6ba278ece207c254c91ed1128fe6c901, type: 3}
     loop: 0
     volume: 0.4
     source: {fileID: 0}
-  - name: 19
+  - name: 25
     clip: {fileID: 8300000, guid: c1a4ded8504a79644b81924e315fa991, type: 3}
     loop: 0
     volume: 0.4
     source: {fileID: 0}
-  - name: 20
+  - name: 26
     clip: {fileID: 8300000, guid: 34b2c52e1433e5c498e09a47646592d9, type: 3}
     loop: 0
     volume: 0.4
     source: {fileID: 0}
-  - name: 21
+  - name: 27
     clip: {fileID: 8300000, guid: c6c9691e929a0e748b6ab405b045cdbe, type: 3}
     loop: 0
     volume: 0.4
     source: {fileID: 0}
-  - name: 25
+  - name: 31
     clip: {fileID: 8300000, guid: b0e7a35916d3026479dc78a17b68b9b5, type: 3}
     loop: 0
     volume: 0.4
