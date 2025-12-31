@@ -24,6 +24,7 @@ public class YarnManager : SceneSingleton<YarnManager>
     [SerializeField] private Screen characterScreen;
     [SerializeField] private UI_Dialogue dialogue;
     [SerializeField] private GameObject dialogueCanvas;
+    [SerializeField] private Button skipButton;
 
     [SerializeField] private float kumiPosY;
     [SerializeField] private float kkebiPosY;
@@ -52,6 +53,8 @@ public class YarnManager : SceneSingleton<YarnManager>
         _player = FindAnyObjectByType<PlayerController>();
         
         runner.onDialogueComplete.AddListener(HandleDialogueCompletion);
+        
+        skipButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -84,38 +87,20 @@ public class YarnManager : SceneSingleton<YarnManager>
         StartCoroutine(WaitSeconds(0.8f));
         runner.StartDialogue(nodeName);
         dialogEnd = callback;
+        
+        skipButton.gameObject.SetActive(true);
     }
     
     /// <summary>
     /// Yarn 스크립트의 <<end>> 커맨드에 의해 호출됩니다.
     /// 단순히 DialogueRunner를 중지시킵니다.
     /// </summary>
-    void StopDialogue()
+    public void StopDialogue()
     {
         if (runner.IsDialogueRunning)
         {
             runner.Stop();
         }
-    }
-    
-    /// <summary>
-    /// 스킵 버튼(UI)에서 호출할 공용 메소드입니다.
-    /// </summary>
-    public void SkipDialogue()
-    {
-        // 타이핑 중이 아니라면 대화 즉시 중지
-        if (runner.IsDialogueRunning)
-        {
-            runner.Stop();
-        }
-    }
-    
-    /// <summary>
-    /// 대화가 완료되거나 Stop()으로 중지될 때 공통으로 호출되는 클린업 함수입니다.
-    /// (기존 EndDialogue와 onDialogueComplete 리스너의 로직을 합쳤습니다)
-    /// </summary>
-    private void HandleDialogueCompletion()
-    {
         dialogue.RemoveDialogueOverlay();
 
         if (_player != null) // 안전을 위해 null 체크
@@ -129,6 +114,18 @@ public class YarnManager : SceneSingleton<YarnManager>
         dialogEnd = null;
         
         dialogueCanvas.SetActive(false);
+        
+        skipButton.gameObject.SetActive(false);
+    }
+    
+    
+    /// <summary>
+    /// 대화가 완료되거나 Stop()으로 중지될 때 공통으로 호출되는 클린업 함수입니다.
+    /// (기존 EndDialogue와 onDialogueComplete 리스너의 로직을 합쳤습니다)
+    /// </summary>
+    private void HandleDialogueCompletion()
+    {
+        
     }
 
     /// <summary>
