@@ -38,31 +38,6 @@ public class CharacterMovement : MonoBehaviour
         _isGround = CheckIsGround();
 
         _currentVelocity = _nextDirection * speed;
-        //if (_isGround || _rigidBody.gravityScale == 0)
-        //{
-        //    // Move
-        //    // 땅에 있을 때: 즉시 반응
-        //    _currentVelocity = _nextDirection * speed;
-        //}
-        //else
-        //{
-        //    // Jump
-        //    // 공중에 있을 때
-        //    Vector2 targetVelocity = _nextDirection * speed;
-        //    
-        //    if (_nextDirection != Vector2.zero)
-        //    {
-        //        // 가속
-        //        _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, 
-        //            acceleration * Time.fixedDeltaTime);
-        //    }
-        //    else
-        //    {
-        //        // 감속
-        //        _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, 
-        //            deceleration * Time.fixedDeltaTime);
-        //    }
-        //}
         
         if (_currentVelocity.magnitude > 0.01f)
         {
@@ -70,6 +45,16 @@ public class CharacterMovement : MonoBehaviour
             Vector2 nextMove = _currentVelocity * Time.fixedDeltaTime;
             _rigidBody.position = currMove + nextMove;
         }
+
+        // 일정 속도 이상 안 올라가게 제한
+        var v = _rigidBody.velocity;
+
+        if (Mathf.Abs(v.y) > 10.0f)
+        {
+            v.y = v.y > 0f ? 10.0f : -10.0f;
+        }
+
+        _rigidBody.velocity = v;
     }
 
     /// <summary>

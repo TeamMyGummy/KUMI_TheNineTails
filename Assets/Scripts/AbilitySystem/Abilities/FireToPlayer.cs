@@ -36,6 +36,7 @@ public class FireToPlayer : BlockAbility<FireProjectileSO>
         }
         
         _actor.GetComponent<Animator>().SetTrigger("FireAttack");
+        SoundManager.Instance.PlaySFX(_so.AttackSound);
         
         if (_so.PreDelay > 0f)
             await UniTask.Delay(TimeSpan.FromSeconds(_so.PreDelay), delayType: DelayType.DeltaTime); 

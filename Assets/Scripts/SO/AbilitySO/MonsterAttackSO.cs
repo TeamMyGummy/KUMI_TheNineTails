@@ -18,6 +18,7 @@ public class MonsterAttackSO : BlockAbilitySO
     
     public Vector2 HitboxOffset = Vector2.zero;
     public GameObject AttackHitboxPrefab;
+    public SFXName AttackSound;
     
     [SerializeField] private float preAttackDelay = 0.5f;   // 공격 전 딜레이
     [SerializeField] private float activeTime     = 0.2f; // 공격 유효시간(히트박스 유지시간)
