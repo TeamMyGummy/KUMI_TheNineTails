@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
@@ -31,6 +32,19 @@ public class PathFollower : MonoBehaviour
     {
         SoundManager.Instance.StopBGM();
     }
+
+    public void EndMove()
+    {
+        t = 1f;
+        transform.position = path.GetPoint(t);
+        if (animator != null)
+        {
+            animator.SetTrigger("EndReached");
+        }
+
+        StartCoroutine(Wait());
+        Debug.Log("EndMove");
+    }
     
 
     void Update()
@@ -40,7 +54,6 @@ public class PathFollower : MonoBehaviour
             return;
         }
 
-        // --- (이하 이동 로직은 기존과 동일합니다) ---
         float totalT = t * path.SegmentCount;
         int segmentIndex = Mathf.FloorToInt(totalT);
         segmentIndex = Mathf.Clamp(segmentIndex, 0, path.SegmentCount - 1);
@@ -118,5 +131,17 @@ public class PathFollower : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         canMove = true;
+    }
+    
+    void MoveLeftRelative(float distance, float duration)
+    {
+        transform.DOMoveX(transform.position.x - distance, duration)
+            .SetEase(Ease.OutCubic);
+    }
+    
+    private IEnumerator Wait(){
+        yield return new WaitForSeconds(9.5f);
+        MoveLeftRelative(40f, 20f);
+        
     }
 }

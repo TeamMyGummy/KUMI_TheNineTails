@@ -26,8 +26,9 @@ public class ImoogiCameraMoving : MonoBehaviour
 
     private IEnumerator Shaking()
     {
-        yield return new WaitForSeconds(2f);
-        CameraManager.Instance.Shake(1f, 1.5f);
+        yield return new WaitForSeconds(0f);
+        CameraManager.Instance.Shake(0.7f, 1f);
+        RandomSFX();
     }
 
     private void RandomSFX()
