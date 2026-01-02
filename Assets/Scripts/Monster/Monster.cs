@@ -75,7 +75,14 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             {
                 StopCoroutine(_flashCoroutine);
             }
+
+            if (!isDead)
+                isAggro = true;
             _flashCoroutine = StartCoroutine(Flash());
+            if (playerTransform != null)
+            {
+                _movement.HorizontalDir = playerTransform.position.x > transform.position.x ? 1 : -1;
+            }
         }
         prevHp = currHp;
 
