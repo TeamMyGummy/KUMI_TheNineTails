@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3765813503036159300
+--- !u!1 &3873036728974271933
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5672464922419469436}
-  - component: {fileID: 3823112290733286385}
-  m_Layer: 0
-  m_Name: InputManager
+  - component: {fileID: 843824831382943139}
+  - component: {fileID: 6060948982494394191}
+  m_Layer: 5
+  m_Name: UI_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5672464922419469436
-Transform:
+--- !u!224 &843824831382943139
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3765813503036159300}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 3873036728974271933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3823112290733286385
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6060948982494394191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3765813503036159300}
+  m_GameObject: {fileID: 3873036728974271933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784afe93471364f0ea6a4eff1ed218c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c840aa186db94f30a11b20628e0a3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  uiSkillPrefab: {fileID: 7440300192586805678, guid: 96979428c0b68493299ab8a9f3bf63f0, type: 3}
+  pausePopupPrefab: {fileID: 0}
+  settingsPopup: {fileID: 3328791667321931522, guid: 54c15ebe0f8bd4d0d996885bff124dfa, type: 3}
   canvas: {fileID: 0}
-  pauseUI: {fileID: 0}
