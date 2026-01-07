@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlasAssets:
   - {fileID: 11400000, guid: 789d7510580257c4bb9298c9d80d8054, type: 2}
-  scale: 0.003
+  scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 40173d6ade496fd4baa2caec308eb429, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
@@ -24,14 +24,8 @@ MonoBehaviour:
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
-  fromAnimation:
-  - attack
-  - attack_2
-  toAnimation:
-  - parray
-  - parray
-  duration:
-  - 0
-  - 0
+  fromAnimation: []
+  toAnimation: []
+  duration: []
   defaultMix: 0.2
-  controller: {fileID: 9100000, guid: 9551aefd7d5f799429245e99da958e37, type: 2}
+  controller: {fileID: 0}
