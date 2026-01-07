@@ -38,13 +38,13 @@ public class ImoogiCameraMoving : MonoBehaviour
         switch (randomIndex)
         {
             case 0:
-                SoundManager.Instance.PlaySFX(SFXName.이무기벽쿵1);
+                SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_벽쿵_1);
                 break; // 0일 때 Action1() 실행
             case 1:
-                SoundManager.Instance.PlaySFX(SFXName.이무기벽쿵2);
+                SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_벽쿵_2);
                 break; // 1일 때 Action2() 실행
             case 2:
-                SoundManager.Instance.PlaySFX(SFXName.이무기벽쿵3);
+                SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_벽쿵_3);
                 break; // 2일 때 Action3() 실행
             default:
                 break;
