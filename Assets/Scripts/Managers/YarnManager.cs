@@ -54,7 +54,6 @@ public class YarnManager : SceneSingleton<YarnManager>
         
         runner.onDialogueComplete.AddListener(HandleDialogueCompletion);
         
-        skipButton.gameObject.SetActive(false);
     }
 
     /// <summary>
