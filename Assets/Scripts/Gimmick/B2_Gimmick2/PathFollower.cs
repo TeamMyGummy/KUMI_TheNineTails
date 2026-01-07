@@ -22,7 +22,7 @@ public class PathFollower : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("WakeUp");
-            SoundManager.Instance.PlaySFX(SFXName.이무기등장);
+            SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_등장);
         }
 
         StartCoroutine(WaitTillAnimFinish());
@@ -35,7 +35,7 @@ public class PathFollower : MonoBehaviour
 
     public void EndMove()
     {
-        t = 1f;
+        t = 0.99f;
         transform.position = path.GetPoint(t);
         if (animator != null)
         {
@@ -114,17 +114,17 @@ public class PathFollower : MonoBehaviour
 
     public void Attack1()
     {
-        SoundManager.Instance.PlaySFX(SFXName.이무기공격1);
+        SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_공격_1);
     }
 
     public void Attack2()
     {
-        SoundManager.Instance.PlaySFX(SFXName.이무기공격2);
+        SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_공격_2);
     }
 
     public void Attack3()
     {
-        SoundManager.Instance.PlaySFX(SFXName.이무기공격3);
+        SoundManager.Instance.PlaySFX(SFXName.이무기_기믹2_공격_3);
     }
 
     private IEnumerator WaitTillAnimFinish()
