@@ -129,6 +129,8 @@ public class PathFollower : MonoBehaviour
 
     private IEnumerator WaitTillAnimFinish()
     {
+        yield return new WaitForSeconds(2.2f);
+        CameraManager.Instance.Shake(0.7f, 2f);
         yield return new WaitForSeconds(4f);
         canMove = true;
     }
