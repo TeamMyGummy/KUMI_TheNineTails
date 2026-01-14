@@ -3,6 +3,7 @@ using GameAbilitySystem;
 using Spine.Unity;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections;
 
 public abstract class Monster : MonoBehaviour, IAbilitySystem
 {
@@ -37,6 +38,11 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     private Player _player;
     private LiverExtraction _liverExtraction; 
 
+    private MeshRenderer _meshRenderer;
+    private Material _originalMaterial;
+    private Material _flashMaterial;
+    private Coroutine _activeFlashCoroutine;
+    
     private void Awake()
     {
         // ASC 초기화
@@ -49,6 +55,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         _skeletonMecanim = GetComponent<SkeletonMecanim>();
         _movement = GetComponent<MonsterMovement>(); 
         playerTransform = GameObject.FindWithTag("Player")?.transform;
+        _meshRenderer = GetComponent<MeshRenderer>();
         
         if (_skeletonMecanim != null)
         {
@@ -64,6 +71,30 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
             var playerCollider = playerObj.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(monsterCollider, playerCollider, true);
         }
+        
+        //Flash 때문에 추가
+        if (_meshRenderer != null)
+        {
+            _originalMaterial = _meshRenderer.material;
+            Shader flashShader = Shader.Find("Custom/WhiteFlash"); 
+            
+            if (flashShader != null)
+            {
+                _flashMaterial = new Material(flashShader);
+                
+                // 원래 텍스처(몬스터 모양)를 복사해서 넣어줌
+                if (_originalMaterial.HasProperty("_MainTex"))
+                {
+                    _flashMaterial.mainTexture = _originalMaterial.mainTexture;
+                }
+                
+                // ColorFlash 쉐이더를 쓴다면 색상을 흰색으로 설정
+                if (_flashMaterial.HasProperty("_FlashColor"))
+                {
+                    _flashMaterial.SetColor("_FlashColor", Color.white);
+                }
+            }
+        }
     }
 
     private void Update()
@@ -78,6 +109,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
 
             if (!isDead)
                 isAggro = true;
+            
             _flashCoroutine = StartCoroutine(Flash());
             if (playerTransform != null)
             {
@@ -138,7 +170,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
 
         Debug.Log($"{name} has been parried!");
         
-        StartCoroutine(ParriedFlash());
+        StartWhiteFlash(0.1f);
         _movement.EnterParriedState();
     }
 
@@ -253,16 +285,35 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
     }
 
 
-    public System.Collections.IEnumerator Flash()
+    public void StartWhiteFlash(float duration = 0.15f)
     {
-        if (_skeletonMecanim == null) yield break;
-        _skeletonMecanim.Skeleton.SetColor(Color.red);
-        yield return new WaitForSeconds(0.15f);
-        _skeletonMecanim.Skeleton.SetColor(_originalColor);
-        _flashCoroutine = null;
+        // 기존에 돌던 코루틴이 있으면 끄고 새로 시작 (안전장치)
+        if (_activeFlashCoroutine != null) StopCoroutine(_activeFlashCoroutine);
+        _activeFlashCoroutine = StartCoroutine(FlashRoutine(duration));
+    }
+
+    private IEnumerator FlashRoutine(float duration)
+    {
+        if (_meshRenderer == null || _flashMaterial == null) yield break;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            _meshRenderer.material = _flashMaterial;
+            yield return null;
+        }
+        _meshRenderer.material = _originalMaterial;
+        _activeFlashCoroutine = null;
     }
     
-    public System.Collections.IEnumerator ParriedFlash()
+    public IEnumerator Flash()
+    {
+        StartWhiteFlash(0.1f);
+        yield break;
+    }
+    
+    /* 기존 패링당할 시 호출하던 파랑이되는코드
+     public System.Collections.IEnumerator ParriedFlash()
     {
         if (_skeletonMecanim == null) yield break;
 
@@ -270,7 +321,7 @@ public abstract class Monster : MonoBehaviour, IAbilitySystem
         _skeletonMecanim.Skeleton.SetColor(Color.blue);
         yield return new WaitForSeconds(0.2f);
         _skeletonMecanim.Skeleton.SetColor(prevColor);
-    }
+    }*/
 
 
     protected virtual void Die()
