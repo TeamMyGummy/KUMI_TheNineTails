@@ -419,19 +419,25 @@ public class AggroState : IMonsterMovementState
                 }
             }
         }
+        //플레이어가 이동중이지 않을 때만 공격 사이에 멈춰 있었어서, 수정
+        bool inShortRange = _mm._monster.IsPlayerInShortRange();
+        bool inLongRange = _mm._monster.Data.IsTriggerAttack && _mm._monster.IsPlayerInLongRange(); // 원거리 공격 가능하고 사거리 내라면
 
-        if (_mm._monster.IsPlayerInShortRange() && !_mm.IsPlayerMoving())
+        if (inShortRange || inLongRange)
         {
             _mm._characterMovement.Move(Vector2.zero);
+            _mm._animator.SetBool(MonsterMovement.WalkID, false); 
             return;
         }
-
+        else
+        {
+            _mm._animator.SetBool(MonsterMovement.WalkID, true);
+        }
         if (!_mm._monster.Data.IsFlying && !_mm.CheckGroundAhead())
         {
             _mm._characterMovement.Move(Vector2.zero);
             return;
         }
-
         _mm._characterMovement.Move(_mm.GetDirection());
     }
 
