@@ -639,10 +639,13 @@ public class ParriedState : IMonsterMovementState
 public class OuchState : IMonsterMovementState
 {
     private MonsterMovement _mm;
+    private float _timer;
+    private const float MinStunTime = 0.3f;
 
     public void Enter(MonsterMovement monsterMovement)
     {
         _mm = monsterMovement;
+        _timer = 0f;
         
         _mm._characterMovement.Move(Vector2.zero);
         _mm._animator.SetTrigger(MonsterMovement.HurtID);
@@ -650,12 +653,17 @@ public class OuchState : IMonsterMovementState
 
     public void UpdateState()
     {
+        _mm._characterMovement.Move(Vector2.zero);
+        _timer += Time.deltaTime;
+        
+        if (_timer < MinStunTime) return;
+        
         var curAnimStateInfo = _mm._animator.GetCurrentAnimatorStateInfo(0);
         var nextAnimStateInfo = _mm._animator.GetNextAnimatorStateInfo(0);
         
         if (curAnimStateInfo.IsName("Hurt") || nextAnimStateInfo.IsName("Hurt")) // 전이 중일 때 고려
         {
-            if (curAnimStateInfo.normalizedTime >= 0.3f)
+            if (curAnimStateInfo.normalizedTime >= 0.5f)
             {
                 _mm.ChangeState(_mm._aggroState);
             }
