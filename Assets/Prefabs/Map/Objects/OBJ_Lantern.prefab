@@ -311,7 +311,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bc42063ae6f9aa945a3457afabc73a69, type: 3}
-  m_Color: {r: 1, g: 0.014322422, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -632,7 +632,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bc42063ae6f9aa945a3457afabc73a69, type: 3}
-  m_Color: {r: 0, g: 0.27169943, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -750,9 +750,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b38e44f04857942afb2de00dbc781b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offLanternImage: {fileID: 1554658591113414984}
-  smallLanternImage: {fileID: 5625132156943110932}
-  bigLanternImage: {fileID: 2237611637143252033}
+  offLanternImage: {fileID: 0}
+  smallLanternImage: {fileID: 0}
+  bigLanternImage: {fileID: 0}
   interactionUI: {fileID: 5354536427208515829}
   numberOfFloor: 
   sectionName: 
