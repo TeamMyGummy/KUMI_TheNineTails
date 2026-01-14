@@ -613,7 +613,7 @@ public class ParriedState : IMonsterMovementState
 
         _duration = 0.1f; //패링당한 모션 내보낼 시간
         _timer = 0f;
-
+        
         _mm._characterMovement.Move(Vector2.zero);
         _mm._animator.SetTrigger(MonsterMovement.ParriedID);
     }
