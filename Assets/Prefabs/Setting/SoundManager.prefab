@@ -54,9 +54,9 @@ MonoBehaviour:
     volume: 0.8
     source: {fileID: 0}
   - name: 1
-    clip: {fileID: 8300000, guid: 0369b1c44172fe643806019a51bfdcd9, type: 3}
+    clip: {fileID: 8300000, guid: c05b82b4a417e0042ba1af232c4e36aa, type: 3}
     loop: 1
-    volume: 0.3
+    volume: 0.8
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 5bb06cfaadaee00409be87392b498657, type: 3}
