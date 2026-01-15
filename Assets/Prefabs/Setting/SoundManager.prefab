@@ -224,6 +224,51 @@ MonoBehaviour:
     loop: 0
     volume: 0.4
     source: {fileID: 0}
+  - name: 32
+    clip: {fileID: 8300000, guid: 0270f40083921a14d9ef3186b7012450, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 33
+    clip: {fileID: 8300000, guid: b88b1abdefffe2b4299e80e8982d9db4, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 34
+    clip: {fileID: 8300000, guid: 0f51c826eef410447bbfbfa6265bb99a, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 35
+    clip: {fileID: 8300000, guid: e672302a0dda1fb4a946c8eabb9d091c, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 36
+    clip: {fileID: 8300000, guid: 7cea817f0d6e8c445aec662d689cf45b, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 37
+    clip: {fileID: 8300000, guid: 34869060e07d9fc4c838787ce354ddeb, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 38
+    clip: {fileID: 8300000, guid: af786a7e91964b74a94ce5d2e57b40de, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 39
+    clip: {fileID: 8300000, guid: f55f27bda92bc5b4e87184732e508e03, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
+  - name: 40
+    clip: {fileID: 8300000, guid: 8aded9aad192d2745b7b40848575902f, type: 3}
+    loop: 0
+    volume: 0.4
+    source: {fileID: 0}
 --- !u!114 &1581191385722863009
 MonoBehaviour:
   m_ObjectHideFlags: 0
