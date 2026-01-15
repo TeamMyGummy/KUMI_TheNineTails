@@ -56,7 +56,7 @@ MonoBehaviour:
   - name: 1
     clip: {fileID: 8300000, guid: c05b82b4a417e0042ba1af232c4e36aa, type: 3}
     loop: 1
-    volume: 0.8
+    volume: 0.6
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 5bb06cfaadaee00409be87392b498657, type: 3}
