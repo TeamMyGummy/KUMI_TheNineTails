@@ -33,7 +33,7 @@ public class ImoogiTrigger : MonoBehaviour
             // --- 여기까지 ---
             
             _playerController.OnDisableAllInput();
-            StartCoroutine(WaitSeconds(3f));
+            StartCoroutine(WaitSeconds(4f));
         }
     }
     

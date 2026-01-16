@@ -9,8 +9,7 @@ public class ImoogiCameraMoving : MonoBehaviour
     public void StartMoving()
     {
         CameraManager.Instance.StopCameraAtPoint(position);
-        StartCoroutine(Shaking());
-        StartCoroutine(FollowPlayer());
+        StartCoroutine(FollowTarget());
     }
 
     public void ShakingCamera()
@@ -18,9 +17,10 @@ public class ImoogiCameraMoving : MonoBehaviour
         CameraManager.Instance.Shake(0.7f, 0.2f);
     }
 
-    private IEnumerator FollowPlayer()
+    private IEnumerator FollowTarget()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
+        CameraManager.Instance.Shake(0.7f, 0.2f);
         CameraManager.Instance.FollowTarget();
     }
 

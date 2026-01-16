@@ -131,7 +131,7 @@ public class PathFollower : MonoBehaviour
     {
         yield return new WaitForSeconds(2.2f);
         CameraManager.Instance.Shake(0.7f, 2f);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         canMove = true;
     }
     
