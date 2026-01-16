@@ -15,6 +15,7 @@ public class ImoogiCameraMoving : MonoBehaviour
     public void ShakingCamera()
     {
         CameraManager.Instance.Shake(0.7f, 0.2f);
+        RandomSFX();
     }
 
     private IEnumerator FollowTarget()
