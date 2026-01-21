@@ -51,7 +51,7 @@ MonoBehaviour:
   - name: 0
     clip: {fileID: 8300000, guid: dcbb5243dd4f11c45916598b955fee1a, type: 3}
     loop: 1
-    volume: 0.8
+    volume: 0.35
     source: {fileID: 0}
   - name: 1
     clip: {fileID: 8300000, guid: c05b82b4a417e0042ba1af232c4e36aa, type: 3}
@@ -72,12 +72,12 @@ MonoBehaviour:
   - name: 1
     clip: {fileID: 8300000, guid: ed99c4ef99168dd429412f3abe846ae1, type: 3}
     loop: 0
-    volume: 0.3
+    volume: 0.5
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: 35c59edd18360f14cb060b67397f0574, type: 3}
     loop: 0
-    volume: 0.5
+    volume: 0.4
     source: {fileID: 0}
   - name: 3
     clip: {fileID: 8300000, guid: 26e7ebce8636edc4aa20624ec0207815, type: 3}
@@ -107,7 +107,7 @@ MonoBehaviour:
   - name: 8
     clip: {fileID: 8300000, guid: 1807b1a3237014f4eaa655eab29b9708, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.4
     source: {fileID: 0}
   - name: 9
     clip: {fileID: 8300000, guid: 9023c43be742b2245b7d522f2bc571ce, type: 3}
@@ -127,7 +127,7 @@ MonoBehaviour:
   - name: 12
     clip: {fileID: 8300000, guid: 003943a16d124774fa94d3d6b9cfee38, type: 3}
     loop: 0
-    volume: 0.5
+    volume: 0.4
     source: {fileID: 0}
   - name: 13
     clip: {fileID: 8300000, guid: 2776b91527f213d41a5ce4051bcc8121, type: 3}
@@ -237,32 +237,32 @@ MonoBehaviour:
   - name: 34
     clip: {fileID: 8300000, guid: 0f51c826eef410447bbfbfa6265bb99a, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.8
     source: {fileID: 0}
   - name: 35
     clip: {fileID: 8300000, guid: e672302a0dda1fb4a946c8eabb9d091c, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.8
     source: {fileID: 0}
   - name: 36
     clip: {fileID: 8300000, guid: 7cea817f0d6e8c445aec662d689cf45b, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.8
     source: {fileID: 0}
   - name: 37
     clip: {fileID: 8300000, guid: 34869060e07d9fc4c838787ce354ddeb, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.6
     source: {fileID: 0}
   - name: 38
     clip: {fileID: 8300000, guid: af786a7e91964b74a94ce5d2e57b40de, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.5
     source: {fileID: 0}
   - name: 39
     clip: {fileID: 8300000, guid: f55f27bda92bc5b4e87184732e508e03, type: 3}
     loop: 0
-    volume: 0.4
+    volume: 0.9
     source: {fileID: 0}
   - name: 40
     clip: {fileID: 8300000, guid: 8aded9aad192d2745b7b40848575902f, type: 3}
