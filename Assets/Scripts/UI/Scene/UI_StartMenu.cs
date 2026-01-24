@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Util;
+using UnityEngine.EventSystems;
 
 public class UI_StartMenu : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class UI_StartMenu : MonoBehaviour
     [Header("Popups")]
     [SerializeField] private GameObject newGamePopup;
     [SerializeField] private GameObject loadGamePopup;
-    [SerializeField] private GameObject settingsPopup; // 환경설정 팝업 프리팹
+    [SerializeField] private GameObject settingsPopup;
 
     private int currentSelection = 0;
     private GameObject loadGamePopupInstance;
@@ -25,7 +26,6 @@ public class UI_StartMenu : MonoBehaviour
     {
         InitUI();
     
-        // 마우스 커서를 숨기거나 잠그지 않습니다. (기본 상태 유지)
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -38,18 +38,40 @@ public class UI_StartMenu : MonoBehaviour
 
         for (int i = 0; i < menuButtons.Length; i++)
         {
-            // 핵심: 버튼의 Image와 Text가 마우스 클릭(Raycast)을 무시하도록 설정
+            int index = i;
+
             if (menuButtons[i].TryGetComponent<Image>(out var img)) 
-                img.raycastTarget = false; 
+                img.raycastTarget = true;
 
             var text = menuButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             if (text != null) 
-                text.raycastTarget = false;
+                text.raycastTarget = true;
 
-            // Button 컴포넌트의 자체 기능(마우스 호버 등)을 완전히 무시하도록 설정
-            menuButtons[i].interactable = false; 
-            // 주의: interactable을 끄면 버튼이 회색으로 변할 수 있으니 
-            // 텍스트 색상은 UpdateSelectionVisuals에서 관리하는 대로 나옵니다.
+            menuButtons[i].interactable = true;
+            menuButtons[i].transition = Selectable.Transition.None;
+            
+            EventTrigger trigger = menuButtons[i].gameObject.GetComponent<EventTrigger>();
+            if (trigger == null) trigger = menuButtons[i].gameObject.AddComponent<EventTrigger>();
+            
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((data) => {
+                if (isControlEnabled)
+                {
+                    currentSelection = index;
+                    UpdateSelectionVisuals();
+                }
+            });
+            trigger.triggers.Add(entry);
+
+            menuButtons[i].onClick.RemoveAllListeners();
+            menuButtons[i].onClick.AddListener(() => {
+                if (isControlEnabled)
+                {
+                    currentSelection = index;
+                    ExecuteSelection();
+                }
+            });
 
             if (i == 1 && !hasSaveData) text.color = Color.gray;
         }
@@ -65,7 +87,6 @@ public class UI_StartMenu : MonoBehaviour
 
     private void HandleInput()
     {
-        // 위/아래 방향키 조작 (0~3 순환)
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentSelection = (currentSelection - 1 + menuButtons.Length) % menuButtons.Length;
@@ -77,7 +98,6 @@ public class UI_StartMenu : MonoBehaviour
             UpdateSelectionVisuals();
         }
 
-        // 엔터키 결정
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             ExecuteSelection();
@@ -90,27 +110,23 @@ public class UI_StartMenu : MonoBehaviour
         {
             bool isSelected = (i == currentSelection);
             var text = menuButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-
-            // 1. 화살표 활성화/비활성화
+            
             if (menuArrows.Length > i && menuArrows[i] != null)
                 menuArrows[i].SetActive(isSelected);
 
-            // 2. 텍스트 강조 효과 (색상만 변경, 크기 고정)
             if (isSelected)
             {
                 text.color = Color.white;
                 
-                // 이어하기(인덱스 1)가 선택된 경우에만 로드 정보 팝업 표시
                 if (i == 1 && JsonLoader.Exists("gamedata_0")) ShowLoadGamePopup();
                 else HideLoadGamePopup();
             }
             else
             {
-                // 선택되지 않은 버튼 처리
                 if (i == 1 && !JsonLoader.Exists("gamedata_0")) 
                     text.color = Color.gray;
                 else 
-                    text.color = new Color(0.6f, 0.6f, 0.6f); // 비선택 항목은 약간 어둡게
+                    text.color = new Color(0.6f, 0.6f, 0.6f); 
             }
         }
     }
@@ -134,7 +150,6 @@ public class UI_StartMenu : MonoBehaviour
         }
     }
 
-    // --- 기능별 로직 ---
 
     public void OnClick_newGameBtn()
     {
@@ -156,8 +171,6 @@ public class UI_StartMenu : MonoBehaviour
         if (settingsPopupInstance == null)
         {
             settingsPopupInstance = Instantiate(settingsPopup, transform);
-            // 팝업이 닫힐 때 isControlEnabled를 true로 돌려주는 로직은 팝업 스크립트에서 처리하거나,
-            // 여기서 간단히 제어 가능합니다.
             isControlEnabled = false; 
         }
     }
@@ -171,14 +184,9 @@ public class UI_StartMenu : MonoBehaviour
 #endif
     }
 
-    // 팝업 응답용 (새로하기 확인창)
     public void NewGame_yesBtn() { DomainFactory.Instance.DeleteGameData(); SceneLoader.LoadScene("B2_Monster1"); }
     public void NewGame_noBtn() { newGamePopup.SetActive(false); isControlEnabled = true; }
-
-    // 설정창 닫기용 (외부에서 호출)
     public void CloseSettings() { isControlEnabled = true; }
-
-    // --- 이어하기 정보 팝업 ---
 
     private void ShowLoadGamePopup()
     {
