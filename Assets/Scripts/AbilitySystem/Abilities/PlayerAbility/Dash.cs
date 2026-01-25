@@ -17,9 +17,9 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     private float _dashTime;
     private float _endDelayTime;
     private bool _canDash = true;
-    private bool _endDash;
+    private bool _endDash = true;
     private Vector2 _originVelocity;
-
+    
     public override void InitAbility(GameObject actor, AbilitySystem asc, GameplayAbilitySO abilitySo)
     {
         base.InitAbility(actor, asc, abilitySo);
@@ -113,8 +113,5 @@ public class Dash : BlockAbility<BlockAbilitySO>, ITickable
     public void ResetDash()
     {
         _canDash = true;
-
-        if(!_endDash)
-            EndDash();
     }
 }
