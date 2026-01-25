@@ -122,6 +122,8 @@ public class SectionTrigger : MonoBehaviour
         currentState = ZoneState.PreEnter;
         Debug.Log("State: PreEnter - Pre-Enter sequence started.");
         hasBeenTriggered = true;
+        
+        StartCoroutine(WaitRoar());
 
         // onPreEnterActions 리스트의 모든 액션을 각자의 딜레이로 실행
         foreach (var delayedEvent in onPreEnterActions)
@@ -182,6 +184,12 @@ public class SectionTrigger : MonoBehaviour
         
         // 이벤트 호출
         targetEvent?.Invoke();
+    }
+
+    private IEnumerator WaitRoar()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySFX(SFXName.이무기_보스_포효_1);
     }
     
     // 기즈모를 그려 씬 뷰에서 영역을 쉽게 식별하도록 합니다.
