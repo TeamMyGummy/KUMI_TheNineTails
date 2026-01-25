@@ -34,6 +34,7 @@ public class ImoogiTrigger : MonoBehaviour
             
             _playerController.OnDisableAllInput();
             StartCoroutine(WaitSeconds(4f));
+            StartCoroutine(WaitSFX());
         }
     }
     
@@ -44,5 +45,11 @@ public class ImoogiTrigger : MonoBehaviour
         gameObject.SetActive(false);
         
         SoundManager.Instance.PlayBGM(BGMName.B2_Gimmick2);
+    }
+
+    private IEnumerator WaitSFX()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySFX(SFXName.이무기_보스_포효_1);
     }
 }
