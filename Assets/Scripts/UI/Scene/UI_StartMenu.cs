@@ -8,24 +8,31 @@ public class UI_StartMenu : MonoBehaviour
 {
     [Header("Menu Buttons (0:New, 1:Load, 2:Settings, 3:Exit)")]
     [SerializeField] private Button[] menuButtons;
-    
+
     [Header("Selection Arrows")]
     [SerializeField] private GameObject[] menuArrows;
 
     [Header("Popups")]
     [SerializeField] private GameObject newGamePopup;
-    [SerializeField] private GameObject loadGamePopup;
     [SerializeField] private GameObject settingsPopup;
 
     private int currentSelection = 0;
-    private GameObject loadGamePopupInstance;
     private GameObject settingsPopupInstance;
     private bool isControlEnabled = true;
 
+    private bool hasValidDomain = true;
+
     private void Start()
     {
+        // DomainFactory 안전 체크 (빌드에서 가장 중요)
+        if (DomainFactory.Instance == null)
+        {
+            Debug.LogError("[UI_StartMenu] DomainFactory.Instance is NULL");
+            hasValidDomain = false;
+        }
+
         InitUI();
-    
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -40,49 +47,53 @@ public class UI_StartMenu : MonoBehaviour
         {
             int index = i;
 
-            if (menuButtons[i].TryGetComponent<Image>(out var img)) 
+            if (menuButtons[i].TryGetComponent<Image>(out var img))
                 img.raycastTarget = true;
 
             var text = menuButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null) 
+            if (text != null)
                 text.raycastTarget = true;
 
             menuButtons[i].interactable = true;
             menuButtons[i].transition = Selectable.Transition.None;
-            
-            EventTrigger trigger = menuButtons[i].gameObject.GetComponent<EventTrigger>();
-            if (trigger == null) trigger = menuButtons[i].gameObject.AddComponent<EventTrigger>();
-            
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerEnter;
-            entry.callback.AddListener((data) => {
-                if (isControlEnabled)
-                {
-                    currentSelection = index;
-                    UpdateSelectionVisuals();
-                }
+
+            EventTrigger trigger = menuButtons[i].GetComponent<EventTrigger>();
+            if (trigger == null)
+                trigger = menuButtons[i].gameObject.AddComponent<EventTrigger>();
+
+            // 🔥 중복 등록 방지
+            trigger.triggers.Clear();
+
+            EventTrigger.Entry entry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            entry.callback.AddListener((data) =>
+            {
+                if (!isControlEnabled) return;
+                currentSelection = index;
+                UpdateSelectionVisuals();
             });
             trigger.triggers.Add(entry);
 
             menuButtons[i].onClick.RemoveAllListeners();
-            menuButtons[i].onClick.AddListener(() => {
-                if (isControlEnabled)
-                {
-                    currentSelection = index;
-                    ExecuteSelection();
-                }
+            menuButtons[i].onClick.AddListener(() =>
+            {
+                if (!isControlEnabled) return;
+                currentSelection = index;
+                ExecuteSelection();
             });
 
-            if (i == 1 && !hasSaveData) text.color = Color.gray;
+            // Load 버튼 비활성 색상 처리
+            if (i == 1 && !hasSaveData && text != null)
+                text.color = Color.gray;
         }
     }
 
     private void Update()
     {
         if (!isControlEnabled) return;
-        
         HandleInput();
-        UpdateLoadGamePopupPosition();
     }
 
     private void HandleInput()
@@ -106,27 +117,28 @@ public class UI_StartMenu : MonoBehaviour
 
     private void UpdateSelectionVisuals()
     {
+        bool hasSaveData = JsonLoader.Exists("gamedata_0");
+
         for (int i = 0; i < menuButtons.Length; i++)
         {
             bool isSelected = (i == currentSelection);
             var text = menuButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            
+
             if (menuArrows.Length > i && menuArrows[i] != null)
                 menuArrows[i].SetActive(isSelected);
+
+            if (text == null) continue;
 
             if (isSelected)
             {
                 text.color = Color.white;
-                
-                if (i == 1 && JsonLoader.Exists("gamedata_0")) ShowLoadGamePopup();
-                else HideLoadGamePopup();
             }
             else
             {
-                if (i == 1 && !JsonLoader.Exists("gamedata_0")) 
+                if (i == 1 && !hasSaveData)
                     text.color = Color.gray;
-                else 
-                    text.color = new Color(0.6f, 0.6f, 0.6f); 
+                else
+                    text.color = new Color(0.6f, 0.6f, 0.6f);
             }
         }
     }
@@ -135,21 +147,24 @@ public class UI_StartMenu : MonoBehaviour
     {
         switch (currentSelection)
         {
-            case 0: // 새로하기
-                OnClick_newGameBtn(); 
+            case 0: // New Game
+                OnClick_newGameBtn();
                 break;
-            case 1: // 이어하기
-                if (JsonLoader.Exists("gamedata_0")) OnClick_loadGameBtn(); 
+
+            case 1: // Load Game
+                if (JsonLoader.Exists("gamedata_0"))
+                    OnClick_loadGameBtn();
                 break;
-            case 2: // 환경설정
-                OnClick_settingsBtn(); 
+
+            case 2: // Settings
+                OnClick_settingsBtn();
                 break;
-            case 3: // 게임종료
-                OnClick_exitBtn(); 
+
+            case 3: // Exit
+                OnClick_exitBtn();
                 break;
         }
     }
-
 
     public void OnClick_newGameBtn()
     {
@@ -164,14 +179,18 @@ public class UI_StartMenu : MonoBehaviour
         }
     }
 
-    public void OnClick_loadGameBtn() => DomainFactory.Instance.ClearStateAndReload();
+    public void OnClick_loadGameBtn()
+    {
+        if (!hasValidDomain) return;
+        DomainFactory.Instance.ClearStateAndReload();
+    }
 
     public void OnClick_settingsBtn()
     {
         if (settingsPopupInstance == null)
         {
             settingsPopupInstance = Instantiate(settingsPopup, transform);
-            isControlEnabled = false; 
+            isControlEnabled = false;
         }
     }
 
@@ -184,32 +203,24 @@ public class UI_StartMenu : MonoBehaviour
 #endif
     }
 
-    public void NewGame_yesBtn() { DomainFactory.Instance.DeleteGameData(); SceneLoader.LoadScene("B2_Monster1"); }
-    public void NewGame_noBtn() { newGamePopup.SetActive(false); isControlEnabled = true; }
-    public void CloseSettings() { isControlEnabled = true; }
+    // ===== Popup Callbacks =====
 
-    private void ShowLoadGamePopup()
+    public void NewGame_yesBtn()
     {
-        if (loadGamePopupInstance == null)
-        {
-            loadGamePopupInstance = Instantiate(loadGamePopup, transform);
-            var lanternState = DomainFactory.Instance.Data.LanternState;
-            LoadGamePopup popupUI = loadGamePopupInstance.GetComponent<LoadGamePopup>();
-            if (popupUI != null) popupUI.SetInfo(lanternState.RecentFloor, lanternState.RecentSection);
-        }
+        if (!hasValidDomain) return;
+
+        DomainFactory.Instance.DeleteGameData();
+        SceneLoader.LoadScene("B2_Monster1");
     }
 
-    private void HideLoadGamePopup()
+    public void NewGame_noBtn()
     {
-        if (loadGamePopupInstance != null) { Destroy(loadGamePopupInstance); loadGamePopupInstance = null; }
+        newGamePopup.SetActive(false);
+        isControlEnabled = true;
     }
 
-    private void UpdateLoadGamePopupPosition()
+    public void CloseSettings()
     {
-        if (currentSelection == 1 && loadGamePopupInstance != null)
-        {
-            RectTransform arrowRect = menuArrows[1].GetComponent<RectTransform>();
-            loadGamePopupInstance.GetComponent<RectTransform>().anchoredPosition = arrowRect.anchoredPosition + new Vector2(250, 0); 
-        }
+        isControlEnabled = true;
     }
 }
