@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 7569220488402031056}
   - component: {fileID: 7905835167814683445}
   - component: {fileID: 1973809748443810508}
+  - component: {fileID: 8063228239442588621}
   m_Layer: 0
   m_Name: Spine GameObject (Dragon_head)
   m_TagString: Untagged
@@ -756,6 +757,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ccad3c3c1f475e911f814499daa277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8063228239442588621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502796460505021483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c066865e278c54991eb62cab23991a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  domainKey: 1
+  flashShaderName: Custom/WhiteFlash
 --- !u!1 &3133681439245677475
 GameObject:
   m_ObjectHideFlags: 0
