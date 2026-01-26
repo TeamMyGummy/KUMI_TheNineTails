@@ -1163,7 +1163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 83a16b9d5d5371f49929d031d0a2c8f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc6e9178315c2c04884abe0e258b8b54, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1551,14 +1551,14 @@ RectTransform:
   m_GameObject: {fileID: 1324127170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7692308, y: 1, z: 1}
+  m_LocalScale: {x: 0.7692307, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114100001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67.846146, y: -0}
+  m_AnchoredPosition: {x: 67.84616, y: 0}
   m_SizeDelta: {x: 1999.985, y: 1080.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1324127172
@@ -1581,7 +1581,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 83a16b9d5d5371f49929d031d0a2c8f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc6e9178315c2c04884abe0e258b8b54, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1701,14 +1701,14 @@ RectTransform:
   m_GameObject: {fileID: 1424841301}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7692308, y: 1, z: 1}
+  m_LocalScale: {x: 0.7692307, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114100001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 211.07697, y: -0}
+  m_AnchoredPosition: {x: 211.07697, y: 0}
   m_SizeDelta: {x: 1999.985, y: 1080.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1424841303
@@ -3193,7 +3193,6 @@ MonoBehaviour:
   - {fileID: 1188297581}
   - {fileID: 894731789}
   newGamePopup: {fileID: 160365696}
-  loadGamePopup: {fileID: 0}
   settingsPopup: {fileID: 3328791667321931522, guid: 54c15ebe0f8bd4d0d996885bff124dfa, type: 3}
 --- !u!1 &1962145387
 GameObject:
