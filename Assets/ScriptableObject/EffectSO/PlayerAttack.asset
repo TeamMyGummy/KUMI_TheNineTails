@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerAttack
   m_EditorClassIdentifier: 
   useCameraShake: 1
-  shakeIntensity: 0.2
-  shakeDuration: 0.1
+  shakeIntensity: 0.5
+  shakeDuration: 0.08
   useTimeSlow: 0
   timeScale: 0
   slowDuration: 0
