@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: LiverExtraction
   m_EditorClassIdentifier: 
   useCameraShake: 1
-  shakeIntensity: 0.2
-  shakeDuration: 0.1
+  shakeIntensity: 0.3
+  shakeDuration: 0.05
   useTimeSlow: 1
-  timeScale: 0.01
-  slowDuration: 0.001
+  timeScale: 0.1
+  slowDuration: 0.3
   useSound: 1
   sfxName: 15
   hitEffectPrefab: {fileID: 6069330293569023417, guid: 3cc915543c1366b4982412e9f3bf8689, type: 3}
