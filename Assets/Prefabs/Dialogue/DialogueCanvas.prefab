@@ -322,11 +322,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4063881748623769291}
-  m_Father: {fileID: 2177330948830712860}
+  m_Father: {fileID: 6019762600425731289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1554, y: -695}
+  m_AnchoredPosition: {x: 1603, y: -943}
   m_SizeDelta: {x: 160, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8831073452449850348
@@ -657,7 +657,7 @@ MonoBehaviour:
   dialogue: {fileID: 1824535815446000880}
   dialogueCanvas: {fileID: 5067439420841083555}
   skipButton: {fileID: 7307028819753758780}
-  kumiPosY: -30
+  kumiPosY: 0
   kkebiPosY: 10
 --- !u!225 &1324883367777368058
 CanvasGroup:
@@ -1193,6 +1193,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 7778558435732307476, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7084386685998634907, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 909202176529658249}
     - targetCorrespondingSourceObject: {fileID: 7778558435068644803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       insertIndex: 1
       addedObject: {fileID: 5290384819417784700}
@@ -1207,6 +1210,11 @@ PrefabInstance:
 --- !u!4 &2159351202222989523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3183266951831634833, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
+  m_PrefabInstance: {fileID: 3592379465054430018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6019762600425731289 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7084386685998634907, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
   m_PrefabInstance: {fileID: 3592379465054430018}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6496530114208092832 stripped
@@ -1405,9 +1413,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6016763909227568285, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3059159742418467224}
-    - targetCorrespondingSourceObject: {fileID: 6016763909227568285, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 909202176529658249}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1360987690126651574, guid: c701e72e6f27a7345a840598118e0bf1, type: 3}
       insertIndex: -1
