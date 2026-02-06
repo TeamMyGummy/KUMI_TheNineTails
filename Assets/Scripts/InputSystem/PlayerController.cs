@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour, IMovement
 
     private Vector2 _direction;
     
+    // 보스전 텔포 할 때 필요한 변수
+    private static bool shouldTeleport = false;
+    private Vector3 bossEntrancePos = new Vector3(277f, 15.5f, 0f);
+    
     // ------------- Input Values ---------------
     public Vector2 MoveInput { get; private set; }
     public Vector2 ClimbInput { get; private set; }
@@ -56,7 +60,16 @@ public class PlayerController : MonoBehaviour, IMovement
     {
         OnEnableAllInput();
 
-        RespawnPlayer();
+        // 보스 텔포 사용 후 로드된 경우 텔레포트 실행
+        if (shouldTeleport)
+        {
+            transform.position = bossEntrancePos;
+            shouldTeleport = false; 
+        }
+        else
+        {
+            RespawnPlayer();
+        }
     }
 
     //스폰된 플레이어를 영구 저장 위치(마지막으로 저장한 호롱불)로 옮김
@@ -431,9 +444,16 @@ public class PlayerController : MonoBehaviour, IMovement
     }
     public void OnLoadScene4(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!ctx.performed) return;
+
+        if (SceneManager.GetActiveScene().name == "B2_Gimmick2")
         {
-            SceneManager.LoadScene("B2_Boss");
+            transform.position = bossEntrancePos;
+        }
+        else
+        {
+            shouldTeleport = true;
+            SceneManager.LoadScene("B2_Gimmick2");
         }
     }
 
