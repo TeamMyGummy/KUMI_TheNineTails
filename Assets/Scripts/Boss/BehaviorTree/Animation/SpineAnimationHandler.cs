@@ -13,9 +13,15 @@ public struct BlendDefinition
     [SerializeField] [SpineAnimation] public string to;
     [SerializeField] public float blendingTime;
 }
+
 public class SpineAnimationHandler : MonoBehaviour
 {
     private SkeletonAnimation skeletonAnimation;
+    
+    [Header("Blend Settings")]
+    [SerializeField] private float defaultMixDuration = 0.2f;
+    [SerializeField] private List<BlendDefinition> blendDefinitions = new List<BlendDefinition>();
+    
     void Awake()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -23,7 +29,19 @@ public class SpineAnimationHandler : MonoBehaviour
     
     void Start()
     {
-        skeletonAnimation.AnimationState.Data.DefaultMix = 0.2f;
+        SetupBlending();
+    }
+
+    private void SetupBlending()
+    {
+        var stateData = skeletonAnimation.AnimationState.Data;
+        stateData.DefaultMix = defaultMixDuration;
+        
+        // 정의된 블렌딩 규칙 적용
+        foreach (var blend in blendDefinitions)
+        {
+            stateData.SetMix(blend.from, blend.to, blend.blendingTime);
+        }
     }
 
     public void StopAnimation()
@@ -36,7 +54,6 @@ public class SpineAnimationHandler : MonoBehaviour
         }
     }
 
-    //상태에 따라 애니메이션을 실행하는 함수
     public TrackEntry AddAnimation(string animationName, bool loop, float delay)
     {
         return skeletonAnimation.AnimationState.AddAnimation(0, animationName, loop, delay);
@@ -44,8 +61,19 @@ public class SpineAnimationHandler : MonoBehaviour
 
     public TrackEntry SetAnimation(string animationName, bool loop)
     {
-        DebugUtil.Log(animationName + " 가 실행중입니다. ");
         return skeletonAnimation.AnimationState.SetAnimation(0, animationName, loop);
+    }
+    
+    public TrackEntry SetAnimation(string animationName, bool loop, float customMix)
+    {
+        var trackEntry = skeletonAnimation.AnimationState.SetAnimation(0, animationName, loop);
+        
+        if (customMix >= 0)
+        {
+            trackEntry.MixDuration = customMix;
+        }
+        
+        return trackEntry;
     }
     
     public void SetAnimation(string animationName)
