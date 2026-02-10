@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMixDuration: 0.2
+  blendDefinitions: []
 --- !u!1 &517080584346434038
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMixDuration: 0.2
+  blendDefinitions: []
 --- !u!114 &6869070379822303099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMixDuration: 0.2
+  blendDefinitions: []
 --- !u!1 &2075109342536132128
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4b9041f838f548852ce01bf4644d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMixDuration: 0.2
+  blendDefinitions: []
 --- !u!114 &1973809748443810508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,8 +777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c066865e278c54991eb62cab23991a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  domainKey: 1
-  flashShaderName: Custom/WhiteFlash
+  flashShader: {fileID: 4800000, guid: 4e8a7c0129cd2b8428074757e1cee8fa, type: 3}
+  flashDuration: 0.15
 --- !u!1 &3133681439245677475
 GameObject:
   m_ObjectHideFlags: 0
