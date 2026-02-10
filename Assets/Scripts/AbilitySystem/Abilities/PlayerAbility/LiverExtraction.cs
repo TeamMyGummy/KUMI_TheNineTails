@@ -53,8 +53,19 @@ public class LiverExtraction : BlockAbility<BlockAbilitySO>
     public void EndAbility()
     {
         IsUsingLiverExtraction = false;
+        RecoverPlayerHp(1f);
         Actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
         _hitbox.SetActive(false);
     }
 
+    private void RecoverPlayerHp(float healAmount)
+    {
+        DomainFactory.Instance.GetDomain(DomainKey.Player, out AbilitySystem asc);
+        if (asc == null) return;
+
+        GameplayAttribute att = asc.Attribute;
+
+        InstantGameplayEffect effect = new("HP", healAmount);
+        effect.Apply(att);
+    }
 }
