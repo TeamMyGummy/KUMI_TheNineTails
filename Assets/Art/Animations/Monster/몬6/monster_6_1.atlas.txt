@@ -1,0 +1,58 @@
+monster_6_1.png
+size:2056,257
+filter:Linear,Linear
+pma:true
+L arm_6_1
+bounds:575,11,52,104
+offsets:0,2,52,106
+L foot_6_1
+bounds:629,3,59,29
+L hand_6_1
+bounds:2003,15,46,70
+L leg_6_1
+bounds:338,117,138,350
+offsets:2,0,140,350
+rotate:90
+L shou2_6_1
+bounds:963,127,128,161
+rotate:90
+L shou_6_1
+bounds:1727,24,103,136
+rotate:90
+LB cloth_6_1
+bounds:1126,2,125,246
+rotate:90
+LF cloth_6_1
+bounds:690,123,132,271
+rotate:90
+R arm_6_1
+bounds:2019,157,98,35
+rotate:90
+R cloth_6_1
+bounds:855,4,117,265
+rotate:90
+R foot_6_1
+bounds:2019,87,68,30
+rotate:90
+R hand_6_1
+bounds:629,34,81,49
+rotate:90
+R leg_6_1
+bounds:1374,14,113,351
+offsets:14,0,127,351
+rotate:90
+R shou2_6_1
+bounds:690,3,118,163
+rotate:90
+R shou_6_1
+bounds:1865,25,102,136
+rotate:90
+body_6_1
+bounds:338,9,106,235
+rotate:90
+head_6_1
+bounds:2,32,223,334
+rotate:90
+spear_6_1
+bounds:1126,129,126,891
+rotate:90
