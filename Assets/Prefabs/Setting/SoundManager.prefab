@@ -49,7 +49,7 @@ MonoBehaviour:
   sfxSources: []
   bgmSounds:
   - name: 0
-    clip: {fileID: 8300000, guid: dcbb5243dd4f11c45916598b955fee1a, type: 3}
+    clip: {fileID: 8300000, guid: 540582d5cf7313749905d47489fd7a84, type: 3}
     loop: 1
     volume: 0.35
     source: {fileID: 0}
