@@ -21,21 +21,25 @@ public class UI_StartMenu : MonoBehaviour
     private bool isControlEnabled = true;
 
     private bool hasValidDomain = true;
+    
+    private SoundManager soundManager;
 
     private void Start()
     {
-        // DomainFactory 안전 체크 (빌드에서 가장 중요)
         if (DomainFactory.Instance == null)
         {
             Debug.LogError("[UI_StartMenu] DomainFactory.Instance is NULL");
             hasValidDomain = false;
         }
 
+        soundManager = SoundManager.Instance;
+        
         InitUI();
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
+        
         UpdateSelectionVisuals();
     }
 
@@ -61,7 +65,7 @@ public class UI_StartMenu : MonoBehaviour
             if (trigger == null)
                 trigger = menuButtons[i].gameObject.AddComponent<EventTrigger>();
 
-            // 🔥 중복 등록 방지
+            // 중복 등록 방지
             trigger.triggers.Clear();
 
             EventTrigger.Entry entry = new EventTrigger.Entry
@@ -98,19 +102,23 @@ public class UI_StartMenu : MonoBehaviour
 
     private void HandleInput()
     {
+        //사운드 나오면 수정
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
             currentSelection = (currentSelection - 1 + menuButtons.Length) % menuButtons.Length;
             UpdateSelectionVisuals();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
             currentSelection = (currentSelection + 1) % menuButtons.Length;
             UpdateSelectionVisuals();
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
+            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
             ExecuteSelection();
         }
     }
@@ -168,6 +176,7 @@ public class UI_StartMenu : MonoBehaviour
 
     public void OnClick_newGameBtn()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         if (JsonLoader.Exists("gamedata_0"))
         {
             newGamePopup.SetActive(true);
@@ -181,12 +190,14 @@ public class UI_StartMenu : MonoBehaviour
 
     public void OnClick_loadGameBtn()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         if (!hasValidDomain) return;
         DomainFactory.Instance.ClearStateAndReload();
     }
 
     public void OnClick_settingsBtn()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         if (settingsPopupInstance == null)
         {
             settingsPopupInstance = Instantiate(settingsPopup, transform);
@@ -196,17 +207,19 @@ public class UI_StartMenu : MonoBehaviour
 
     public void OnClick_exitBtn()
     {
-#if UNITY_EDITOR
+        soundManager.PlaySFX(SFXName.마우스_클릭);
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#else
+        #else
         Application.Quit();
-#endif
+        #endif
     }
 
     // ===== Popup Callbacks =====
 
     public void NewGame_yesBtn()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         if (!hasValidDomain) return;
 
         DomainFactory.Instance.DeleteGameData();
@@ -215,12 +228,14 @@ public class UI_StartMenu : MonoBehaviour
 
     public void NewGame_noBtn()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         newGamePopup.SetActive(false);
         isControlEnabled = true;
     }
 
     public void CloseSettings()
     {
+        soundManager.PlaySFX(SFXName.마우스_클릭);
         isControlEnabled = true;
     }
 }

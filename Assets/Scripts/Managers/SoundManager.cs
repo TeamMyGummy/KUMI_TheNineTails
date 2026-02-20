@@ -8,6 +8,7 @@ public enum BGMName
     이무기,
     B2,
     B2_Gimmick2,
+    Start
 }
 
 public enum SFXName
@@ -60,6 +61,9 @@ public enum SFXName
     이무기_보스_번개_타겟팅,
     이무기_보스_번개_공격,
     이무기_보스_사망,
+    
+    // ---- UI 효과음 ----
+    마우스_클릭
 }
 
 [System.Serializable]
