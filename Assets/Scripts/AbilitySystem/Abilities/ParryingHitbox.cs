@@ -11,6 +11,7 @@ public class ParryingHitbox : MonoBehaviour
     
     public EffectSO effectSO;
     private GameObject _effectPrefab;
+    public event Action OnLiverExtractionEnded;
     
     // Start is called before the first frame update
     void Start()
@@ -50,8 +51,8 @@ public class ParryingHitbox : MonoBehaviour
 
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
         
+        OnLiverExtractionEnded?.Invoke();
         _actor.GetComponent<PlayerController>().OnDisableLiverExtraction();
-        Debug.Log("인풋 막힘");
     }
 
     //여우불 증가 로직

@@ -12,15 +12,32 @@ public class Hitbox : MonoBehaviour
     private readonly Collider2D[] _results = new Collider2D[1];
 
     private GameObject _attacker;
+    public GameObject liverPrefab;
+    private GameObject liverObject;
 
     private void Awake()
     {
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
+    private void Start()
+    {
+        // 간 생성
+        if (liverPrefab != null)
+        {
+            liverObject = ResourcesManager.Instance.Instantiate(liverPrefab, _attacker.transform);
+            liverObject.SetActive(false);
+        }
+    }
+
     public void SetAttacker(GameObject attacker)
     {
         _attacker = attacker;
+    }
+
+    private void DeactivateLiverObject()
+    {
+        liverObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -49,7 +66,20 @@ public class Hitbox : MonoBehaviour
                     monster.asc.Attribute.Attributes["HP"].MaxValueRP.Value * 0.5f)
                 {
                     // 간 빼기 스킬 활성화
-                    other.GetComponent<ParryingHitbox>()?.StartLiverExtraction();
+                    ParryingHitbox ph = other.GetComponent<ParryingHitbox>();
+                    if (ph != null)
+                    {
+                        ph.StartLiverExtraction();
+                        
+                        // 간 보이게 하기
+                        if (liverObject != null)
+                        {
+                            liverObject.SetActive(true);
+                            liverObject.transform.position = _attacker.GetComponent<Collider2D>().bounds.center;
+                            ph.OnLiverExtractionEnded -= DeactivateLiverObject;
+                            ph.OnLiverExtractionEnded += DeactivateLiverObject;
+                        }
+                    }
                 }
                 else
                 {
@@ -59,19 +89,19 @@ public class Hitbox : MonoBehaviour
             }
         }
 
-            // 플레이어 피격&넉백
-            Transform playerTransform = GameObject.FindWithTag("Player").transform;
-            if (_attacker != null)
-            {
-                // 몬스터가 있을 때 : 몬스터 위치 기준
-                Vector2 attackDirection = playerTransform.position.x > _attacker.transform.position.x ? Vector2.right : Vector2.left;
-                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);              
-            }
-            else
-            {
-                // 몬스터가 없을 때 (+ 투사체일 때) : HitBox 위치 기준
-                Vector2 attackDirection = playerTransform.position.x > transform.position.x ? Vector2.right : Vector2.left;
-                other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);
-            }
+        // 플레이어 피격&넉백
+        Transform playerTransform = GameObject.FindWithTag("Player").transform;
+        if (_attacker != null)
+        {
+            // 몬스터가 있을 때 : 몬스터 위치 기준
+            Vector2 attackDirection = playerTransform.position.x > _attacker.transform.position.x ? Vector2.right : Vector2.left;
+            other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);              
+        }
+        else
+        {
+            // 몬스터가 없을 때 (+ 투사체일 때) : HitBox 위치 기준
+            Vector2 attackDirection = playerTransform.position.x > transform.position.x ? Vector2.right : Vector2.left;
+            other.GetComponent<Damageable>()?.GetDamage(DomainKey.Player, damage, attackDirection);
+        }
     }
 }

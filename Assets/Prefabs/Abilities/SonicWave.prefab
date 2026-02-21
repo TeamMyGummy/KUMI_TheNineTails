@@ -219,3 +219,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parryLayerName: 
+  damage: 1
+  liverPrefab: {fileID: 3017341907596307413, guid: 8420119d88015a84381c2dac44727e97, type: 3}

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parryLayerName: 
   damage: 1
+  liverPrefab: {fileID: 3017341907596307413, guid: 8420119d88015a84381c2dac44727e97, type: 3}
 --- !u!114 &-8341998748947318730
 MonoBehaviour:
   m_ObjectHideFlags: 0
