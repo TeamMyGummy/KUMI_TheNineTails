@@ -25,6 +25,6 @@ MonoBehaviour:
   AttackHitboxPrefab: {fileID: 5257110030182595671, guid: e62b36397708f764e9785b839fae8a26, type: 3}
   AttackSound: 19
   preAttackDelay: 1
-  activeTime: 0.2
+  activeTime: 0.4
   postAttackDelay: 0.5
   betweenAttackDelay: 0.3

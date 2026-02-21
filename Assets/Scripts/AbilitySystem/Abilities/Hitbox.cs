@@ -14,6 +14,9 @@ public class Hitbox : MonoBehaviour
     private GameObject _attacker;
     public GameObject liverPrefab;
     private GameObject liverObject;
+    
+    public EffectSO effectSO;
+    private GameObject _effectPrefab;
 
     private void Awake()
     {
@@ -23,10 +26,17 @@ public class Hitbox : MonoBehaviour
     private void Start()
     {
         // 간 생성
-        if (liverPrefab != null)
+        if (liverPrefab != null && _attacker != null)
         {
             liverObject = ResourcesManager.Instance.Instantiate(liverPrefab, _attacker.transform);
             liverObject.SetActive(false);
+        }
+        
+        // Effect 초기화
+        if (effectSO != null && _attacker != null)
+        {
+            _effectPrefab = ResourcesManager.Instance.Instantiate(effectSO.hitEffectPrefab, _attacker.transform);
+            _effectPrefab.SetActive(false);
         }
     }
 
@@ -43,6 +53,10 @@ public class Hitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_boxCollider == null) return;
+        
+        // 공격 성공 시 Effect
+        if(_effectPrefab != null && effectSO != null)
+            EffectManager.Instance.AttackEffect(_attacker, effectSO, other.bounds.center, _effectPrefab);
         
         Vector2 boxCenter = (Vector2)transform.position + _boxCollider.offset;
         Vector2 boxSize = _boxCollider.size;

@@ -88,6 +88,9 @@ public class MonsterSwordAttack : BlockAbility<MonsterAttackSO>
 
             GameObject hitbox = ResourcesManager.Instance.Instantiate(prefab);
             hitbox.GetComponent<Hitbox>()?.SetAttacker(_actor);
+            ParticleSystemRenderer renderer = hitbox.GetComponent<ParticleSystemRenderer>();
+            if(renderer != null)
+                renderer.flip = facingDir == 1 ? new Vector3(0f, renderer.flip.y, 0f) : new Vector3(1f, renderer.flip.y, 0f);
             hitbox.transform.position = spawnPos;
 
             var box = hitbox.GetComponent<BoxCollider2D>();
