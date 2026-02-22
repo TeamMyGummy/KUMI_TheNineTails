@@ -72,7 +72,18 @@ public class Hitbox : MonoBehaviour
             {
                 // 플레이어 패링 성공
                 if (FindAnyObjectByType<DoParrying>() != null)
+                {
                     FindAnyObjectByType<DoParrying>().RecordParrySuccess();
+                    if (gameObject.CompareTag("Imoogi"))
+                    {
+                        gameObject.GetComponent<Imoogi>().GetParried();
+                    }
+                    if (gameObject.CompareTag("Tail"))
+                    {
+                        //꼬리에 대한 처리
+                        gameObject.GetComponent<Tail>().GetParried();
+                    }
+                }
                 _attacker?.GetComponent<Monster>()?.OnParried();
                 Monster monster = _attacker?.GetComponent<Monster>();
                 if (monster != null && 
