@@ -105,20 +105,20 @@ public class UI_StartMenu : MonoBehaviour
         //사운드 나오면 수정
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
+            SoundManager.Instance.PlaySFX(SFXName.시작화면_애니메이션_효과음);
             currentSelection = (currentSelection - 1 + menuButtons.Length) % menuButtons.Length;
             UpdateSelectionVisuals();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
+            SoundManager.Instance.PlaySFX(SFXName.시작화면_애니메이션_효과음);
             currentSelection = (currentSelection + 1) % menuButtons.Length;
             UpdateSelectionVisuals();
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            SoundManager.Instance.PlaySFX(SFXName.마우스_클릭);
+            SoundManager.Instance.PlaySFX(SFXName.시작화면_애니메이션_효과음);
             ExecuteSelection();
         }
     }

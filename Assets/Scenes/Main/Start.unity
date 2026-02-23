@@ -2933,6 +2933,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
       propertyPath: bgmSounds.Array.data[3].clip
       value: 
       objectReference: {fileID: 8300000, guid: 2d04001f42fe4a140946d942b2f75a90, type: 3}
@@ -2945,8 +2949,32 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[41].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a825b56c0d5462744be6fb136bc05c11, type: 3}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[41].name
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[42].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6acca484b38c1264daff76219f86a467, type: 3}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[42].name
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
       propertyPath: bgmSounds.Array.data[3].volume
-      value: 1
+      value: 0.398
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[41].volume
+      value: 0.703
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: sfxSounds.Array.data[42].volume
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
