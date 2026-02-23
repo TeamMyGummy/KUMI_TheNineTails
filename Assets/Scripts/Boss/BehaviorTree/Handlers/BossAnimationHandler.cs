@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class BossAnimationHandler : ActionHandler
 {
+    public DeadAssert DeadAssert;
     private SpineAnimationHandler animHandler;
     private string _currentAnimation = "idle"; 
     private EAnimationControl _howToPlay;
@@ -34,6 +35,10 @@ public class BossAnimationHandler : ActionHandler
                 break;
             case EAnimationControl.Set:
                 Debug.Log(_currentAnimation);
+                if(_currentAnimation == "death")
+                {
+                    DeadAssert.isDead = true;
+                }
                 animHandler.SetAnimation(_currentAnimation, _loop);
                 break;
             case EAnimationControl.Stop:
