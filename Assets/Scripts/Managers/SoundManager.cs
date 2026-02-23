@@ -63,7 +63,8 @@ public enum SFXName
     이무기_보스_사망,
     
     // ---- UI 효과음 ----
-    마우스_클릭
+    마우스_클릭,
+    시작화면_애니메이션_효과음
 }
 
 [System.Serializable]

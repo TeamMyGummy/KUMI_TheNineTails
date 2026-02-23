@@ -33,12 +33,12 @@ public class UI_StartMenu : MonoBehaviour
         }
 
         soundManager = SoundManager.Instance;
+        SoundManager.Instance.PlayBGM(BGMName.Start);
         
         InitUI();
-
+        
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
         
         UpdateSelectionVisuals();
     }

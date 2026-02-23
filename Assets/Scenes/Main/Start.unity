@@ -1549,14 +1549,14 @@ RectTransform:
   m_GameObject: {fileID: 1308552479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27, y: 0.27, z: 0.27}
+  m_LocalScale: {x: 0.33, y: 0.33, z: 0.33}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1797990516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -168.9, y: -540}
+  m_AnchoredPosition: {x: -173, y: -604}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308552481
@@ -2927,6 +2927,26 @@ PrefabInstance:
     - target: {fileID: 6537367554530501654, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: bgmSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: bgmSounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d04001f42fe4a140946d942b2f75a90, type: 3}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: bgmSounds.Array.data[3].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: bgmSounds.Array.data[3].name
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224079397913356551, guid: 1284e5f17121e4f42a8390520f5f84d8, type: 3}
+      propertyPath: bgmSounds.Array.data[3].volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
