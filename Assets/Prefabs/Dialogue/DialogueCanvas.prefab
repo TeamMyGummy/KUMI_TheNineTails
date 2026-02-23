@@ -657,8 +657,8 @@ MonoBehaviour:
   dialogue: {fileID: 1824535815446000880}
   dialogueCanvas: {fileID: 5067439420841083555}
   skipButton: {fileID: 7307028819753758780}
-  kumiPosY: 0
-  kkebiPosY: 10
+  kumiPosY: 100
+  kkebiPosY: 120
 --- !u!225 &1324883367777368058
 CanvasGroup:
   m_ObjectHideFlags: 0
