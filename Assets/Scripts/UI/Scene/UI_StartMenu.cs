@@ -177,15 +177,15 @@ public class UI_StartMenu : MonoBehaviour
     public void OnClick_newGameBtn()
     {
         soundManager.PlaySFX(SFXName.마우스_클릭);
-        if (JsonLoader.Exists("gamedata_0"))
+        /*if (JsonLoader.Exists("gamedata_0"))
         {
             newGamePopup.SetActive(true);
             isControlEnabled = false;
         }
         else
-        {
+        {*/
             SceneLoader.LoadScene("B1_Tutorial");
-        }
+        //}
     }
 
     public void OnClick_loadGameBtn()
